@@ -6,7 +6,6 @@ import java.util.Set;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcraft.mod.common.spellsystem.PlayerMagicHelper;
@@ -36,13 +35,12 @@ public class Target implements ISpellShape
 	}
 
 	@Override
-	public Set<SimpleDoubleCoordStore> getLocations(EntityLivingBase ent)
+	public SimpleDoubleCoordStore getLocation(EntityLivingBase ent)
 	{
-		Set<SimpleDoubleCoordStore> locs = new HashSet<SimpleDoubleCoordStore>();
 		SimpleDoubleCoordStore aimingAt = PlayerMagicHelper.getAimingAt(ent, 30);
 		if(aimingAt != null)
-			locs.add(PlayerMagicHelper.getAimingAt(ent, 30));
-		return locs;
+			return PlayerMagicHelper.getAimingAt(ent, 30);
+		return null;
 	}
 
 	@Override
@@ -76,18 +74,18 @@ public class Target implements ISpellShape
 			blocks.add(block);
 		else
 		{
-			for(ForgeDirection d : ForgeDirection.VALID_DIRECTIONS)
-			{
-				SimpleCoordStore nearby = block.getNearby(d);
-				if(!w.isAirBlock(nearby.x, nearby.y, nearby.z))
-					blocks.add(nearby);
-			}
+			if(pos.x == block.x)
+				blocks.add(new SimpleCoordStore(block.world,block.x-1,block.y,block.z));
+			if(pos.y == block.y)
+				blocks.add(new SimpleCoordStore(block.world,block.x,block.y-1,block.z));
+			if(pos.z == block.z)
+				blocks.add(new SimpleCoordStore(block.world,block.x,block.y,block.z-1));
 		}
 		return blocks;
 	}
 
 	@Override
-	public void applyModifiers(List<ISpellModifier> modifiers)
+	public void applyModifiers(Set<ISpellModifier> modifiers)
 	{
 		// TODO Auto-generated method stub
 

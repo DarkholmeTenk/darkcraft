@@ -6,15 +6,17 @@ import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellEffect;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellModifier;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellShape;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import net.minecraft.nbt.NBTTagCompound;
 
 public class SpellHelper
 {
-	public static void writeToNBT(NBTTagCompound nbt, LinkedList<ISpellShape> shps, ArrayList<ISpellEffect> effs,
-			ArrayList<ISpellModifier> mdrs)
+	public static void writeToNBT(NBTTagCompound nbt, LinkedList<ISpellShape> shps, Set<ISpellEffect> effs,
+			Set<ISpellModifier> mdrs)
 	{
 		StringBuilder shapes =  new StringBuilder();
 		for(ISpellShape shape : shps)
@@ -31,7 +33,8 @@ public class SpellHelper
 		StringBuilder modifiers = new StringBuilder();
 		for(ISpellModifier modifier : mdrs)
 			if(modifier != null)
-				modifiers.append(modifier.getID()).append(':');
+				for(int i = 0; i < modifier.getStrength();i++)
+					modifiers.append(modifier.getID()).append(':');
 		nbt.setString("modifiers", modifiers.toString());
 	}
 	
@@ -61,9 +64,9 @@ public class SpellHelper
 		return readShapes(baseData);
 	}
 	
-	public static ArrayList<ISpellEffect> readEffects(String baseData)
+	public static Set<ISpellEffect> readEffects(String baseData)
 	{
-		ArrayList<ISpellEffect> effects = new ArrayList<ISpellEffect>();
+		HashSet<ISpellEffect> effects = new HashSet<ISpellEffect>();
 		if(baseData == null)
 			return effects;
 		String[] individualEffects = baseData.split(":");
@@ -79,17 +82,18 @@ public class SpellHelper
 		return effects;
 	}
 	
-	public static ArrayList<ISpellEffect> readEffects(NBTTagCompound nbt)
+	public static Set<ISpellEffect> readEffects(NBTTagCompound nbt)
 	{
 		String baseData = nbt.getString("effects");
 		return readEffects(baseData);
 	}
 	
-	public static ArrayList<ISpellModifier> readModifiers(String baseData)
+	public static Set<ISpellModifier> readModifiers(String baseData)
 	{
-		ArrayList<ISpellModifier> modifiers = new ArrayList<ISpellModifier>();
+		HashMap<ISpellModifier,ISpellModifier> modifiers = new HashMap<ISpellModifier,ISpellModifier>();
+		HashSet<ISpellModifier> set = new HashSet<ISpellModifier>();
 		if(baseData == null)
-			return modifiers;
+			return set;
 		String[] individualEffects = baseData.split(":");
 		for(int i = 0; i< individualEffects.length; i++)
 		{
@@ -98,12 +102,21 @@ public class SpellHelper
 				continue;
 			ISpellModifier modifier = SpellComponentRegistry.getModifier(thisEffect);
 			if(modifier != null)
-				modifiers.add(modifier);
+			{
+				if(!modifiers.containsKey(modifier))
+					modifiers.put(modifier,modifier);
+				else
+				{
+					ISpellModifier m = modifiers.get(modifier);
+					m.setStrength(m.getStrength()+1);
+				}
+			}
 		}
-		return modifiers;
+		set.addAll(modifiers.values());
+		return set;
 	}
 	
-	public static ArrayList<ISpellModifier> readModifiers(NBTTagCompound nbt)
+	public static Set<ISpellModifier> readModifiers(NBTTagCompound nbt)
 	{
 		String baseData = nbt.getString("modifiers");
 		return readModifiers(baseData);

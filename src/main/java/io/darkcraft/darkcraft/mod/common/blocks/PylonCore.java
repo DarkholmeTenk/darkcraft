@@ -3,26 +3,25 @@ package io.darkcraft.darkcraft.mod.common.blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcraft.mod.common.tileent.MultiBlockBaseTE;
+import io.darkcraft.darkcraft.mod.common.tileent.PylonCoreTE;
 
-public class MultiBlockBaseBlock extends AbstractBlockContainer
+public class PylonCore extends AbstractBlockContainer
 {
-
-	public MultiBlockBaseBlock(boolean render, String sm)
+	public PylonCore()
 	{
-		super(render, sm);
+		super("darkcraft");
 	}
-
+	
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
 	{
-		return new MultiBlockBaseTE();
+		return new PylonCoreTE();
 	}
 
 	@Override
 	public void initData()
 	{
-		setBlockName("multiblockBaseBlock");
+		setBlockName("PylonCore");
 	}
 
 	@Override
@@ -30,6 +29,12 @@ public class MultiBlockBaseBlock extends AbstractBlockContainer
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Class<? extends TileEntity> getTEClass()
+	{
+		return PylonCoreTE.class;
 	}
 
 }

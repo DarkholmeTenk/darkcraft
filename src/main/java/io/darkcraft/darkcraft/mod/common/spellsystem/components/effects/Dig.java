@@ -1,7 +1,6 @@
 package io.darkcraft.darkcraft.mod.common.spellsystem.components.effects;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.block.Block;
@@ -10,11 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellComponent;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellEffect;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellModifier;
-import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellShape;
 
 public class Dig implements ISpellEffect
 {
@@ -45,6 +44,8 @@ public class Dig implements ISpellEffect
 	@Override
 	public void applyEffect(SimpleCoordStore scs)
 	{
+		if(!ServerHelper.isServer())
+			return;
 		if(scs == null)
 			return;
 		World w = scs.getWorldObj();
@@ -68,11 +69,11 @@ public class Dig implements ISpellEffect
 	@Override
 	public int getInterval()
 	{
-		return 1;
+		return 5;
 	}
 
 	@Override
-	public void applyModifiers(List<ISpellModifier> modifiers)
+	public void applyModifiers(Set<ISpellModifier> modifiers)
 	{
 		// TODO Auto-generated method stub
 		

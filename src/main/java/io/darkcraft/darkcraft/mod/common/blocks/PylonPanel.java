@@ -3,26 +3,31 @@ package io.darkcraft.darkcraft.mod.common.blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcraft.mod.common.tileent.MultiBlockCoreTE;
+import io.darkcraft.darkcraft.mod.common.tileent.PylonPanelTE;
 
-public class MultiBlockCoreBlock extends AbstractBlockContainer
+public class PylonPanel extends AbstractBlockContainer
 {
-
-	public MultiBlockCoreBlock(boolean render, String sm)
+	public PylonPanel()
 	{
-		super(render, sm);
+		super("darkcraft");
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_)
 	{
-		return new MultiBlockCoreTE();
+		return new PylonPanelTE();
+	}
+
+	@Override
+	public Class<? extends TileEntity> getTEClass()
+	{
+		return PylonPanelTE.class;
 	}
 
 	@Override
 	public void initData()
 	{
-		setBlockName("MultiBlockCore");
+		setBlockName("PylonPanel");
 	}
 
 	@Override

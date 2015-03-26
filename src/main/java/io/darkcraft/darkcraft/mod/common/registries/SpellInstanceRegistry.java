@@ -1,14 +1,10 @@
 package io.darkcraft.darkcraft.mod.common.registries;
 
-import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.darkcraft.mod.common.spellsystem.PlayerMagicHelper;
 import io.darkcraft.darkcraft.mod.common.spellsystem.SpellInstance;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;

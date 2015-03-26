@@ -1,9 +1,15 @@
 package io.darkcraft.darkcraft.mod.common.spellsystem.components.shapes;
 
+import java.util.Set;
+
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.modifiers.Duration;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellComponent;
+import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellModifier;
 
 public class Zone extends Area
 {
+	private int durMod = 1;
+	
 	@Override
 	public String getID()
 	{
@@ -31,6 +37,17 @@ public class Zone extends Area
 	@Override
 	public int getDuration()
 	{
-		return 8;
+		return 20 * durMod;
+	}
+	
+	@Override
+	public void applyModifiers(Set<ISpellModifier> modifiers)
+	{
+		for(ISpellModifier m : modifiers)
+		{
+			System.out.println("Adding modifier " + m.getID());
+			if(m instanceof Duration)
+				durMod = 1+m.getStrength();
+		}
 	}
 }

@@ -12,6 +12,7 @@ public class BaseStaff extends AbstractItem
 {
 	public BaseStaff()
 	{
+		super("Darkcraft");
 		setUnlocalizedName("staffBase");
 	}
 

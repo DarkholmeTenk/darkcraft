@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import io.darkcraft.darkcore.mod.abstracts.AbstractCommand;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcraft.mod.common.spellsystem.BaseSpell;
 
 public class CreateSpellCommand extends AbstractCommand
@@ -29,6 +30,19 @@ public class CreateSpellCommand extends AbstractCommand
 	{
 		list.add("dccreatespell");
 	}
+	
+	private void sortStuff(EntityPlayer pl, String sStr, String eStr, String mStr)
+	{
+		BaseSpell b = BaseSpell.readFromStrings(sStr, eStr, mStr);
+		if(b == null)
+			return;
+		NBTTagCompound nbt = new NBTTagCompound();
+		b.writeToNBT(nbt);
+		ItemStack is = pl.getHeldItem();
+		if(is.stackTagCompound == null)
+			is.stackTagCompound = new NBTTagCompound();
+		is.stackTagCompound.setTag("currentSpell", nbt);
+	}
 
 	@Override
 	public void commandBody(ICommandSender sender, String[] astring)
@@ -40,16 +54,15 @@ public class CreateSpellCommand extends AbstractCommand
 		{
 			if(!isPlayer(sender))
 				return;
-			BaseSpell b = BaseSpell.readFromStrings(astring[0], astring[1], null);
-			if(b == null)
-				return;
-			NBTTagCompound nbt = new NBTTagCompound();
-			b.writeToNBT(nbt);
-			EntityPlayer pl = (EntityPlayer) sender;
-			ItemStack is = pl.getHeldItem();
-			if(is.stackTagCompound == null)
-				is.stackTagCompound = new NBTTagCompound();
-			is.stackTagCompound.setTag("currentSpell", nbt);
+			sortStuff((EntityPlayer)sender,astring[0],astring[1],null);
+		}
+		if(astring.length == 3)
+		{
+			EntityPlayer pl = ServerHelper.getPlayer(astring[0]);
+			if(pl != null)
+				sortStuff(pl,astring[1],astring[2],null);
+			else if(sender instanceof EntityPlayer)
+				sortStuff((EntityPlayer)sender,astring[0],astring[1],astring[2]);
 		}
 	}
 

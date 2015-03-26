@@ -5,7 +5,6 @@ import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellEffect;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellModifier;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellShape;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -15,11 +14,11 @@ import net.minecraft.nbt.NBTTagCompound;
 public class BaseSpell
 {
 	private LinkedList<ISpellShape> shapes;
-	private ArrayList<ISpellEffect> effects;
-	private ArrayList<ISpellModifier> mods;
+	private Set<ISpellEffect> effects;
+	private Set<ISpellModifier> mods;
 	private Double cost = null;
 	
-	private BaseSpell(LinkedList<ISpellShape> _shapes, ArrayList<ISpellEffect> _effects, ArrayList<ISpellModifier> _mods)
+	private BaseSpell(LinkedList<ISpellShape> _shapes, Set<ISpellEffect> _effects, Set<ISpellModifier> _mods)
 	{
 		shapes	= _shapes;
 		effects	= _effects;
@@ -29,9 +28,11 @@ public class BaseSpell
 	public void cast(EntityPlayer pl)
 	{
 		ISpellShape head = shapes.getFirst();
-		Set<SimpleDoubleCoordStore> locs = head.getLocations(pl);
-		for(SimpleDoubleCoordStore loc : locs)
-			new SpellInstance(this,loc);
+		SimpleDoubleCoordStore loc = head.getLocation(pl);
+		if(loc == null)
+			return;
+		Set<SimpleDoubleCoordStore> locs = head.getNewLocations(loc);
+		new SpellInstance(this,loc,locs);
 	}
 	
 	public double getCost()
@@ -57,12 +58,12 @@ public class BaseSpell
 		return shapes;
 	}
 	
-	protected ArrayList<ISpellEffect> getEffects()
+	protected Set<ISpellEffect> getEffects()
 	{
 		return effects;
 	}
 	
-	protected ArrayList<ISpellModifier> getMods()
+	protected Set<ISpellModifier> getMods()
 	{
 		return mods;
 	}
@@ -70,8 +71,8 @@ public class BaseSpell
 	public static BaseSpell readFromStrings(String shapeStr, String effectsStr, String modStr)
 	{
 		LinkedList<ISpellShape> shapes	= SpellHelper.readShapes(shapeStr);
-		ArrayList<ISpellEffect> effects	= SpellHelper.readEffects(effectsStr);
-		ArrayList<ISpellModifier> mods	= SpellHelper.readModifiers(modStr);
+		Set<ISpellEffect> effects	= SpellHelper.readEffects(effectsStr);
+		Set<ISpellModifier> mods	= SpellHelper.readModifiers(modStr);
 		return new BaseSpell(shapes,effects,mods);
 	}
 	
@@ -80,8 +81,8 @@ public class BaseSpell
 		if(nbt.hasKey("shapes") && nbt.hasKey("effects"))
 		{
 			LinkedList<ISpellShape> shapes	= SpellHelper.readShapes(nbt);
-			ArrayList<ISpellEffect> effects	= SpellHelper.readEffects(nbt);
-			ArrayList<ISpellModifier> mods	= SpellHelper.readModifiers(nbt);
+			Set<ISpellEffect> effects	= SpellHelper.readEffects(nbt);
+			Set<ISpellModifier> mods	= SpellHelper.readModifiers(nbt);
 			return new BaseSpell(shapes,effects,mods);
 		}
 		return null;

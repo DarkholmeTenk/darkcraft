@@ -1,5 +1,12 @@
 package io.darkcraft.darkcraft.mod.common.registries;
 
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.effects.Damage;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.effects.Dig;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.modifiers.Duration;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.modifiers.Size;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.shapes.Area;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.shapes.Target;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.shapes.Zone;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellComponent;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellEffect;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellModifier;
@@ -42,6 +49,20 @@ public class SpellComponentRegistry
 			effects.put(com.getID(),(ISpellEffect)com);
 		if(com instanceof ISpellModifier)
 			modifiers.put(com.getID(),(ISpellModifier) com);
+	}
+	
+	public static void registerComponents()
+	{
+		// Effects
+		add(new Damage());
+		add(new Dig());
+		// Shapes
+		add(new Target());
+		add(new Area());
+		add(new Zone());
+		// Modifiers
+		add(new Duration());
+		add(new Size());
 	}
 	
 }

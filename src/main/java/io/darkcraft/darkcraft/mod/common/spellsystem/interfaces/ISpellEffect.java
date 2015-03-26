@@ -2,7 +2,6 @@ package io.darkcraft.darkcraft.mod.common.spellsystem.interfaces;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -31,5 +30,5 @@ public interface ISpellEffect extends ISpellComponent
 	 * The effect in question should keep track of the modifiers which have been applied and modify its other code.
 	 * Should only be called once.
 	 */
-	public void applyModifiers(List<ISpellModifier> modifiers);
+	public void applyModifiers(Set<ISpellModifier> modifiers);
 }

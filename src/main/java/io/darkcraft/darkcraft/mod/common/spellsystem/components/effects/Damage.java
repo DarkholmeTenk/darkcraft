@@ -1,17 +1,21 @@
 package io.darkcraft.darkcraft.mod.common.spellsystem.components.effects;
 
-import java.util.List;
+import java.util.Set;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
-import io.darkcraft.darkcore.mod.helpers.ServerHelper;
-import io.darkcraft.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.darkcraft.mod.common.spellsystem.components.modifiers.DamageMod;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellEffect;
 import io.darkcraft.darkcraft.mod.common.spellsystem.interfaces.ISpellModifier;
 
 public class Damage implements ISpellEffect
 {
+	private int strength = 1;
+	private static final int baseDam = 2;
+	
 	@Override
 	public double getBaseCost()
 	{
@@ -21,12 +25,18 @@ public class Damage implements ISpellEffect
 	@Override
 	public void applyEffect(EntityLivingBase ent)
 	{
-		ent.attackEntityFrom(DamageSource.generic, 10);
+		ent.attackEntityFrom(DamageSource.generic, baseDam*strength);
 	}
 
 	@Override
 	public void applyEffect(SimpleCoordStore scs)
 	{
+		if(strength > 1)
+		{
+			World w = scs.getWorldObj();
+			if(w.getBlock(scs.x, scs.y, scs.z) == Blocks.cobblestone)
+				w.setBlock(scs.x, scs.y, scs.z, Blocks.sand,0,3);
+		}
 	}
 
 	@Override
@@ -36,10 +46,13 @@ public class Damage implements ISpellEffect
 	}
 
 	@Override
-	public void applyModifiers(List<ISpellModifier> modifiers)
+	public void applyModifiers(Set<ISpellModifier> modifiers)
 	{
-		// TODO Auto-generated method stub
-
+		for(ISpellModifier mod : modifiers)
+		{
+			if(mod instanceof DamageMod)
+				strength = 1 + mod.getStrength();
+		}
 	}
 
 	@Override
@@ -51,7 +64,6 @@ public class Damage implements ISpellEffect
 	@Override
 	public ISpellEffect create()
 	{
-		// TODO Auto-generated method stub
 		return new Damage();
 	}
 

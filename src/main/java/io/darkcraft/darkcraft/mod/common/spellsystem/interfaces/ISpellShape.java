@@ -1,6 +1,5 @@
 package io.darkcraft.darkcraft.mod.common.spellsystem.interfaces;
 
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -24,12 +23,12 @@ public interface ISpellShape extends ISpellComponent
 	 */
 	public Set<SimpleDoubleCoordStore> getNewLocations(SimpleDoubleCoordStore originalLocation);
 	
-	/**Returns the locations that this spell should affect given the entity which is doing the casting.
+	/**Returns the location that this spell should affect given the entity which is doing the casting.
 	 * This should only be called for the first shape in the spell.
 	 * @param ent
 	 * @return
 	 */
-	public Set<SimpleDoubleCoordStore> getLocations(EntityLivingBase ent);
+	public SimpleDoubleCoordStore getLocation(EntityLivingBase ent);
 	
 	/**Return a list of the entities affected by the result of applying this shape to this location
 	 * 
@@ -46,7 +45,7 @@ public interface ISpellShape extends ISpellComponent
 	 * The effect in question should keep track of the modifiers which have been applied and modify its other code.
 	 * Should only be called once.
 	 */
-	public void applyModifiers(List<ISpellModifier> modifiers);
+	public void applyModifiers(Set<ISpellModifier> modifiers);
 	
 	/**The number of ticks over which this shape should apply. <=1 means the effect will only run for the tick in which it hits.
 	 * @return an int specifying the number of ticks which it should take place over
