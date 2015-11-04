@@ -1,4 +1,4 @@
-package io.darkcraft.darkcraft.mod.common.registries;
+package io.darkcraft.mod.common.registries;
 
 
 public class ItemBlockRegistry

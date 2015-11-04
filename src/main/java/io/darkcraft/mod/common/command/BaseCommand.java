@@ -1,4 +1,4 @@
-package io.darkcraft.darkcraft.mod.common.command;
+package io.darkcraft.mod.common.command;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractCommandNew;
 

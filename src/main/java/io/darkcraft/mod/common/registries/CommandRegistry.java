@@ -1,6 +1,6 @@
-package io.darkcraft.darkcraft.mod.common.registries;
+package io.darkcraft.mod.common.registries;
 
-import io.darkcraft.darkcraft.mod.common.command.BaseCommand;
+import io.darkcraft.mod.common.command.BaseCommand;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 public class CommandRegistry

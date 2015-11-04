@@ -1,0 +1,13 @@
+darkcraft.skills.magic.alteration.name=Alteration
+darkcraft.skills.magic.conjuration.name=Conjuration
+darkcraft.skills.magic.destruction.name=Destruction
+darkcraft.skills.magic.illusion.name=Illusion
+darkcraft.skills.magic.mysticism.name=Mysticism
+darkcraft.skills.magic.restoration.name=Restoration
+
+darkcraft.skills.magic.alteration.desc=Alteration is the magic associated with modifying the universe to your needs. It is usually obtained by convincing the universe that something behaves in another way temporarily.
+darkcraft.skills.magic.conjuration.desc=Conjuration is the magic associated with tearing the veil between the Overworld and other realms and pulling something through temporarily.
+darkcraft.skills.magic.destruction.desc=Destruction is the magic associated with causing damage of some sort to other entities.
+darkcraft.skills.magic.illusion.desc=Illusion is like alteration but can usually obtain stronger effects by convincing a mind of changes rather than the universe.
+darkcraft.skills.magic.mysticism.desc=Mysticism is the magic of manipulating other types of magic for various effects.
+darkcraft.skills.magic.restoration.desc=Restoration is the magic of fixing things, whether it's a damaged tool, flesh or disease.

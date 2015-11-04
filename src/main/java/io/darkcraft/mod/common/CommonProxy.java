@@ -1,4 +1,4 @@
-package io.darkcraft.darkcraft.mod.common;
+package io.darkcraft.mod.common;
 
 public class CommonProxy
 {
