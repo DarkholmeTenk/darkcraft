@@ -21,6 +21,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 @Mod(modid = "darkcraft", version = "0.1", dependencies = "required-after:darkcore; required-after:SkillAPI")
 public class DarkcraftMod implements IConfigHandlerMod
 {
+	public static final String				modName					= "darkcraft";
 	public static Random					modRand					= new Random();
 	public static ConfigHandler				configHandler			= null;
 
