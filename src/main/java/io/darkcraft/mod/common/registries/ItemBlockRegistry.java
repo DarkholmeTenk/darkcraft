@@ -1,6 +1,10 @@
 package io.darkcraft.mod.common.registries;
 
 import io.darkcraft.mod.common.items.staff.ItemStaff;
+import io.darkcraft.mod.common.items.staff.parts.StaffPartRegistry;
+import io.darkcraft.mod.common.items.staff.parts.bottom.DefaultStaffBottom;
+import io.darkcraft.mod.common.items.staff.parts.head.DefaultStaffHead;
+import io.darkcraft.mod.common.items.staff.parts.shaft.DefaultStaffShaft;
 
 
 public class ItemBlockRegistry
@@ -18,6 +22,8 @@ public class ItemBlockRegistry
 
 	private static void registerStaffParts()
 	{
-
+		StaffPartRegistry.register(new DefaultStaffShaft("DefaultShaft"));
+		StaffPartRegistry.register(new DefaultStaffBottom("DefaultBottom"));
+		StaffPartRegistry.register(new DefaultStaffHead("DefaultHead"));
 	}
 }

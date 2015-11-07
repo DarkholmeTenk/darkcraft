@@ -1,14 +1,13 @@
 package io.darkcraft.mod.common.items.staff.parts;
 
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.common.items.staff.parts.bottom.IStaffBottom;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
-public abstract class DefaultStaffPart implements IStaffBottom
+public abstract class DefaultStaffPart implements IStaffPart
 {
 	private final ResourceLocation	objLoc;
 	private final ResourceLocation	tex;
