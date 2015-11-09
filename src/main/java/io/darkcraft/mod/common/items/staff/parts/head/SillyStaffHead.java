@@ -3,7 +3,6 @@ package io.darkcraft.mod.common.items.staff.parts.head;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.items.staff.parts.DefaultStaffPart;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 
@@ -44,7 +43,7 @@ public class SillyStaffHead extends DefaultStaffPart implements IStaffHead
 		GL11.glPopMatrix();
 		GL11.glPushMatrix();
 		GL11.glTranslated(0, 0.75, 0);
-		GL11.glRotated((Minecraft.getMinecraft().theWorld.getTotalWorldTime() * 2) % 360, 0, 1, 0);
+		GL11.glRotated((System.currentTimeMillis() / 20.0) % 360, 0, 1, 0);
 		GL11.glTranslated(0.25, 0, 0);
 		GL11.glScaled(0.25, 0.25, 0.25);
 		model.renderAll();

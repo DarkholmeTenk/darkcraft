@@ -4,6 +4,7 @@ import io.darkcraft.darkcore.mod.config.ConfigHandler;
 import io.darkcraft.darkcore.mod.config.ConfigHandlerFactory;
 import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
 import io.darkcraft.mod.common.CommonProxy;
+import io.darkcraft.mod.common.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 
@@ -54,6 +55,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void serverStarting(FMLServerAboutToStartEvent event)
 	{
 		registerRegistries();
+		ItemStaffHelperFactory.clear();
 	}
 
 	@EventHandler

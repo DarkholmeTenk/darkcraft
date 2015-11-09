@@ -2,15 +2,19 @@ package io.darkcraft.mod.common.items.staff;
 
 import io.darkcraft.mod.DarkcraftMod;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ItemStaffHelperFactory
 {
-	private static HashMap<Integer, ItemStaffHelper>	map				= new HashMap();
-	private static ItemStaffHelper						defaultHelper	= new ItemStaffHelper(0);
+	private static HashMap<Integer, ItemStaffHelper>				map				= new HashMap();
+	private static HashMap<Integer, Long>							accessMap		= new HashMap();
+	private static long												lastClearTime	= 0;
+	private static ItemStaffHelper									defaultHelper	= new ItemStaffHelper(0);
 
 	private static int getNewID()
 	{
@@ -20,8 +24,32 @@ public class ItemStaffHelperFactory
 		return id;
 	}
 
+	public static void clear()
+	{
+		map.clear();
+		accessMap.clear();
+		lastClearTime = 0;
+	}
+
+	private static void clearOldStuff()
+	{
+		if(lastClearTime >= (System.currentTimeMillis() - 10000)) return;
+		lastClearTime = System.currentTimeMillis();
+		Iterator<Integer> iter = accessMap.keySet().iterator();
+		while(iter.hasNext())
+		{
+			Integer id = iter.next();
+			long time = accessMap.get(id);
+			if(time >= (System.currentTimeMillis() - 10000)) continue;
+			map.remove(id);
+			iter.remove();
+		}
+	}
+
 	public static ItemStaffHelper getHelper(int id)
 	{
+		clearOldStuff();
+		accessMap.put(id, System.currentTimeMillis());
 		if (map.containsKey(id)) return map.get(id);
 		ItemStaffHelper helper = new ItemStaffHelper(id);
 		map.put(id, helper);
