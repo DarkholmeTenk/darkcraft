@@ -4,9 +4,13 @@ import io.darkcraft.mod.common.items.staff.parts.StaffPartRegistry;
 import io.darkcraft.mod.common.items.staff.parts.bottom.IStaffBottom;
 import io.darkcraft.mod.common.items.staff.parts.head.IStaffHead;
 import io.darkcraft.mod.common.items.staff.parts.shaft.IStaffShaft;
+import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -22,16 +26,25 @@ public class ItemStaffHelper
 	private IStaffHead					head		= StaffPartRegistry.getStaffHead(null);
 	private WeakReference<ItemStack>	itemstack;
 	public boolean						inited = false;
+	private Spell						spell;
 
 	public ItemStaffHelper(int _id)
 	{
 		id = _id;
 	}
 
-	public ItemStack getIS()
+	public ItemStack getIS() { return getIS(false); }
+
+	public ItemStack getIS(boolean spawnNew)
 	{
 		if(itemstack == null)
-			return null;
+		{
+			if(!spawnNew)
+				return null;
+			ItemStack is = new ItemStack(ItemBlockRegistry.itemStaff, 1);
+			setIS(is);
+			return is;
+		}
 		return itemstack.get();
 	}
 
@@ -56,6 +69,18 @@ public class ItemStaffHelper
 	public void setStaffShaft(IStaffShaft part)		{ if((part==null) || (part == shaft)) return; shaft = part; markDirty(); }
 	public void setStaffHead(IStaffHead part)		{ if((part==null) || (part == head)) return; head = part; markDirty(); }
 
+	public void setSpell(Spell newSpell)
+	{
+		if(spell == newSpell) return;
+		spell = newSpell;
+		markDirty();
+	}
+
+	public Spell getSpell()
+	{
+		return spell;
+	}
+
 	public void markDirty()
 	{
 		ItemStack is = getIS();
@@ -73,7 +98,7 @@ public class ItemStaffHelper
 		bottom	= StaffPartRegistry.getStaffBottom(nbt.getString("staffBottom"));
 		shaft	= StaffPartRegistry.getStaffShaft(nbt.getString("staffShaft"));
 		head	= StaffPartRegistry.getStaffHead(nbt.getString("staffHead"));
-
+		spell	= nbt.hasKey("spell") ? Spell.readFromNBT(nbt.getCompoundTag("spell")) : null;
 		inited = true;
 	}
 
@@ -83,5 +108,17 @@ public class ItemStaffHelper
 		nbt.setString("staffBottom", bottom.id());
 		nbt.setString("staffShaft", shaft.id());
 		nbt.setString("staffHead", head.id());
+		if(spell != null)
+		{
+			NBTTagCompound spellTag = new NBTTagCompound();
+			spell.writeToNBT(spellTag);
+			nbt.setTag("spell", spellTag);
+		}
+	}
+
+	public void addInfo(List<String> list, EntityPlayer pl)
+	{
+		if(spell != null)
+			spell.addInfo(list, pl);
 	}
 }

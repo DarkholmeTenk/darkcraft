@@ -8,6 +8,10 @@ import net.minecraft.command.ICommandSender;
 
 public class BaseCommand extends AbstractCommandNew
 {
+	public BaseCommand()
+	{
+		super(new SetStaffSpellCommand());
+	}
 
 	@Override
 	public String getCommandName()

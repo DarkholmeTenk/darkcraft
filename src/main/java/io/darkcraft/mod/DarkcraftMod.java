@@ -7,6 +7,7 @@ import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import io.darkcraft.mod.common.registries.MagicalRegistry;
 
 import java.util.Random;
 
@@ -42,6 +43,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		configHandler = ConfigHandlerFactory.getConfigHandler(this);
 		ItemBlockRegistry.registerBlocks();
 		ItemBlockRegistry.registerItems();
+		MagicalRegistry.registerMagic();
 		FMLInterModComms.sendMessage("SkillAPI", "register", "io.darkcraft.mod.common.registries.SkillRegistry.requestAPI");
 	}
 
