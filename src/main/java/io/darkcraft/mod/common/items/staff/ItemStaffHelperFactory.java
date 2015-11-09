@@ -14,6 +14,7 @@ public class ItemStaffHelperFactory
 	private static HashMap<Integer, ItemStaffHelper>				map				= new HashMap();
 	private static HashMap<Integer, Long>							accessMap		= new HashMap();
 	private static long												lastClearTime	= 0;
+	private static HashMap<Integer, WeakReference<ItemStaffHelper>>	weakMap			= new HashMap();
 	private static ItemStaffHelper									defaultHelper	= new ItemStaffHelper(0);
 
 	private static int getNewID()
@@ -28,6 +29,7 @@ public class ItemStaffHelperFactory
 	{
 		map.clear();
 		accessMap.clear();
+		weakMap.clear();
 		lastClearTime = 0;
 	}
 
@@ -35,7 +37,15 @@ public class ItemStaffHelperFactory
 	{
 		if(lastClearTime >= (System.currentTimeMillis() - 10000)) return;
 		lastClearTime = System.currentTimeMillis();
-		Iterator<Integer> iter = accessMap.keySet().iterator();
+		Iterator<Integer> iter = weakMap.keySet().iterator();
+		while(iter.hasNext())
+		{
+			Integer id = iter.next();
+			WeakReference<ItemStaffHelper> item = weakMap.get(id);
+			if(item.get() == null)
+				iter.remove();
+		}
+		iter = accessMap.keySet().iterator();
 		while(iter.hasNext())
 		{
 			Integer id = iter.next();
@@ -51,7 +61,14 @@ public class ItemStaffHelperFactory
 		clearOldStuff();
 		accessMap.put(id, System.currentTimeMillis());
 		if (map.containsKey(id)) return map.get(id);
-		ItemStaffHelper helper = new ItemStaffHelper(id);
+		ItemStaffHelper helper = null;
+		if(weakMap.containsKey(id))
+			helper = weakMap.get(id).get();
+		if(helper == null)
+		{
+			helper = new ItemStaffHelper(id);
+			weakMap.put(id, new WeakReference(helper));
+		}
 		map.put(id, helper);
 		return helper;
 	}
