@@ -23,7 +23,7 @@ public abstract class DefaultStaffPart implements IStaffPart
 	}
 
 	@Override
-	public String getID()
+	public String id()
 	{
 		return id;
 	}

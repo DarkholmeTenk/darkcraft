@@ -55,7 +55,7 @@ public class StaffPartRegistry
 
 	public static void register(IStaffPart part)
 	{
-		String id = part.getID();
+		String id = part.id();
 		boolean isDef = part.isDefault();
 		if (part instanceof IStaffHead) add(id, part, heads, headNames, headDNames, isDef);
 		if (part instanceof IStaffShaft) add(id, part, shafts, shaftNames, shaftDNames, isDef);

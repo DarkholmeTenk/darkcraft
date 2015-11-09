@@ -7,7 +7,7 @@ public interface IStaffPart
 	/**
 	 * @return a unique identifier which is used to save/load the part
 	 */
-	public String getID();
+	public String id();
 
 	public void render();
 

@@ -80,8 +80,8 @@ public class ItemStaffHelper
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		nbt.setInteger(nbtIDName, id);
-		nbt.setString("staffBottom", bottom.getID());
-		nbt.setString("staffShaft", shaft.getID());
-		nbt.setString("staffHead", head.getID());
+		nbt.setString("staffBottom", bottom.id());
+		nbt.setString("staffShaft", shaft.id());
+		nbt.setString("staffHead", head.id());
 	}
 }
