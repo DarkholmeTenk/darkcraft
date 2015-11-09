@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.items.staff.parts;
 
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
+import io.darkcraft.mod.common.items.staff.ItemStaffHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
@@ -37,4 +38,15 @@ public abstract class DefaultStaffPart implements IStaffPart
 		GL11.glPopMatrix();
 	}
 
+	@Override
+	public double getPowerMult(ItemStaffHelper helper)
+	{
+		return 1;
+	}
+
+	@Override
+	public boolean isDefault()
+	{
+		return true;
+	}
 }

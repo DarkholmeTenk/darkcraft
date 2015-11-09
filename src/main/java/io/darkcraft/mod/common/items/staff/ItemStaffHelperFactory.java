@@ -40,7 +40,7 @@ public class ItemStaffHelperFactory
 			nbt.setInteger(ItemStaffHelper.nbtIDName, id);
 		}
 		ItemStaffHelper helper = getHelper(id);
-		if(helper != null)
+		if((helper != null) && !helper.inited)
 			helper.readFromNBT(nbt);
 		return helper;
 	}
@@ -49,7 +49,10 @@ public class ItemStaffHelperFactory
 	{
 		if ((is == null) || !(is.getItem() instanceof ItemStaff)) return null;
 		if (is.stackTagCompound == null) is.stackTagCompound = new NBTTagCompound();
-		return getHelper(is.stackTagCompound);
+		ItemStaffHelper helper = getHelper(is.stackTagCompound);
+		if(helper != null)
+			helper.setIS(is);
+		return helper;
 	}
 
 	public static ItemStaffHelper getDefaultHelper()
