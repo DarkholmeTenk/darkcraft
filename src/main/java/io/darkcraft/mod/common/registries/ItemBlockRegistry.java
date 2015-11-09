@@ -5,6 +5,7 @@ import io.darkcraft.mod.common.items.staff.ItemStaff;
 import io.darkcraft.mod.common.items.staff.parts.StaffPartRegistry;
 import io.darkcraft.mod.common.items.staff.parts.bottom.DefaultStaffBottom;
 import io.darkcraft.mod.common.items.staff.parts.head.DefaultStaffHead;
+import io.darkcraft.mod.common.items.staff.parts.head.SillyStaffHead;
 import io.darkcraft.mod.common.items.staff.parts.shaft.DefaultStaffShaft;
 import net.minecraft.util.ResourceLocation;
 
@@ -36,5 +37,6 @@ public class ItemBlockRegistry
 		StaffPartRegistry.register(new DefaultStaffHead("DefaultHeadB"));
 		StaffPartRegistry.register(new DefaultStaffHead("DefaultHeadR", getRL("textures/staff/defaultHeadRed.png")));
 		StaffPartRegistry.register(new DefaultStaffHead("DefaultHeadG", getRL("textures/staff/defaultHeadGreen.png")));
+		StaffPartRegistry.register(new SillyStaffHead("SillyHeadB"));
 	}
 }

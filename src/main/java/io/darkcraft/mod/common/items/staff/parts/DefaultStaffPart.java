@@ -10,10 +10,10 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class DefaultStaffPart implements IStaffPart
 {
-	private final ResourceLocation	objLoc;
-	private final ResourceLocation	tex;
-	private IModelCustom			model;
-	private final String			id;
+	public final ResourceLocation	objLoc;
+	public final ResourceLocation	tex;
+	protected IModelCustom			model;
+	public final String				id;
 
 	public DefaultStaffPart(ResourceLocation modelLocation, String name, ResourceLocation textureLocation)
 	{
