@@ -1,5 +1,8 @@
 package io.darkcraft.mod.common.magic.spell;
 
+import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.mod.common.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
@@ -9,8 +12,10 @@ import io.darkcraft.mod.common.registries.SkillRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -71,7 +76,11 @@ public class Spell
 
 	private void createSpellInstance(ICaster caster)
 	{
-
+		SimpleDoubleCoordStore dcs = caster.getSpellCreationPos();
+		if(dcs == null) return;
+		EntitySpellProjectile esp = new EntitySpellProjectile(caster, this, dcs);
+		caster.setVelocity(esp);
+		dcs.getWorldObj().spawnEntityInWorld(esp);
 	}
 
 	public void cast(ICaster caster)
@@ -117,5 +126,22 @@ public class Spell
 		double cost = getCost(caster);
 		list.add("Spell name: " + name);
 		list.add(String.format("Spell Cost: %.1f", cost));
+	}
+
+	public ResourceLocation getTexture()
+	{
+		return components[0].component.getProjectileTexture();
+	}
+
+	public void apply(ICaster caster, SimpleCoordStore simpleCoordStore)
+	{
+		for(ComponentInstance ci : components)
+			ci.component.apply(caster, simpleCoordStore, ci.magnitude);
+	}
+
+	public void apply(ICaster caster, Entity ent)
+	{
+		for(ComponentInstance ci : components)
+			ci.component.apply(caster, ent, ci.magnitude);
 	}
 }

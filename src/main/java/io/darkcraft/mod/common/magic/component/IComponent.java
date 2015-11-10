@@ -3,6 +3,7 @@ package io.darkcraft.mod.common.magic.component;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
 
 /**
@@ -37,4 +38,6 @@ public interface IComponent
 	 * @param magnitude the magnitude this spell has
 	 */
 	public void apply(ICaster caster, Entity ent, int magnitude);
+
+	public ResourceLocation getProjectileTexture();
 }

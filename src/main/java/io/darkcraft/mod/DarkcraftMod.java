@@ -6,6 +6,7 @@ import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
 import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.registries.CommandRegistry;
+import io.darkcraft.mod.common.registries.EntRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 
@@ -23,6 +24,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 @Mod(modid = "darkcraft", version = "0.1", dependencies = "required-after:darkcore; required-after:SkillAPI")
 public class DarkcraftMod implements IConfigHandlerMod
 {
+	public static DarkcraftMod				i;
 	public static final String				modName					= "darkcraft";
 	public static Random					modRand					= new Random();
 	public static ConfigHandler				configHandler			= null;
@@ -30,6 +32,10 @@ public class DarkcraftMod implements IConfigHandlerMod
 	@SidedProxy(clientSide = "io.darkcraft.mod.client.ClientProxy",
 			serverSide = "io.darkcraft.mod.common.CommonProxy")
 	public static CommonProxy				proxy;
+
+	{
+		i = this;
+	}
 
 	@Override
 	public String getModID()
@@ -44,6 +50,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		ItemBlockRegistry.registerBlocks();
 		ItemBlockRegistry.registerItems();
 		MagicalRegistry.registerMagic();
+		EntRegistry.registerEntities();
 		FMLInterModComms.sendMessage("SkillAPI", "register", "io.darkcraft.mod.common.registries.SkillRegistry.requestAPI");
 	}
 
