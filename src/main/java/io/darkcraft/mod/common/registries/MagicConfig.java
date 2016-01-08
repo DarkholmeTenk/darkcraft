@@ -24,6 +24,7 @@ public class MagicConfig
 	public static int			magicVortexSpawnRate = 1200;
 	public static int			magicVortexSpawnRad = 35;
 	public static int			magicVortexSpawnMax = 45;
+	public static int			magicVortexNumRings = 30;
 
 	public static void refreshConfigs()
 	{
@@ -44,5 +45,6 @@ public class MagicConfig
 		magicVortexSpawnRate = config.getInt("magic vortex - crystal spawn rate", 1200, "Number of ticks between vortex spawning new crystals");
 		magicVortexSpawnRad = config.getInt("magic vortex - spawn radius", 35, "radius in which crystals will spawn");
 		magicVortexSpawnMax = config.getInt("magic vortex - spawn max", 45, "Maximum number of magic crystals the vortex will maintain");
+		magicVortexNumRings = config.getInt("magic vortex - num rings", 30, "Number of rings to render");
 	}
 }

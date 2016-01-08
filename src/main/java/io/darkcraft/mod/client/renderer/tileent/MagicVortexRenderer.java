@@ -6,6 +6,7 @@ import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.tileent.MagicVortex;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import io.darkcraft.mod.common.registries.MagicConfig;
 
 import java.util.WeakHashMap;
 
@@ -118,7 +119,7 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 			return mvrdMap.get(te);
 		else
 		{
-			MagicVortexRenderData mvrd = new MagicVortexRenderData(18);
+			MagicVortexRenderData mvrd = new MagicVortexRenderData(MagicConfig.magicVortexNumRings);
 			mvrdMap.put(te,mvrd);
 			return mvrd;
 		}

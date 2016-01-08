@@ -171,7 +171,7 @@ public class MagicVortex extends AbstractMFTileEntity
 	@SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
-		return AxisAlignedBB.getBoundingBox(xCoord-8, yCoord, zCoord-8, xCoord+9, yCoord+15, zCoord+9);
+		return AxisAlignedBB.getBoundingBox(xCoord-8, yCoord, zCoord-8, xCoord+9, yCoord+35, zCoord+9);
     }
 }
 
