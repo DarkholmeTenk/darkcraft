@@ -45,7 +45,7 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 			for(int i = 0; i < r; i++)
 			{
 				ringOffsets[i] = DarkcraftMod.modRand.nextFloat() * 360;
-				textures[i] = DarkcraftMod.modRand.nextInt(texs.length);
+				textures[i] = DarkcraftMod.modRand.nextInt(16);
 				heights[i] = 1+Math.abs((i * 0.6f) + DarkcraftMod.modRand.nextFloat());
 				radSizes[i] = 0.5f + (heights[i] * (0.6f + (((float)DarkcraftMod.modRand.nextGaussian()) * 0.1f)));
 				speeds[i] = (int) (1500 * ((1 +DarkcraftMod.modRand.nextFloat()) * (1 + (i * 0.25))));
@@ -87,24 +87,21 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 			return radSizes[rNum];
 		}
 
-		public ResourceLocation getTexture(int rNum)
+		public float getTexturev(int rNum)
 		{
 			if(rNum >= size)
 				generateRingOffsets(rNum);
-			return texs[textures[rNum]];
+			return textures[rNum]/16f;
+		}
+		public float getTextureV(int rNum)
+		{
+			if(rNum >= size)
+				generateRingOffsets(rNum);
+			return (textures[rNum]+1)/16f;
 		}
 	}
 
-	private static ResourceLocation[] texs = new ResourceLocation[]{
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow1.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow2.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow3.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow4.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow5.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow6.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow7.png"),
-		new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow8.png")
-	};
+	private static ResourceLocation tex = new ResourceLocation(DarkcraftMod.modName,"textures/tileents/flow.png");
 	private static WeakHashMap<TileEntity,MagicVortexRenderData> mvrdMap = new WeakHashMap();
 
 	@Override
@@ -129,14 +126,14 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 	{
 		GL11.glPushMatrix();
 		double h = 0.125;
-		ResourceLocation rl = mvrd.getTexture(num);
 		float angle = mvrd.getAngle(num);
 		float w = mvrd.getRadius(num);
 		float yOff = mvrd.getHeight(num);
 		GL11.glTranslated(0.5, yOff, 0.5);
 		GL11.glScaled(w, w, w);
 		GL11.glRotated(angle, 0, 1, 0);
-		bindTexture(rl);
+		float v = mvrd.getTexturev(num);
+		float V = mvrd.getTextureV(num);
 		int numSegments = 10;
 		float aps = 6;
 		tess.startDrawingQuads();
@@ -156,10 +153,10 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 			double X = MathHelper.sin(ang2);
 			double z = MathHelper.cos(ang);
 			double Z = MathHelper.cos(ang2);
-			tess.addVertexWithUV(x, 0, z, tMin, 1);
-			tess.addVertexWithUV(X, 0, Z, tMax, 1);
-			tess.addVertexWithUV(X, h, Z, tMax, 0);
-			tess.addVertexWithUV(x, h, z, tMin, 0);
+			tess.addVertexWithUV(x, 0, z, tMin, V);
+			tess.addVertexWithUV(X, 0, Z, tMax, V);
+			tess.addVertexWithUV(X, h, Z, tMax, v);
+			tess.addVertexWithUV(x, h, z, tMin, v);
 		}
 		tess.draw();
 		GL11.glPopMatrix();
@@ -173,6 +170,7 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 		MagicVortexRenderData mvrd = getMVRD(te);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glColor3f(1f, 0.24f, 0.1f);
+		bindTexture(tex);
 		for(int i = 0; i < mvrd.size; i++)
 			renderRing(mv, mvrd, i, tess);
 		GL11.glColor3f(1, 1, 1);

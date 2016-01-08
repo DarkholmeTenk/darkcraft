@@ -29,6 +29,7 @@ public class MagicVortexBlock extends AbstractBlockContainer
 	public void initData()
 	{
 		setBlockName("MagicVortex");
+		setLightLevel(15f);
 	}
 
 	@Override
