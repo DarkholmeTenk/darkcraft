@@ -20,6 +20,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
@@ -61,8 +62,13 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void init(FMLInitializationEvent event)
 	{
 		proxy.init();
-		MagicConfig.refreshConfigs();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
+	}
+
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event)
+	{
+		MagicConfig.refreshConfigs();
 	}
 
 	@EventHandler
