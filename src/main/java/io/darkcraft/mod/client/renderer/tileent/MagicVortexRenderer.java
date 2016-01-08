@@ -125,7 +125,7 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 	private void renderRing(MagicVortex mv, MagicVortexRenderData mvrd, int num, Tessellator tess)
 	{
 		GL11.glPushMatrix();
-		double h = 0.125;
+		double h = 0.15;
 		float angle = mvrd.getAngle(num);
 		float w = mvrd.getRadius(num);
 		float yOff = mvrd.getHeight(num);
