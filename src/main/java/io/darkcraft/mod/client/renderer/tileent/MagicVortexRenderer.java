@@ -48,12 +48,19 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 				heights[i] = 1+Math.abs((i * 0.6f) + DarkcraftMod.modRand.nextFloat());
 				radSizes[i] = 0.5f + (heights[i] * (0.6f + (((float)DarkcraftMod.modRand.nextGaussian()) * 0.1f)));
 				speeds[i] = (int) (1500 * ((1 +DarkcraftMod.modRand.nextFloat()) * (1 + (i * 0.25))));
+				if(DarkcraftMod.modRand.nextDouble() < 0.3)
+					speeds[i] = -speeds[i];
 			}
 		}
 
 		private float timeAngle(int rNum)
 		{
 			int rotTime = speeds[rNum];
+			if(rotTime < 0)
+			{
+				rotTime = -rotTime;
+				return (1 - ((getTime() % rotTime) / (float)rotTime)) * 360;
+			}
 			return ((getTime() % rotTime) / (float)rotTime) * 360;
 		}
 

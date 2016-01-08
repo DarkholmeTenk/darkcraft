@@ -9,6 +9,7 @@ import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.EntRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 
 import java.util.Random;
@@ -60,6 +61,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void init(FMLInitializationEvent event)
 	{
 		proxy.init();
+		MagicConfig.refreshConfigs();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
 	}
 

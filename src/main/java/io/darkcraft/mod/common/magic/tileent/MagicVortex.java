@@ -2,10 +2,15 @@ package io.darkcraft.mod.common.magic.tileent;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.BlockIterator;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.interfaces.IBlockIteratorCondition;
+import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.abstracts.AbstractMFTileEntity;
+import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import io.darkcraft.mod.common.registries.MagicConfig;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -52,7 +57,7 @@ public class MagicVortex extends AbstractMFTileEntity
 	private void recheckLava()
 	{
 		long n = System.nanoTime();
-
+		System.out.println("Rechecking lava");
 		int c = 0;
 		SimpleCoordStore below = coords().getNearby(ForgeDirection.DOWN);
 		below.setBlock(Blocks.lava, 0, 3);
@@ -89,7 +94,17 @@ public class MagicVortex extends AbstractMFTileEntity
 	@Override
 	public void tick()
 	{
-		if(inLava && ((tt % 200) == 0)) recheckLava();
+		if(ServerHelper.isClient()) return;
+		if(inLava && ((tt % 6000) == 0)) recheckLava();
+		if((tt % 80) == 0) getMagicField().addToFieldStrength(coords(), 20);
+		if((tt % MagicConfig.magicVortexSpawnRate) == 0)
+		{
+			checkCrystals();
+			if(crystals.size() < MagicConfig.magicVortexSpawnMax)
+			{
+				spawnCrystal();
+			}
+		}
 	}
 
 	@Override
@@ -104,7 +119,7 @@ public class MagicVortex extends AbstractMFTileEntity
 	public void readFromNBT(NBTTagCompound nbt)
 	{
 		crystals.clear();
-		for(int i = 0; i < 25; i++)
+		for(int i = 0; i < MagicConfig.magicVortexSpawnMax; i++)
 		{
 			SimpleCoordStore scs = SimpleCoordStore.readFromNBT(nbt, "c"+i);
 			if(scs == null) break;
@@ -115,9 +130,41 @@ public class MagicVortex extends AbstractMFTileEntity
 		inLava = nbt.getBoolean("inLava");
 	}
 
+	private void checkCrystals()
+	{
+		Iterator<SimpleCoordStore> iter = crystals.iterator();
+		while(iter.hasNext())
+		{
+			SimpleCoordStore scs = iter.next();
+			if(!(scs.getTileEntity() instanceof MagicVortexCrystal))
+				iter.remove();
+		}
+	}
+
+	public void spawnCrystal()
+	{
+		int s = MagicConfig.magicVortexSpawnRad;
+		int x = (xCoord + DarkcraftMod.modRand.nextInt((s*2) + 1)) - s;
+		int z = (zCoord + DarkcraftMod.modRand.nextInt((s*2) + 1)) - s;
+		int y = yCoord;
+		while((y < 255) && !worldObj.isAirBlock(x, y, z))
+			y++;
+		if(y >= 255) return;
+		worldObj.setBlock(x, y, z, ItemBlockRegistry.magicVortexCrystal);
+		TileEntity te = worldObj.getTileEntity(x, y, z);
+		if(!(te instanceof MagicVortexCrystal))
+			System.out.println("ERR!");
+		else
+		{
+			MagicVortexCrystal mvc = (MagicVortexCrystal) te;
+			mvc.setVortex(coords());
+		}
+	}
+
 	public void addCrystal(SimpleCoordStore coords)
 	{
-
+		if(crystals.contains(coords)) return;
+		crystals.add(coords);
 	}
 
 	@Override
@@ -135,7 +182,7 @@ class LavaLakeIterator implements IBlockIteratorCondition
 	public boolean isValid(SimpleCoordStore start, SimpleCoordStore prevPosition, SimpleCoordStore newPosition)
 	{
 		if(start.y != newPosition.y) return false;
-		if((prevPosition.getBlock() == Blocks.lava) || (prevPosition.getBlock() == Blocks.flowing_lava)) return true;
+		if((prevPosition.getBlock() == Blocks.lava) || (prevPosition.getBlock() == Blocks.flowing_lava) || (prevPosition.getBlock() == null)) return true;
 		return false;
 	}
 
