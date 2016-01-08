@@ -2,10 +2,10 @@ package io.darkcraft.mod.common.command;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractCommandNew;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
-import io.darkcraft.mod.common.items.staff.ItemStaffHelper;
-import io.darkcraft.mod.common.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 

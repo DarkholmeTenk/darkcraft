@@ -1,6 +1,6 @@
 package io.darkcraft.mod.client.renderer;
 
-import io.darkcraft.mod.common.entities.EntitySpellProjectile;
+import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderEntity;

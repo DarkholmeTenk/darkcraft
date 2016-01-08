@@ -1,7 +1,7 @@
 package io.darkcraft.mod.common.registries;
 
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.entities.EntitySpellProjectile;
+import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class EntRegistry

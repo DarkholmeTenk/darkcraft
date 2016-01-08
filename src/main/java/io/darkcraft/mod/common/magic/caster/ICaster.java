@@ -1,7 +1,7 @@
 package io.darkcraft.mod.common.magic.caster;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.mod.common.entities.EntitySpellProjectile;
+import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 
 /**
  * Useless on its own, caster will either be {@link EntityCaster} or {@link BlockCaster}

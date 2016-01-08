@@ -2,10 +2,10 @@ package io.darkcraft.mod.common.magic.spell;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.mod.common.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
+import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 

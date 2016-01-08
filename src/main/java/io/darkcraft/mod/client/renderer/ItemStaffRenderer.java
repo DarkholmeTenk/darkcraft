@@ -1,7 +1,7 @@
 package io.darkcraft.mod.client.renderer;
 
-import io.darkcraft.mod.common.items.staff.ItemStaffHelper;
-import io.darkcraft.mod.common.items.staff.ItemStaffHelperFactory;
+import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 

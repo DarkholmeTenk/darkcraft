@@ -4,7 +4,8 @@ import io.darkcraft.darkcore.mod.config.ConfigHandler;
 import io.darkcraft.darkcore.mod.config.ConfigHandlerFactory;
 import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
 import io.darkcraft.mod.common.CommonProxy;
-import io.darkcraft.mod.common.items.staff.ItemStaffHelperFactory;
+import io.darkcraft.mod.common.magic.field.MagicFieldFactory;
+import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
 import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.EntRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
@@ -12,6 +13,7 @@ import io.darkcraft.mod.common.registries.MagicalRegistry;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -58,6 +60,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void init(FMLInitializationEvent event)
 	{
 		proxy.init();
+		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
 	}
 
 	@EventHandler
@@ -71,6 +74,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void serverStartEvent(FMLServerStartingEvent event)
 	{
 		CommandRegistry.registerCommands(event);
+		MagicFieldFactory.clear();
 	}
 
 	private void registerRegistries()

@@ -2,7 +2,7 @@ package io.darkcraft.mod.common.magic.caster;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.mod.common.entities.EntitySpellProjectile;
+import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 
 public class BlockCaster implements ICaster
 {
