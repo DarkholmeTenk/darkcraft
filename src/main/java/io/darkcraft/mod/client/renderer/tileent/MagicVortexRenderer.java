@@ -141,12 +141,6 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 		{
 			float tMin = (i / (float)(numSegments));
 			float tMax = ((i+1) / (float)(numSegments));
-			/*double ang = Math.toRadians(i * aps);
-			double ang2 = Math.toRadians((i+1)*aps);
-			double x = Math.sin(ang);
-			double X = Math.sin(ang2);
-			double z = Math.cos(ang);
-			double Z = Math.cos(ang2);*/
 			double ang = (i * aps);
 			double ang2 = ((i+1)*aps);
 			double x = MathHelper.sin(ang);
