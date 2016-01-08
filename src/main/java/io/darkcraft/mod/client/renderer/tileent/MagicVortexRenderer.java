@@ -171,7 +171,7 @@ public class MagicVortexRenderer extends AbstractBlockRenderer
 		MagicVortex mv = (MagicVortex)te;
 		MagicVortexRenderData mvrd = getMVRD(te);
 		GL11.glDisable(GL11.GL_CULL_FACE);
-		GL11.glColor3f(1f, 0.64f, 0.1f);
+		GL11.glColor3f(1f, 0.24f, 0.1f);
 		for(int i = 0; i < mvrd.size; i++)
 			renderRing(mv, mvrd, i, tess);
 		GL11.glColor3f(1, 1, 1);
