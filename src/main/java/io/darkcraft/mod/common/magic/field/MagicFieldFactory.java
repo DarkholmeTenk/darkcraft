@@ -56,6 +56,8 @@ public class MagicFieldFactory
 
 	public static MagicField getMagicField(int dim)
 	{
+		if(ServerHelper.isClient())
+			throw new RuntimeException("Client attempted to get Magic Field!");
 		if (fieldMap.containsKey(dim))
 			return fieldMap.get(dim);
 		else

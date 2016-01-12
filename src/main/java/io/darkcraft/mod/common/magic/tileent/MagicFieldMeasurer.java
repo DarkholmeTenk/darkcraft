@@ -18,7 +18,14 @@ public class MagicFieldMeasurer extends AbstractMFTileEntity implements IActivat
 		for(double[] da : vals)
 			for(int i = 0; i < da.length; i++)
 				da[i] = 0;
-		getMF();
+		if(ServerHelper.isServer())
+			getMF();
+	}
+
+	@Override
+	public void tick()
+	{
+		if((tt % 100) == 0) sendUpdate();
 	}
 
 	public double[][] getMagicFieldValues()
@@ -50,6 +57,7 @@ public class MagicFieldMeasurer extends AbstractMFTileEntity implements IActivat
 		MagicField mf = getMF();
 		mf.addToFieldStrength(coords(), ent.isSneaking() ? -10 : 10);
 		mf.sendUpdate();
+		sendUpdate();
 		return true;
 	}
 
@@ -57,6 +65,7 @@ public class MagicFieldMeasurer extends AbstractMFTileEntity implements IActivat
 	public void writeTransmittableOnly(NBTTagCompound nbt)
 	{
 		nbt.setInteger("valsSize", vals.length);
+		vals = getMagicFieldValues();
 		for(int i = 0; i < vals.length; i++)
 			for(int j = 0; j < vals[i].length; j++)
 				nbt.setDouble(i+","+j, vals[i][j]);

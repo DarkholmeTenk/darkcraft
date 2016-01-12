@@ -96,7 +96,7 @@ public class MagicVortex extends AbstractMFTileEntity
 	{
 		if(ServerHelper.isClient()) return;
 		if(inLava && ((tt % 6000) == 0)) recheckLava();
-		if((tt % 80) == 0) getMagicField().addToFieldStrength(coords(), 20);
+		if((tt % 80) == 0) getMagicField().addToFieldStrength(coords(), 10);
 		if((tt % MagicConfig.magicVortexSpawnRate) == 0)
 		{
 			checkCrystals();

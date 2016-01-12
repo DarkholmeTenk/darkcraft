@@ -121,6 +121,12 @@ public class MagicField extends AbstractWorldDataStore
 	}
 
 	@Override
+	public void sendUpdate()
+	{
+		//Disable sendUpdate on magic fields. Serverside only.
+	}
+
+	@Override
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		int i = 0;
