@@ -1,10 +1,12 @@
 package io.darkcraft.mod.common.skills;
 
+import io.darkcraft.darkcore.mod.datastore.UVStore;
 import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkillIcon;
 
 public class MagicSkillIcon implements ISkillIcon
 {
+	private UVStore uv;
 	private int index;
 	private int num;
 	private ResourceLocation rl;
@@ -15,6 +17,7 @@ public class MagicSkillIcon implements ISkillIcon
 		num = Math.max(1, max);
 		//rl = null;
 		rl = new ResourceLocation("darkcraft","textures/gui/skills/"+name+".png");
+		uv = new UVStore(index / (double)num, (index+1)/(double)num,0,1);
 	}
 
 	@Override
@@ -24,27 +27,9 @@ public class MagicSkillIcon implements ISkillIcon
 	}
 
 	@Override
-	public double u()
+	public UVStore getUV()
 	{
-		return index / (double)num;
-	}
-
-	@Override
-	public double U()
-	{
-		return (index + 1) / (double)num;
-	}
-
-	@Override
-	public double v()
-	{
-		return 0;
-	}
-
-	@Override
-	public double V()
-	{
-		return 1;
+		return uv;
 	}
 
 }

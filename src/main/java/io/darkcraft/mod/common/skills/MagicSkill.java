@@ -1,6 +1,10 @@
 package io.darkcraft.mod.common.skills;
 
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import skillapi.api.implement.ISkill;
 import skillapi.api.implement.ISkillIcon;
 import skillapi.api.internal.ISkillHandler;
@@ -75,6 +79,14 @@ public class MagicSkill implements ISkill
 	public double getXPForNextLevel(int currentLevel, ISkillHandler handler)
 	{
 		return (currentLevel + 1) * 100;
+	}
+
+	@Override
+	public List<String> getLevelingHints()
+	{
+		List<String> l = new ArrayList();
+		l.add("Cast " + skillName + " spells");
+		return l;
 	}
 
 }
