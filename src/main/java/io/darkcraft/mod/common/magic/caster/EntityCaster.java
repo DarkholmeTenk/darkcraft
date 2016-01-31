@@ -3,11 +3,16 @@ package io.darkcraft.mod.common.magic.caster;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.registries.MagicConfig;
+import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import skillapi.api.implement.ISkill;
+import skillapi.api.internal.ISkillHandler;
 
 public class EntityCaster implements ICaster
 {
@@ -81,7 +86,26 @@ public class EntityCaster implements ICaster
 		dX *= mult;
 		dY *= mult;
 		dZ *= mult;
-		sp.setVelocity(dX, dY, dZ);
+		sp.motionX = dX;
+		sp.motionY = dY;
+		sp.motionZ = dZ;
 		sp.velocityChanged = true;
+	}
+
+	public void applyXP(Map<ISkill,Double> xpMap)
+	{
+		ISkillHandler handler = SkillRegistry.api.getSkillHandler(getCaster());
+		if(handler != null)
+		{
+			for(int i = 0; i < Math.min(xpMap.size(), MagicConfig.maxSkillsXPFromSpell); i++)
+			{
+				Entry<ISkill,Double> maxEntry = null;
+				for(Entry<ISkill, Double> entry : xpMap.entrySet())
+					if((maxEntry == null) || (entry.getValue() > maxEntry.getValue()))
+						maxEntry = entry;
+				handler.addXP(maxEntry.getKey(), maxEntry.getValue());
+				maxEntry.setValue(0.0);
+			}
+		}
 	}
 }

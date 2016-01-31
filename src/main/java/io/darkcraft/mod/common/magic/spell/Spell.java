@@ -3,31 +3,44 @@ package io.darkcraft.mod.common.magic.spell;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.helpers.Helper;
+import io.darkcraft.mod.common.magic.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
+import io.darkcraft.mod.common.magic.event.spell.SpellApplyBlockEvent;
+import io.darkcraft.mod.common.magic.event.spell.SpellApplyEntityEvent;
+import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
 public class Spell
 {
-	private final String name;
-	private final ComponentInstance[] components;
+	public final String name;
+	public final CastType type;
+	public final ComponentInstance[] components;
 
 	public Spell(String _name, ComponentInstance[] componentInstances)
 	{
+		this(_name, componentInstances, CastType.PROJECTILE);
+	}
+
+	public Spell(String _name, ComponentInstance[] componentInstances, CastType castType)
+	{
 		name = _name;
-		components = componentInstances;
+		components = componentInstances.clone();
+		type = castType;
 	}
 
 	private ISkillHandler getHandler(ICaster caster)
@@ -63,24 +76,23 @@ public class Spell
 		return cost;
 	}
 
-	private void giveXP(ISkillHandler handler)
-	{
-		if(handler == null) return;
-		for(ComponentInstance ci : components)
-		{
-			ISkill skill = ci.component.getMainSkill();
-			if(skill == null) continue;
-			handler.addXP(skill, ci.cost * MagicConfig.xpCostMult);
-		}
-	}
-
 	private void createSpellInstance(ICaster caster)
 	{
-		SimpleDoubleCoordStore dcs = caster.getSpellCreationPos();
-		if(dcs == null) return;
-		EntitySpellProjectile esp = new EntitySpellProjectile(caster, this, dcs);
-		caster.setVelocity(esp);
-		dcs.getWorldObj().spawnEntityInWorld(esp);
+		if(type == CastType.PROJECTILE)
+		{
+			SimpleDoubleCoordStore dcs = caster.getSpellCreationPos();
+			if(dcs == null) return;
+			EntitySpellProjectile esp = new EntitySpellProjectile(caster, this, dcs);
+			caster.setVelocity(esp);
+			dcs.getWorldObj().spawnEntityInWorld(esp);
+		}
+		else if(type == CastType.SELF)
+		{
+			if(caster instanceof BlockCaster)
+				this.apply(caster, ((BlockCaster)caster).blockPos);
+			else if(caster instanceof EntityCaster)
+				this.apply(caster, ((EntityCaster)caster).getCaster());
+		}
 	}
 
 	public void cast(ICaster caster)
@@ -89,11 +101,13 @@ public class Spell
 		ISkillHandler sh = getHandler(caster);
 		for(ComponentInstance ci : components)
 			cost += getCost(ci, caster, sh);
-		if(caster.useMana(cost, false))
-		{
-			giveXP(sh);
-			createSpellInstance(caster);
-		}
+		SpellPreCastEvent spce = new SpellPreCastEvent(this, caster, cost);
+		if(!spce.isCanceled())
+			if(caster.useMana(spce.getCost(), false))
+			{
+				if(type == CastType.PROJECTILE)
+					createSpellInstance(caster);
+			}
 	}
 
 	public void writeToNBT(NBTTagCompound nbt)
@@ -133,15 +147,57 @@ public class Spell
 		return components[0].component.getProjectileTexture();
 	}
 
-	public void apply(ICaster caster, SimpleCoordStore simpleCoordStore)
+	private double xpFunction(double cost)
 	{
-		for(ComponentInstance ci : components)
-			ci.component.apply(caster, simpleCoordStore, ci.magnitude);
+		return cost * MagicConfig.xpCostMult;
 	}
 
+	/**
+	 * Apply the spell effect to a block
+	 * @param caster the person who cast this spell
+	 * @param simpleCoordStore the coords of the block
+	 */
+	public void apply(ICaster caster, SimpleCoordStore simpleCoordStore)
+	{
+		HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+		SpellApplyBlockEvent sabe = new SpellApplyBlockEvent(caster, this, simpleCoordStore);
+		MinecraftForge.EVENT_BUS.post(sabe);
+		for(int i = 0; i < components.length; i++)
+		{
+			ComponentInstance ci = components[i];
+			if(!ci.component.applyToBlock()) continue;
+			double magMult = sabe.spellMagnitudeMults[i];
+			double durMult = sabe.spellDurationMults[i];
+			if((magMult <= 0) || (durMult <= 0)) continue;
+			ci.component.apply(caster, simpleCoordStore, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+			ISkill skill = ci.component.getMainSkill();
+			xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+		}
+		if(caster instanceof EntityCaster)
+			((EntityCaster)caster).applyXP(xpMap);
+	}
+
+	/**
+	 * Apply the spell effect to an entity
+	 * @param caster the person who cast this spell
+	 * @param ent the entity to apply the spell to
+	 */
 	public void apply(ICaster caster, Entity ent)
 	{
-		for(ComponentInstance ci : components)
-			ci.component.apply(caster, ent, ci.magnitude);
+		HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+		SpellApplyEntityEvent saee = new SpellApplyEntityEvent(caster, this, ent);
+		MinecraftForge.EVENT_BUS.post(saee);
+		for(int i = 0; i < components.length; i++)
+		{
+			ComponentInstance ci = components[i];
+			double magMult = saee.spellMagnitudeMults[i];
+			double durMult = saee.spellDurationMults[i];
+			if((magMult <= 0) || (durMult <= 0)) continue;
+			ci.component.apply(caster, ent, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+			ISkill skill = ci.component.getMainSkill();
+			xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+		}
+		if(caster instanceof EntityCaster)
+			((EntityCaster)caster).applyXP(xpMap);
 	}
 }

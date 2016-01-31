@@ -26,6 +26,9 @@ public class MagicConfig
 	public static int			magicVortexSpawnMax = 45;
 	public static int			magicVortexNumRings = 30;
 
+	public static int			maxSkillXPFromSpell = 25;
+	public static int			maxSkillsXPFromSpell = 3;
+
 	public static void refreshConfigs()
 	{
 		if (config == null) config = DarkcraftMod.configHandler.registerConfigNeeder("Magic");

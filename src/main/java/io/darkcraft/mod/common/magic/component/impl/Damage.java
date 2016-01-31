@@ -36,12 +36,24 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude)
+	public boolean applyToBlock()
+	{
+		return false;
+	}
+
+	@Override
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude, int duration)
 	{
 	}
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude)
+	public boolean applyToEnt()
+	{
+		return true;
+	}
+
+	@Override
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase living = (EntityLivingBase) ent;
