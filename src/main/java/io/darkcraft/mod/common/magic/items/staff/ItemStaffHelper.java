@@ -27,6 +27,7 @@ public class ItemStaffHelper
 	private String						displayName;
 	private WeakReference<ItemStack>	itemstack;
 	public boolean						inited = false;
+	public NBTTagCompound				extraNBT = new NBTTagCompound();
 	private Spell						spell;
 
 	public ItemStaffHelper(int _id)
@@ -106,6 +107,10 @@ public class ItemStaffHelper
 		head	= StaffPartRegistry.getStaffHead(nbt.getString("staffHead"));
 		spell	= nbt.hasKey("spell") ? Spell.readFromNBT(nbt.getCompoundTag("spell")) : null;
 		displayName = nbt.hasKey("display") ? nbt.getString("display") : null;
+		if(!nbt.hasKey("extra"))
+			extraNBT = new NBTTagCompound();
+		else
+			extraNBT = nbt.getCompoundTag("extra");
 		inited = true;
 	}
 
@@ -123,6 +128,7 @@ public class ItemStaffHelper
 			spell.writeToNBT(spellTag);
 			nbt.setTag("spell", spellTag);
 		}
+		nbt.setTag("extra", extraNBT);
 	}
 
 	public void addInfo(List<String> list, EntityPlayer pl)

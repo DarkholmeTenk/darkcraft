@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class ItemStaff extends AbstractItem
@@ -38,7 +39,9 @@ public class ItemStaff extends AbstractItem
     {
 		if(ServerHelper.isServer())
 		{
-			System.out.println("block");
+			TileEntity te = w.getTileEntity(x, y, z);
+			if(te instanceof IStaffable)
+				if(((IStaffable)te).staffActivate(pl, ItemStaffHelperFactory.getHelper(is)))
 			rightClick(is, w, pl);
 		}
 		return true;

@@ -3,6 +3,7 @@ package io.darkcraft.mod.common.registries;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.blocks.MagicFieldMeasurerBlock;
+import io.darkcraft.mod.common.magic.blocks.MagicInventoryBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
 import io.darkcraft.mod.common.magic.items.staff.ItemStaff;
@@ -20,10 +21,13 @@ public class ItemBlockRegistry
 	public static AbstractBlock magicFieldMeasurer;
 	public static AbstractBlock magicVortex;
 	public static AbstractBlock magicVortexCrystal;
+	public static AbstractBlock magicInventory;
 	public static AbstractBlock techGenerator;
+
 	public static void registerBlocks()
 	{
 		//MAGIC
+		magicInventory = new MagicInventoryBlock().register();
 		magicFieldMeasurer = new MagicFieldMeasurerBlock().register();
 		magicVortex = new MagicVortexBlock().register();
 		magicVortexCrystal = new MagicVortexCrystalBlock().register();
