@@ -6,6 +6,7 @@ import io.darkcraft.mod.common.magic.blocks.MagicFieldMeasurerBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicInventoryBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
+import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.items.staff.ItemStaff;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartRegistry;
 import io.darkcraft.mod.common.magic.items.staff.parts.bottom.DefaultStaffBottom;
@@ -35,11 +36,20 @@ public class ItemBlockRegistry
 		techGenerator = new TechGeneratorBlock().register();
 	}
 
+	public static MagicComponent magicComponent = new MagicComponent();
 	public static ItemStaff itemStaff = new ItemStaff();
 	public static void registerItems()
 	{
+		magicComponent.register();
 		itemStaff.register();
 		registerStaffParts();
+	}
+
+	public static void registerRecipes()
+	{
+		magicInventory.initRecipes();
+		magicComponent.initRecipes();
+		itemStaff.initRecipes();
 	}
 
 	private static ResourceLocation getRL(String pos)

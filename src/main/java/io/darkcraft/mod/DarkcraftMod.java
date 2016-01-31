@@ -53,6 +53,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		configHandler = ConfigHandlerFactory.getConfigHandler(this);
 		ItemBlockRegistry.registerBlocks();
 		ItemBlockRegistry.registerItems();
+		ItemBlockRegistry.registerRecipes();
 		MagicalRegistry.registerMagic();
 		EntRegistry.registerEntities();
 		FMLInterModComms.sendMessage("SkillAPI", "register", "io.darkcraft.mod.common.registries.SkillRegistry.requestAPI");

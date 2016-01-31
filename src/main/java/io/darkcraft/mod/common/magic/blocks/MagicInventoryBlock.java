@@ -2,9 +2,13 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.tileent.MagicInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagicInventoryBlock extends AbstractBlockContainer
 {
@@ -23,8 +27,9 @@ public class MagicInventoryBlock extends AbstractBlockContainer
 	@Override
 	public void initRecipes()
 	{
-		// TODO Auto-generated method stub
-
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(this,1), false, "www","wcw","www",
+				'w', "plankWood",
+				'c', MagicComponent.Type.Crystal.getIS(1)));
 	}
 
 	@Override

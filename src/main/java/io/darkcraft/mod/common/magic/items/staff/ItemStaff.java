@@ -4,6 +4,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.helpers.Helper;
+import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.spell.Spell;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemStaff extends AbstractItem
 {
@@ -74,8 +76,9 @@ public class ItemStaff extends AbstractItem
 	@Override
 	public void initRecipes()
 	{
-		// TODO Auto-generated method stub
-
+		GameRegistry.addRecipe(new ItemStaffRecipe(new ItemStack(this,1),false,"c","s","s",
+				'c', MagicComponent.Type.Crystal.getIS(1),
+				's', "stickWood"));
 	}
 
 }

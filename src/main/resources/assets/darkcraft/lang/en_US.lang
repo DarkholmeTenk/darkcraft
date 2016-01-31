@@ -12,5 +12,10 @@ darkcraft.skills.magic.illusion.desc=Illusion is like alteration but can usually
 darkcraft.skills.magic.mysticism.desc=Mysticism is the magic of manipulating other types of magic for various effects.
 darkcraft.skills.magic.restoration.desc=Restoration is the magic of fixing things, whether it's a damaged tool, flesh or disease.
 
+tile.darkcraft.MagicInventory.name=Magical Storage
+
+item.darkcraft.MagicComponent.Crystal.name=Glowing Crystal
+item.darkcraft.staff.name=Staff
+
 tile.darkcraft.MagicVortex.name=Heart of Red Mountain
 tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
