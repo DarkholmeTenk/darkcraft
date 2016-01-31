@@ -15,7 +15,8 @@ public class MagicInventoryBlock extends AbstractBlockContainer
 
 	public MagicInventoryBlock()
 	{
-		super(DarkcraftMod.modName);
+		super(true, true, DarkcraftMod.modName);
+		setHardness(1.5F);
 	}
 
 	@Override
@@ -43,5 +44,4 @@ public class MagicInventoryBlock extends AbstractBlockContainer
 	{
 		return MagicInventory.class;
 	}
-
 }
