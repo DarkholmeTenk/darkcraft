@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class MagicInventory extends AbstractMFTileEntity implements IInventory, IChunkLoader, IStaffable
 {
-	private final int size = 5;
+	private final int size = 32;
 	private SimpleCoordStore otherInventory = null;
 	private int lastOtherInvTT = -1;
 	private int lastThisInvTT = -1;
