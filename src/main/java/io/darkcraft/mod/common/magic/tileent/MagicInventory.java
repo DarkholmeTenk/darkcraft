@@ -92,7 +92,14 @@ public class MagicInventory extends AbstractMFTileEntity implements IInventory, 
 	{
 		MagicInventory inv = getOtherInventory();
 		if(inv.items[slot] == null) return null;
+		if(inv.items[slot].stackSize <= 0)
+		{
+			inv.items[slot] = null;
+			return null;
+		}
 		int count = inv.items[slot].stackSize;
+		if(num >= count)
+			num = count;
 		ItemStack ret = inv.items[slot].splitStack(num);
 		if(count == num) items[slot] = null;
 		inv.markDirty();
