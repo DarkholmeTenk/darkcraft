@@ -29,6 +29,11 @@ public class MagicConfig
 	public static int			maxSkillXPFromSpell = 25;
 	public static int			maxSkillsXPFromSpell = 3;
 
+	public static boolean		traceLiquids = false;
+	public static int			touchCastDistance = 1;
+
+	public static boolean		deity = true;
+
 	public static void refreshConfigs()
 	{
 		if (config == null) config = DarkcraftMod.configHandler.registerConfigNeeder("Magic");
@@ -49,5 +54,7 @@ public class MagicConfig
 		magicVortexSpawnRad = config.getInt("magic vortex - spawn radius", 35, "radius in which crystals will spawn");
 		magicVortexSpawnMax = config.getInt("magic vortex - spawn max", 45, "Maximum number of magic crystals the vortex will maintain");
 		magicVortexNumRings = config.getInt("magic vortex - num rings", 30, "Number of rings to render");
+
+		deity = config.getBoolean("Deity - Enabled", true, "Is the deity system enabled");
 	}
 }

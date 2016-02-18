@@ -2,10 +2,14 @@ package io.darkcraft.mod.common.magic.spell;
 
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
+import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
+import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.nbt.NBTTagCompound;
+import skillapi.api.implement.ISkill;
+import skillapi.api.internal.ISkillHandler;
 
 public class ComponentInstance
 {
@@ -36,6 +40,22 @@ public class ComponentInstance
 		else
 			duration = 1;
 		cost = tempCost;
+	}
+
+	public double getCost(ICaster caster, ISkillHandler handler)
+	{
+		double cost = this.cost;
+		ISkill skill = component.getMainSkill();
+		if((skill != null) && (handler != null))
+		{
+			int min = skill.getMinimumSkillLevel(handler);
+			int max = skill.getMaximumSkillLevel(handler);
+			if(max == min) return cost;
+			int lvl = handler.getLevel(skill);
+			double percent = 1 - ((lvl - min) / (double)(max-min));
+			cost *= ((percent * (MagicConfig.maxCostMult - MagicConfig.minCostMult)) + MagicConfig.minCostMult);
+		}
+		return cost;
 	}
 
 	public void writeToNBT(NBTTagCompound nbt, String id)

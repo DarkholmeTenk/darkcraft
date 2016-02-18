@@ -1,10 +1,13 @@
 package io.darkcraft.mod.common.magic.items.staff;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
+import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.helpers.Helper;
+import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
+import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.Spell;
 
 import java.util.List;
@@ -41,6 +44,17 @@ public class ItemStaff extends AbstractItem
     {
 		if(ServerHelper.isServer())
 		{
+			ItemStaffHelper staffHelper = ItemStaffHelperFactory.getHelper(is);
+			ICaster caster = Helper.getCaster(pl);
+			if((staffHelper != null) && (staffHelper.getSpell() != null))
+			{
+				Spell spell = staffHelper.getSpell();
+				if(spell.type != CastType.SELF)
+					caster.cast(spell, new SimpleCoordStore(w,x,y,z));
+				else
+					caster.cast(spell, pl);
+				return true;
+			}
 			TileEntity te = w.getTileEntity(x, y, z);
 			if(te instanceof IStaffable)
 				if(((IStaffable)te).staffActivate(pl, ItemStaffHelperFactory.getHelper(is)))
@@ -50,15 +64,15 @@ public class ItemStaff extends AbstractItem
     }
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
+	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer pl)
 	{
 		if(ServerHelper.isServer())
 		{
 			System.out.println("non-block?");
-			rightClick(is, world, player);
+			rightClick(is, w, pl);
 		}
 		else
-			player.swingItem();
+			pl.swingItem();
 		return is;
 	}
 
@@ -69,7 +83,11 @@ public class ItemStaff extends AbstractItem
 		{
 			Spell spell = helper.getSpell();
 			if(spell != null)
-				spell.cast(Helper.getCaster(pl));
+			{
+				ICaster caster = Helper.getCaster(pl);
+				if(caster != null)
+					caster.cast(spell);
+			}
 		}
 	}
 

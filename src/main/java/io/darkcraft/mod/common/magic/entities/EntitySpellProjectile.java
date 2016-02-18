@@ -4,18 +4,15 @@ import io.darkcraft.darkcore.mod.abstracts.IEntityTransmittable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.handlers.packets.EntityPacketHandler;
+import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
-import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.spell.Spell;
-
-import java.util.List;
-
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class EntitySpellProjectile extends Entity implements IEntityTransmittable
@@ -65,7 +62,16 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	private void hitCheck()
 	{
 		if(ServerHelper.isClient())return;
-		Vec3 oldPos = Vec3.createVectorHelper(prevPosX, prevPosY, prevPosZ);
+		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class);
+		if(mop != null)
+		{
+			if(mop.entityHit != null)
+				spell.apply(caster, mop.entityHit);
+			else
+				spell.apply(caster, new SimpleCoordStore(worldObj, mop));
+			setDead();
+		}
+		/*Vec3 oldPos = Vec3.createVectorHelper(prevPosX, prevPosY, prevPosZ);
 		Vec3 newPos = Vec3.createVectorHelper(posX, posY, posZ);
 		if(ticksExisted <= 2) return;
 		MovingObjectPosition hpos = worldObj.rayTraceBlocks(oldPos, newPos, true);
@@ -102,7 +108,7 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 				spell.apply(caster, closest);
 				setDead();
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -111,8 +117,8 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 		if(ticksExisted == 1)
 			EntityPacketHandler.syncEntity(this);
 		super.onEntityUpdate();
-		move();
 		hitCheck();
+		move();
 		if(ticksExisted > 500)
 			setDead();
     }

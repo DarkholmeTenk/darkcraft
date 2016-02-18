@@ -1,15 +1,11 @@
 package io.darkcraft.mod.common.magic.spell;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
-import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.event.spell.SpellApplyBlockEvent;
 import io.darkcraft.mod.common.magic.event.spell.SpellApplyEntityEvent;
-import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 
@@ -43,73 +39,6 @@ public class Spell
 		type = castType;
 	}
 
-	private ISkillHandler getHandler(ICaster caster)
-	{
-		ISkillHandler sh = null;
-		if(caster instanceof EntityCaster)
-			sh = SkillRegistry.api.getSkillHandler(((EntityCaster)caster).getCaster());
-		return sh;
-	}
-
-	private double getCost(ComponentInstance ci, ICaster caster, ISkillHandler handler)
-	{
-		double cost = ci.cost;
-		ISkill skill = ci.component.getMainSkill();
-		if((skill != null) && (handler != null))
-		{
-			int min = skill.getMinimumSkillLevel(handler);
-			int max = skill.getMaximumSkillLevel(handler);
-			if(max == min) return cost;
-			int lvl = handler.getLevel(skill);
-			double percent = 1 - ((lvl - min) / (double)(max-min));
-			cost *= ((percent * (MagicConfig.maxCostMult - MagicConfig.minCostMult)) + MagicConfig.minCostMult);
-		}
-		return cost;
-	}
-
-	private double getCost(ICaster caster)
-	{
-		double cost = 0;
-		ISkillHandler handler = getHandler(caster);
-		for(ComponentInstance ci : components)
-			cost += getCost(ci, caster, handler);
-		return cost;
-	}
-
-	private void createSpellInstance(ICaster caster)
-	{
-		if(type == CastType.PROJECTILE)
-		{
-			SimpleDoubleCoordStore dcs = caster.getSpellCreationPos();
-			if(dcs == null) return;
-			EntitySpellProjectile esp = new EntitySpellProjectile(caster, this, dcs);
-			caster.setVelocity(esp);
-			dcs.getWorldObj().spawnEntityInWorld(esp);
-		}
-		else if(type == CastType.SELF)
-		{
-			if(caster instanceof BlockCaster)
-				this.apply(caster, ((BlockCaster)caster).blockPos);
-			else if(caster instanceof EntityCaster)
-				this.apply(caster, ((EntityCaster)caster).getCaster());
-		}
-	}
-
-	public void cast(ICaster caster)
-	{
-		double cost = 0;
-		ISkillHandler sh = getHandler(caster);
-		for(ComponentInstance ci : components)
-			cost += getCost(ci, caster, sh);
-		SpellPreCastEvent spce = new SpellPreCastEvent(this, caster, cost);
-		if(!spce.isCanceled())
-			if(caster.useMana(spce.getCost(), false))
-			{
-				if(type == CastType.PROJECTILE)
-					createSpellInstance(caster);
-			}
-	}
-
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		nbt.setString("name", name);
@@ -132,6 +61,17 @@ public class Spell
 		ComponentInstance[] ciArray = new ComponentInstance[ciList.size()];
 		ciArray = ciList.toArray(ciArray);
 		return new Spell(nbt.getString("name"),ciArray);
+	}
+
+	private double getCost(ICaster caster)
+	{
+		double cost = 0;
+		ISkillHandler sh = null;
+		if(caster instanceof EntityCaster)
+			sh = SkillRegistry.api.getSkillHandler(((EntityCaster) caster).getCaster());
+		for(ComponentInstance ci : components)
+			cost += ci.getCost(caster, sh);
+		return cost;
 	}
 
 	public void addInfo(List<String> list, EntityPlayer pl)
