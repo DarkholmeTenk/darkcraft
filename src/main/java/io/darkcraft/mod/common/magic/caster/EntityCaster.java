@@ -6,7 +6,6 @@ import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.spell.CastType;
-import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
@@ -72,7 +71,6 @@ public class EntityCaster implements ICaster
 			return ent.height / 2;
 	}
 
-	@Override
 	public SimpleDoubleCoordStore getSpellCreationPos()
 	{
 		EntityLivingBase ent = caster.get();
@@ -87,7 +85,6 @@ public class EntityCaster implements ICaster
 		return new SimpleDoubleCoordStore(ent.worldObj, posX, posY, posZ);
 	}
 
-	@Override
 	public void setVelocity(EntitySpellProjectile sp)
 	{
 		EntityLivingBase ent = caster.get();
@@ -125,7 +122,7 @@ public class EntityCaster implements ICaster
 
 	private void castProjectile(Spell spell)
 	{
-		if(castTouch(spell)) return;
+		//if(castTouch(spell)) return;
 		SimpleDoubleCoordStore dcs = getSpellCreationPos();
 		if(dcs == null) return;
 		EntitySpellProjectile esp = new EntitySpellProjectile(this, spell, dcs);
@@ -154,10 +151,7 @@ public class EntityCaster implements ICaster
 
 	private boolean doCast(Spell spell)
 	{
-		double cost = 0;
-		ISkillHandler sh = getHandler();
-		for(ComponentInstance ci : spell.components)
-			cost += ci.getCost(this, sh);
+		double cost = spell.getCost(this);
 		SpellPreCastEvent spce = new SpellPreCastEvent(spell, this, cost);
 		if(!spce.isCanceled())
 			return useMana(spce.getCost(), false);

@@ -5,7 +5,6 @@ import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.spell.CastType;
-import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicConfig;
 
@@ -45,14 +44,12 @@ public class BlockCaster implements ICaster
 		return true;
 	}
 
-	@Override
 	public SimpleDoubleCoordStore getSpellCreationPos()
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void setVelocity(EntitySpellProjectile sp)
 	{
 		// TODO Auto-generated method stub
@@ -122,9 +119,7 @@ public class BlockCaster implements ICaster
 
 	private boolean doCast(Spell spell)
 	{
-		double cost = 0;
-		for(ComponentInstance ci : spell.components)
-			cost += ci.getCost(this, null);
+		double cost = spell.getCost(this);
 		SpellPreCastEvent spce = new SpellPreCastEvent(spell, this, cost);
 		if(!spce.isCanceled())
 			return (useMana(spce.getCost(), false));

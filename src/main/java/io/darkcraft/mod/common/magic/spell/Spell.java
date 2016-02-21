@@ -7,6 +7,7 @@ import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.event.spell.SpellApplyBlockEvent;
 import io.darkcraft.mod.common.magic.event.spell.SpellApplyEntityEvent;
 import io.darkcraft.mod.common.registries.MagicConfig;
+import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class Spell
 
 	public static Spell readFromNBT(NBTTagCompound nbt)
 	{
+		if(nbt.hasKey("pfs"))
+			return MagicalRegistry.getPrefabSpell(nbt.getString("pfs"));
 		ArrayList<ComponentInstance> ciList = new ArrayList();
 		int i = 0;
 		while(nbt.hasKey("ci" + i))
@@ -63,7 +66,7 @@ public class Spell
 		return new Spell(nbt.getString("name"),ciArray);
 	}
 
-	private double getCost(ICaster caster)
+	public double getCost(ICaster caster)
 	{
 		double cost = 0;
 		ISkillHandler sh = null;
