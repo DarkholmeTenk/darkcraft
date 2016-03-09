@@ -44,14 +44,14 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude, int duration)
-	{
-	}
-
-	@Override
 	public boolean applyToEnt()
 	{
 		return true;
+	}
+
+	@Override
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude, int duration)
+	{
 	}
 
 	@Override
@@ -89,12 +89,6 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 
 	@Override
 	public int getMaxDuration()
-	{
-		return 10;
-	}
-
-	@Override
-	public int getTickRate()
 	{
 		return 10;
 	}
