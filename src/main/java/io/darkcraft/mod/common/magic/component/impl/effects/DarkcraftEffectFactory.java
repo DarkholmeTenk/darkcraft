@@ -5,7 +5,7 @@ import io.darkcraft.darkcore.mod.abstracts.effects.IEffectFactory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class EffectFactory implements IEffectFactory
+public class DarkcraftEffectFactory implements IEffectFactory
 {
 
 	@Override
@@ -16,6 +16,8 @@ public class EffectFactory implements IEffectFactory
 		int dur = nbt.getInteger("dur");
 		if(id.equals("darkcraft.damage"))
 			return new EffectDamage(ent, null, mag, dur);
+		if(id.equals("darkcraft.fly"))
+			return new EffectFly(null,ent,mag,dur);
 		return null;
 	}
 
