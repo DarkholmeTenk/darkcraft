@@ -4,5 +4,13 @@ public enum CastType
 {
 	SELF,
 	TOUCH,
-	PROJECTILE
+	PROJECTILE;
+
+	public static CastType getType(String s)
+	{
+		for(CastType ct : values())
+			if(ct.name().equalsIgnoreCase(s))
+				return ct;
+		return PROJECTILE;
+	}
 }

@@ -6,6 +6,7 @@ import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
 import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
+import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 
@@ -45,18 +46,19 @@ public class SetStaffSpellCommand extends AbstractCommandNew
 			}
 
 			int s = strList.size();
-			if((s % 3) != 1)
+			if((s % 3) != 2)
 			{
-				sendString(sen, "Command should be in the form <spellName>, <spell>");
+				sendString(sen, "Command should be in the form <spellName>, castType, <spell>");
 				sendString(sen, "Spell must be in the form of a list of <componentID> <magnitude> <duration>");
 				return true;
 			}
 			s /= 3;
 			String name = strList.get(0);
+			CastType type = CastType.getType(strList.get(1));
 			ComponentInstance[] comps = new ComponentInstance[s];
 			for(int i = 0; i<s; i++)
 			{
-				int b = (i * 3) + 1;
+				int b = (i * 3) + 2;
 				String id = strList.get(b);
 				int mag = MathHelper.toInt(strList.get(b+1), 1);
 				int dur = MathHelper.toInt(strList.get(b+2), 1);
@@ -68,7 +70,7 @@ public class SetStaffSpellCommand extends AbstractCommandNew
 				}
 				comps[i] = new ComponentInstance(c, mag, dur);
 			}
-			Spell spell = new Spell(name,comps);
+			Spell spell = new Spell(name,comps, type);
 			helper.setSpell(spell);
 		}
 		return true;
