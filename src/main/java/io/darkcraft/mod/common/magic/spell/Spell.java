@@ -79,7 +79,7 @@ public class Spell
 
 	public void addInfo(List<String> list, EntityPlayer pl)
 	{
-		EntityCaster caster = Helper.getCaster(pl);
+		EntityCaster caster = Helper.getPlayerCaster(pl);
 		double cost = getCost(caster);
 		list.add("Spell name: " + name);
 		list.add(String.format("Spell Cost: %.1f", cost));

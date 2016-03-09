@@ -45,7 +45,7 @@ public class ItemStaff extends AbstractItem
 		if(ServerHelper.isServer())
 		{
 			ItemStaffHelper staffHelper = ItemStaffHelperFactory.getHelper(is);
-			ICaster caster = Helper.getCaster(pl);
+			ICaster caster = Helper.getPlayerCaster(pl);
 			if((staffHelper != null) && (staffHelper.getSpell() != null))
 			{
 				Spell spell = staffHelper.getSpell();
@@ -84,7 +84,7 @@ public class ItemStaff extends AbstractItem
 			Spell spell = helper.getSpell();
 			if(spell != null)
 			{
-				ICaster caster = Helper.getCaster(pl);
+				ICaster caster = Helper.getPlayerCaster(pl);
 				if(caster != null)
 					caster.cast(spell);
 			}
