@@ -1,6 +1,8 @@
 package io.darkcraft.mod.common.magic.items.staff;
 
+import io.darkcraft.mod.common.magic.items.staff.parts.IStaffPart;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartRegistry;
+import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartType;
 import io.darkcraft.mod.common.magic.items.staff.parts.bottom.IStaffBottom;
 import io.darkcraft.mod.common.magic.items.staff.parts.head.IStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.shaft.IStaffShaft;
@@ -39,7 +41,7 @@ public class ItemStaffHelper
 
 	public ItemStack getIS(boolean spawnNew)
 	{
-		if(itemstack == null)
+		if((itemstack == null) || (itemstack.get() == null))
 		{
 			if(!spawnNew)
 				return null;
@@ -75,6 +77,26 @@ public class ItemStaffHelper
 	public void setStaffBottom(IStaffBottom part)	{ if((part==null) || (part == bottom)) return; bottom = part; markDirty(); }
 	public void setStaffShaft(IStaffShaft part)		{ if((part==null) || (part == shaft)) return; shaft = part; markDirty(); }
 	public void setStaffHead(IStaffHead part)		{ if((part==null) || (part == head)) return; head = part; markDirty(); }
+	public void setStaffPart(IStaffPart part, StaffPartType type)
+	{
+		switch(type)
+		{
+			case HEAD: setStaffHead((IStaffHead)part); break;
+			case SHAFT: setStaffShaft((IStaffShaft)part); break;
+			case BOTTOM: setStaffBottom((IStaffBottom)part); break;
+		}
+	}
+
+	public IStaffPart getStaffPart(StaffPartType type)
+	{
+		switch(type)
+		{
+			case HEAD: return head;
+			case SHAFT: return shaft;
+			case BOTTOM: return bottom;
+		}
+		return null;
+	}
 
 	public void setSpell(Spell newSpell)
 	{
