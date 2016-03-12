@@ -115,14 +115,20 @@ public class LetterRenderer
 		}
 	}
 
-	private static void face(Tessellator tess, int x, int y, int X, int Y, double v, double V)
+	private static double gT(double a, double c)
 	{
-		double h = 1;
+		double m = 1.3;
+		return ((a-c)*m)+c;
+	}
+
+	private static void face(Tessellator tess, int x, int y, int X, int Y, int cx, int cy, double v, double V)
+	{
+		double h = 1.5;
 		double U = Math.max(X-x, Y-y)/16.0;
 		tess.addVertexWithUV(x, y, 0, 0, V);
 		tess.addVertexWithUV(X, Y, 0, U, V);
-		tess.addVertexWithUV(X, Y, h, U, v);
-		tess.addVertexWithUV(x, y, h, 0, v);
+		tess.addVertexWithUV(gT(X,cx), gT(Y,cy), h, U, v);
+		tess.addVertexWithUV(gT(x,cx), gT(y,cy), h, 0, v);
 	}
 
 	private static int renderChar(Tessellator tess, int x, LetterData ld)
@@ -136,12 +142,14 @@ public class LetterRenderer
 
 	private static int renderGlow(Tessellator tess, int x, LetterData ld)
 	{
+		int cx = (ld.x/2)+x;
+		int cy = ld.y/2;
 		for(Pair<Integer,Integer>[] block : ld.data)
 		{
 			for(int i = 0; i < block.length; i++)
 			{
 				int n = (i+1)%block.length;
-				face(tess,x+block[i].a, block[i].b, x+block[n].a, block[n].b,0,1);
+				face(tess,x+block[i].a, block[i].b, x+block[n].a, block[n].b,cx,cy,0,1);
 			}
 		}
 		return ld.x + 1;
