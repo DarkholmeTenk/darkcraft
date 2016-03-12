@@ -2,9 +2,11 @@ package io.darkcraft.mod.common.magic.component.impl;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.util.ArrayList;
@@ -79,5 +81,15 @@ public class Dig implements IComponent
 	{
 		return null;
 	}
+
+	@Override
+	public String getUnlocalisedName(){return "darkcraft.component.dig";}
+
+	@Override
+	public ResourceLocation getIcon(){return MagicalRegistry.componentTex;}
+
+	private final UVStore uv = new UVStore(0.0,0.1,0.1,0.2);
+	@Override
+	public UVStore getIconLocation(){return uv;}
 
 }

@@ -1,12 +1,14 @@
 package io.darkcraft.mod.common.magic.component.impl;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.impl.effects.EffectFly;
+import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -76,5 +78,15 @@ public class Fly implements IComponent, IDurationComponent
 	{
 		return null;
 	}
+
+	@Override
+	public String getUnlocalisedName(){return "darkcraft.component.fly";}
+
+	@Override
+	public ResourceLocation getIcon(){return MagicalRegistry.componentTex;}
+
+	private final UVStore uv = new UVStore(0.2,0.3,0.0,0.1);
+	@Override
+	public UVStore getIconLocation(){return uv;}
 
 }

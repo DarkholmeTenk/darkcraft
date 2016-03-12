@@ -2,12 +2,19 @@ package io.darkcraft.mod.common.helpers;
 
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.field.MagicFieldGlobal;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.WeakHashMap;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
 public class Helper
@@ -49,5 +56,29 @@ public class Helper
 		return mfg;
 	}
 
+	public static List<IComponent> sortComponents(Collection<IComponent> comps)
+	{
+		List<IComponent> list = new ArrayList();
+		list.addAll(comps);
+		Collections.sort(list, ComponentComparator.i);
+		return list;
+	}
 
+	private static class ComponentComparator implements Comparator<IComponent>
+	{
+		private static ComponentComparator i = new ComponentComparator();
+
+		@Override
+		public int compare(IComponent a, IComponent b)
+		{
+			String sa = a.getMainSkill().getName();
+			String sb = b.getMainSkill().getName();
+			if(sa.compareTo(sb) != 0)
+				return sa.compareTo(sb);
+			String na = StatCollector.translateToLocal(a.getUnlocalisedName());
+			String nb = StatCollector.translateToLocal(b.getUnlocalisedName());
+			return na.compareTo(nb);
+		}
+
+	}
 }

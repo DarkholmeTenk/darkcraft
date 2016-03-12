@@ -30,6 +30,32 @@ public class StaffPartRegistry
 		return partMap.get(newId);
 	}
 
+	public static List<String> getStaffBottomNames(boolean def)
+	{
+		return def ? bottomDNames : bottomNames;
+	}
+
+	public static List<String> getStaffShaftNames(boolean def)
+	{
+		return def ? shaftDNames : shaftNames;
+	}
+
+	public static List<String> getStaffHeadNames(boolean def)
+	{
+		return def ? headDNames : headNames;
+	}
+
+	public static List<String> getStaffPartNames(StaffPartType type, boolean def)
+	{
+		switch(type)
+		{
+			case HEAD: return getStaffHeadNames(def);
+			case SHAFT: return getStaffShaftNames(def);
+			case BOTTOM: return getStaffBottomNames(def);
+		}
+		return null;
+	}
+
 	public static IStaffBottom getStaffBottom(String id)
 	{
 		return (IStaffBottom) getStaffPart(id, bottoms, bottomNames, bottomDNames);
@@ -43,6 +69,17 @@ public class StaffPartRegistry
 	public static IStaffHead getStaffHead(String id)
 	{
 		return (IStaffHead) getStaffPart(id, heads, headNames, headDNames);
+	}
+
+	public static IStaffPart getStaffPart(StaffPartType type, String id)
+	{
+		switch(type)
+		{
+			case HEAD: return getStaffHead(id);
+			case SHAFT: return getStaffShaft(id);
+			case BOTTOM: return getStaffBottom(id);
+		}
+		return null;
 	}
 
 	private static void add(String id, IStaffPart part, HashMap<String,IStaffPart> map, List<String> names, List<String> defaultNames, boolean isDefault)

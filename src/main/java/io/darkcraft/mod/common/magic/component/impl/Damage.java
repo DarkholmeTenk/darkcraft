@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.magic.component.impl;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.mod.DarkcraftMod;
@@ -9,6 +10,7 @@ import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
 import io.darkcraft.mod.common.magic.component.impl.effects.EffectDamage;
+import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -104,5 +106,15 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	{
 		return tex;
 	}
+
+	@Override
+	public String getUnlocalisedName(){return "darkcraft.component.damage";}
+
+	@Override
+	public ResourceLocation getIcon(){return MagicalRegistry.componentTex;}
+
+	private final UVStore uv = new UVStore(0,0.1,0,0.1);
+	@Override
+	public UVStore getIconLocation(){return uv;}
 
 }
