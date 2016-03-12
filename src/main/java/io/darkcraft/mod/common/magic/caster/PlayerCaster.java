@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.caster;
 
+import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.spell.Spell;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -27,6 +29,23 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	public void learnSpell(Spell spell)
 	{
 
+	}
+
+	@Override
+	public EntityPlayer getCaster()
+	{
+		EntityLivingBase ent = super.getCaster();
+		if(ent != null)
+			return (EntityPlayer)ent;
+		return null;
+	}
+
+	public Set<IComponent> getKnownComponents()
+	{
+		EntityPlayer ent = getCaster();
+		if((ent != null) && ent.capabilities.isCreativeMode)
+			return SpellPartRegistry.getAllComponents();
+		return knownComponents;
 	}
 
 	@Override

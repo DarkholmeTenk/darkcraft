@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.registries;
 
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
+import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.impl.Damage;
@@ -10,9 +11,11 @@ import io.darkcraft.mod.common.magic.component.impl.Test;
 import io.darkcraft.mod.common.magic.component.impl.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 
 public class MagicalRegistry
 {
+	public static final ResourceLocation componentTex = new ResourceLocation(DarkcraftMod.modName,"textures/gui/components/components.png");
 	public static final DamageSource magicDamage = new DamageSource("dcMagicDamage");
 	private static Dig dig = new Dig();
 	private static Damage damage = new Damage();

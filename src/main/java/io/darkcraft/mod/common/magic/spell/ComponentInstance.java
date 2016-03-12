@@ -8,6 +8,7 @@ import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -17,8 +18,11 @@ public class ComponentInstance
 	public final int magnitude;
 	public final int duration;
 	public final double cost;
+	public final int area;
 
-	public ComponentInstance(IComponent comp, int mag, int dur)
+	public ComponentInstance(IComponent comp, int mag, int dur){this(comp,mag,dur,0);}
+
+	public ComponentInstance(IComponent comp, int mag, int dur, int _area)
 	{
 		component = comp;
 		double tempCost = comp.getCost();
@@ -39,6 +43,9 @@ public class ComponentInstance
 		}
 		else
 			duration = 1;
+		area = _area;
+		if(area > 0)
+			tempCost *= Math.pow(1.5, area);
 		cost = tempCost;
 	}
 
@@ -58,12 +65,43 @@ public class ComponentInstance
 		return cost;
 	}
 
+	public String getDurationString()
+	{
+		if(!(component instanceof IDurationComponent)) return "";
+		return MathHelper.getTimeString(duration);
+	}
+
+	public String getMagnitudeString()
+	{
+		if(!(component instanceof IMagnitudeComponent)) return "";
+		return magnitude+"";
+	}
+
+	public String getAreaString()
+	{
+		return area + " br";
+	}
+
+	@Override
+	public String toString()
+	{
+		String s = StatCollector.translateToLocal(component.getUnlocalisedName());
+		if(component instanceof IMagnitudeComponent)
+			s += " " + getMagnitudeString();
+		if(component instanceof IDurationComponent)
+			s += " for " + getDurationString();
+		if(area > 0)
+			s += " over " + getAreaString();
+		return s;
+	}
+
 	public void writeToNBT(NBTTagCompound nbt, String id)
 	{
 		NBTTagCompound sub = new NBTTagCompound();
 		sub.setString("id", component.id());
 		sub.setInteger("mag", magnitude);
 		sub.setInteger("dur", duration);
+		sub.setInteger("area", area);
 		nbt.setTag(id, sub);
 	}
 
@@ -74,9 +112,10 @@ public class ComponentInstance
 		String cid = sub.getString("id");
 		int mag = sub.getInteger("mag");
 		int dur = sub.getInteger("dur");
+		int area = sub.getInteger("area");
 		IComponent component = SpellPartRegistry.getComponent(cid);
 		if(component != null)
-			return new ComponentInstance(component, mag, dur);
+			return new ComponentInstance(component, mag, dur, area);
 		return null;
 	}
 }

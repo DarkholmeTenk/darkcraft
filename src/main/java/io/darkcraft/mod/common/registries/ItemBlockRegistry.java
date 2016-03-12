@@ -8,6 +8,7 @@ import io.darkcraft.mod.common.magic.blocks.MagicStaffChangerBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicTouchPassBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
+import io.darkcraft.mod.common.magic.blocks.SpellCreatorBlock;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.items.staff.ItemStaff;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartRegistry;
@@ -26,9 +27,9 @@ public class ItemBlockRegistry
 	public static AbstractBlock magicVortexCrystal;
 	public static AbstractBlock magicInventory;
 	public static AbstractBlock magicStaffChanger;
+	public static AbstractBlock spellCreatorBlock;
 	public static AbstractBlock magicTouchPass;
 	public static AbstractBlock techGenerator;
-
 	public static void registerBlocks()
 	{
 		//MAGIC
@@ -39,6 +40,7 @@ public class ItemBlockRegistry
 		magicVortex = new MagicVortexBlock().register();
 		magicVortexCrystal = new MagicVortexCrystalBlock().register();
 		magicStaffChanger = new MagicStaffChangerBlock().register();
+		spellCreatorBlock = new SpellCreatorBlock().register();
 		//TECH
 		techGenerator = new TechGeneratorBlock().register();
 	}
