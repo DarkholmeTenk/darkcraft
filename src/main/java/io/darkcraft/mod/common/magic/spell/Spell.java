@@ -11,6 +11,7 @@ import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -156,5 +157,33 @@ public class Spell
 		}
 		if(caster instanceof EntityCaster)
 			((EntityCaster)caster).applyXP(xpMap);
+	}
+
+	public static class SpellNameComparator implements Comparator<Spell>
+	{
+		public static SpellNameComparator withSkill = new SpellNameComparator(false);
+		public static SpellNameComparator noSkill = new SpellNameComparator(false);
+
+		private final boolean useSkill;
+		public SpellNameComparator(boolean b)
+		{
+			useSkill = b;
+		}
+
+		@Override
+		public int compare(Spell a, Spell b)
+		{
+			if(useSkill)
+			{
+				ISkill as = a.getMainSkill();
+				ISkill bs = b.getMainSkill();
+				if((as != null) && (bs == null)) return -1;
+				if((as == null) && (bs != null)) return 1;
+				int c = as.getID().compareTo(bs.getID());
+				if(c != 0) return c;
+			}
+			return a.name.compareTo(b.name);
+		}
+
 	}
 }
