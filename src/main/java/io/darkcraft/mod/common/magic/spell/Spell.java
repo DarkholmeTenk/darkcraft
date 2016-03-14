@@ -29,6 +29,7 @@ public class Spell
 	public final String name;
 	public final CastType type;
 	public final ComponentInstance[] components;
+	public final ComponentInstance mostExpensiveComponent;
 
 	public Spell(String _name, ComponentInstance[] componentInstances)
 	{
@@ -40,6 +41,15 @@ public class Spell
 		name = _name;
 		components = componentInstances.clone();
 		type = castType;
+		double c = 0;
+		ComponentInstance mec = null;
+		for(ComponentInstance ci : components)
+			if(ci.cost > c)
+			{
+				c = ci.cost;
+				mec = ci;
+			}
+		mostExpensiveComponent = mec;
 	}
 
 	public void writeToNBT(NBTTagCompound nbt)

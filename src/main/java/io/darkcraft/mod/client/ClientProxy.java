@@ -2,6 +2,7 @@ package io.darkcraft.mod.client;
 
 import io.darkcraft.mod.client.renderer.EntitySpellProjectileRenderer;
 import io.darkcraft.mod.client.renderer.ItemStaffRenderer;
+import io.darkcraft.mod.client.renderer.StatusOverlay;
 import io.darkcraft.mod.client.renderer.tileent.MagicFieldMeasurerRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicStaffChangerRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicVortexCrystalRenderer;
@@ -22,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -30,6 +32,7 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void init()
 	{
+		MinecraftForge.EVENT_BUS.register(StatusOverlay.i);
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.itemStaff, new ItemStaffRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicFieldMeasurer.class, new MagicFieldMeasurerRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicVortex.class, new MagicVortexRenderer());

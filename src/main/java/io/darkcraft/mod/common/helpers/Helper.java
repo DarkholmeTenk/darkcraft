@@ -25,6 +25,7 @@ public class Helper
 
 	public static PlayerCaster getPlayerCaster(EntityPlayer pl)
 	{
+		if(pl == null) return null;
 		IExtendedEntityProperties ieep = pl.getExtendedProperties("dcPC");
 		PlayerCaster caster;
 		if(ieep instanceof PlayerCaster)

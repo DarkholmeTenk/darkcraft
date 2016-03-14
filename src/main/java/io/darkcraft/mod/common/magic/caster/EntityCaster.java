@@ -36,7 +36,7 @@ public class EntityCaster implements ICaster
 		return caster.get();
 	}
 
-	private ISkillHandler getHandler()
+	public ISkillHandler getHandler()
 	{
 		return SkillRegistry.api.getSkillHandler(getCaster());
 	}
@@ -44,15 +44,13 @@ public class EntityCaster implements ICaster
 	@Override
 	public double getMana()
 	{
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double getMaxMana()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return 100;
 	}
 
 	@Override

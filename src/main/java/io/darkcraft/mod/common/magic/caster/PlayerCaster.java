@@ -29,7 +29,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	private List<Spell> knownSpells = new ArrayList<Spell>();
 	private List<Spell> unmodSpells = Collections.unmodifiableList(knownSpells);
 	private Set<IComponent> knownComponents = new HashSet<IComponent>();
-	private int currentSpell = 0;
+	private int currentSpell = -1;
 
 	public PlayerCaster(EntityPlayer pl)
 	{
@@ -94,6 +94,12 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			nbt.setInteger("curSpellIndex", currentSpell);
 			DarkcoreMod.networkChannel.sendToServer(new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc));
 		}
+	}
+
+	public Spell getCurrentSpell()
+	{
+		if((currentSpell < 0) || (currentSpell>=knownSpells.size())) return null;
+		return knownSpells.get(currentSpell);
 	}
 
 	@Override
