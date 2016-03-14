@@ -7,6 +7,7 @@ import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
 import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.magic.field.MagicFieldFactory;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
+import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.network.SpellCreationPacketHandler;
 import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.EntRegistry;
@@ -67,6 +68,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	{
 		NetworkRegistry.INSTANCE.registerGuiHandler(i, proxy);
 		DarkcoreMod.packetHandler.registerHandler(SpellCreationPacketHandler.spellCreationDisc, new SpellCreationPacketHandler());
+		DarkcoreMod.packetHandler.registerHandler(PlayerCasterPacketHandler.pcDisc, new PlayerCasterPacketHandler());
 		proxy.init();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
 	}
