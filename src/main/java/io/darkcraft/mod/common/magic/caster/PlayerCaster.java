@@ -2,6 +2,7 @@ package io.darkcraft.mod.common.magic.caster;
 
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 
 import java.util.ArrayList;
@@ -46,6 +47,15 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		if((ent != null) && ent.capabilities.isCreativeMode)
 			return SpellPartRegistry.getAllComponents();
 		return knownComponents;
+	}
+
+	public boolean allComponentsKnown(Spell spell)
+	{
+		Set<IComponent> kc = getKnownComponents();
+		for(ComponentInstance ci : spell.components)
+			if(!kc.contains(ci.component))
+				return false;
+		return true;
 	}
 
 	@Override

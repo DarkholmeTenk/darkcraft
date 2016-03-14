@@ -7,7 +7,7 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.interfaces.IChunkLoader;
 import io.darkcraft.mod.abstracts.AbstractMFTileEntity;
 import io.darkcraft.mod.common.magic.items.staff.IStaffable;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -164,7 +164,7 @@ public class MagicInventory extends AbstractMFTileEntity implements IInventory, 
 	}
 
 	@Override
-	public boolean staffActivate(EntityPlayer player, ItemStaffHelper helper)
+	public boolean staffActivate(EntityPlayer player, StaffHelper helper)
 	{
 		if(helper == null) return false;
 		if(helper.extraNBT.hasKey("magicInvPos"))

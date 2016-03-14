@@ -1,6 +1,6 @@
 package io.darkcraft.mod.common.magic.items.staff.parts;
 
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 
 public interface IStaffPart
 {
@@ -16,7 +16,7 @@ public interface IStaffPart
 	 * @param helper a helper representing the staff to calculate the power multiplier of
 	 * @return a double representing how much the power of a spell going through this component is multiplied by. 1 is normal, 2 is double strength, etc.
 	 */
-	public double getPowerMult(ItemStaffHelper helper);
+	public double getPowerMult(StaffHelper helper);
 
 	public boolean isDefault();
 }

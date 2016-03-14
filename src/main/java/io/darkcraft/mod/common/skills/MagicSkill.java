@@ -53,6 +53,7 @@ public class MagicSkill implements ISkill
 	@Override
 	public ISkillIcon getIcon(ISkillHandler handler)
 	{
+		if(handler == null) return icons[icons.length-1];
 		int level = MathHelper.clamp((handler.getLevel(this) * (icons.length-1)) / getMaximumSkillLevel(handler),0,icons.length);
 		return icons[level];
 	}

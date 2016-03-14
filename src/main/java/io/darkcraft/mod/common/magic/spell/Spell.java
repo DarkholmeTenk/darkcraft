@@ -13,6 +13,7 @@ import io.darkcraft.mod.common.registries.SkillRegistry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,6 +94,19 @@ public class Spell
 	private double xpFunction(double cost)
 	{
 		return cost * MagicConfig.xpCostMult;
+	}
+
+	public ISkill getMainSkill()
+	{
+		if(components.length == 0) return null;
+		HashMap<ISkill,Double> xpMap = new HashMap();
+		for(ComponentInstance c : components)
+			xpMap.put(c.getMainSkill(), xpMap.containsKey(c.getMainSkill()) ? c.cost + xpMap.get(c.getMainSkill()) : c.cost);
+		Entry<ISkill,Double> best = null;
+		for(Entry<ISkill, Double> ent : xpMap.entrySet())
+			if((best == null) || (ent.getValue() > best.getValue()))
+				best = ent;
+		return best.getKey();
 	}
 
 	/**

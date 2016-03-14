@@ -10,7 +10,7 @@ import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
 import io.darkcraft.mod.common.magic.blocks.SpellCreatorBlock;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaff;
+import io.darkcraft.mod.common.magic.items.staff.Staff;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartRegistry;
 import io.darkcraft.mod.common.magic.items.staff.parts.bottom.DefaultStaffBottom;
 import io.darkcraft.mod.common.magic.items.staff.parts.head.DefaultStaffHead;
@@ -46,7 +46,7 @@ public class ItemBlockRegistry
 	}
 
 	public static MagicComponent magicComponent = new MagicComponent();
-	public static ItemStaff itemStaff = new ItemStaff();
+	public static Staff itemStaff = new Staff();
 	public static void registerItems()
 	{
 		magicComponent.register();

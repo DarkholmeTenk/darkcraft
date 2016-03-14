@@ -5,8 +5,8 @@ import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.darkcore.mod.interfaces.IActivatablePrecise;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import io.darkcraft.mod.common.magic.items.staff.parts.IStaffPart;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartRegistry;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartType;
@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class MagicStaffChanger extends AbstractTileEntity implements IActivatablePrecise
 {
-	private ItemStaffHelper helper;
+	private StaffHelper helper;
 
 	private void changePart(StaffPartType type, int d)
 	{
@@ -70,7 +70,7 @@ public class MagicStaffChanger extends AbstractTileEntity implements IActivatabl
 			{
 				if(helper == null)
 				{
-					ItemStaffHelper ish = ItemStaffHelperFactory.getHelper(ent.getHeldItem());
+					StaffHelper ish = StaffHelperFactory.getHelper(ent.getHeldItem());
 					if(ish != null)
 					{
 						helper = ish;
@@ -96,7 +96,7 @@ public class MagicStaffChanger extends AbstractTileEntity implements IActivatabl
 		return true;
 	}
 
-	public ItemStaffHelper getStaff()
+	public StaffHelper getStaff()
 	{
 		return helper;
 	}
@@ -118,7 +118,7 @@ public class MagicStaffChanger extends AbstractTileEntity implements IActivatabl
 		if(nbt.hasKey("sh"))
 		{
 			NBTTagCompound snbt = nbt.getCompoundTag("sh");
-			helper = ItemStaffHelperFactory.getHelper(snbt);
+			helper = StaffHelperFactory.getHelper(snbt);
 		}
 		else
 			helper = null;

@@ -18,10 +18,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ItemStaff extends AbstractItem
+public class Staff extends AbstractItem
 {
 
-	public ItemStaff()
+	public Staff()
 	{
 		super(DarkcraftMod.modName);
 		setUnlocalizedName("staff");
@@ -32,7 +32,7 @@ public class ItemStaff extends AbstractItem
 	@Override
 	public void addInfo(ItemStack is, EntityPlayer player, List infoList)
 	{
-		ItemStaffHelper helper = ItemStaffHelperFactory.getHelper(is);
+		StaffHelper helper = StaffHelperFactory.getHelper(is);
 		if(helper != null)
 		{
 			helper.addInfo(infoList, player);
@@ -44,7 +44,7 @@ public class ItemStaff extends AbstractItem
     {
 		if(ServerHelper.isServer())
 		{
-			ItemStaffHelper staffHelper = ItemStaffHelperFactory.getHelper(is);
+			StaffHelper staffHelper = StaffHelperFactory.getHelper(is);
 			ICaster caster = Helper.getPlayerCaster(pl);
 			if((staffHelper != null) && (staffHelper.getSpell() != null))
 			{
@@ -57,7 +57,7 @@ public class ItemStaff extends AbstractItem
 			}
 			TileEntity te = w.getTileEntity(x, y, z);
 			if(te instanceof IStaffable)
-				if(((IStaffable)te).staffActivate(pl, ItemStaffHelperFactory.getHelper(is)))
+				if(((IStaffable)te).staffActivate(pl, StaffHelperFactory.getHelper(is)))
 			rightClick(is, w, pl);
 		}
 		return true;
@@ -78,7 +78,7 @@ public class ItemStaff extends AbstractItem
 
 	private void rightClick(ItemStack is, World w, EntityPlayer pl)
 	{
-		ItemStaffHelper helper = ItemStaffHelperFactory.getHelper(is);
+		StaffHelper helper = StaffHelperFactory.getHelper(is);
 		if((helper != null) && (pl != null))
 		{
 			Spell spell = helper.getSpell();
@@ -94,7 +94,7 @@ public class ItemStaff extends AbstractItem
 	@Override
 	public void initRecipes()
 	{
-		GameRegistry.addRecipe(new ItemStaffRecipe(new ItemStack(this,1),false,"c","s","s",
+		GameRegistry.addRecipe(new StaffRecipe(new ItemStack(this,1),false,"c","s","s",
 				'c', MagicComponent.Type.Crystal.getIS(1),
 				's', "stickWood"));
 	}

@@ -4,7 +4,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.LetterRenderer;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import io.darkcraft.mod.common.magic.tileent.MagicStaffChanger;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.client.renderer.Tessellator;
@@ -49,7 +49,7 @@ public class MagicStaffChangerRenderer extends AbstractObjRenderer
 		GL11.glRotatef(180, 1, 0, 0);
 		model.renderAll();
 		GL11.glPopMatrix();
-		ItemStaffHelper ish = msc.getStaff();
+		StaffHelper ish = msc.getStaff();
 		if(ish != null)
 		{
 			GL11.glPushMatrix();

@@ -1,7 +1,7 @@
 package io.darkcraft.mod.common.magic.items.staff.parts;
 
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
@@ -39,7 +39,7 @@ public abstract class DefaultStaffPart implements IStaffPart
 	}
 
 	@Override
-	public double getPowerMult(ItemStaffHelper helper)
+	public double getPowerMult(StaffHelper helper)
 	{
 		return 1;
 	}

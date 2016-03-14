@@ -9,13 +9,13 @@ import java.util.Iterator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemStaffHelperFactory
+public class StaffHelperFactory
 {
-	private static HashMap<Integer, ItemStaffHelper>				map				= new HashMap();
+	private static HashMap<Integer, StaffHelper>				map				= new HashMap();
 	private static HashMap<Integer, Long>							accessMap		= new HashMap();
 	private static long												lastClearTime	= 0;
-	private static HashMap<Integer, WeakReference<ItemStaffHelper>>	weakMap			= new HashMap();
-	private static ItemStaffHelper									defaultHelper	= new ItemStaffHelper(0);
+	private static HashMap<Integer, WeakReference<StaffHelper>>	weakMap			= new HashMap();
+	private static StaffHelper									defaultHelper	= new StaffHelper(0);
 
 	private static int getNewID()
 	{
@@ -41,7 +41,7 @@ public class ItemStaffHelperFactory
 		while(iter.hasNext())
 		{
 			Integer id = iter.next();
-			WeakReference<ItemStaffHelper> item = weakMap.get(id);
+			WeakReference<StaffHelper> item = weakMap.get(id);
 			if(item.get() == null)
 				iter.remove();
 		}
@@ -56,51 +56,51 @@ public class ItemStaffHelperFactory
 		}
 	}
 
-	public static ItemStaffHelper getHelper(int id)
+	public static StaffHelper getHelper(int id)
 	{
 		clearOldStuff();
 		accessMap.put(id, System.currentTimeMillis());
 		if (map.containsKey(id)) return map.get(id);
-		ItemStaffHelper helper = null;
+		StaffHelper helper = null;
 		if(weakMap.containsKey(id))
 			helper = weakMap.get(id).get();
 		if(helper == null)
 		{
-			helper = new ItemStaffHelper(id);
+			helper = new StaffHelper(id);
 			weakMap.put(id, new WeakReference(helper));
 		}
 		map.put(id, helper);
 		return helper;
 	}
 
-	public static ItemStaffHelper getHelper(NBTTagCompound nbt)
+	public static StaffHelper getHelper(NBTTagCompound nbt)
 	{
 		if (nbt == null) return null;
 		int id;
-		if (nbt.hasKey(ItemStaffHelper.nbtIDName))
-			id = nbt.getInteger(ItemStaffHelper.nbtIDName);
+		if (nbt.hasKey(StaffHelper.nbtIDName))
+			id = nbt.getInteger(StaffHelper.nbtIDName);
 		else
 		{
 			id = getNewID();
-			nbt.setInteger(ItemStaffHelper.nbtIDName, id);
+			nbt.setInteger(StaffHelper.nbtIDName, id);
 		}
-		ItemStaffHelper helper = getHelper(id);
+		StaffHelper helper = getHelper(id);
 		if((helper != null) && !helper.inited)
 			helper.readFromNBT(nbt);
 		return helper;
 	}
 
-	public static ItemStaffHelper getHelper(ItemStack is)
+	public static StaffHelper getHelper(ItemStack is)
 	{
-		if ((is == null) || !(is.getItem() instanceof ItemStaff)) return null;
+		if ((is == null) || !(is.getItem() instanceof Staff)) return null;
 		if (is.stackTagCompound == null) is.stackTagCompound = new NBTTagCompound();
-		ItemStaffHelper helper = getHelper(is.stackTagCompound);
+		StaffHelper helper = getHelper(is.stackTagCompound);
 		if(helper != null)
 			helper.setIS(is);
 		return helper;
 	}
 
-	public static ItemStaffHelper getDefaultHelper()
+	public static StaffHelper getDefaultHelper()
 	{
 		return defaultHelper;
 	}

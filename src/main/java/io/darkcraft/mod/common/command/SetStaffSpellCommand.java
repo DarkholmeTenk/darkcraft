@@ -4,8 +4,8 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractCommandNew;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.IComponent;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
@@ -38,7 +38,7 @@ public class SetStaffSpellCommand extends AbstractCommandNew
 		if(sen instanceof EntityPlayer)
 		{
 			EntityPlayer pl = (EntityPlayer) sen;
-			ItemStaffHelper helper = ItemStaffHelperFactory.getHelper(pl.getHeldItem());
+			StaffHelper helper = StaffHelperFactory.getHelper(pl.getHeldItem());
 			if(helper == null)
 			{
 				sendString(sen, "No staff held!");

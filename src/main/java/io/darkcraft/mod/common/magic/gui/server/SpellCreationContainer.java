@@ -13,12 +13,13 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import skillapi.api.implement.ISkill;
 
 public class SpellCreationContainer extends Container
 {
 	public static final Spell dummySpell = new Spell("Dummy",new ComponentInstance[]{});
 	public static final int GUI_ID = 1397;
-	private SpellCreator te;
+	public final SpellCreator te;
 
 	public CastType castType = CastType.PROJECTILE;
 	public Spell spellSoFar = dummySpell;
@@ -31,6 +32,7 @@ public class SpellCreationContainer extends Container
 	public List<IComponent> knownComponents;
 	public int selectedLine = -1;
 	public String name = "";
+	public ISkill mainSkill = null;
 
 	public void mainBoxClicked(int x, int y)
 	{
@@ -143,6 +145,7 @@ public class SpellCreationContainer extends Container
 		ciA[spellSoFar.components.length] = selectedComponentInstance;
 		spellSoFar = new Spell(spellSoFar.name,ciA);
 		selectedComponent = null;
+		updateSpell();
 	}
 
 	public void removeCI(int index)
@@ -154,6 +157,12 @@ public class SpellCreationContainer extends Container
 			if(i != index)
 				ciA[j++] = spellSoFar.components[i];
 		spellSoFar = new Spell(spellSoFar.name,ciA);
+		updateSpell();
+	}
+
+	public void updateSpell()
+	{
+		mainSkill = spellSoFar.getMainSkill();
 	}
 
 	public SpellCreationContainer(SpellCreator _te)

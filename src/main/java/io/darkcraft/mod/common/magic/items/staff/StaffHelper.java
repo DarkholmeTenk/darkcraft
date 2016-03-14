@@ -18,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import org.lwjgl.opengl.GL11;
 
-public class ItemStaffHelper
+public class StaffHelper
 {
 	public static final String	nbtIDName	= "isID";
 
@@ -32,7 +32,7 @@ public class ItemStaffHelper
 	public NBTTagCompound				extraNBT = new NBTTagCompound();
 	private Spell						spell;
 
-	public ItemStaffHelper(int _id)
+	public StaffHelper(int _id)
 	{
 		id = _id;
 	}

@@ -4,9 +4,9 @@ import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-public class ItemStaffRecipe extends ShapedOreRecipe
+public class StaffRecipe extends ShapedOreRecipe
 {
-	public ItemStaffRecipe(ItemStack result, Object... recipe)
+	public StaffRecipe(ItemStack result, Object... recipe)
 	{
 		super(result, recipe);
 	}

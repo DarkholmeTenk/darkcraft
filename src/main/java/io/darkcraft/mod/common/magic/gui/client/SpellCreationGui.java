@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.gui.client;
 
+import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
@@ -11,6 +12,7 @@ import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
 import io.darkcraft.mod.common.magic.gui.server.SpellCreationContainer;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
+import io.darkcraft.mod.common.network.SpellCreationPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
@@ -21,6 +23,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
+
+import skillapi.api.implement.ISkillIcon;
 
 public class SpellCreationGui extends GuiContainer
 {
@@ -128,10 +132,19 @@ public class SpellCreationGui extends GuiContainer
     	drawExtraInfo(tess);
     	if(cont.selectedComponent != null)
     		drawSliderBox(tess);
+    	drawErrors(tess);
     	GL11.glPopMatrix();
     }
 
-    private void drawName(Tessellator tess)
+    private void drawErrors(Tessellator tess)
+	{
+		if(cont.spellSoFar.components.length == 0)
+			fr.drawString("No components", 290, 39, 16711680);
+		if((cont.name == null) || (cont.name.length() < 3))
+			fr.drawString("Name too short", 290, 50, 16711680);
+	}
+
+	private void drawName(Tessellator tess)
 	{
 		fr.drawString(cont.name, 102, 49, 16777215);
 	}
@@ -156,6 +169,12 @@ public class SpellCreationGui extends GuiContainer
 	{
 		fr.drawString(String.format("%6.1f",cont.spellSoFar.getCost(null)), 284, 361, 16777215);
 		fr.drawString(cont.castType.name(), 91, 361, 16777215);
+		if(cont.mainSkill != null)
+		{
+			ISkillIcon icon = cont.mainSkill.getIcon(null);
+			RenderHelper.bindTexture(icon.getResourceLocation());
+			face(tess,358,64,16,16,icon.getUV(),true);
+		}
 	}
 
 	@Override
@@ -174,7 +193,11 @@ public class SpellCreationGui extends GuiContainer
     				mc.thePlayer.closeScreen();
     			else if((x >= 384) && (x <= 400))
     			{
-    				//Create spell
+    				if((cont.name != null) && (cont.name.length() >= 3) && (cont.spellSoFar.components.length > 0))
+    				{
+    					DarkcoreMod.networkChannel.sendToServer(SpellCreationPacketHandler.getDataPacket(cont));
+    					mc.thePlayer.closeScreen();
+    				}
     			}
     		}
     		cont.mainBoxClicked(x, y);
@@ -185,7 +208,6 @@ public class SpellCreationGui extends GuiContainer
     		y-= 150;
     		cont.sliderBoxClicked(x, y);
     	}
-    	System.out.println(String.format("X:%4d Y:%4d C:%1d",x,y,c));
     }
 
     @Override
@@ -228,7 +250,7 @@ public class SpellCreationGui extends GuiContainer
     		switch(i)
     		{
     			case 3: case 22: case 24: return;
-    			case 14: cont.name = cont.name.substring(0,cont.name.length() - 1); return;
+    			case 14: if(cont.name.length() > 0) cont.name = cont.name.substring(0,cont.name.length() - 1); return;
     		}
     		switch(c)
     		{

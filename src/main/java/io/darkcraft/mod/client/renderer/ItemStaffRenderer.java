@@ -1,7 +1,7 @@
 package io.darkcraft.mod.client.renderer;
 
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelper;
-import io.darkcraft.mod.common.magic.items.staff.ItemStaffHelperFactory;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -25,11 +25,11 @@ public class ItemStaffRenderer implements IItemRenderer
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data)
 	{
-		ItemStaffHelper helper;
+		StaffHelper helper;
 		if(item == null)
-			helper = ItemStaffHelperFactory.getDefaultHelper();
+			helper = StaffHelperFactory.getDefaultHelper();
 		else
-			helper = ItemStaffHelperFactory.getHelper(item);
+			helper = StaffHelperFactory.getHelper(item);
 		GL11.glPushMatrix();
 		if(type.equals(ItemRenderType.EQUIPPED))
 		{

@@ -49,6 +49,11 @@ public class ComponentInstance
 		cost = tempCost;
 	}
 
+	public ISkill getMainSkill()
+	{
+		return component.getMainSkill();
+	}
+
 	public double getCost(ICaster caster, ISkillHandler handler)
 	{
 		double cost = this.cost;
