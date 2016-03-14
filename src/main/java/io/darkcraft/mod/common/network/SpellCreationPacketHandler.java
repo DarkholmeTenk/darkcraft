@@ -18,7 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class SpellCreationPacketHandler implements IDataPacketHandler
 {
-	public final static byte spellCreationDisc = 40;
+	public final static byte spellCreationDisc = 50;
 
 	@Override
 	public void handleData(NBTTagCompound data)
@@ -44,7 +44,7 @@ public class SpellCreationPacketHandler implements IDataPacketHandler
 		Spell spell = Spell.readFromNBT(data);
 		if((pos == null) || (pl == null) || (spell == null))return;
 		TileEntity te = pos.getTileEntity();
-		if(!(te instanceof SpellCreator) || !((SpellCreator)te).isValidStructure() || !((SpellCreator)te).isUser(pl))
+		if(!(te instanceof SpellCreator) || !((SpellCreator)te).isValidStructure())
 		{
 			MessageHelper.sendMessage(pl, "Invalid spell creator");
 			return;
@@ -55,7 +55,7 @@ public class SpellCreationPacketHandler implements IDataPacketHandler
 			MessageHelper.sendMessage(pl, "You do not know all of the components of this spell");
 			return;
 		}
-		((SpellCreator)te).setSpell(spell);
+		((SpellCreator)te).setSpell(un,spell);
 	}
 
 	public static DataPacket getDataPacket(SpellCreationContainer container)

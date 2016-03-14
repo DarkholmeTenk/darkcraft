@@ -10,7 +10,7 @@ public class SpellCreatorBlock extends AbstractBlockContainer
 {
 	public SpellCreatorBlock()
 	{
-		super(DarkcraftMod.modName);
+		super(false,DarkcraftMod.modName);
 	}
 
 	@Override
@@ -29,6 +29,12 @@ public class SpellCreatorBlock extends AbstractBlockContainer
 	public void initData()
 	{
 		setBlockName("SpellCreator");
+	}
+
+	@Override
+	public boolean isOpaqueCube()
+	{
+		return false;
 	}
 
 	@Override

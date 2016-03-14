@@ -6,6 +6,7 @@ import io.darkcraft.mod.client.renderer.tileent.MagicFieldMeasurerRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicStaffChangerRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicVortexCrystalRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicVortexRenderer;
+import io.darkcraft.mod.client.renderer.tileent.SpellCreatorRenderer;
 import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
 import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
@@ -35,6 +36,7 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicVortexCrystal.class, new MagicVortexCrystalRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TechGenerator.class, new TechGeneratorRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicStaffChanger.class, new MagicStaffChangerRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(SpellCreator.class, new SpellCreatorRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new EntitySpellProjectileRenderer());
 	}
 

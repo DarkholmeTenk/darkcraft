@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.magic.caster;
 
 import io.darkcraft.darkcore.mod.DarkcoreMod;
+import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
@@ -26,7 +27,9 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 public class PlayerCaster extends EntityCaster implements IExtendedEntityProperties
 {
 	private List<Spell> knownSpells = new ArrayList<Spell>();
+	private List<Spell> unmodSpells = Collections.unmodifiableList(knownSpells);
 	private Set<IComponent> knownComponents = new HashSet<IComponent>();
+	private int currentSpell = 0;
 
 	public PlayerCaster(EntityPlayer pl)
 	{
@@ -74,6 +77,23 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			if(!kc.contains(ci.component))
 				return false;
 		return true;
+	}
+
+	public List<Spell> getKnownSpells()
+	{
+		return unmodSpells;
+	}
+
+	public void setCurrentSpell(int index)
+	{
+		currentSpell = index;
+		if(ServerHelper.isClient())
+		{
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setString("pln", PlayerHelper.getUsername(getCaster()));
+			nbt.setInteger("curSpellIndex", currentSpell);
+			DarkcoreMod.networkChannel.sendToServer(new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc));
+		}
 	}
 
 	@Override
@@ -126,19 +146,24 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			while(nbt.hasKey("kc"+i))
 				knownComponents.add(SpellPartRegistry.getComponent(nbt.getString("kc"+(i++))));
 		}
-		if(ServerHelper.isServer())
-			sendUpdate();
 	}
 
 	private void sendUpdate()
 	{
-		if(ServerHelper.isClient())return;
-		EntityPlayerMP pl = (EntityPlayerMP) getCaster();
+		EntityPlayer pl = getCaster();
 		if(pl == null) return;
-		NBTTagCompound nbt = new NBTTagCompound();
-		saveNBTData(nbt);
-		DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
-		DarkcoreMod.networkChannel.sendTo(dp,pl);
+		if(ServerHelper.isClient())
+		{
+			String un = PlayerHelper.getUsername(pl);
+
+		}
+		else if(ServerHelper.isServer())
+		{
+			NBTTagCompound nbt = new NBTTagCompound();
+			saveNBTData(nbt);
+			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
+			DarkcoreMod.networkChannel.sendTo(dp,(EntityPlayerMP) pl);
+		}
 	}
 
 	@Override
