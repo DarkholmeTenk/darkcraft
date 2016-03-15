@@ -4,6 +4,8 @@ import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.field.MagicFieldGlobal;
+import io.darkcraft.mod.common.magic.items.staff.Staff;
+import io.darkcraft.mod.common.registries.MagicConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,6 +65,13 @@ public class Helper
 		list.addAll(comps);
 		Collections.sort(list, ComponentComparator.i);
 		return list;
+	}
+
+	public static boolean canCast(EntityPlayer pl)
+	{
+		if(pl == null) return false;
+		if(MagicConfig.castWithHand && (pl.getHeldItem() == null)) return true;
+		return Staff.hasStaff(pl);
 	}
 
 	private static class ComponentComparator implements Comparator<IComponent>

@@ -4,10 +4,13 @@ import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.interfaces.IDataPacketHandler;
 import io.darkcraft.mod.common.helpers.Helper;
+import io.darkcraft.mod.common.magic.MagicEventHandler;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 public class PlayerCasterPacketHandler implements IDataPacketHandler
 {
@@ -31,7 +34,11 @@ public class PlayerCasterPacketHandler implements IDataPacketHandler
 		EntityPlayer pl = PlayerHelper.getPlayer(data.getString("pln"));
 		if(pl == null) return;
 		PlayerCaster plc = Helper.getPlayerCaster(pl);
-		if(data.hasKey("curSpellIndex"))
+		if(data.hasKey("rca"))
+		{
+			MagicEventHandler.i.handleInteract(new PlayerInteractEvent(pl,Action.RIGHT_CLICK_AIR,0,0,0,0,null));
+		}
+		else if(data.hasKey("curSpellIndex"))
 		{
 			int i = data.getInteger("curSpellIndex");
 			plc.setCurrentSpell(i);

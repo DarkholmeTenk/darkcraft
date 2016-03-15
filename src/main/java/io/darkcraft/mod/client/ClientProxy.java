@@ -16,7 +16,6 @@ import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
-import io.darkcraft.mod.common.magic.items.staff.Staff;
 import io.darkcraft.mod.common.magic.tileent.MagicFieldMeasurer;
 import io.darkcraft.mod.common.magic.tileent.MagicStaffChanger;
 import io.darkcraft.mod.common.magic.tileent.MagicVortex;
@@ -95,7 +94,7 @@ public class ClientProxy extends CommonProxy
 		}
 		EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
 		PlayerCaster pc = Helper.getPlayerCaster(pl);
-		if(!Staff.hasStaff(pl)) return;
+		if(!Helper.canCast(pl)) return;
 		if(pl.isSneaking())
 		{
 			GameSettings gs = Minecraft.getMinecraft().gameSettings;
