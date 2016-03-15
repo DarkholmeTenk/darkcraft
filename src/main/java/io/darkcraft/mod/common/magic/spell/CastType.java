@@ -1,10 +1,21 @@
 package io.darkcraft.mod.common.magic.spell;
 
+import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.mod.DarkcraftMod;
+import net.minecraft.util.ResourceLocation;
+
 public enum CastType
 {
-	SELF,
-	TOUCH,
-	PROJECTILE;
+	SELF(new UVStore(0,0.5,0,0.5)),
+	TOUCH(new UVStore(0,0.5,0.5,1)),
+	PROJECTILE(new UVStore(0.5,1,0,0.5));
+
+	public static final ResourceLocation icon = new ResourceLocation(DarkcraftMod.modName,"textures/gui/casttypes.png");
+	public final UVStore uv;
+	private CastType(UVStore _uv)
+	{
+		uv = _uv;
+	}
 
 	public static CastType getType(String s)
 	{

@@ -1,11 +1,16 @@
-package io.darkcraft.mod.client.renderer;
+package io.darkcraft.mod.client.renderer.gui;
 
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.ClientHelper;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.items.staff.Staff;
+import io.darkcraft.mod.common.magic.spell.Spell;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -45,7 +50,22 @@ public class StatusOverlay
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslatef(w, h, 0);
-		RenderHelper.uiFace(-34, -24, 24, 24, 1, sCon, true);
+		RenderHelper.uiFace(-34, -36, 24, 24, 1, sCon, true);
+		if(pc.getCurrentSpell() != null)
+		{
+			Spell sp = pc.getCurrentSpell();
+			ClientHelper.renderSpellIcon(sp, -30, -32, 16, 16);
+			String s = sp.name;
+			FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+			int l = fr.getStringWidth(s);
+			fr.drawString(s, -14-l, -12, 0);
+			if(pl.isSneaking() && Staff.hasStaff(pl))
+			{
+				int index = pc.getCurrentSpellIndex();
+				ClientHelper.renderSpellIcon(pc.getSpell(index-1), -50, -32, 16, 16);
+				ClientHelper.renderSpellIcon(pc.getSpell(index+1), -30, -52, 16, 16);
+			}
+		}
 		GL11.glPopMatrix();
 	}
 
@@ -67,6 +87,17 @@ public class StatusOverlay
 	@SubscribeEvent
 	public void mouseEvent(MouseEvent event)
 	{
-
+		EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
+		PlayerCaster pc = Helper.getPlayerCaster(pl);
+		if(!Staff.hasStaff(pl)) return;
+		if(pl.isSneaking())
+		{
+			if(event.dwheel > 0)
+				pc.setCurrentSpell(MathHelper.cycle(pc.getCurrentSpellIndex()+1,0,pc.getKnownSpells().size()-1));
+			else if(event.dwheel < 0)
+				pc.setCurrentSpell(MathHelper.cycle(pc.getCurrentSpellIndex()-1,0,pc.getKnownSpells().size()-1));
+			if(event.dwheel != 0)
+				event.setCanceled(true);
+		}
 	}
 }

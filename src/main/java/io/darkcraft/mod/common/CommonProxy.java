@@ -1,6 +1,6 @@
 package io.darkcraft.mod.common;
 
-import io.darkcraft.mod.common.magic.gui.server.SpellCreationContainer;
+import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;

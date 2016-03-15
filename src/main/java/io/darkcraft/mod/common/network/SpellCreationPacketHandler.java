@@ -8,7 +8,7 @@ import io.darkcraft.darkcore.mod.interfaces.IDataPacketHandler;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.gui.server.SpellCreationContainer;
+import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
 import net.minecraft.client.Minecraft;
@@ -64,7 +64,7 @@ public class SpellCreationPacketHandler implements IDataPacketHandler
 		SimpleCoordStore pos = container.te.coords();
 		NBTTagCompound nbt = new NBTTagCompound();
 		pos.writeToNBT(nbt);
-		Spell spell = new Spell(container.name,container.spellSoFar.components);
+		Spell spell = new Spell(container.name,container.spellSoFar.components,container.castType);
 		spell.writeToNBT(nbt);
 		nbt.setString("plname", un);
 		return new DataPacket(nbt,spellCreationDisc);

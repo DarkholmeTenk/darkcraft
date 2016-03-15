@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.gui.server;
+package io.darkcraft.mod.common.magic.gui;
 
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.common.magic.component.IComponent;

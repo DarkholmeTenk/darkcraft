@@ -1,4 +1,4 @@
-package io.darkcraft.mod.client.renderer;
+package io.darkcraft.mod.client.renderer.item;
 
 import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;

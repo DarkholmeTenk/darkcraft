@@ -10,7 +10,7 @@ public class BaseCommand extends AbstractCommandNew
 {
 	public BaseCommand()
 	{
-		super(new SetStaffSpellCommand());
+		super();
 	}
 
 	@Override

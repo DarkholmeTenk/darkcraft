@@ -12,10 +12,10 @@ import io.darkcraft.darkcore.mod.multiblock.IBlockState;
 import io.darkcraft.darkcore.mod.multiblock.IMultiBlockStructure;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.abstracts.AbstractMFTileEntity;
+import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.gui.client.SpellCreationGui;
 import io.darkcraft.mod.common.magic.items.staff.IStaffable;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import io.darkcraft.mod.common.magic.spell.Spell;
@@ -149,6 +149,8 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 				if(currentSpellOwner.equals(n))
 					ownerIn = true;
 			}
+			else
+				hasUser[i] = null;
 		}
 		if(ownerIn)
 		{
@@ -159,7 +161,7 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 				EntityPlayer pl = PlayerHelper.getPlayer(s);
 				if(pl == null) continue;
 				EntityCaster c = Helper.getCaster(pl);
-				double am = Math.min(10, currentCost);
+				double am = Math.min(Math.max(20,currentSpell.getCost(null)/4), currentCost);
 				if(c.useMana(am, false))
 					currentCost -= am;
 			}

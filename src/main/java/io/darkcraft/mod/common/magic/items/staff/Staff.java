@@ -5,7 +5,7 @@ import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.ICaster;
+import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.Spell;
@@ -45,10 +45,10 @@ public class Staff extends AbstractItem
 		if(ServerHelper.isServer())
 		{
 			StaffHelper staffHelper = StaffHelperFactory.getHelper(is);
-			ICaster caster = Helper.getPlayerCaster(pl);
-			if((staffHelper != null) && (staffHelper.getSpell() != null))
+			PlayerCaster caster = Helper.getPlayerCaster(pl);
+			if((staffHelper != null) && (caster.getCurrentSpell() != null))
 			{
-				Spell spell = staffHelper.getSpell();
+				Spell spell = caster.getCurrentSpell();
 				if(spell.type != CastType.SELF)
 					caster.cast(spell, new SimpleCoordStore(w,x,y,z));
 				else
@@ -79,14 +79,13 @@ public class Staff extends AbstractItem
 	private void rightClick(ItemStack is, World w, EntityPlayer pl)
 	{
 		StaffHelper helper = StaffHelperFactory.getHelper(is);
+		PlayerCaster pc = Helper.getPlayerCaster(pl);
 		if((helper != null) && (pl != null))
 		{
-			Spell spell = helper.getSpell();
+			Spell spell = pc.getCurrentSpell();
 			if(spell != null)
 			{
-				ICaster caster = Helper.getPlayerCaster(pl);
-				if(caster != null)
-					caster.cast(spell);
+				pc.cast(spell);
 			}
 		}
 	}
@@ -97,6 +96,13 @@ public class Staff extends AbstractItem
 		GameRegistry.addRecipe(new StaffRecipe(new ItemStack(this,1),false,"c","s","s",
 				'c', MagicComponent.Type.Crystal.getIS(1),
 				's', "stickWood"));
+	}
+
+	public static boolean hasStaff(EntityPlayer pl)
+	{
+		if(pl == null) return false;
+		if((pl.getHeldItem() == null) || !(pl.getHeldItem().getItem() instanceof Staff)) return false;
+		return true;
 	}
 
 }

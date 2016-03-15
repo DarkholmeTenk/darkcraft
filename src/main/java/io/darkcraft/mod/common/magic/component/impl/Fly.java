@@ -64,7 +64,7 @@ public class Fly implements IComponent, IDurationComponent
 		EntityLivingBase ent = (EntityLivingBase) entity;
 		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
 		if(ees != null)
-			ees.addEffect(new EffectFly(caster,ent,magnitude,duration));
+			ees.addEffect(new EffectFly(caster,ent,magnitude,duration*20));
 	}
 
 	@Override

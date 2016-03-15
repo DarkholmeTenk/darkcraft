@@ -15,6 +15,12 @@ public class EffectFly extends AbstractDarkcraftEffect
 	}
 
 	@Override
+	public UVStore getIconLocation()
+	{
+		return flyUV;
+	}
+
+	@Override
 	public void effectAdded()
 	{
 		EntityLivingBase ent = getEntity();

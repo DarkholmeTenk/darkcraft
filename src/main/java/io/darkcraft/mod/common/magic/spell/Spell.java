@@ -55,6 +55,7 @@ public class Spell
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		nbt.setString("name", name);
+		nbt.setInteger("ct", type.ordinal());
 		for(int i = 0; i < components.length; i++)
 			components[i].writeToNBT(nbt, "ci"+i);
 	}
@@ -75,7 +76,8 @@ public class Spell
 		if(ciList.size() == 0) return null;
 		ComponentInstance[] ciArray = new ComponentInstance[ciList.size()];
 		ciArray = ciList.toArray(ciArray);
-		return new Spell(nbt.getString("name"),ciArray);
+		CastType ct = CastType.values()[nbt.getInteger("ct")];
+		return new Spell(nbt.getString("name"),ciArray,ct);
 	}
 
 	public double getCost(ICaster caster)

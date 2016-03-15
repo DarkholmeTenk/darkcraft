@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.gui.client;
+package io.darkcraft.mod.client.renderer.gui;
 
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
@@ -9,7 +9,7 @@ import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
-import io.darkcraft.mod.common.magic.gui.server.SpellCreationContainer;
+import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
 import io.darkcraft.mod.common.network.SpellCreationPacketHandler;
@@ -183,8 +183,8 @@ public class SpellCreationGui extends GuiContainer
     	if(c != 0) return;
     	x = (int)((x - guiLeft) / sr);
     	y = (int)((y - guiTop) / sr);
-    	if((x < 0) || (x > size)) return;
-    	if((y < 0) || (y > size)) return;
+    	if((x < 0) || (x > 400)) return;
+    	if((y < 0) || (y > 400)) return;
     	if(cont.selectedComponent == null)
     	{
     		if((y >= 384) && (y <= 400))

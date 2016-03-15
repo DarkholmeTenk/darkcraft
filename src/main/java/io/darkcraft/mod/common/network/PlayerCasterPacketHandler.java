@@ -16,20 +16,18 @@ public class PlayerCasterPacketHandler implements IDataPacketHandler
 	@Override
 	public void handleData(NBTTagCompound data)
 	{
-		if(ServerHelper.isServer()) handlerServerSide(data);
-		EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
-		PlayerCaster plc = Helper.getPlayerCaster(pl);
-		if(plc == null)
+		if(data.hasKey("pln")) handlerServerSide(data);
+
+		if(data.hasKey("cs") && ServerHelper.isClient())
 		{
-			System.err.println("ERRNOCASTERONPACKET!");
-			return;
+			EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
+			PlayerCaster plc = Helper.getPlayerCaster(pl);
+			plc.loadNBTData(data);
 		}
-		plc.loadNBTData(data);
 	}
 
 	private void handlerServerSide(NBTTagCompound data)
 	{
-		if(!data.hasKey("pln")) return;
 		EntityPlayer pl = PlayerHelper.getPlayer(data.getString("pln"));
 		if(pl == null) return;
 		PlayerCaster plc = Helper.getPlayerCaster(pl);
@@ -38,6 +36,8 @@ public class PlayerCasterPacketHandler implements IDataPacketHandler
 			int i = data.getInteger("curSpellIndex");
 			plc.setCurrentSpell(i);
 		}
+		else if(data.hasKey("rem"))
+			plc.loadNBTData(data);
 
 	}
 

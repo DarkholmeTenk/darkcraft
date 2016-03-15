@@ -6,7 +6,6 @@ import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartType;
 import io.darkcraft.mod.common.magic.items.staff.parts.bottom.IStaffBottom;
 import io.darkcraft.mod.common.magic.items.staff.parts.head.IStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.shaft.IStaffShaft;
-import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 
 import java.lang.ref.WeakReference;
@@ -30,7 +29,6 @@ public class StaffHelper
 	private WeakReference<ItemStack>	itemstack;
 	public boolean						inited = false;
 	public NBTTagCompound				extraNBT = new NBTTagCompound();
-	private Spell						spell;
 
 	public StaffHelper(int _id)
 	{
@@ -98,18 +96,6 @@ public class StaffHelper
 		return null;
 	}
 
-	public void setSpell(Spell newSpell)
-	{
-		if(spell == newSpell) return;
-		spell = newSpell;
-		markDirty();
-	}
-
-	public Spell getSpell()
-	{
-		return spell;
-	}
-
 	public void markDirty()
 	{
 		ItemStack is = getIS();
@@ -127,7 +113,6 @@ public class StaffHelper
 		bottom	= StaffPartRegistry.getStaffBottom(nbt.getString("staffBottom"));
 		shaft	= StaffPartRegistry.getStaffShaft(nbt.getString("staffShaft"));
 		head	= StaffPartRegistry.getStaffHead(nbt.getString("staffHead"));
-		spell	= nbt.hasKey("spell") ? Spell.readFromNBT(nbt.getCompoundTag("spell")) : null;
 		displayName = nbt.hasKey("display") ? nbt.getString("display") : null;
 		if(!nbt.hasKey("extra"))
 			extraNBT = new NBTTagCompound();
@@ -144,18 +129,10 @@ public class StaffHelper
 		nbt.setString("staffHead", head.id());
 		if(displayName != null)
 			nbt.setString("display", displayName);
-		if(spell != null)
-		{
-			NBTTagCompound spellTag = new NBTTagCompound();
-			spell.writeToNBT(spellTag);
-			nbt.setTag("spell", spellTag);
-		}
 		nbt.setTag("extra", extraNBT);
 	}
 
 	public void addInfo(List<String> list, EntityPlayer pl)
 	{
-		if(spell != null)
-			spell.addInfo(list, pl);
 	}
 }
