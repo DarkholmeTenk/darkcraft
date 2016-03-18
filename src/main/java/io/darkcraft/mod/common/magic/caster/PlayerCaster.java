@@ -149,6 +149,12 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		sendUpdate();
 	}
 
+	public void setHotkeys(int[] nhk)
+	{
+		for(int i = 0; (i<10)&&(i<nhk.length);i++)
+			hotkeys[i]=nhk[i];
+	}
+
 	public void removeIndex(int index)
 	{
 		EntityPlayer pl = getCaster();
@@ -167,8 +173,9 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	}
 
 	@Override
-	public void saveNBTData(NBTTagCompound nbt)
+	public void saveNBTData(NBTTagCompound lnbt)
 	{
+		NBTTagCompound nbt = new NBTTagCompound();
 		synchronized(knownSpells)
 		{
 			int i = 0;
@@ -192,14 +199,15 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		}
 		nbt.setInteger("cs", currentSpell);
 		nbt.setIntArray("hotkeys", hotkeys);
+		lnbt.setTag("dcpc", nbt);
 	}
 
 	@Override
-	public void loadNBTData(NBTTagCompound nbt)
+	public void loadNBTData(NBTTagCompound lnbt)
 	{
-		if(nbt.hasKey("rem"))
+		if(lnbt.hasKey("rem"))
 		{
-			int x = nbt.getInteger("rem");
+			int x = lnbt.getInteger("rem");
 			if((x >= 0) && (x < knownSpells.size()))
 			{
 				knownSpells.remove(x);
@@ -219,6 +227,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		}
 		else
 		{
+			NBTTagCompound nbt = lnbt.getCompoundTag("dcpc");
 			currentSpell = nbt.hasKey("cs") ? nbt.getInteger("cs") : -1;
 			synchronized(knownSpells)
 			{
@@ -256,6 +265,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setString("pln", un);
 			nbt.setInteger("curSpellIndex", currentSpell);
+			nbt.setIntArray("hotkeys", hotkeys);
 			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
 			DarkcoreMod.networkChannel.sendToServer(dp);
 		}

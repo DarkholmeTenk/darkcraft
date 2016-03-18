@@ -11,6 +11,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class PlayerCasterPacketHandler implements IDataPacketHandler
 {
@@ -21,12 +23,8 @@ public class PlayerCasterPacketHandler implements IDataPacketHandler
 	{
 		if(data.hasKey("pln")) handlerServerSide(data);
 
-		if(data.hasKey("cs") && ServerHelper.isClient())
-		{
-			EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
-			PlayerCaster plc = Helper.getPlayerCaster(pl);
-			plc.loadNBTData(data);
-		}
+		if(data.hasKey("dcpc") && ServerHelper.isClient())
+			handleClientSide(data);
 	}
 
 	private void handlerServerSide(NBTTagCompound data)
@@ -41,11 +39,21 @@ public class PlayerCasterPacketHandler implements IDataPacketHandler
 		else if(data.hasKey("curSpellIndex"))
 		{
 			int i = data.getInteger("curSpellIndex");
+			int[] hks = data.getIntArray("hotkeys");
 			plc.setCurrentSpell(i);
+			plc.setHotkeys(hks);
 		}
 		else if(data.hasKey("rem"))
 			plc.loadNBTData(data);
 
+	}
+
+	@SideOnly(Side.CLIENT)
+	private void handleClientSide(NBTTagCompound data)
+	{
+		EntityPlayer pl = Minecraft.getMinecraft().thePlayer;
+		PlayerCaster plc = Helper.getPlayerCaster(pl);
+		plc.loadNBTData(data);
 	}
 
 }

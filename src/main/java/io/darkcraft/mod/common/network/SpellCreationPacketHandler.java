@@ -15,6 +15,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpellCreationPacketHandler implements IDataPacketHandler
 {
@@ -58,6 +60,7 @@ public class SpellCreationPacketHandler implements IDataPacketHandler
 		((SpellCreator)te).setSpell(un,spell);
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static DataPacket getDataPacket(SpellCreationContainer container)
 	{
 		String un = PlayerHelper.getUsername(Minecraft.getMinecraft().thePlayer);
