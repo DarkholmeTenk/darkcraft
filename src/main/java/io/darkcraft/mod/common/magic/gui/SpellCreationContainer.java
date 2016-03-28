@@ -105,7 +105,7 @@ public class SpellCreationContainer extends Container
 
 	public int getArea()
 	{
-		int max = 10;
+		int max = 5;
 		return (int)(max * area);
 	}
 

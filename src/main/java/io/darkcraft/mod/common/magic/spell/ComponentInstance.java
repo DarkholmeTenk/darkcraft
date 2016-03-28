@@ -45,7 +45,7 @@ public class ComponentInstance
 			duration = 1;
 		area = _area;
 		if(area > 0)
-			tempCost *= Math.pow(1.5, area);
+			tempCost *= Math.pow(1.75, area);
 		cost = tempCost;
 	}
 

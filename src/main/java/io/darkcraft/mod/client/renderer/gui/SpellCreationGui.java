@@ -110,6 +110,8 @@ public class SpellCreationGui extends GuiContainer
     @Override
 	public void drawScreen(int a, int b, float f)
     {
+    	GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     	drawDefaultBackground();
     	if(size == -1)
     	{
@@ -249,7 +251,6 @@ public class SpellCreationGui extends GuiContainer
     	{
     		switch(i)
     		{
-    			case 3: case 22: case 24: return;
     			case 14: if(cont.name.length() > 0) cont.name = cont.name.substring(0,cont.name.length() - 1); return;
     		}
     		switch(c)

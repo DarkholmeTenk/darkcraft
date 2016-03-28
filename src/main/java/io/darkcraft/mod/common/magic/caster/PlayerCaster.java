@@ -40,7 +40,16 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 
 	private void sortSpells()
 	{
+		Spell[] spells = new Spell[hotkeys.length];
+		for(int i = 0; i < spells.length; i++)
+			if(hotkeys[i] != -1)
+				spells[i] = knownSpells.get(hotkeys[i]);
+			else
+				spells[i] = null;
 		Collections.sort(knownSpells, Spell.SpellNameComparator.withSkill);
+		for(int i = 0; i < spells.length; i++)
+			if(spells[i] != null)
+				hotkeys[i] = knownSpells.indexOf(spells[i]);
 	}
 
 	public void learnSpell(Spell spell)
@@ -52,6 +61,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		}
 		synchronized(knownSpells)
 		{
+
 			knownSpells.add(spell);
 			for(ComponentInstance ci : spell.components)
 				knownComponents.add(ci.component);
