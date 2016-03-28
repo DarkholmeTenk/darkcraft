@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.magic.spell;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
@@ -30,6 +31,9 @@ public class Spell
 	public final CastType type;
 	public final ComponentInstance[] components;
 	public final ComponentInstance mostExpensiveComponent;
+	private final int maxArea;
+	private final boolean affectBlocks;
+	private final boolean affectEntities;
 
 	public Spell(String _name, ComponentInstance[] componentInstances)
 	{
@@ -43,12 +47,24 @@ public class Spell
 		type = castType;
 		double c = 0;
 		ComponentInstance mec = null;
+		int ma = 0;
+		boolean ae = false;
+		boolean ab = false;
 		for(ComponentInstance ci : components)
+		{
+			ae = ae || ci.component.applyToEnt();
+			ab = ab || ci.component.applyToBlock();
+			if(ci.area > ma)
+				ma = ci.area;
 			if(ci.cost > c)
 			{
 				c = ci.cost;
 				mec = ci;
 			}
+		}
+		affectEntities = ae;
+		affectBlocks = ab;
+		maxArea = ma;
 		mostExpensiveComponent = mec;
 	}
 
@@ -145,6 +161,11 @@ public class Spell
 		}
 		if(caster instanceof EntityCaster)
 			((EntityCaster)caster).applyXP(xpMap);
+	}
+
+	private void applyArea(SimpleDoubleCoordStore center)
+	{
+
 	}
 
 	/**
