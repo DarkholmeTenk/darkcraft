@@ -162,7 +162,8 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 				if(pl == null) continue;
 				EntityCaster c = Helper.getCaster(pl);
 				double am = Math.min(Math.max(20,currentSpell.getCost(null)/4), currentCost);
-				if(c.useMana(am, false))
+				if(pl.capabilities.isCreativeMode) am = currentCost;
+				if(pl.capabilities.isCreativeMode || c.useMana(am, false))
 					currentCost -= am;
 			}
 			if(currentCost <= 0)
