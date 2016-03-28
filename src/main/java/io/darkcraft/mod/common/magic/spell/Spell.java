@@ -138,6 +138,87 @@ public class Spell
 		return best.getKey();
 	}
 
+	private void applyArea(ICaster caster, SimpleDoubleCoordStore center)
+	{
+		HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+		if(affectBlocks)
+		{
+			SimpleCoordStore iCenter = center.floor();
+			for(int x = center.iX - maxArea; x <= (center.iX + maxArea); x++)
+				for(int y = center.iY - maxArea; y <= (center.iY + maxArea); y++)
+					for(int z  =center.iZ - maxArea; z <= (center.iZ + maxArea); z++)
+					{
+						long d = iCenter.diagonalParadoxDistance(x, y, z);
+						{
+							boolean inRange = false;
+							for(ComponentInstance ci : components)
+							{
+								if(d > ci.area) continue;
+								if(!ci.component.applyToBlock()) continue;
+								inRange = true;
+								break;
+							}
+							if(!inRange) continue;
+						}
+						//Must be in range to be here
+						SimpleCoordStore scs = new SimpleCoordStore(center.world, x,y,z);
+						SpellApplyBlockEvent sabe = new SpellApplyBlockEvent(caster, this, scs);
+						MinecraftForge.EVENT_BUS.post(sabe);
+						for(int i = 0; i < components.length; i++)
+						{
+							ComponentInstance ci = components[i];
+							if(!ci.component.applyToBlock()) continue;
+							if(d > ci.area) continue;
+							double magMult = sabe.spellMagnitudeMults[i];
+							double durMult = sabe.spellDurationMults[i];
+							ci.component.apply(caster, scs, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+							ISkill skill = ci.component.getMainSkill();
+							xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+						}
+					}
+		}
+		if(affectEntities)
+		{
+			World w = center.getWorldObj();
+			AxisAlignedBB aabb = center.getAABB(maxArea);
+			List<Entity> entList = w.getEntitiesWithinAABB(Entity.class, aabb);
+			for(Entity e : entList)
+			{
+				double d = center.diagonalParadoxDistance(e.posX, e.posY, e.posZ);
+				if(d > maxArea) continue;
+
+				{
+					boolean inRange = false;
+					for(ComponentInstance ci : components)
+					{
+						if(d > ci.area) continue;
+						if(!ci.component.applyToEnt()) continue;
+						inRange = true;
+						break;
+					}
+					if(!inRange) continue;
+				}
+
+				SpellApplyEntityEvent saee = new SpellApplyEntityEvent(caster, this, e);
+				MinecraftForge.EVENT_BUS.post(saee);
+				for(int i = 0; i < components.length; i++)
+				{
+					ComponentInstance ci = components[i];
+					if((d > ci.area) || !(ci.component.applyToEnt())) continue;
+					double magMult = saee.spellMagnitudeMults[i];
+					double durMult = saee.spellDurationMults[i];
+					if((magMult <= 0) || (durMult <= 0)) continue;
+					ci.component.apply(caster, e, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+					ISkill skill = ci.component.getMainSkill();
+					xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+				}
+			}
+		}
+
+		if(caster instanceof EntityCaster)
+			((EntityCaster)caster).applyXP(xpMap);
+	}
+
 	/**
 	 * Apply the spell effect to a block
 	 * @param caster the person who cast this spell
@@ -161,11 +242,6 @@ public class Spell
 		}
 		if(caster instanceof EntityCaster)
 			((EntityCaster)caster).applyXP(xpMap);
-	}
-
-	private void applyArea(SimpleDoubleCoordStore center)
-	{
-
 	}
 
 	/**
