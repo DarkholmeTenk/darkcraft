@@ -36,7 +36,7 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	@Override
 	public double getCost()
 	{
-		return 1;
+		return 8;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	}
 
 	@Override
-	public double getCostMag(double magnitude, double oldCost)
+	public double getCostMag(int magnitude, double oldCost)
 	{
 		return magnitude * oldCost;
 	}
@@ -96,7 +96,7 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	}
 
 	@Override
-	public double getCostDur(double duration, double oldCost)
+	public double getCostDur(int duration, double oldCost)
 	{
 		return oldCost * duration;
 	}

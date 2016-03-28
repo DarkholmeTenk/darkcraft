@@ -33,7 +33,7 @@ public class Fly implements IComponent, IDurationComponent
 	@Override
 	public double getCost()
 	{
-		return 10;
+		return 100;
 	}
 
 	@Override
@@ -49,9 +49,9 @@ public class Fly implements IComponent, IDurationComponent
 	}
 
 	@Override
-	public double getCostDur(double duration, double oldCost)
+	public double getCostDur(int duration, double oldCost)
 	{
-		return oldCost * (duration - 4);
+		return oldCost * Math.pow(duration,1.05);
 	}
 
 	@Override
