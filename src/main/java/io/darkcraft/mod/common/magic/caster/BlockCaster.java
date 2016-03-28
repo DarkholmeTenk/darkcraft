@@ -157,4 +157,10 @@ public class BlockCaster implements ICaster
 		if(doCast(spell))
 			spell.apply(this, ent);
 	}
+
+	@Override
+	public SimpleDoubleCoordStore getCoords()
+	{
+		return blockPos.getCenter();
+	}
 }

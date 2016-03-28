@@ -187,4 +187,13 @@ public class EntityCaster implements ICaster
 		if(doCast(spell))
 			spell.apply(this, ent);
 	}
+
+	@Override
+	public SimpleDoubleCoordStore getCoords()
+	{
+		EntityLivingBase ent = getCaster();
+		if(ent != null)
+			return new SimpleDoubleCoordStore(ent);
+		return null;
+	}
 }
