@@ -20,7 +20,9 @@ import java.util.Map.Entry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
@@ -222,26 +224,32 @@ public class Spell
 	/**
 	 * Apply the spell effect to a block
 	 * @param caster the person who cast this spell
-	 * @param simpleCoordStore the coords of the block
+	 * @param scs the coords of the block
 	 */
-	public void apply(ICaster caster, SimpleCoordStore simpleCoordStore)
+	public void apply(ICaster caster, SimpleCoordStore scs)
 	{
-		HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
-		SpellApplyBlockEvent sabe = new SpellApplyBlockEvent(caster, this, simpleCoordStore);
-		MinecraftForge.EVENT_BUS.post(sabe);
-		for(int i = 0; i < components.length; i++)
+		if(maxArea == 0)
 		{
-			ComponentInstance ci = components[i];
-			if(!ci.component.applyToBlock()) continue;
-			double magMult = sabe.spellMagnitudeMults[i];
-			double durMult = sabe.spellDurationMults[i];
-			if((magMult <= 0) || (durMult <= 0)) continue;
-			ci.component.apply(caster, simpleCoordStore, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
-			ISkill skill = ci.component.getMainSkill();
-			xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+			if(!affectBlocks) return;
+			HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+			SpellApplyBlockEvent sabe = new SpellApplyBlockEvent(caster, this, scs);
+			MinecraftForge.EVENT_BUS.post(sabe);
+			for(int i = 0; i < components.length; i++)
+			{
+				ComponentInstance ci = components[i];
+				if(!ci.component.applyToBlock()) continue;
+				double magMult = sabe.spellMagnitudeMults[i];
+				double durMult = sabe.spellDurationMults[i];
+				if((magMult <= 0) || (durMult <= 0)) continue;
+				ci.component.apply(caster, scs, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+				ISkill skill = ci.component.getMainSkill();
+				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+			}
+			if(caster instanceof EntityCaster)
+				((EntityCaster)caster).applyXP(xpMap);
 		}
-		if(caster instanceof EntityCaster)
-			((EntityCaster)caster).applyXP(xpMap);
+		else
+			applyArea(caster,scs.getCenter());
 	}
 
 	/**
@@ -251,22 +259,28 @@ public class Spell
 	 */
 	public void apply(ICaster caster, Entity ent)
 	{
-		HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
-		SpellApplyEntityEvent saee = new SpellApplyEntityEvent(caster, this, ent);
-		MinecraftForge.EVENT_BUS.post(saee);
-		for(int i = 0; i < components.length; i++)
+		if(maxArea == 0)
 		{
-			ComponentInstance ci = components[i];
-			if(!ci.component.applyToEnt()) continue;
-			double magMult = saee.spellMagnitudeMults[i];
-			double durMult = saee.spellDurationMults[i];
-			if((magMult <= 0) || (durMult <= 0)) continue;
-			ci.component.apply(caster, ent, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
-			ISkill skill = ci.component.getMainSkill();
-			xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+			if(!affectEntities) return;
+			HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+			SpellApplyEntityEvent saee = new SpellApplyEntityEvent(caster, this, ent);
+			MinecraftForge.EVENT_BUS.post(saee);
+			for(int i = 0; i < components.length; i++)
+			{
+				ComponentInstance ci = components[i];
+				if(!ci.component.applyToEnt()) continue;
+				double magMult = saee.spellMagnitudeMults[i];
+				double durMult = saee.spellDurationMults[i];
+				if((magMult <= 0) || (durMult <= 0)) continue;
+				ci.component.apply(caster, ent, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+				ISkill skill = ci.component.getMainSkill();
+				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+			}
+			if(caster instanceof EntityCaster)
+				((EntityCaster)caster).applyXP(xpMap);
 		}
-		if(caster instanceof EntityCaster)
-			((EntityCaster)caster).applyXP(xpMap);
+		else
+			applyArea(caster, new SimpleDoubleCoordStore(ent));
 	}
 
 	public static class SpellNameComparator implements Comparator<Spell>
