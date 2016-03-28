@@ -181,6 +181,7 @@ public class Spell
 		for(int i = 0; i < components.length; i++)
 		{
 			ComponentInstance ci = components[i];
+			if(!ci.component.applyToEnt()) continue;
 			double magMult = saee.spellMagnitudeMults[i];
 			double durMult = saee.spellDurationMults[i];
 			if((magMult <= 0) || (durMult <= 0)) continue;
