@@ -10,5 +10,5 @@ public interface IMagnitudeComponent
 	 * Allows a spell component to alter the cost of the component based on the magnitude of the effect.
 	 * @return how much the component should cost with this magnitude
 	 */
-	public double getCostMag(double magnitude, double oldCost);
+	public double getCostMag(int magnitude, double oldCost);
 }
