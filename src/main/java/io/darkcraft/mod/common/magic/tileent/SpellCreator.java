@@ -174,8 +174,8 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 					if(pl == null) continue;
 					PlayerCaster c = Helper.getPlayerCaster(pl);
 					c.learnSpell(currentSpell);
-					setSpell(null,null);
 				}
+				setSpell(null,null);
 			}
 		}
 		else
