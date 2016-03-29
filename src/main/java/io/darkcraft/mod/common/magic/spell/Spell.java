@@ -2,6 +2,7 @@ package io.darkcraft.mod.common.magic.spell;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
@@ -119,12 +120,19 @@ public class Spell
 
 	public ResourceLocation getTexture()
 	{
-		return components[0].component.getProjectileTexture();
+		return mostExpensiveComponent.component.getProjectileTexture();
 	}
 
-	private double xpFunction(double cost)
+	public UVStore getTextureLocation(int frame)
 	{
-		return cost * MagicConfig.xpCostMult;
+		return mostExpensiveComponent.component.getProjectileLocation(frame);
+	}
+
+	private double xpFunction(ComponentInstance ci, boolean ent)
+	{
+		if(ent)
+			return (ci.cost * MagicConfig.xpCostMult) / (ci.area + 1);
+		return (ci.cost * MagicConfig.xpCostMult) / ci.areaCubed;
 	}
 
 	public ISkill getMainSkill()
@@ -175,7 +183,7 @@ public class Spell
 							double durMult = sabe.spellDurationMults[i];
 							ci.component.apply(caster, scs, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
 							ISkill skill = ci.component.getMainSkill();
-							xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+							xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,false));
 						}
 					}
 		}
@@ -212,7 +220,7 @@ public class Spell
 					if((magMult <= 0) || (durMult <= 0)) continue;
 					ci.component.apply(caster, e, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
 					ISkill skill = ci.component.getMainSkill();
-					xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+					xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,true));
 				}
 			}
 		}
@@ -243,7 +251,7 @@ public class Spell
 				if((magMult <= 0) || (durMult <= 0)) continue;
 				ci.component.apply(caster, scs, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
 				ISkill skill = ci.component.getMainSkill();
-				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,false));
 			}
 			if(caster instanceof EntityCaster)
 				((EntityCaster)caster).applyXP(xpMap);
@@ -274,7 +282,7 @@ public class Spell
 				if((magMult <= 0) || (durMult <= 0)) continue;
 				ci.component.apply(caster, ent, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
 				ISkill skill = ci.component.getMainSkill();
-				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci.cost));
+				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,true));
 			}
 			if(caster instanceof EntityCaster)
 				((EntityCaster)caster).applyXP(xpMap);
@@ -285,7 +293,7 @@ public class Spell
 
 	public static class SpellNameComparator implements Comparator<Spell>
 	{
-		public static SpellNameComparator withSkill = new SpellNameComparator(false);
+		public static SpellNameComparator withSkill = new SpellNameComparator(true);
 		public static SpellNameComparator noSkill = new SpellNameComparator(false);
 
 		private final boolean useSkill;

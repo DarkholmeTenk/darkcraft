@@ -102,10 +102,11 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	}
 
 	@Override
-	public ResourceLocation getProjectileTexture()
-	{
-		return tex;
-	}
+	public ResourceLocation getProjectileTexture(){ return MagicalRegistry.projectileTex; }
+
+	private static final UVStore[] uvs = new UVStore[]{new UVStore(0,0.0625,0,0.0625), new UVStore(0,0.0625,0.0625,0.125)};
+	@Override
+	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 
 	@Override
 	public String getUnlocalisedName(){return "darkcraft.component.damage";}

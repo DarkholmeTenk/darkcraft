@@ -74,10 +74,11 @@ public class Fly implements IComponent, IDurationComponent
 	public boolean applyToBlock(){return false;}
 
 	@Override
-	public ResourceLocation getProjectileTexture()
-	{
-		return null;
-	}
+	public ResourceLocation getProjectileTexture(){ return MagicalRegistry.projectileTex; }
+
+	private static final UVStore[] uvs = new UVStore[]{new UVStore(0.125,0.1875,0,0.0625), new UVStore(0,0.0625,0.0625,0.125)};
+	@Override
+	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 
 	@Override
 	public String getUnlocalisedName(){return "darkcraft.component.fly";}

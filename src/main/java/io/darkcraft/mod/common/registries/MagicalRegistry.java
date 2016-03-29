@@ -16,12 +16,12 @@ import net.minecraft.util.ResourceLocation;
 public class MagicalRegistry
 {
 	public static final ResourceLocation componentTex = new ResourceLocation(DarkcraftMod.modName,"textures/gui/components/components.png");
+	public static final ResourceLocation projectileTex = new ResourceLocation(DarkcraftMod.modName,"textures/project/projectiles.png");
 	public static final DamageSource magicDamage = new DamageSource("dcMagicDamage");
-	private static Dig dig = new Dig();
-	private static Damage damage = new Damage();
-	private static Fly fly = new Fly();
-	private static Test test = new Test();
-
+	public static final Dig dig = new Dig();
+	public static final Damage damage = new Damage();
+	public static final Fly fly = new Fly();
+	public static final Test test = new Test();
 	public static void registerMagic()
 	{
 		SpellPartRegistry.registerComponent(dig);

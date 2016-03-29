@@ -25,7 +25,7 @@ public class Test implements IComponent
 	@Override
 	public ISkill getMainSkill()
 	{
-		return SkillRegistry.alteration;
+		return SkillRegistry.destruction;
 	}
 
 	@Override
@@ -65,11 +65,10 @@ public class Test implements IComponent
 	}
 
 	@Override
-	public ResourceLocation getProjectileTexture()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ResourceLocation getProjectileTexture(){ return MagicalRegistry.damage.getProjectileTexture(); }
+
+	@Override
+	public UVStore getProjectileLocation(int f){ return MagicalRegistry.damage.getProjectileLocation(f); }
 
 	@Override
 	public String getUnlocalisedName(){return "darkcraft.component.test";}

@@ -49,4 +49,6 @@ public interface IComponent
 	public boolean applyToBlock();
 
 	public ResourceLocation getProjectileTexture();
+
+	public UVStore getProjectileLocation(int frame);
 }

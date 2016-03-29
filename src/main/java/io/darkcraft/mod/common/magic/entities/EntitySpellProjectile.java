@@ -143,15 +143,15 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	@Override
 	public void writeToNBTTransmittable(NBTTagCompound nbt)
 	{
-		writeToNBT(nbt);
-		//writeEntityToNBT(nbt);
+		//writeToNBT(nbt);
+		writeEntityToNBT(nbt);
 	}
 
 	@Override
 	public void readFromNBTTransmittable(NBTTagCompound nbt)
 	{
-		readFromNBT(nbt);
-		//readEntityFromNBT(nbt);
+		//readFromNBT(nbt);
+		readEntityFromNBT(nbt);
 	}
 
 }

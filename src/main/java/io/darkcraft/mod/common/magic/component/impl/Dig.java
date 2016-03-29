@@ -3,6 +3,7 @@ package io.darkcraft.mod.common.magic.component.impl;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
@@ -36,10 +37,10 @@ public class Dig implements IComponent, IMagnitudeComponent
 	@Override
 	public double getCost()
 	{
-		return 2;
+		return 6;
 	}
 
-	private boolean canBreak(int magnitude, float hardness)
+	protected boolean canBreak(int magnitude, float hardness)
 	{
 		if(hardness < 3) return true;
 		if((magnitude >= 2) && (hardness < 50)) return true;
@@ -57,7 +58,7 @@ public class Dig implements IComponent, IMagnitudeComponent
 		{
 			ArrayList<ItemStack> drops = b.getDrops(bp.getWorldObj(), bp.x, bp.y, bp.z, bp.getMetadata(), 0);
 			bp.setToAir();
-			if(drops != null)
+			if((drops != null) && ServerHelper.isServer())
 			{
 				SimpleDoubleCoordStore center = bp.getCenter();
 				for(ItemStack is : drops)
@@ -86,10 +87,11 @@ public class Dig implements IComponent, IMagnitudeComponent
 	}
 
 	@Override
-	public ResourceLocation getProjectileTexture()
-	{
-		return null;
-	}
+	public ResourceLocation getProjectileTexture(){ return MagicalRegistry.projectileTex; }
+
+	private static final UVStore[] uvs = new UVStore[]{new UVStore(0.0625,0.125,0,0.0625)};
+	@Override
+	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 
 	@Override
 	public String getUnlocalisedName(){return "darkcraft.component.dig";}
