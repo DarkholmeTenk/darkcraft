@@ -44,6 +44,8 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(damage);
 		SpellPartRegistry.registerComponent(damageHunger);
 		SpellPartRegistry.registerComponent(damageMagicka);
+		SpellPartRegistry.registerComponent(restoreHealth);
+		SpellPartRegistry.registerComponent(restoreHunger);
 		SpellPartRegistry.registerComponent(fly);
 		SpellPartRegistry.registerComponent(test);
 

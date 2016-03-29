@@ -156,9 +156,7 @@ public class SpellSelectionGui extends GuiScreen
 				List<Spell> spl = pc.getKnownSpells();
 				int index = hover + scroll;
 				if(index < spl.size())
-				{
 					pc.setCurrentSpell(index);
-				}
 				else
 					pc.setCurrentSpell(-1);
 			}
