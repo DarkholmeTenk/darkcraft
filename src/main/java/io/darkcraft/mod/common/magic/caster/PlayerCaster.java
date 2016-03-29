@@ -239,7 +239,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		{
 			NBTTagCompound nbt = lnbt.getCompoundTag("dcpc");
 			currentSpell = nbt.hasKey("cs") ? nbt.getInteger("cs") : -1;
-			synchronized(knownSpells)
+			synchronized(knownSpells){ synchronized(knownComponents)
 			{
 				int i = 0;
 				knownSpells.clear();
@@ -251,17 +251,14 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 						knownSpells.add(s);
 					i++;
 				}
-				sortSpells();
-			}
-			synchronized(knownComponents)
-			{
-				int i = 0;
+				i = 0;
 				knownComponents.clear();
 				while(nbt.hasKey("kc"+i))
 					knownComponents.add(SpellPartRegistry.getComponent(nbt.getString("kc"+(i++))));
-			}
-			if(nbt.hasKey("hotkeys"))
-				hotkeys = nbt.getIntArray("hotkeys");
+				if(nbt.hasKey("hotkeys"))
+					hotkeys = nbt.getIntArray("hotkeys");
+				sortSpells();
+			}}
 		}
 	}
 
