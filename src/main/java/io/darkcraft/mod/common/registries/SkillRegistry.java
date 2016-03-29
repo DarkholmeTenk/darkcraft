@@ -26,8 +26,8 @@ public class SkillRegistry
 		api.registerSkill(illusion);
 	}
 
-	public static ISkill[] skills = new ISkill[]{alteration,conjuration,destruction,illusion,mysticism,restoration};
-	public static int getIndex(ISkill skill)
+	public static ISkill[] magicSkills = new ISkill[]{alteration,conjuration,destruction,illusion,mysticism,restoration};
+	public static int getMagicIndex(ISkill skill)
 	{
 		if(skill == alteration) return  0;
 		if(skill == conjuration) return 1;
