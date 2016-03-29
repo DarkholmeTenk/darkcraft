@@ -44,7 +44,7 @@ public class EntityCaster implements ICaster
 	@Override
 	public double getMana()
 	{
-		return 0;
+		return 100;
 	}
 
 	@Override
@@ -112,7 +112,10 @@ public class EntityCaster implements ICaster
 				for(Entry<ISkill, Double> entry : xpMap.entrySet())
 					if((maxEntry == null) || (entry.getValue() > maxEntry.getValue()))
 						maxEntry = entry;
-				handler.addXP(maxEntry.getKey(), maxEntry.getValue());
+				double xp = Math.max(maxEntry.getValue(), 5);
+				double mult = 2.5 - (2*(handler.getLevelPercent(maxEntry.getKey())));
+				xp *= mult;
+				handler.addXP(maxEntry.getKey(), xp);
 				maxEntry.setValue(0.0);
 			}
 		}
@@ -196,4 +199,6 @@ public class EntityCaster implements ICaster
 			return new SimpleDoubleCoordStore(ent);
 		return null;
 	}
+
+	public void sendUpdate(){}
 }
