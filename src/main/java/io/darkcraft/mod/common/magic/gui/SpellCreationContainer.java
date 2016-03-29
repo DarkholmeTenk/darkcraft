@@ -106,21 +106,21 @@ public class SpellCreationContainer extends Container
 	public int getArea()
 	{
 		int max = 5;
-		return (int)(max * area);
+		return MathHelper.round(max * area);
 	}
 
 	public int getMagnitude()
 	{
 		if(!(selectedComponent instanceof IMagnitudeComponent)) return 0;
 		IMagnitudeComponent c = (IMagnitudeComponent) selectedComponent;
-		return (int) (((c.getMaxMagnitude() - c.getMinMagnitude()) * magnitude) + c.getMinMagnitude());
+		return MathHelper.round(((c.getMaxMagnitude() - c.getMinMagnitude()) * magnitude) + c.getMinMagnitude());
 	}
 
 	public int getDuration()
 	{
 		if(!(selectedComponent instanceof IDurationComponent)) return 0;
 		IDurationComponent c = (IDurationComponent) selectedComponent;
-		return (int) (((c.getMaxDuration() - c.getMinDuration()) * duration) + c.getMinDuration());
+		return MathHelper.round(((c.getMaxDuration() - c.getMinDuration()) * duration) + c.getMinDuration());
 	}
 
 	public String getDurationString()
