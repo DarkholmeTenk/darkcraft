@@ -13,7 +13,7 @@ public class EffectDamage extends AbstractDarkcraftEffect
 
 	public EffectDamage(EntityLivingBase ent, ICaster caster, int magnitude, int duration)
 	{
-		super("damage", caster, ent, magnitude, duration, true, true, 20);
+		super("damage", caster, ent, magnitude, duration-1, true, true, 20);
 	}
 
 	@Override
