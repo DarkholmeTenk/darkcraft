@@ -28,12 +28,10 @@ public class EffectDamage extends AbstractDarkcraftEffect
 	public void apply()
 	{
 		getEntity().attackEntityFrom(MagicalRegistry.magicDamage, magnitude);
-		System.out.println("Damage"+getTT()+"/"+duration);
 		if(caster instanceof EntityCaster)
 		{
 			EntityLivingBase ent = ((EntityCaster) caster).getCaster();
 			getEntity().setRevengeTarget(ent);
 		}
 	}
-
 }

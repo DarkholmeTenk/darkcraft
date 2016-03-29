@@ -5,6 +5,8 @@ import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
 import io.darkcraft.mod.common.magic.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.component.impl.Damage;
+import io.darkcraft.mod.common.magic.component.impl.DamageHunger;
+import io.darkcraft.mod.common.magic.component.impl.DamageMagicka;
 import io.darkcraft.mod.common.magic.component.impl.Dig;
 import io.darkcraft.mod.common.magic.component.impl.DigFortune;
 import io.darkcraft.mod.common.magic.component.impl.DigSilk;
@@ -20,20 +22,27 @@ public class MagicalRegistry
 	public static final ResourceLocation componentTex = new ResourceLocation(DarkcraftMod.modName,"textures/gui/components/components.png");
 	public static final ResourceLocation projectileTex = new ResourceLocation(DarkcraftMod.modName,"textures/project/projectiles.png");
 	public static final DamageSource magicDamage = new DamageSource("dcMagicDamage");
+
 	public static final Dig dig = new Dig();
 	public static final DigFortune digfortune = new DigFortune();
 	public static final DigSilk digsilk = new DigSilk();
 	public static final Damage damage = new Damage();
+	public static final DamageHunger damageHunger = new DamageHunger();
+	public static final DamageMagicka damageMagicka = new DamageMagicka();
 	public static final Fly fly = new Fly();
 	public static final Test test = new Test();
+
 	public static void registerMagic()
 	{
 		SpellPartRegistry.registerComponent(dig);
 		SpellPartRegistry.registerComponent(digsilk);
 		SpellPartRegistry.registerComponent(digfortune);
 		SpellPartRegistry.registerComponent(damage);
+		SpellPartRegistry.registerComponent(damageHunger);
+		SpellPartRegistry.registerComponent(damageMagicka);
 		SpellPartRegistry.registerComponent(fly);
 		SpellPartRegistry.registerComponent(test);
+
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
 
 		new MagicEventHandler();
