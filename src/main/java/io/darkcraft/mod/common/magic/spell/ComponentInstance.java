@@ -19,6 +19,7 @@ public class ComponentInstance
 	public final int duration;
 	public final double cost;
 	public final int area;
+	public final double areaCubed;
 
 	public ComponentInstance(IComponent comp, int mag, int dur){this(comp,mag,dur,0);}
 
@@ -47,6 +48,8 @@ public class ComponentInstance
 		if(area > 0)
 			tempCost *= Math.pow(1.75, area);
 		cost = tempCost;
+		double ar = (area * 2) + 1;
+		areaCubed = ar * ar * ar;
 	}
 
 	public ISkill getMainSkill()
