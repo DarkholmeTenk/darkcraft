@@ -89,7 +89,7 @@ public class Dig implements IComponent, IMagnitudeComponent
 	@Override
 	public ResourceLocation getProjectileTexture(){ return MagicalRegistry.projectileTex; }
 
-	private static final UVStore[] uvs = new UVStore[]{new UVStore(0.0625,0.125,0,0.0625)};
+	private static final UVStore[] uvs = new UVStore[]{new UVStore(0.1,0.2,0,0.1)};
 	@Override
 	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 

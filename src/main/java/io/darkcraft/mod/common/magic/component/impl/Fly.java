@@ -76,7 +76,7 @@ public class Fly implements IComponent, IDurationComponent
 	@Override
 	public ResourceLocation getProjectileTexture(){ return MagicalRegistry.projectileTex; }
 
-	private static final UVStore[] uvs = new UVStore[]{new UVStore(0.125,0.1875,0,0.0625), new UVStore(0,0.0625,0.0625,0.125)};
+	private static final UVStore[] uvs = new UVStore[]{new UVStore(0.2,0.3,0,0.1)};
 	@Override
 	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 

@@ -11,6 +11,8 @@ import io.darkcraft.mod.common.magic.component.impl.Dig;
 import io.darkcraft.mod.common.magic.component.impl.DigFortune;
 import io.darkcraft.mod.common.magic.component.impl.DigSilk;
 import io.darkcraft.mod.common.magic.component.impl.Fly;
+import io.darkcraft.mod.common.magic.component.impl.RestoreHealth;
+import io.darkcraft.mod.common.magic.component.impl.RestoreHunger;
 import io.darkcraft.mod.common.magic.component.impl.Test;
 import io.darkcraft.mod.common.magic.component.impl.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.spell.Spell;
@@ -29,6 +31,8 @@ public class MagicalRegistry
 	public static final Damage damage = new Damage();
 	public static final DamageHunger damageHunger = new DamageHunger();
 	public static final DamageMagicka damageMagicka = new DamageMagicka();
+	public static final RestoreHealth restoreHealth = new RestoreHealth();
+	public static final RestoreHunger restoreHunger = new RestoreHunger();
 	public static final Fly fly = new Fly();
 	public static final Test test = new Test();
 
