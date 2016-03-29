@@ -47,6 +47,7 @@ public class StatusOverlay
 
 	private void renderSpell(EntityPlayer pl, PlayerCaster pc, Tessellator tess)
 	{
+		FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
 		GL11.glPushMatrix();
 		GL11.glTranslatef(w, h, 0);
 		RenderHelper.uiFace(-34, -36, 24, 24, 1, sCon, true);
@@ -55,9 +56,8 @@ public class StatusOverlay
 			Spell sp = pc.getCurrentSpell();
 			ClientHelper.renderSpellIcon(sp, -30, -32, 16, 16);
 			String s = sp.name;
-			FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
 			int l = fr.getStringWidth(s);
-			fr.drawString(s, -14-l, -12, 0);
+			fr.drawString(s, -14-l, -12, 16777215, true);
 			if(pl.isSneaking() && Helper.canCast(pl))
 			{
 				int index = pc.getCurrentSpellIndex();
@@ -65,6 +65,9 @@ public class StatusOverlay
 				ClientHelper.renderSpellIcon(pc.getSpell(index+1), -30, -52, 16, 16);
 			}
 		}
+		String mana = String.format("%.0f/%.0f",pc.getMana(),pc.getMaxMana());
+		int l = fr.getStringWidth(mana);
+		fr.drawString(mana, -2-l, -142, 16777215, true);
 		GL11.glPopMatrix();
 	}
 
