@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.magic.caster;
 
 import io.darkcraft.darkcore.mod.DarkcoreMod;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.network.DataPacket;
@@ -10,12 +11,15 @@ import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
+import io.darkcraft.mod.common.registries.MagicConfig;
+import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,15 +28,25 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import skillapi.api.implement.ISkill;
+import skillapi.api.internal.ISkillHandler;
 
 public class PlayerCaster extends EntityCaster implements IExtendedEntityProperties
 {
+	private static Set<PlayerCaster> registeredCasters = Collections.newSetFromMap(new WeakHashMap<PlayerCaster,Boolean>());
+	public static void tickAll()
+	{
+		synchronized(registeredCasters)
+		{
+			for(PlayerCaster pc : registeredCasters)
+				pc.tick();
+		}
+	}
 	private List<Spell> knownSpells = new ArrayList<Spell>();
 	private List<Spell> unmodSpells = Collections.unmodifiableList(knownSpells);
 	private Set<IComponent> knownComponents = new HashSet<IComponent>();
 	private int currentSpell = -1;
 	private int[] hotkeys = new int[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-
 	public PlayerCaster(EntityPlayer pl)
 	{
 		super(pl);
@@ -209,6 +223,8 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		}
 		nbt.setInteger("cs", currentSpell);
 		nbt.setIntArray("hotkeys", hotkeys);
+		nbt.setDouble("maxMana", maxMana);
+		nbt.setDouble("mana", mana);
 		lnbt.setTag("dcpc", nbt);
 	}
 
@@ -259,9 +275,12 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 					hotkeys = nbt.getIntArray("hotkeys");
 				sortSpells();
 			}}
+			maxMana = nbt.getDouble("maxMana");
+			mana = nbt.getDouble("mana");
 		}
 	}
 
+	@Override
 	public void sendUpdate()
 	{
 		EntityPlayer pl = getCaster();
@@ -290,6 +309,65 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	{
 		if(ServerHelper.isServer())
 			MagicEventHandler.updateQueue.add(this);
+		synchronized(registeredCasters)
+		{
+			registeredCasters.add(this);
+		}
+	}
+
+	private double mana = 100;
+	private double maxMana = 100;
+	@Override
+	public double getMana()
+	{
+		return mana;
+	}
+
+	public double getManaRegen()
+	{
+		if(MagicConfig.regenPercent)
+			return getMaxMana() * MagicConfig.manaRegenRate;
+		return MagicConfig.manaRegenRate;
+	}
+
+	@Override
+	public double getMaxMana()
+	{
+		return maxMana;
+	}
+
+	public void updateMaxMana()
+	{
+		EntityPlayer pl = getCaster(); if(pl == null) return;
+		ISkillHandler sh = SkillRegistry.api.getSkillHandler(pl);
+		double tl = 0;
+		for(ISkill sk : SkillRegistry.magicSkills)
+			tl += sh.getLevelPercent(sk);
+		tl /= SkillRegistry.magicSkills.length;
+		tl = Math.pow(tl, 2.5);
+		maxMana = (tl * (MagicConfig.maxMana - MagicConfig.minMana)) + MagicConfig.minMana;
+		sendUpdate();
+	}
+
+	@Override
+	public boolean useMana(double amount, boolean sim)
+	{
+		EntityPlayer pl = getCaster();
+		if((pl != null) && pl.capabilities.isCreativeMode) return true;
+		boolean r = amount <= getMana();
+		if(r && !sim) mana -= amount;
+		if(ServerHelper.isServer() && !sim)
+			sendUpdate();
+		return r;
+	}
+
+	int tt = 0;
+	public void tick()
+	{
+		tt++;
+		if((tt % 20) != 0) return;
+		if(maxMana < MagicConfig.minMana) updateMaxMana();
+		mana = MathHelper.clamp(mana + Math.max(1,getManaRegen()), 0, getMaxMana());
 	}
 
 }
