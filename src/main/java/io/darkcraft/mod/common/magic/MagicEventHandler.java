@@ -11,6 +11,7 @@ import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
+import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,6 +29,8 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import skillapi.api.implement.ISkill;
+import skillapi.api.internal.events.EntitySkillChangeEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
@@ -49,6 +52,7 @@ public class MagicEventHandler
 	{
 		if((event.phase == Phase.END) && (event.type == Type.SERVER))
 		{
+			PlayerCaster.tickAll();
 			synchronized(updateQueue)
 			{
 				Iterator<PlayerCaster> iter = updateQueue.iterator();
@@ -117,5 +121,19 @@ public class MagicEventHandler
 				event.setCanceled(true);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void handleSkillChange(EntitySkillChangeEvent event)
+	{
+		EntityLivingBase ent = event.ent;
+		if(!(ent instanceof EntityPlayer))return;
+		boolean f = false;
+		for(ISkill sk : SkillRegistry.magicSkills)
+			if(sk == event.skill)
+				f = true;
+		if(!f) return;
+		PlayerCaster pc = Helper.getPlayerCaster((EntityPlayer) ent);
+		pc.updateMaxMana();
 	}
 }
