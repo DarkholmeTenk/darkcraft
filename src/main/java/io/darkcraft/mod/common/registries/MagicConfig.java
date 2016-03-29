@@ -35,6 +35,12 @@ public class MagicConfig
 
 	public static boolean		deity = true;
 
+	//COMPONENT BALANCE
+	public static ConfigFile	cbConfig;
+	public static double fortuneMult = 6;
+	public static int fortuneLevel = 3;
+	public static double silkMult = 3;
+
 	public static void refreshConfigs()
 	{
 		if (config == null) config = DarkcraftMod.configHandler.registerConfigNeeder("Magic");
@@ -57,5 +63,10 @@ public class MagicConfig
 		magicVortexNumRings = config.getInt("magic vortex - num rings", 30, "Number of rings to render");
 
 		deity = config.getBoolean("Deity - Enabled", true, "Is the deity system enabled");
+
+		if(cbConfig == null) cbConfig = DarkcraftMod.configHandler.registerConfigNeeder("Magic Component Balance");
+		fortuneMult = cbConfig.getDouble("Fortune cost multiplier", 6, "Configures how much of a cost increase fortune is on excavate");
+		fortuneLevel = cbConfig.getInt("Fortune level", 3, "The level of fortune fortune spells have");
+		silkMult = cbConfig.getDouble("Silk cost multiplier", 3, "Configures how much of a cost increase silk touch is on excavate");
 	}
 }

@@ -16,6 +16,8 @@ darkcraft.component.damage=Damage Health
 darkcraft.component.fly=Levitate
 darkcraft.component.test=TestPlzIgnore
 darkcraft.component.dig=Excavate
+darkcraft.component.digsilk=Gentle Excavate
+darkcraft.component.digfortune=Greedy Excavate
 
 tile.darkcraft.MagicInventory.name=Magical Storage
 
