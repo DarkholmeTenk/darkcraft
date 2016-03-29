@@ -159,6 +159,8 @@ public class SpellSelectionGui extends GuiScreen
 				{
 					pc.setCurrentSpell(index);
 				}
+				else
+					pc.setCurrentSpell(-1);
 			}
 		}
 		if(c == 1)
