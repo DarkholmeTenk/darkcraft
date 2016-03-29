@@ -29,6 +29,11 @@ public class MagicConfig
 	public static int			maxSkillXPFromSpell = 25;
 	public static int			maxSkillsXPFromSpell = 3;
 
+	public static int maxMana = 100000;
+	public static int minMana = 100;
+	public static double manaRegenRate = 0.005;
+	public static boolean regenPercent = true;
+
 	public static boolean		traceLiquids = false;
 	public static int			touchCastDistance = 1;
 	public static boolean		castWithHand = true;
@@ -63,6 +68,8 @@ public class MagicConfig
 		magicVortexNumRings = config.getInt("magic vortex - num rings", 30, "Number of rings to render");
 
 		deity = config.getBoolean("Deity - Enabled", true, "Is the deity system enabled");
+		manaRegenRate = config.getDouble("Mana - Regen rate", 0.005, "How much mana a player regens per second","If Regen Percent is true, this is the percent of the player's mana that gets regen (with 1 being all)","Else this is the amount of mana that regens per second");
+		regenPercent = config.getBoolean("Mana - Regen percent", true, "If true, regen an amount of mana proportional to max mana","Else regen a flat amount");
 
 		if(cbConfig == null) cbConfig = DarkcraftMod.configHandler.registerConfigNeeder("Magic Component Balance");
 		fortuneMult = cbConfig.getDouble("Fortune cost multiplier", 6, "Configures how much of a cost increase fortune is on excavate");
