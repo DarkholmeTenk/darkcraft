@@ -342,9 +342,8 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		ISkillHandler sh = SkillRegistry.api.getSkillHandler(pl);
 		double tl = 0;
 		for(ISkill sk : SkillRegistry.magicSkills)
-			tl += sh.getLevelPercent(sk);
+			tl += Math.pow(sh.getLevelPercent(sk), 2.5);
 		tl /= SkillRegistry.magicSkills.length;
-		tl = Math.pow(tl, 2.5);
 		maxMana = (tl * (MagicConfig.maxMana - MagicConfig.minMana)) + MagicConfig.minMana;
 		sendUpdate();
 	}
