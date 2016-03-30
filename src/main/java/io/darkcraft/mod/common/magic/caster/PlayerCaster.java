@@ -124,7 +124,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setString("pln", PlayerHelper.getUsername(getCaster()));
 			nbt.setInteger("curSpellIndex", currentSpell);
-			DarkcoreMod.networkChannel.sendToServer(new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc));
+			DarkcoreMod.networkChannel.sendToServer(new DataPacket(nbt,PlayerCasterPacketHandler.disc));
 		}
 	}
 
@@ -187,7 +187,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("pln", un);
 		nbt.setInteger("rem", index);
-		DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
+		DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 		DarkcoreMod.networkChannel.sendToServer(dp);
 	}
 
@@ -292,14 +292,14 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			nbt.setString("pln", un);
 			nbt.setInteger("curSpellIndex", currentSpell);
 			nbt.setIntArray("hotkeys", hotkeys);
-			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
+			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 			DarkcoreMod.networkChannel.sendToServer(dp);
 		}
 		else if(ServerHelper.isServer())
 		{
 			NBTTagCompound nbt = new NBTTagCompound();
 			saveNBTData(nbt);
-			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
+			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 			DarkcoreMod.networkChannel.sendTo(dp,(EntityPlayerMP) pl);
 		}
 	}

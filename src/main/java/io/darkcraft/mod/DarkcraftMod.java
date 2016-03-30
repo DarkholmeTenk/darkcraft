@@ -29,7 +29,7 @@ import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.1", dependencies = "required-after:darkcore; required-after:SkillAPI")
+@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.1", dependencies = "required-after:darkcore@[0.4]; required-after:SkillAPI")
 public class DarkcraftMod implements IConfigHandlerMod
 {
 	public static DarkcraftMod				i;
@@ -67,8 +67,8 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void init(FMLInitializationEvent event)
 	{
 		NetworkRegistry.INSTANCE.registerGuiHandler(i, proxy);
-		DarkcoreMod.packetHandler.registerHandler(SpellCreationPacketHandler.spellCreationDisc, new SpellCreationPacketHandler());
-		DarkcoreMod.packetHandler.registerHandler(PlayerCasterPacketHandler.pcDisc, new PlayerCasterPacketHandler());
+		DarkcoreMod.packetHandler.registerHandler(SpellCreationPacketHandler.disc, new SpellCreationPacketHandler());
+		DarkcoreMod.packetHandler.registerHandler(PlayerCasterPacketHandler.disc, new PlayerCasterPacketHandler());
 		proxy.init();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
 	}

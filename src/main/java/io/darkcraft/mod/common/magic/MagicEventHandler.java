@@ -109,7 +109,7 @@ public class MagicEventHandler
 				NBTTagCompound nbt = new NBTTagCompound();
 				nbt.setString("pln", un);
 				nbt.setString("rca", "yup");
-				DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.pcDisc);
+				DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 				DarkcoreMod.networkChannel.sendToServer(dp);
 			}
 			if(ServerHelper.isClient())return;

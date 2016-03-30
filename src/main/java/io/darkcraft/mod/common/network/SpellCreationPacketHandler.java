@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SpellCreationPacketHandler implements IDataPacketHandler
 {
-	public final static byte spellCreationDisc = 50;
+	public final static String disc = "dc.spellcreate";
 
 	@Override
 	public void handleData(NBTTagCompound data)
@@ -70,6 +70,6 @@ public class SpellCreationPacketHandler implements IDataPacketHandler
 		Spell spell = new Spell(container.name,container.spellSoFar.components,container.castType);
 		spell.writeToNBT(nbt);
 		nbt.setString("plname", un);
-		return new DataPacket(nbt,spellCreationDisc);
+		return new DataPacket(nbt,disc);
 	}
 }

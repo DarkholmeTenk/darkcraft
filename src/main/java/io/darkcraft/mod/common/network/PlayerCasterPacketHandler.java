@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class PlayerCasterPacketHandler implements IDataPacketHandler
 {
-	public static final byte pcDisc = 51;
+	public static final String disc = "dc.playercaster";
 
 	@Override
 	public void handleData(NBTTagCompound data)
