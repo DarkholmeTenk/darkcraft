@@ -97,35 +97,40 @@ public class SpellCreatorRenderer extends AbstractObjRenderer
 	public void renderBlock(Tessellator tess, TileEntity te, int x, int y, int z)
 	{
 		if(obj == null) obj = AdvancedModelLoader.loadModel(new ResourceLocation(DarkcraftMod.modName,"models/tiles/spellcreator.obj"));
-		int period = 15;
-		if((getTime() % (360 * period*2)) <= period)
-		{
-			do
-			{
-				xr = DarkcoreMod.r.nextInt(3);
-				yr = DarkcoreMod.r.nextInt(3);
-				zr = DarkcoreMod.r.nextInt(3);
-			}
-			while(((xr==0)&&(yr==0)&&(zr==0)) || ((xr==yr)&&(yr==zr)));
-		}
-		int angle = (int) ((getTime() / period) % 360);
-		SpellCreator sc = (SpellCreator)te;
 		RenderHelper.bindTexture(tex);
 		obj.renderPart("Base_Cube.001");
-		if(sc.isValidStructure())
+
+		if(te != null)
 		{
-			GL11.glPushMatrix();
-			GL11.glTranslatef(0, 2f, 0);
-			GL11.glRotatef(angle, xr,yr,zr);
-			obj.renderPart("Float_Cube");
-			GL11.glPopMatrix();
-			GL11.glPushMatrix();
-			GL11.glScalef(0.05f, 0.05f, 0.05f);
-			renderSideText(0);
-			renderSideText(90);
-			renderSideText(180);
-			renderSideText(270);
-			GL11.glPopMatrix();
+			int period = 15;
+			if((getTime() % (360 * period*2)) <= period)
+			{
+				do
+				{
+					xr = DarkcoreMod.r.nextInt(3);
+					yr = DarkcoreMod.r.nextInt(3);
+					zr = DarkcoreMod.r.nextInt(3);
+				}
+				while(((xr==0)&&(yr==0)&&(zr==0)) || ((xr==yr)&&(yr==zr)));
+			}
+			int angle = (int) ((getTime() / period) % 360);
+
+			SpellCreator sc = (SpellCreator)te;
+			if(sc.isValidStructure())
+			{
+				GL11.glPushMatrix();
+				GL11.glTranslatef(0, 2f, 0);
+				GL11.glRotatef(angle, xr,yr,zr);
+				obj.renderPart("Float_Cube");
+				GL11.glPopMatrix();
+				GL11.glPushMatrix();
+				GL11.glScalef(0.05f, 0.05f, 0.05f);
+				renderSideText(0);
+				renderSideText(90);
+				renderSideText(180);
+				renderSideText(270);
+				GL11.glPopMatrix();
+			}
 		}
 	}
 

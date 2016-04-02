@@ -59,6 +59,7 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(TechGenerator.class, new TechGeneratorRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicStaffChanger.class, new MagicStaffChangerRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(SpellCreator.class, new SpellCreatorRenderer());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.spellCreatorBlock),new SpellCreatorRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new EntitySpellProjectileRenderer());
 		ClientRegistry.registerKeyBinding(keyBind = new KeyBinding("darkcraft.key.open.desc", Keyboard.KEY_Y, "darkcraft.key.category"));
 	}
