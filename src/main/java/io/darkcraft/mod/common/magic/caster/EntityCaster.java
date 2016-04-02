@@ -54,6 +54,12 @@ public class EntityCaster implements ICaster
 	}
 
 	@Override
+	public double addMana(double amount, boolean sim)
+	{
+		return 0;
+	}
+
+	@Override
 	public boolean useMana(double amount, boolean sim)
 	{
 		return true;

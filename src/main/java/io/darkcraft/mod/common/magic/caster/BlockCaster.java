@@ -163,4 +163,11 @@ public class BlockCaster implements ICaster
 	{
 		return blockPos.getCenter();
 	}
+
+	@Override
+	public double addMana(double amount, boolean sim)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

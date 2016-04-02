@@ -20,6 +20,14 @@ public interface ICaster
 
 	public boolean useMana(double amount, boolean sim);
 
+	/**
+	 * Add mana to the caster's pool
+	 * @param amount the amount of mana to add
+	 * @param sim if true, simulates adding but does not actually add
+	 * @return the amount of mana from amount that did not get added. I.e. 0 means all mana was added
+	 */
+	public double addMana(double amount, boolean sim);
+
 	public void cast(Spell spell);
 
 	public void cast(Spell spell, SimpleCoordStore block);

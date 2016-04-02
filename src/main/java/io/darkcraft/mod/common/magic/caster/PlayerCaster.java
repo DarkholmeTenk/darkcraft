@@ -360,6 +360,22 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		return r;
 	}
 
+	@Override
+	public double addMana(double amount, boolean sim)
+	{
+		EntityPlayer pl = getCaster();
+		if(pl == null) return amount;
+		double a = MathHelper.clamp(amount, 0, getMaxMana() - getMana());
+		if(!sim)
+			mana += a;
+		return amount - a;
+	}
+
+	public void setMana(double amount)
+	{
+		mana = MathHelper.clamp(amount,0,getMaxMana());
+	}
+
 	int tt = 0;
 	public void tick()
 	{
