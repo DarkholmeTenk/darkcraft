@@ -10,7 +10,7 @@ public class BaseCommand extends AbstractCommandNew
 {
 	public BaseCommand()
 	{
-		super();
+		super(new MagicCommand());
 	}
 
 	@Override
@@ -30,5 +30,4 @@ public class BaseCommand extends AbstractCommandNew
 	{
 		return false;
 	}
-
 }
