@@ -10,6 +10,7 @@ import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.network.SpellCreationPacketHandler;
 import io.darkcraft.mod.common.registries.CommandRegistry;
+import io.darkcraft.mod.common.registries.DarkcraftCreativeTabs;
 import io.darkcraft.mod.common.registries.EntRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
@@ -17,6 +18,7 @@ import io.darkcraft.mod.common.registries.MagicalRegistry;
 
 import java.util.Random;
 
+import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -36,6 +38,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public static final String				modName					= "darkcraft";
 	public static Random					modRand					= new Random();
 	public static ConfigHandler				configHandler			= null;
+	public static CreativeTabs				tab						= new DarkcraftCreativeTabs();
 
 	@SidedProxy(clientSide = "io.darkcraft.mod.client.ClientProxy",
 			serverSide = "io.darkcraft.mod.common.CommonProxy")
@@ -54,6 +57,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		DarkcoreMod.registerCreativeTab(modName, tab);
 		configHandler = ConfigHandlerFactory.getConfigHandler(this);
 		ItemBlockRegistry.registerBlocks();
 		ItemBlockRegistry.registerItems();
