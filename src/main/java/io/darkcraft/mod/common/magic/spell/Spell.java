@@ -236,6 +236,8 @@ public class Spell
 	 */
 	public void apply(ICaster caster, SimpleCoordStore scs)
 	{
+		if((scs.getBlock() instanceof ISpellable) && ((ISpellable)scs.getBlock()).spellHit(scs, this, caster)) return;
+		if((scs.getTileEntity() instanceof ISpellable) && ((ISpellable)scs.getTileEntity()).spellHit(scs, this, caster)) return;
 		if(maxArea == 0)
 		{
 			if(!affectBlocks) return;
