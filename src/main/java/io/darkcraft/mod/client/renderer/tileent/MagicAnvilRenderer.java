@@ -41,6 +41,7 @@ public class MagicAnvilRenderer extends AbstractObjRenderer
 		if(te instanceof MagicAnvil)
 		{
 			MagicAnvil ma = (MagicAnvil)te;
+			if(ma.eiArr == null) return;
 			double d = 0.75;
 			for(int i = 0; i < 3; i++)
 				if(ma.eiArr[i] != null)
