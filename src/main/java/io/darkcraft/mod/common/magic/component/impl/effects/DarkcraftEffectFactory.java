@@ -27,6 +27,8 @@ public class DarkcraftEffectFactory implements IEffectFactory
 			return new EffectRestoreHealth(null,ent,mag,dur);
 		if(id.equals("darkcraft.restorehunger"))
 			return new EffectRestoreHunger(null,ent,mag,dur);
+		if(id.equals("darkcraft.soultrap"))
+			return new EffectSoulTrap(null,ent,mag,dur);
 		return null;
 	}
 

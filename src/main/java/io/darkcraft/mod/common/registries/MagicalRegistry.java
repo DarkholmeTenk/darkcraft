@@ -13,6 +13,7 @@ import io.darkcraft.mod.common.magic.component.impl.DigSilk;
 import io.darkcraft.mod.common.magic.component.impl.Fly;
 import io.darkcraft.mod.common.magic.component.impl.RestoreHealth;
 import io.darkcraft.mod.common.magic.component.impl.RestoreHunger;
+import io.darkcraft.mod.common.magic.component.impl.SoulTrap;
 import io.darkcraft.mod.common.magic.component.impl.Test;
 import io.darkcraft.mod.common.magic.component.impl.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.spell.Spell;
@@ -34,6 +35,7 @@ public class MagicalRegistry
 	public static final RestoreHealth restoreHealth = new RestoreHealth();
 	public static final RestoreHunger restoreHunger = new RestoreHunger();
 	public static final Fly fly = new Fly();
+	public static final SoulTrap soulTrap = new SoulTrap();
 	public static final Test test = new Test();
 
 	public static void registerMagic()
@@ -47,6 +49,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(restoreHealth);
 		SpellPartRegistry.registerComponent(restoreHunger);
 		SpellPartRegistry.registerComponent(fly);
+		SpellPartRegistry.registerComponent(soulTrap);
 		SpellPartRegistry.registerComponent(test);
 
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
