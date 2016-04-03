@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.spell;
 
+import io.darkcraft.api.magic.ISpellable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
