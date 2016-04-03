@@ -11,6 +11,8 @@ import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
 import io.darkcraft.mod.common.magic.blocks.SpellCreatorBlock;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
+import io.darkcraft.mod.common.magic.items.MagicScroll;
+import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.items.staff.Staff;
 import io.darkcraft.mod.common.magic.items.staff.parts.StaffPartRegistry;
 import io.darkcraft.mod.common.magic.items.staff.parts.bottom.DefaultStaffBottom;
@@ -50,10 +52,14 @@ public class ItemBlockRegistry
 
 	public static MagicComponent magicComponent = new MagicComponent();
 	public static Staff itemStaff = new Staff();
+	public static SoulGem soulGem = new SoulGem();
+	public static MagicScroll scroll = new MagicScroll();
 	public static void registerItems()
 	{
 		magicComponent.register();
 		itemStaff.register();
+		soulGem.register();
+		scroll.register();
 		registerStaffParts();
 	}
 
@@ -62,6 +68,8 @@ public class ItemBlockRegistry
 		magicInventory.initRecipes();
 		magicComponent.initRecipes();
 		itemStaff.initRecipes();
+		scroll.initRecipes();
+		soulGem.initRecipes();
 	}
 
 	private static ResourceLocation getRL(String pos)
