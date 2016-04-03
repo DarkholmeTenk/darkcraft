@@ -39,6 +39,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public static Random					modRand					= new Random();
 	public static ConfigHandler				configHandler			= null;
 	public static CreativeTabs				tab						= new DarkcraftCreativeTabs();
+	public static boolean					inited					= false;
 
 	@SidedProxy(clientSide = "io.darkcraft.mod.client.ClientProxy",
 			serverSide = "io.darkcraft.mod.common.CommonProxy")
@@ -81,6 +82,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		MagicConfig.refreshConfigs();
+		inited = true;
 	}
 
 	@EventHandler
