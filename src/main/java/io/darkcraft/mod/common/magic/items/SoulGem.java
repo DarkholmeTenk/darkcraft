@@ -43,7 +43,7 @@ public class SoulGem extends AbstractItem
 	public void addInfo(ItemStack is, EntityPlayer player, List infoList)
 	{
 		Size s = getSoulSize(is);
-		if(is != null)
+		if(s != null)
 		{
 			String e = getSoulName(is);
 			infoList.add("Soul size: " + s.name());
