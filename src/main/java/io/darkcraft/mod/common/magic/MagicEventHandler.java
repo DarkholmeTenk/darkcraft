@@ -7,7 +7,10 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
+import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.component.impl.effects.EffectSoulTrap;
+import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
@@ -26,12 +29,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.events.EntitySkillChangeEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
@@ -93,6 +98,21 @@ public class MagicEventHandler
 		if(ds== DamageSource.fall)
 			if(ees.hasEffect("darkcraft.fly"))
 				event.setCanceled(true);
+	}
+
+	@SubscribeEvent(priority=EventPriority.LOWEST)
+	public void entityDeath(LivingDeathEvent event)
+	{
+		if(event.isCanceled()) return;
+		EntityLivingBase ent = event.entityLiving;
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees.hasEffect("darkcraft.soultrap"))
+		{
+			EffectSoulTrap st = (EffectSoulTrap) ees.getEffect("darkcraft.soultrap");
+			ICaster cast = st.caster;
+			if(cast != null)
+				SoulGem.fill(cast, ent);
+		}
 	}
 
 	@SubscribeEvent

@@ -3,6 +3,8 @@ package io.darkcraft.mod.common.registries;
 import io.darkcraft.darkcore.mod.config.ConfigFile;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.items.SoulGem;
+import io.darkcraft.mod.common.magic.items.SoulGem.Size;
 import io.darkcraft.mod.common.magic.tileent.MagicVortexCrystal;
 
 public class MagicConfig
@@ -45,6 +47,7 @@ public class MagicConfig
 	public static double fortuneMult = 6;
 	public static int fortuneLevel = 3;
 	public static double silkMult = 3;
+	public static int[] soulHealthSizes = new int[]{0,5,15,30,45};
 
 	public static void refreshConfigs()
 	{
@@ -75,5 +78,18 @@ public class MagicConfig
 		fortuneMult = cbConfig.getDouble("Fortune cost multiplier", 6, "Configures how much of a cost increase fortune is on excavate");
 		fortuneLevel = cbConfig.getInt("Fortune level", 3, "The level of fortune fortune spells have");
 		silkMult = cbConfig.getDouble("Silk cost multiplier", 3, "Configures how much of a cost increase silk touch is on excavate");
+		setSoulSizes();
+	}
+
+	private static void setSoulSizes()
+	{
+		Size[] sizes = SoulGem.Size.values();
+		int[] soulSizes = new int[sizes.length-1];
+		for(int i = 0; i < (sizes.length-1); i++)
+		{
+			Size s = sizes[i];
+			soulSizes[i] = config.getInt("Soul level - " + s.name(), soulHealthSizes[i], "Amount of health a creature needs to have a " + s.name() + " sized soul");
+		}
+		soulHealthSizes = soulSizes;
 	}
 }
