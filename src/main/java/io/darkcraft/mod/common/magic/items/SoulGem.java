@@ -114,8 +114,9 @@ public class SoulGem extends AbstractItem
 						boolean r = fill(newIS, ent, entSoulSize);
 						if(r)
 						{
-							is.stackSize--;
+							inv.decrStackSize(i, 1);
 							WorldHelper.transferItemStack(newIS, inv);
+							inv.markDirty();
 						}
 						return r;
 					}
