@@ -66,6 +66,11 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 				hotkeys[i] = knownSpells.indexOf(spells[i]);
 	}
 
+	public void learnComponent(IComponent c)
+	{
+		knownComponents.add(c);
+	}
+
 	public void learnSpell(Spell spell)
 	{
 		if(spell == null)
@@ -78,7 +83,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 
 			knownSpells.add(spell);
 			for(ComponentInstance ci : spell.components)
-				knownComponents.add(ci.component);
+				learnComponent(ci.component);
 			sortSpells();
 		}
 		sendUpdate();

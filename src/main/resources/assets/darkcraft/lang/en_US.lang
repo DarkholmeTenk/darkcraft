@@ -39,6 +39,10 @@ item.darkcraft.SoulGem.Common.name=Common Soulgem
 item.darkcraft.SoulGem.Greater.name=Greater Soulgem
 item.darkcraft.SoulGem.Grand.name=Grand Soulgem
 item.darkcraft.SoulGem.Black.name=Black Soulgem
+item.darkcraft.ComponentBook.name=Arcane Tome
 
 tile.darkcraft.MagicVortex.name=Heart of Red Mountain
 tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
+
+dc.message.anvil.emptysoul=The provided soulgem is empty
+dc.message.anvil.smallsoul=The provided soul is too small

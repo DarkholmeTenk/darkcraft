@@ -40,6 +40,12 @@ public class MagicGuideRenderer extends AbstractObjRenderer
 		return ItemBlockRegistry.magicGuide;
 	}
 
+	@Override
+	public boolean handleLighting()
+	{
+		return false;
+	}
+
 	private void rotate(TileEntity te)
 	{
 		if(te == null) return;

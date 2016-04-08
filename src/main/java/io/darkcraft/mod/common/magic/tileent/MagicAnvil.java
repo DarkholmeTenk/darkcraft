@@ -22,6 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class MagicAnvil extends AbstractTileEntity implements ISpellable, IActivatablePrecise
 {
 	public static final String emptySoulMessage = "dc.message.anvil.emptysoul";
+	public static final String	smallSoulMessage = "dc.message.anvil.smallsoul";
 	private ItemStack[] items = new ItemStack[3];
 	private ItemStack[] newItems = new ItemStack[3];
 	public EntityItem[] eiArr = new EntityItem[3];
@@ -169,6 +170,25 @@ public class MagicAnvil extends AbstractTileEntity implements ISpellable, IActiv
 		}
 		nbt.setBoolean("proc", processing);
 		nbt.setInteger("process", processTime);
+	}
+
+	@Override
+	public void init()
+	{
+		if(ServerHelper.isClient())
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				if(items[i] != null)
+				{
+					eiArr[i] = new EntityItem(getWorldObj(), xCoord,yCoord,zCoord, items[i]);
+					eiArr[i].hoverStart = 0;
+					eiArr[i].rotationYaw = 0;
+				}
+				else
+					eiArr[i] = null;
+			}
+		}
 	}
 
 	@Override

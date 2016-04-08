@@ -4,10 +4,13 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.tileent.MagicGuide;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagicGuideBlock extends AbstractBlockContainer
 {
@@ -32,12 +35,19 @@ public class MagicGuideBlock extends AbstractBlockContainer
 	public void initData()
 	{
 		setBlockName("MagicGuide");
+		minX = 0.21;
+		maxX = 0.79;
+		minZ = 0.21;
+		maxZ = 0.79;
 	}
 
 	@Override
 	public void initRecipes()
 	{
-
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(this,1), false, " b ","www","wgw",
+				'b', Items.book,
+				'w', "plankWood",
+				'g', "ingotGold"));
 	}
 
 	@Override

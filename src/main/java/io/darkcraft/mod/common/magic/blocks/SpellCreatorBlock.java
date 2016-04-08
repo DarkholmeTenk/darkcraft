@@ -3,8 +3,11 @@ package io.darkcraft.mod.common.magic.blocks;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class SpellCreatorBlock extends AbstractBlockContainer
 {
@@ -40,8 +43,11 @@ public class SpellCreatorBlock extends AbstractBlockContainer
 	@Override
 	public void initRecipes()
 	{
-		// TODO Auto-generated method stub
-
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(this,1), false, "ldl","www","wgw",
+				'l', "blockGlass",
+				'd', "blockCoal",
+				'w', "plankWood",
+				'g', "ingotGold"));
 	}
 
 }
