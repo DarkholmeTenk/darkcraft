@@ -4,6 +4,7 @@ import io.darkcraft.api.magic.IMagicAnvilRecipe;
 import io.darkcraft.darkcore.mod.abstracts.AbstractTileEntity;
 import io.darkcraft.darkcore.mod.interfaces.IActivatablePrecise;
 import io.darkcraft.mod.common.magic.tileent.guide.IGuidePage;
+import io.darkcraft.mod.common.magic.tileent.guide.PageAnvil;
 import io.darkcraft.mod.common.magic.tileent.guide.PageCreator;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,7 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class MagicGuide extends AbstractTileEntity implements IActivatablePrecise
 {
 	private Mode mode = Mode.CONTENTS;
-	private IGuidePage[] pages = new IGuidePage[]{new PageCreator()};
+	private IGuidePage[] pages = new IGuidePage[]{new PageCreator(), new PageAnvil()};
 	private int page;
 
 	@Override
