@@ -13,9 +13,11 @@ import io.darkcraft.mod.common.registries.recipes.SoulGemRecipe;
 
 import java.util.List;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -37,6 +39,19 @@ public class SoulGem extends AbstractItem
 	{
 		for(IMagicAnvilRecipe rec : SoulGemRecipe.recipes)
 			MagicAnvilRecipeRegistry.addRecipe(rec);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void getSubItems(Item i, CreativeTabs ct, List list)
+	{
+		for(Size s : Size.values())
+		{
+			list.add(getIS(s,1));
+			ItemStack is = getIS(s,1);
+			fill(is,null,s);
+			list.add(is);
+		}
 	}
 
 	@Override
@@ -143,7 +158,8 @@ public class SoulGem extends AbstractItem
 		if((sgs != null) && sgs.canFit(size) && (is.stackSize == 1))
 		{
 			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setString("soulEnt", ent.getCommandSenderName());
+			if(ent != null)
+				nbt.setString("soulEnt", ent.getCommandSenderName());
 			nbt.setInteger("soulSize", size.ordinal());
 			is.stackTagCompound = nbt;
 			return true;
@@ -185,7 +201,7 @@ public class SoulGem extends AbstractItem
 		public boolean canFit(Size size)
 		{
 			if(size == null) return false;
-			return ordinal() > size.ordinal();
+			return ordinal() >= size.ordinal();
 		}
 	}
 }
