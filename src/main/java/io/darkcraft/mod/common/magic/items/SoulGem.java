@@ -172,6 +172,12 @@ public class SoulGem extends AbstractItem
 			return names;
 		}
 
+		public int powerLevel()
+		{
+			if(this == Black) return Grand.powerLevel();
+			return ordinal();
+		}
+
 		/**
 		 * @param size
 		 * @return return true if a soul gem of this size can fit a soul of size

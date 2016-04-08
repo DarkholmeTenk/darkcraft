@@ -54,22 +54,14 @@ public class SoulGemRecipe implements IMagicAnvilRecipe
 	public void craftingDone(MagicAnvil anvil, ICaster caster){}
 
 	@Override
-	public ItemStack[] getDesiredItems()
-	{
-		return desired;
-	}
+	public ItemStack[] getDesiredItems(){ return desired; }
+
+	private static IComponent[] comp = new IComponent[]{MagicalRegistry.soulTrap};
+	@Override
+	public IComponent[] getDesiredComponent(){ return comp; }
 
 	@Override
-	public IComponent[] getDesiredComponent()
-	{
-		return null;
-	}
-
-	@Override
-	public ItemStack[] getExpectedOutput()
-	{
-		return expected;
-	}
+	public ItemStack[] getExpectedOutput(){ return expected; }
 
 	@Override
 	public boolean isHidden()
