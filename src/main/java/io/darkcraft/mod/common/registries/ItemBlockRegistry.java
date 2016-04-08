@@ -4,6 +4,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.blocks.MagicAnvilBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicFieldMeasurerBlock;
+import io.darkcraft.mod.common.magic.blocks.MagicGuideBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicInventoryBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicStaffChangerBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicTouchPassBlock;
@@ -33,6 +34,7 @@ public class ItemBlockRegistry
 	public static AbstractBlock spellCreatorBlock;
 	public static AbstractBlock magicTouchPass;
 	public static AbstractBlock magicAnvil;
+	public static AbstractBlock magicGuide;
 	public static AbstractBlock techGenerator;
 	public static void registerBlocks()
 	{
@@ -46,6 +48,7 @@ public class ItemBlockRegistry
 		magicStaffChanger = new MagicStaffChangerBlock().register();
 		spellCreatorBlock = new SpellCreatorBlock().register();
 		magicAnvil = new MagicAnvilBlock().register();
+		magicGuide = new MagicGuideBlock().register();
 		//TECH
 		techGenerator = new TechGeneratorBlock().register();
 	}
