@@ -137,7 +137,7 @@ public class MagicEventHandler
 			Spell sp = pc.getCurrentSpell();
 			if(sp != null)
 			{
-				pc.cast(sp);
+				pc.cast(sp, true);
 				event.setCanceled(true);
 			}
 		}
