@@ -98,7 +98,8 @@ public class ComponentBook extends AbstractItem
 			if(pc.getKnownComponents().contains(c)) return;
 			pc.learnComponent(c);
 			pl.inventory.decrStackSize(pl.inventory.currentItem, 1);
-			MessageHelper.sendMessage(pl, c.getIcon(), c.getIconLocation(), "Learnt: " + c.getUnlocalisedName(), 5);
+			if(ServerHelper.isServer())
+				MessageHelper.sendMessage(pl, c.getIcon(), c.getIconLocation(), "Learnt: " + c.getUnlocalisedName(), 5);
 		}
 	}
 
