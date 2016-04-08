@@ -219,6 +219,8 @@ public class MagicAnvil extends AbstractTileEntity implements ISpellable, IActiv
 					eiArr[i] = null;
 				}
 			}
+		else if(ServerHelper.isServer())
+			items = temp;
 		else
 			eiArr = null;
 	}
