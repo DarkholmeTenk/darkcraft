@@ -22,11 +22,23 @@ darkcraft.component.test=TestPlzIgnore
 darkcraft.component.dig=Excavate
 darkcraft.component.digsilk=Gentle Excavate
 darkcraft.component.digfortune=Greedy Excavate
+darkcraft.component.soultrap=Soul Trap
 
 tile.darkcraft.MagicInventory.name=Magical Storage
+tile.darkcraft.SpellCreator.name=Spell Creator
+tile.darkcraft.StaffChanger.name=Staff Changer
+tile.darkcraft.MagicGuide.name=Arcane Manual
+tile.darkcraft.MagicAnvil.name=Tonal Anvil
 
 item.darkcraft.MagicComponent.Crystal.name=Glowing Crystal
 item.darkcraft.staff.name=Staff
+item.darkcraft.MagicScroll.name=Scroll
+item.darkcraft.SoulGem.Petty.name=Petty Soulgem
+item.darkcraft.SoulGem.Lesser.name=Lesser Soulgem
+item.darkcraft.SoulGem.Common.name=Common Soulgem
+item.darkcraft.SoulGem.Greater.name=Greater Soulgem
+item.darkcraft.SoulGem.Grand.name=Grand Soulgem
+item.darkcraft.SoulGem.Black.name=Black Soulgem
 
 tile.darkcraft.MagicVortex.name=Heart of Red Mountain
 tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
