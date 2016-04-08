@@ -127,7 +127,7 @@ public class BlockCaster implements ICaster
 	}
 
 	@Override
-	public void cast(Spell spell)
+	public void cast(Spell spell, boolean useMana)
 	{
 		if(doCast(spell))
 		{
@@ -141,7 +141,7 @@ public class BlockCaster implements ICaster
 	}
 
 	@Override
-	public void cast(Spell spell, SimpleCoordStore block)
+	public void cast(Spell spell, SimpleCoordStore block, boolean useMana)
 	{
 		if(block == null) return;
 		if((spell.type == CastType.SELF) && !(block.equals(blockPos))) return;
@@ -150,7 +150,7 @@ public class BlockCaster implements ICaster
 	}
 
 	@Override
-	public void cast(Spell spell, Entity ent)
+	public void cast(Spell spell, Entity ent, boolean useMana)
 	{
 		if(ent == null) return;
 		if(spell.type == CastType.SELF) return;

@@ -28,9 +28,9 @@ public interface ICaster
 	 */
 	public double addMana(double amount, boolean sim);
 
-	public void cast(Spell spell);
+	public void cast(Spell spell, boolean useMana);
 
-	public void cast(Spell spell, SimpleCoordStore block);
+	public void cast(Spell spell, SimpleCoordStore block, boolean useMana);
 
-	public void cast(Spell spell, Entity ent);
+	public void cast(Spell spell, Entity ent, boolean useMana);
 }

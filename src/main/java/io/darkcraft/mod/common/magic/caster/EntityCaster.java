@@ -156,19 +156,19 @@ public class EntityCaster implements ICaster
 		spell.apply(this, getCaster());
 	}
 
-	private boolean doCast(Spell spell)
+	private boolean doCast(Spell spell, boolean useMana)
 	{
 		double cost = spell.getCost(this);
 		SpellPreCastEvent spce = new SpellPreCastEvent(spell, this, cost);
 		if(!spce.isCanceled())
-			return useMana(spce.getCost(), false);
+			return useMana ? useMana(spce.getCost(), false) : true;
 		return false;
 	}
 
 	@Override
-	public void cast(Spell spell)
+	public void cast(Spell spell, boolean useMana)
 	{
-		if(doCast(spell))
+		if(doCast(spell,useMana))
 		{
 			if(spell.type == CastType.PROJECTILE)
 				castProjectile(spell);
@@ -180,20 +180,20 @@ public class EntityCaster implements ICaster
 	}
 
 	@Override
-	public void cast(Spell spell, SimpleCoordStore block)
+	public void cast(Spell spell, SimpleCoordStore block, boolean useMana)
 	{
 		if(block == null) return;
 		if(spell.type == CastType.SELF) return;
-		if(doCast(spell))
+		if(doCast(spell,useMana))
 			spell.apply(this, block);
 	}
 
 	@Override
-	public void cast(Spell spell, Entity ent)
+	public void cast(Spell spell, Entity ent, boolean useMana)
 	{
 		if(ent == null) return;
 		if((spell.type == CastType.SELF) && !(ent.equals(getCaster()))) return;
-		if(doCast(spell))
+		if(doCast(spell, useMana))
 			spell.apply(this, ent);
 	}
 

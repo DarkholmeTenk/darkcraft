@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.items.staff;
 
+import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
@@ -50,9 +51,9 @@ public class Staff extends AbstractItem
 			{
 				Spell spell = caster.getCurrentSpell();
 				if(spell.type != CastType.SELF)
-					caster.cast(spell, new SimpleCoordStore(w,x,y,z));
+					caster.cast(spell, new SimpleCoordStore(w,x,y,z), true);
 				else
-					caster.cast(spell, pl);
+					caster.cast(spell, pl, true);
 				return true;
 			}
 			TileEntity te = w.getTileEntity(x, y, z);
@@ -85,7 +86,7 @@ public class Staff extends AbstractItem
 			Spell spell = pc.getCurrentSpell();
 			if(spell != null)
 			{
-				pc.cast(spell);
+				pc.cast(spell, true);
 			}
 		}
 	}
