@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.tileent;
 
+import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
 import io.darkcraft.darkcore.mod.helpers.MultiBlockHelper;
@@ -16,7 +17,6 @@ import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.items.staff.IStaffable;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
@@ -241,6 +241,11 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 		hasSpell = nbt.getBoolean("hasSpell");
 	}
 
+	public static IMultiBlockStructure getStructure()
+	{
+		return SpellCreatorStructure.i;
+	}
+
 	private static class SpellCreatorStructure implements IMultiBlockStructure
 	{
 		public static final SpellCreatorStructure i = new SpellCreatorStructure();
@@ -263,7 +268,7 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 			{b,null,a,null,b}
 		};
 		public static IBlockState[][] top = new IBlockState[][]{
-			{c,null,null,null,null},
+			{c,null,null,null,c},
 			{null,null,null,null,null},
 			{null,null,null,null,null},
 			{null,null,null,null,null},
