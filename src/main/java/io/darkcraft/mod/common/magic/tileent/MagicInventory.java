@@ -1,12 +1,12 @@
 package io.darkcraft.mod.common.magic.tileent;
 
+import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
 import io.darkcraft.darkcore.mod.helpers.NBTHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.interfaces.IChunkLoader;
 import io.darkcraft.mod.abstracts.AbstractMFTileEntity;
-import io.darkcraft.mod.common.magic.items.staff.IStaffable;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
