@@ -1,12 +1,17 @@
 package io.darkcraft.mod.common.registries.recipes;
 
 import io.darkcraft.api.magic.IMagicAnvilRecipe;
+import io.darkcraft.darkcore.mod.helpers.MessageHelper;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.common.magic.caster.ICaster;
+import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.magic.items.MagicScroll;
 import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -23,7 +28,7 @@ public class ScrollRecipe implements IMagicAnvilRecipe
 			if(is == null){ empty = true; continue; }
 			if(is.stackSize > 1) return false;
 			if(is.getItem() == Items.paper) paper = true;
-			if(SoulGem.getSoulSize(is) != null) soul = true;
+			if(SoulGem.getGemSize(is) != null) soul = true;
 		}
 		return empty && soul && paper;
 	}
@@ -31,7 +36,24 @@ public class ScrollRecipe implements IMagicAnvilRecipe
 	@Override
 	public ItemStack[] craft(MagicAnvil anvil, ICaster caster, ItemStack[] items, Spell spell)
 	{
-		return null;
+		SoulGem.Size s = null;
+		for(int i = 0; i < items.length; i++)
+			if(SoulGem.getSoulSize(items[i]) != null)
+				s = SoulGem.getSoulSize(items[i]);
+		if(s == null)
+		{
+			if((caster instanceof PlayerCaster) && ServerHelper.isServer())
+			{
+				EntityPlayer pl = ((PlayerCaster)caster).getCaster();
+				if(pl != null)
+					MessageHelper.sendMessage(pl, MagicAnvil.emptySoulMessage);
+			}
+			return null;
+		}
+		int uses = s.powerLevel();
+		ItemStack scroll = new ItemStack(ItemBlockRegistry.scroll,1);
+		MagicScroll.setSpell(scroll, spell, uses);
+		return new ItemStack[]{null,scroll,null};
 	}
 
 	@Override
@@ -47,8 +69,9 @@ public class ScrollRecipe implements IMagicAnvilRecipe
 	@Override
 	public IComponent[] getDesiredComponent(){ return null; }
 
+	private static ItemStack[] out = new ItemStack[]{null,new ItemStack(ItemBlockRegistry.scroll,1), null};
 	@Override
-	public ItemStack[] getExpectedOutput(){ return null; }
+	public ItemStack[] getExpectedOutput(){ return out; }
 
 	@Override
 	public boolean isHidden()
