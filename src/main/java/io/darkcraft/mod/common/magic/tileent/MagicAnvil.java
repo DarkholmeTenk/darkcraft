@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class MagicAnvil extends AbstractTileEntity implements ISpellable, IActivatablePrecise
 {
+	public static final String emptySoulMessage = "dc.message.anvil.emptysoul";
 	private ItemStack[] items = new ItemStack[3];
 	private ItemStack[] newItems = new ItemStack[3];
 	public EntityItem[] eiArr = new EntityItem[3];
@@ -99,6 +100,7 @@ public class MagicAnvil extends AbstractTileEntity implements ISpellable, IActiv
 	@Override
 	public boolean activate(EntityPlayer ent, int side, float x, float y, float z)
 	{
+		if(side != 1) return false;
 		if((x > 0.25) && (z > 0.25) && (x < 0.75) && (z < 0.75))
 		{
 			handleActivate(ent, 1);

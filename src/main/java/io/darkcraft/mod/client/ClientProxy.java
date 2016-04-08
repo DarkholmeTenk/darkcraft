@@ -64,9 +64,9 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(TechGenerator.class, new TechGeneratorRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicStaffChanger.class, new MagicStaffChangerRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(SpellCreator.class, new SpellCreatorRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicAnvil.class, new MagicAnvilRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(MagicAnvil.class, MagicAnvilRenderer.i);
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.spellCreatorBlock),new SpellCreatorRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicAnvil),new MagicAnvilRenderer());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicAnvil),MagicAnvilRenderer.i);
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.soulGem, new SoulGemRenderer());
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.scroll, new MagicScrollRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new EntitySpellProjectileRenderer());

@@ -16,10 +16,9 @@ import org.lwjgl.opengl.GL11;
 
 public class MagicAnvilRenderer extends AbstractObjRenderer
 {
+	public static final MagicAnvilRenderer i = new MagicAnvilRenderer();
 	private static final ResourceLocation tex = new ResourceLocation(DarkcraftMod.modName, "textures/tileents/anvil.png");
 	private static IModelCustom model;
-
-
 
 	@Override
 	public AbstractBlock getBlock()
@@ -54,5 +53,4 @@ public class MagicAnvilRenderer extends AbstractObjRenderer
 				RenderManager.instance.renderEntityWithPosYaw(ma.eiArr[2], 0,1.5,d, 0,ma.eiArr[2].rotationYaw);
 		}
 	}
-
 }
