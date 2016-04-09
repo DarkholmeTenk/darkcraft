@@ -29,9 +29,9 @@ public class EffectDamageHunger extends AbstractDarkcraftEffect
 		EntityPlayer pl = (EntityPlayer)e;
 		FoodStats fs = pl.getFoodStats();
 		if(fs.getSaturationLevel() > 0)
-			fs.setFoodSaturationLevel(Math.max(fs.getSaturationLevel() - magnitude,0));
+			fs.addStats(0,-magnitude);
 		else
-			fs.setFoodLevel(Math.max(fs.getFoodLevel()-magnitude,0));
+			fs.addStats(-magnitude,0);
 	}
 
 }

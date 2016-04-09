@@ -24,9 +24,9 @@ public class EffectRestoreHunger extends AbstractDarkcraftEffect
 		if(!(ent instanceof EntityPlayer)) return;
 		FoodStats fs = ((EntityPlayer)ent).getFoodStats();
 		if(fs.needFood())
-			fs.setFoodLevel(Math.min(20,fs.getFoodLevel()+magnitude));
+			fs.addStats(magnitude, 0);
 		else
-			fs.setFoodSaturationLevel(Math.min(20, fs.getSaturationLevel()+magnitude));
+			fs.addStats(0, magnitude);
 	}
 
 }
