@@ -49,7 +49,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	private int[] hotkeys = new int[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 	public PlayerCaster(EntityPlayer pl)
 	{
-		super(pl, "playercaster");
+		super(pl, "dcPC");
 	}
 
 	private void sortSpells()
