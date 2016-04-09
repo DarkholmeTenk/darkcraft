@@ -69,6 +69,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	public void learnComponent(IComponent c)
 	{
 		knownComponents.add(c);
+		sendUpdate();
 	}
 
 	public void learnSpell(Spell spell)
