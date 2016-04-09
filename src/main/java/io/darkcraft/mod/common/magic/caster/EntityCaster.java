@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.caster;
 
+import io.darkcraft.darkcore.mod.abstracts.AbstractEntityDataStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
@@ -17,18 +18,27 @@ import java.util.Map.Entry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.world.World;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
-public class EntityCaster implements ICaster
+public class EntityCaster extends AbstractEntityDataStore implements ICaster
 {
 	private final WeakReference<EntityLivingBase> caster;
 
 	public EntityCaster(EntityLivingBase ent)
 	{
+		super(ent,"darkcraft.entitycaster");
 		caster = new WeakReference(ent);
+	}
+
+	public EntityCaster(EntityLivingBase pl, String string)
+	{
+		super(pl,string);
+		caster = new WeakReference(pl);
 	}
 
 	public EntityLivingBase getCaster()
@@ -206,5 +216,24 @@ public class EntityCaster implements ICaster
 		return null;
 	}
 
+	@Override
 	public void sendUpdate(){}
+
+	@Override
+	public void init(Entity entity, World world){}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt){}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt){}
+
+	@Override
+	public void writeTransmittable(NBTTagCompound nbt){}
+
+	@Override
+	public void readTransmittable(NBTTagCompound nbt){}
+
+	@Override
+	public boolean notifyArea(){return false;}
 }
