@@ -42,6 +42,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 				pc.tick();
 		}
 	}
+
 	private List<Spell> knownSpells = new ArrayList<Spell>();
 	private List<Spell> unmodSpells = Collections.unmodifiableList(knownSpells);
 	private Set<IComponent> knownComponents = new HashSet<IComponent>();
