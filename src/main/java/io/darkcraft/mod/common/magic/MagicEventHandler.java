@@ -38,8 +38,8 @@ import skillapi.api.internal.events.EntitySkillChangeEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.ServerTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Type;
 
 public class MagicEventHandler
@@ -53,7 +53,7 @@ public class MagicEventHandler
 
 	public static final Set<PlayerCaster> updateQueue = Collections.synchronizedSet(new HashSet());
 	@SubscribeEvent
-	public void tickHandler(ServerTickEvent event)
+	public void tickHandler(TickEvent event)
 	{
 		if(event.phase != Phase.END) return;
 		if(ServerHelper.isIntegratedClient()) return;
