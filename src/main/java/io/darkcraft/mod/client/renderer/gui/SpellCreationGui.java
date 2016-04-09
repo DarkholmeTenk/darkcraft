@@ -63,7 +63,7 @@ public class SpellCreationGui extends GuiContainer
     private void drawKnownComponents(Tessellator tess)
     {
     	int left = 30;
-    	for(int i = 0; i<10;i++)
+    	for(int i = 0; i<22;i++)
     	{
     		int top = 83+(11*i);
     		int index = i + cont.kcScroll;
