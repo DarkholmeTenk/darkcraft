@@ -68,47 +68,9 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 			if(mop.entityHit != null)
 				spell.apply(caster, mop.entityHit);
 			else
-				spell.apply(caster, new SimpleCoordStore(worldObj, mop));
+				spell.apply(caster, new SimpleCoordStore(worldObj, mop), mop.sideHit);
 			setDead();
 		}
-		/*Vec3 oldPos = Vec3.createVectorHelper(prevPosX, prevPosY, prevPosZ);
-		Vec3 newPos = Vec3.createVectorHelper(posX, posY, posZ);
-		if(ticksExisted <= 2) return;
-		MovingObjectPosition hpos = worldObj.rayTraceBlocks(oldPos, newPos, true);
-		if(hpos != null)
-		{
-			spell.apply(caster,new SimpleCoordStore(worldObj,hpos.blockX,hpos.blockY,hpos.blockZ));
-			setDead();
-		}
-		else
-		{
-			Entity skip = null;
-			if(caster instanceof EntityCaster)
-				skip = ((EntityCaster)caster).getCaster();
-			List entities = worldObj.getEntitiesWithinAABBExcludingEntity(this, getAABB());
-			double closeDist = Double.MAX_VALUE;
-			Entity closest = null;
-			for(Object o : entities)
-			{
-				if(!(o instanceof Entity)) continue;
-				if(o == skip) continue;
-				Entity e = (Entity)o;
-				Vec3 ePos = Vec3.createVectorHelper(e.posX, e.posY, e.posZ);
-				double dist = (ePos.subtract(newPos)).crossProduct(ePos.subtract(oldPos)).lengthVector()/oldPos.subtract(newPos).lengthVector();
-				if(dist > 2) continue;
-				dist = ePos.distanceTo(oldPos);
-				if(dist < closeDist)
-				{
-					closeDist = dist;
-					closest = e;
-				}
-			}
-			if(closest != null)
-			{
-				spell.apply(caster, closest);
-				setDead();
-			}
-		}*/
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class MagicScroll extends AbstractItem
 			if((spell != null) && (caster.getCurrentSpell() != null))
 			{
 				if(spell.type != CastType.SELF)
-					caster.cast(spell, new SimpleCoordStore(w,x,y,z), false);
+					caster.cast(spell, new SimpleCoordStore(w,x,y,z), s, false);
 				else
 					caster.cast(spell, pl, false);
 				decreaseUses(is,pl);

@@ -51,7 +51,7 @@ public class Staff extends AbstractItem
 			{
 				Spell spell = caster.getCurrentSpell();
 				if(spell.type != CastType.SELF)
-					caster.cast(spell, new SimpleCoordStore(w,x,y,z), true);
+					caster.cast(spell, new SimpleCoordStore(w,x,y,z), s, true);
 				else
 					caster.cast(spell, pl, true);
 				return true;

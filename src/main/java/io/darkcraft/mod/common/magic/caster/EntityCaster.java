@@ -155,7 +155,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 		if(pos == null)
 			return false;
 		if(pos.typeOfHit == MovingObjectType.BLOCK)
-			spell.apply(this, new SimpleCoordStore(c.worldObj, pos));
+			spell.apply(this, new SimpleCoordStore(c.worldObj, pos), pos.sideHit);
 		else
 			spell.apply(this, pos.entityHit);
 		return true;
@@ -190,12 +190,12 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	}
 
 	@Override
-	public void cast(Spell spell, SimpleCoordStore block, boolean useMana)
+	public void cast(Spell spell, SimpleCoordStore block, int side, boolean useMana)
 	{
 		if(block == null) return;
 		if(spell.type == CastType.SELF) return;
 		if(doCast(spell,useMana))
-			spell.apply(this, block);
+			spell.apply(this, block, 0);
 	}
 
 	@Override

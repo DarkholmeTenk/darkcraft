@@ -32,9 +32,10 @@ public interface IComponent
 	 * Apply the effect of this component to a block.
 	 * @param caster the thing which cast the spell containing this component
 	 * @param blockPos the position of the block to affect
+	 * @param side TODO
 	 * @param magnitude the magnitude this spell has
 	 */
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude, int duration);
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration);
 
 	/**
 	 * Apply the effect of this component to an entity.

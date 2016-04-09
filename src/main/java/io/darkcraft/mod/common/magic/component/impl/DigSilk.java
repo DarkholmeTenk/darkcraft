@@ -26,7 +26,7 @@ public class DigSilk extends Dig
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore bp, int magnitude, int duration)
+	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration)
 	{
 		if(bp == null) return;
 		Block b = bp.getBlock();
@@ -43,7 +43,7 @@ public class DigSilk extends Dig
 					WorldHelper.dropItemStack(is, bp.getCenter());
 			}
 			else
-				super.apply(caster, bp, magnitude, duration);
+				super.apply(caster, bp, side, magnitude, duration);
 		}
 	}
 

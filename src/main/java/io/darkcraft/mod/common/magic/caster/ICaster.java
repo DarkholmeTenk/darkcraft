@@ -30,7 +30,7 @@ public interface ICaster
 
 	public void cast(Spell spell, boolean useMana);
 
-	public void cast(Spell spell, SimpleCoordStore block, boolean useMana);
+	public void cast(Spell spell, SimpleCoordStore block, int side, boolean useMana);
 
 	public void cast(Spell spell, Entity ent, boolean useMana);
 }

@@ -182,7 +182,7 @@ public class Spell
 							if(d > ci.area) continue;
 							double magMult = sabe.spellMagnitudeMults[i];
 							double durMult = sabe.spellDurationMults[i];
-							ci.component.apply(caster, scs, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+							ci.component.apply(caster, scs, -1, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
 							ISkill skill = ci.component.getMainSkill();
 							xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,false));
 						}
@@ -234,8 +234,9 @@ public class Spell
 	 * Apply the spell effect to a block
 	 * @param caster the person who cast this spell
 	 * @param scs the coords of the block
+	 * @param side TODO
 	 */
-	public void apply(ICaster caster, SimpleCoordStore scs)
+	public void apply(ICaster caster, SimpleCoordStore scs, int side)
 	{
 		if((scs.getBlock() instanceof ISpellable) && ((ISpellable)scs.getBlock()).spellHit(scs, this, caster)) return;
 		if((scs.getTileEntity() instanceof ISpellable) && ((ISpellable)scs.getTileEntity()).spellHit(scs, this, caster)) return;
@@ -252,7 +253,7 @@ public class Spell
 				double magMult = sabe.spellMagnitudeMults[i];
 				double durMult = sabe.spellDurationMults[i];
 				if((magMult <= 0) || (durMult <= 0)) continue;
-				ci.component.apply(caster, scs, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+				ci.component.apply(caster, scs, side, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
 				ISkill skill = ci.component.getMainSkill();
 				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,false));
 			}

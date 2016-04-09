@@ -35,7 +35,7 @@ public class Test implements IComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude, int duration)
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration)
 	{
 		if((caster == null) || (blockPos == null)) return;
 		String s = "T:"+caster.toString()+","+blockPos.toString();

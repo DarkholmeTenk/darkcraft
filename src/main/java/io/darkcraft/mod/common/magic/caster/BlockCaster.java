@@ -83,7 +83,7 @@ public class BlockCaster implements ICaster
 			if(b == null) return false;
 			if(MagicConfig.traceLiquids || b.canCollideCheck(m, false))
 			{
-				spell.apply(this, hitPos);
+				spell.apply(this, hitPos, -1);
 				return true;
 			}
 		}
@@ -114,7 +114,7 @@ public class BlockCaster implements ICaster
 
 	private void castSelf(Spell spell)
 	{
-		spell.apply(this, blockPos);
+		spell.apply(this, blockPos, 0);
 	}
 
 	private boolean doCast(Spell spell)
@@ -141,12 +141,12 @@ public class BlockCaster implements ICaster
 	}
 
 	@Override
-	public void cast(Spell spell, SimpleCoordStore block, boolean useMana)
+	public void cast(Spell spell, SimpleCoordStore block, int side, boolean useMana)
 	{
 		if(block == null) return;
 		if((spell.type == CastType.SELF) && !(block.equals(blockPos))) return;
 		if(doCast(spell))
-			spell.apply(this, block);
+			spell.apply(this, block, 0);
 	}
 
 	@Override

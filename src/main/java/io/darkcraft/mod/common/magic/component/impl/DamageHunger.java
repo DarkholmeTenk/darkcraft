@@ -38,7 +38,7 @@ public class DamageHunger extends Damage
 	public boolean applyToEnt(){ return true; }
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int magnitude, int duration){}
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration){}
 
 	@Override
 	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
