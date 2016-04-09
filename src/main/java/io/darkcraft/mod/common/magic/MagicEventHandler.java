@@ -55,7 +55,7 @@ public class MagicEventHandler
 	@SubscribeEvent
 	public void tickHandler(ServerTickEvent event)
 	{
-		if((event.phase == Phase.END) && (event.type == Type.SERVER))
+		if((event.phase == Phase.END) && ((event.type == Type.SERVER) || (!ServerHelper.isIntegratedClient() && (event.type == Type.CLIENT))))
 		{
 			PlayerCaster.tickAll();
 			synchronized(updateQueue)
