@@ -15,6 +15,7 @@ import io.darkcraft.mod.common.registries.EntRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
+import io.darkcraft.mod.common.tech.network.NetworkHelper;
 
 import java.util.Random;
 
@@ -75,6 +76,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		DarkcoreMod.packetHandler.registerHandler(SpellCreationPacketHandler.disc, new SpellCreationPacketHandler());
 		DarkcoreMod.packetHandler.registerHandler(PlayerCasterPacketHandler.disc, new PlayerCasterPacketHandler());
 		proxy.init();
+		FMLCommonHandler.instance().bus().register(new NetworkHelper());
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
 	}
 
@@ -90,6 +92,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	{
 		registerRegistries();
 		StaffHelperFactory.clear();
+		NetworkHelper.clearNRs();
 	}
 
 	@EventHandler
