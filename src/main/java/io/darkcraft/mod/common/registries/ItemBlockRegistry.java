@@ -21,6 +21,7 @@ import io.darkcraft.mod.common.magic.items.staff.parts.bottom.DefaultStaffBottom
 import io.darkcraft.mod.common.magic.items.staff.parts.head.DefaultStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.head.SillyStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.shaft.DefaultStaffShaft;
+import io.darkcraft.mod.common.tech.block.TechBatteryBlock;
 import io.darkcraft.mod.common.tech.block.TechGeneratorBlock;
 import net.minecraft.util.ResourceLocation;
 
@@ -37,6 +38,7 @@ public class ItemBlockRegistry
 	public static AbstractBlock magicAnvil;
 	public static AbstractBlock magicGuide;
 	public static AbstractBlock techGenerator;
+	public static AbstractBlock techBattery;
 	public static void registerBlocks()
 	{
 		//MAGIC
@@ -52,6 +54,7 @@ public class ItemBlockRegistry
 		magicGuide = new MagicGuideBlock().register();
 		//TECH
 		techGenerator = new TechGeneratorBlock().register();
+		techBattery = new TechBatteryBlock().register();
 	}
 
 	public static MagicComponent magicComponent = new MagicComponent();
