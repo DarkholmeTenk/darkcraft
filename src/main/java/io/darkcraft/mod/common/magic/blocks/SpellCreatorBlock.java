@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.blocks;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
@@ -7,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class SpellCreatorBlock extends AbstractBlockContainer
 {
@@ -32,6 +32,7 @@ public class SpellCreatorBlock extends AbstractBlockContainer
 	public void initData()
 	{
 		setBlockName("SpellCreator");
+		setHardness(4.0f);
 	}
 
 	@Override

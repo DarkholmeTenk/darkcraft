@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.blocks;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
@@ -10,7 +11,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagicAnvilBlock extends AbstractBlockContainer
 {
@@ -36,6 +36,7 @@ public class MagicAnvilBlock extends AbstractBlockContainer
 	public void initData()
 	{
 		setBlockName("MagicAnvil");
+		setHardness(5.0f);
 	}
 
 	@Override
