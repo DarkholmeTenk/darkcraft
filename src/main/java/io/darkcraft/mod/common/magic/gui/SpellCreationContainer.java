@@ -1,16 +1,16 @@
 package io.darkcraft.mod.common.magic.gui;
 
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
+import io.darkcraft.mod.common.magic.component.INoAreaComponent;
 import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
-
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import skillapi.api.implement.ISkill;
@@ -72,6 +72,7 @@ public class SpellCreationContainer extends Container
 			if((x < (pos-3)) || (x > (pos+9)))return;
 			if((line == 0) && !(selectedComponent instanceof IMagnitudeComponent)) return;
 			if((line == 1) && !(selectedComponent instanceof IDurationComponent)) return;
+			if((line == 2) && (selectedComponent instanceof INoAreaComponent)) return;
 			selectedLine = line;
 		}
 		if((y >= 84) && (y <= 100))
