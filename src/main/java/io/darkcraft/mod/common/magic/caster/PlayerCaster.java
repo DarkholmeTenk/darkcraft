@@ -1,5 +1,12 @@
 package io.darkcraft.mod.common.magic.caster;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.WeakHashMap;
+
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
@@ -13,14 +20,6 @@ import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.WeakHashMap;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -206,6 +205,8 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	@Override
 	public void saveNBTData(NBTTagCompound lnbt)
 	{
+		writeToNBT(lnbt);
+		writeTransmittable(lnbt);
 		NBTTagCompound nbt = new NBTTagCompound();
 		synchronized(knownSpells)
 		{
@@ -238,6 +239,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	@Override
 	public void loadNBTData(NBTTagCompound lnbt)
 	{
+		super.loadNBTData(lnbt);
 		if(lnbt.hasKey("rem"))
 		{
 			int x = lnbt.getInteger("rem");
@@ -288,10 +290,10 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	}
 
 	@Override
-	public void sendUpdate()
+	public boolean sendUpdate()
 	{
 		EntityPlayer pl = getCaster();
-		if(pl == null) return;
+		if(pl == null) return false;
 		if(ServerHelper.isClient() || pl.worldObj.isRemote)
 		{
 			String un = PlayerHelper.getUsername(pl);
@@ -309,6 +311,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 			DarkcoreMod.networkChannel.sendTo(dp,(EntityPlayerMP) pl);
 		}
+		return true;
 	}
 
 	@Override
