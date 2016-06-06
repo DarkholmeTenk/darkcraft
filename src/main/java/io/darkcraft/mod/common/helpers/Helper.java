@@ -1,12 +1,5 @@
 package io.darkcraft.mod.common.helpers;
 
-import io.darkcraft.mod.common.magic.caster.EntityCaster;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.component.IComponent;
-import io.darkcraft.mod.common.magic.field.MagicFieldGlobal;
-import io.darkcraft.mod.common.magic.items.staff.Staff;
-import io.darkcraft.mod.common.registries.MagicConfig;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +7,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.WeakHashMap;
 
+import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.mod.common.magic.caster.EntityCaster;
+import io.darkcraft.mod.common.magic.caster.ICaster;
+import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.magic.field.MagicFieldGlobal;
+import io.darkcraft.mod.common.magic.items.staff.Staff;
+import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
@@ -48,6 +49,18 @@ public class Helper
 		EntityCaster caster = new EntityCaster(ent);
 		entCastMap.put(ent, caster);
 		return caster;
+	}
+
+	public static boolean isCaster(ICaster c, EntityLivingBase ent)
+	{
+		if(c instanceof EntityCaster)
+			return ent == ((EntityCaster)c).getCaster();
+		return false;
+	}
+
+	public static void playFizzleNoise(SimpleDoubleCoordStore pos)
+	{
+
 	}
 
 	public static MagicFieldGlobal getMFG()

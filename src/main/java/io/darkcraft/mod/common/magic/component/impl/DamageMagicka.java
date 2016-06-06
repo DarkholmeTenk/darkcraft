@@ -3,6 +3,7 @@ package io.darkcraft.mod.common.magic.component.impl;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
+import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.impl.effects.EffectDamageMagicka;
 import io.darkcraft.mod.common.registries.SkillRegistry;
@@ -26,6 +27,7 @@ public class DamageMagicka extends Damage
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase living = (EntityLivingBase) ent;
+		if(Helper.isCaster(caster, living)) return;
 		EntityEffectStore ees = EffectHandler.getEffectStore(living);
 		ees.addEffect(new EffectDamageMagicka(caster,living,magnitude,duration*20));
 	}
