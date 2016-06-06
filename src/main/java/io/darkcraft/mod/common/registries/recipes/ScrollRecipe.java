@@ -17,6 +17,11 @@ import net.minecraft.item.ItemStack;
 
 public class ScrollRecipe implements IMagicAnvilRecipe
 {
+	@Override
+	public String id()
+	{
+		return "dc.rec.scroll";
+	}
 
 	@Override
 	public boolean isValid(MagicAnvil anvil, ItemStack[] input, Spell spell)

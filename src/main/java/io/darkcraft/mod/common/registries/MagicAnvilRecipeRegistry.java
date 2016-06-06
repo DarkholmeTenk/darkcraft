@@ -1,21 +1,20 @@
 package io.darkcraft.mod.common.registries;
 
-import gnu.trove.set.hash.THashSet;
-import io.darkcraft.api.magic.IMagicAnvilRecipe;
-import io.darkcraft.darkcore.mod.helpers.MathHelper;
-import io.darkcraft.mod.DarkcraftMod;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import gnu.trove.set.hash.THashSet;
+import io.darkcraft.api.magic.IMagicAnvilRecipe;
+import io.darkcraft.mod.DarkcraftMod;
 
 public class MagicAnvilRecipeRegistry
 {
 	private static List<IMagicAnvilRecipe> recipeList = new ArrayList();
 	private static Set<IMagicAnvilRecipe> recipes = new THashSet();
-	private static Set<IMagicAnvilRecipe> unmod = Collections.unmodifiableSet(recipes);
-	private static IMagicAnvilRecipe[] recipeArray = null;
+	private static List<IMagicAnvilRecipe> unmod;
 
 	public static void addRecipe(IMagicAnvilRecipe rec)
 	{
@@ -27,11 +26,11 @@ public class MagicAnvilRecipeRegistry
 		recipeList.add(rec);
 	}
 
-	public static Set<IMagicAnvilRecipe> getRecipes()
+	public static List<IMagicAnvilRecipe> getRecipes()
 	{
 		if(DarkcraftMod.inited)
 			return unmod;
-		return recipes;
+		return null;
 	}
 
 	public static int getNumRecipes()
@@ -43,18 +42,23 @@ public class MagicAnvilRecipeRegistry
 	{
 		if(DarkcraftMod.inited)
 		{
-			if(recipeArray == null)
-			{
-				recipeArray = new IMagicAnvilRecipe[recipes.size()];
-				int i = 0;
-				for(IMagicAnvilRecipe rec : recipeList)
-					recipeArray[i++] = rec;
-			}
-			num = MathHelper.clamp(num, 0, recipeArray.length-1);
-			return recipeArray[num];
+			return unmod.get(num);
 		}
 		else
 			System.err.println("Recipes not inited, can't get recipe yet");
 		return null;
+	}
+
+	public static void postInit()
+	{
+		List<IMagicAnvilRecipe> recipeList = new ArrayList(recipes);
+		recipeList.sort(new Comparator<IMagicAnvilRecipe>(){
+			@Override
+			public int compare(IMagicAnvilRecipe a,IMagicAnvilRecipe b)
+			{
+				return a.id().compareTo(b.id());
+			}
+		});
+		unmod = Collections.unmodifiableList(recipeList);
 	}
 }

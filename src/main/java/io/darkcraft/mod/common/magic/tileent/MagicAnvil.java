@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.magic.tileent;
 
+import java.util.Collection;
+
 import io.darkcraft.api.magic.IMagicAnvilRecipe;
 import io.darkcraft.api.magic.ISpellable;
 import io.darkcraft.darkcore.mod.abstracts.AbstractTileEntity;
@@ -11,9 +13,6 @@ import io.darkcraft.darkcore.mod.interfaces.IActivatablePrecise;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
-
-import java.util.Set;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -54,7 +53,7 @@ public class MagicAnvil extends AbstractTileEntity implements ISpellable, IActiv
 	@Override
 	public boolean spellHit(SimpleCoordStore block, Spell spell, ICaster caster)
 	{
-		Set<IMagicAnvilRecipe> recipes = MagicAnvilRecipeRegistry.getRecipes();
+		Collection<IMagicAnvilRecipe> recipes = MagicAnvilRecipeRegistry.getRecipes();
 		for(IMagicAnvilRecipe r : recipes)
 		{
 			if(r.isValid(this, items, spell))

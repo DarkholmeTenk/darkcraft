@@ -1,5 +1,18 @@
 package io.darkcraft.mod;
 
+import java.util.Random;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.config.ConfigHandler;
 import io.darkcraft.darkcore.mod.config.ConfigHandlerFactory;
@@ -13,23 +26,10 @@ import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.DarkcraftCreativeTabs;
 import io.darkcraft.mod.common.registries.EntRegistry;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
-
-import java.util.Random;
-
 import net.minecraft.creativetab.CreativeTabs;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = "darkcraft", name = "Darkcraft", version = "0.1", dependencies = "required-after:darkcore@[0.41,0.499]; required-after:SkillAPI")
 public class DarkcraftMod implements IConfigHandlerMod
@@ -82,6 +82,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		MagicConfig.refreshConfigs();
+		MagicAnvilRecipeRegistry.postInit();
 		inited = true;
 	}
 

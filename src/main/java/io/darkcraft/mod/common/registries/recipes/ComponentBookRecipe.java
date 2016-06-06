@@ -20,6 +20,12 @@ public class ComponentBookRecipe implements IMagicAnvilRecipe
 {
 
 	@Override
+	public String id()
+	{
+		return "dc.rec.compBook";
+	}
+
+	@Override
 	public boolean isValid(MagicAnvil anvil, ItemStack[] input, Spell spell)
 	{
 		boolean empty,soul,book;

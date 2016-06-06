@@ -34,6 +34,12 @@ public class SoulGemRecipe implements IMagicAnvilRecipe
 	}
 
 	@Override
+	public String id()
+	{
+		return "dc.rec.soulgem."+size.ordinal();
+	}
+
+	@Override
 	public boolean isValid(MagicAnvil anvil, ItemStack[] input, Spell spell)
 	{
 		if((input[0] != null) || (input[2] != null)) return false;

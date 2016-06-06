@@ -14,6 +14,11 @@ import net.minecraft.item.ItemStack;
 public interface IMagicAnvilRecipe
 {
 	/**
+	 * Used to sort recipes for the guide
+	 */
+	public String id();
+
+	/**
 	 * Used to determine which recipe to use
 	 * @param anvil the anvil where the crafting is occurring.
 	 * @param input the items which have been input.
