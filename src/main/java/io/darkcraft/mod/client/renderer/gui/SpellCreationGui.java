@@ -1,5 +1,7 @@
 package io.darkcraft.mod.client.renderer.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
@@ -9,6 +11,7 @@ import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
+import io.darkcraft.mod.common.magic.component.INoAreaComponent;
 import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
 import io.darkcraft.mod.common.magic.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.tileent.SpellCreator;
@@ -21,9 +24,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
-import org.lwjgl.opengl.GL11;
-
 import skillapi.api.implement.ISkillIcon;
 
 public class SpellCreationGui extends GuiContainer
@@ -93,12 +93,12 @@ public class SpellCreationGui extends GuiContainer
     	RenderHelper.bindTexture(guiWindow);
     	GL11.glTranslated(50, 150, 1);
     	face(tess,0,0,300,100,sliderScreenSize,true);
-    	if(cont.selectedComponent instanceof IMagnitudeComponent) drawSlider(tess,80,36,cont.magnitude);
-    	if(cont.selectedComponent instanceof IDurationComponent) drawSlider(tess,80,53,cont.duration);
-    	drawSlider(tess,80,70,cont.area);
-    	if(cont.selectedComponent instanceof IMagnitudeComponent) fr.drawString(cont.getMagnitudeString(), 240, 36, 16777215);
-    	if(cont.selectedComponent instanceof IDurationComponent) fr.drawString(cont.getDurationString(), 240, 53, 16777215);
-    	fr.drawString(cont.getAreaString(), 240, 70, 16777215);
+    	if(cont.selectedComponent instanceof IMagnitudeComponent)	drawSlider(tess,80,36,cont.magnitude);
+    	if(cont.selectedComponent instanceof IDurationComponent)	drawSlider(tess,80,53,cont.duration);
+    	if(!(cont.selectedComponent instanceof INoAreaComponent))	drawSlider(tess,80,70,cont.area);
+    	if(cont.selectedComponent instanceof IMagnitudeComponent)	fr.drawString(cont.getMagnitudeString(), 240, 36, 16777215);
+    	if(cont.selectedComponent instanceof IDurationComponent)	fr.drawString(cont.getDurationString(), 240, 53, 16777215);
+    	if(!(cont.selectedComponent instanceof INoAreaComponent))	fr.drawString(cont.getAreaString(), 240, 70, 16777215);
 
     	fr.drawString(String.format("%.1f",cont.selectedComponentInstance.cost), 215, 21, 16777215);
     	String n = fr.trimStringToWidth(StatCollector.translateToLocal(cont.selectedComponent.getUnlocalisedName()),120);

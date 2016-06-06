@@ -1,5 +1,9 @@
 package io.darkcraft.mod.common.magic.caster;
 
+import java.lang.ref.WeakReference;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractEntityDataStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
@@ -10,11 +14,6 @@ import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-
-import java.lang.ref.WeakReference;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +27,8 @@ import skillapi.api.internal.ISkillHandler;
 public class EntityCaster extends AbstractEntityDataStore implements ICaster
 {
 	private final WeakReference<EntityLivingBase> caster;
+	private NBTTagCompound extraData = new NBTTagCompound();
+	private NBTTagCompound extraDataTransmittable = new NBTTagCompound();
 
 	public EntityCaster(EntityLivingBase ent)
 	{
@@ -217,23 +218,50 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	}
 
 	@Override
-	public void sendUpdate(){}
-
-	@Override
 	public void init(Entity entity, World world){}
 
 	@Override
-	public void writeToNBT(NBTTagCompound nbt){}
+	public void writeToNBT(NBTTagCompound nbt)
+	{
+		if(!extraData.hasNoTags())
+			nbt.setTag("extraData", extraData);
+	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbt){}
+	public void readFromNBT(NBTTagCompound nbt)
+	{
+		if(nbt.hasKey("extraData"))
+			extraData = nbt.getCompoundTag("extraData");
+		else if(!extraData.hasNoTags())
+			extraData = new NBTTagCompound();
+	}
 
 	@Override
-	public void writeTransmittable(NBTTagCompound nbt){}
+	public void writeTransmittable(NBTTagCompound nbt)
+	{
+		if(!extraDataTransmittable.hasNoTags())
+			nbt.setTag("extraDataT", extraDataTransmittable);
+	}
 
 	@Override
-	public void readTransmittable(NBTTagCompound nbt){}
+	public void readTransmittable(NBTTagCompound nbt)
+	{
+		if(nbt.hasKey("extraDataT"))
+			extraDataTransmittable = nbt.getCompoundTag("extraDataT");
+		else if(!extraDataTransmittable.hasNoTags())
+			extraDataTransmittable = new NBTTagCompound();
+	}
 
 	@Override
 	public boolean notifyArea(){return false;}
+
+	public NBTTagCompound getExtraData()
+	{
+		return extraData;
+	}
+
+	public NBTTagCompound getExtraDataT()
+	{
+		return extraDataTransmittable;
+	}
 }

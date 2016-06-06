@@ -6,6 +6,7 @@ import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
+import io.darkcraft.mod.common.magic.component.INoAreaComponent;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
@@ -44,9 +45,14 @@ public class ComponentInstance
 		}
 		else
 			duration = 1;
-		area = _area;
-		if(area > 0)
-			tempCost *= Math.pow(1.75, area);
+		if(!(this instanceof INoAreaComponent))
+		{
+			area = _area;
+			if(area > 0)
+				tempCost *= Math.pow(1.75, area);
+		}
+		else
+			area = 0;
 		cost = tempCost;
 		double ar = (area * 2) + 1;
 		areaCubed = ar * ar * ar;
