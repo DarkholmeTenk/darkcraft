@@ -16,6 +16,7 @@ import io.darkcraft.mod.common.magic.component.impl.Recall;
 import io.darkcraft.mod.common.magic.component.impl.RestoreHealth;
 import io.darkcraft.mod.common.magic.component.impl.RestoreHunger;
 import io.darkcraft.mod.common.magic.component.impl.SoulTrap;
+import io.darkcraft.mod.common.magic.component.impl.SummonLight;
 import io.darkcraft.mod.common.magic.component.impl.Test;
 import io.darkcraft.mod.common.magic.component.impl.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.spell.Spell;
@@ -40,6 +41,7 @@ public class MagicalRegistry
 	public static final SoulTrap soulTrap = new SoulTrap();
 	public static final Mark mark = new Mark();
 	public static final Recall recall = new Recall();
+	public static final SummonLight sl = new SummonLight();
 	public static final Test test = new Test();
 
 	public static void registerMagic()
@@ -56,6 +58,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(soulTrap);
 		SpellPartRegistry.registerComponent(mark);
 		SpellPartRegistry.registerComponent(recall);
+		SpellPartRegistry.registerComponent(sl);
 		SpellPartRegistry.registerComponent(test);
 
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());

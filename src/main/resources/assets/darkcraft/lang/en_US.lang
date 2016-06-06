@@ -23,6 +23,7 @@ darkcraft.component.dig=Excavate
 darkcraft.component.digsilk=Gentle Excavate
 darkcraft.component.digfortune=Greedy Excavate
 darkcraft.component.soultrap=Soul Trap
+darkcraft.component.conLight=Conjure Light
 darkcraft.component.mark=Mark
 darkcraft.component.recall=Recall
 

@@ -1,5 +1,13 @@
 package io.darkcraft.mod.client;
 
+import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.EntitySpellProjectileRenderer;
 import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
@@ -12,6 +20,7 @@ import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicAnvilRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicFieldMeasurerRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicGuideRenderer;
+import io.darkcraft.mod.client.renderer.tileent.MagicLightRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicStaffChangerRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicVortexCrystalRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicVortexRenderer;
@@ -24,6 +33,7 @@ import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
 import io.darkcraft.mod.common.magic.tileent.MagicFieldMeasurer;
 import io.darkcraft.mod.common.magic.tileent.MagicGuide;
+import io.darkcraft.mod.common.magic.tileent.MagicLight;
 import io.darkcraft.mod.common.magic.tileent.MagicStaffChanger;
 import io.darkcraft.mod.common.magic.tileent.MagicVortex;
 import io.darkcraft.mod.common.magic.tileent.MagicVortexCrystal;
@@ -40,15 +50,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-
-import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class ClientProxy extends CommonProxy
 {
@@ -69,9 +70,11 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(SpellCreator.class, new SpellCreatorRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicAnvil.class, MagicAnvilRenderer.i);
 		ClientRegistry.bindTileEntitySpecialRenderer(MagicGuide.class, new MagicGuideRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(MagicLight.class, new MagicLightRenderer());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.spellCreatorBlock),new SpellCreatorRenderer());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicAnvil),MagicAnvilRenderer.i);
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicGuide),new MagicGuideRenderer());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicLight), new MagicLightRenderer());
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.soulGem, new SoulGemRenderer());
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.scroll, new MagicScrollRenderer());
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.compBook, new ComponentBookRenderer());
