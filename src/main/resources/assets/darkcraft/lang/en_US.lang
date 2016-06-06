@@ -26,12 +26,14 @@ darkcraft.component.soultrap=Soul Trap
 darkcraft.component.conLight=Conjure Light
 darkcraft.component.mark=Mark
 darkcraft.component.recall=Recall
+darkcraft.component.recall.cd=Aetheric Recall
 
 tile.darkcraft.MagicInventory.name=Magical Storage
 tile.darkcraft.SpellCreator.name=Spell Creator
 tile.darkcraft.StaffChanger.name=Staff Changer
 tile.darkcraft.MagicGuide.name=Arcane Manual
 tile.darkcraft.MagicAnvil.name=Tonal Anvil
+tile.darkcraft.MagicLight.name=Conjured Light
 
 item.darkcraft.MagicComponent.Crystal.name=Glowing Crystal
 item.darkcraft.staff.name=Staff

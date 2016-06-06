@@ -23,19 +23,25 @@ import skillapi.api.implement.ISkill;
 
 public class Recall implements IComponent, IDescriptiveMagnitudeComponent
 {
+	public final boolean crossDimensional;
+	public Recall(boolean cd)
+	{
+		crossDimensional = cd;
+	}
 
 	@Override
-	public String id(){ return "recall"; }
+	public String id(){ return crossDimensional? "recall.cd" : "recall"; }
 
 	@Override
-	public String getUnlocalisedName(){ return "darkcraft.component.recall"; }
+	public String getUnlocalisedName(){ return "darkcraft.component." +id(); }
 
 	@Override
 	public ResourceLocation getIcon(){ return MagicalRegistry.componentTex; }
 
-	private final UVStore uv = new UVStore(0.4,0.5,0.2,0.3);
+	private final UVStore uvN = new UVStore(0.4,0.5,0.2,0.3);
+	private final UVStore uvC = new UVStore(0.5,0.6,0.2,0.3);
 	@Override
-	public UVStore getIconLocation(){ return uv; }
+	public UVStore getIconLocation(){ return crossDimensional ? uvC : uvN; }
 
 	@Override
 	public ISkill getMainSkill(){ return SkillRegistry.conjuration; }
@@ -43,7 +49,7 @@ public class Recall implements IComponent, IDescriptiveMagnitudeComponent
 	@Override
 	public double getCost()
 	{
-		return 65;
+		return crossDimensional ? 300 : 65;
 	}
 
 	@Override
@@ -62,7 +68,7 @@ public class Recall implements IComponent, IDescriptiveMagnitudeComponent
 			if(nbt.hasKey("markLoc" + magnitude))
 			{
 				SimpleDoubleCoordStore markLoc = SimpleDoubleCoordStore.readFromNBT(nbt.getCompoundTag("markLoc"+magnitude));
-				if(markLoc.world == WorldHelper.getWorldID(e))
+				if(crossDimensional || (markLoc.world == WorldHelper.getWorldID(e)))
 				{
 					TeleportHelper.teleportEntity(e, markLoc);
 				}

@@ -40,7 +40,8 @@ public class MagicalRegistry
 	public static final Fly fly = new Fly();
 	public static final SoulTrap soulTrap = new SoulTrap();
 	public static final Mark mark = new Mark();
-	public static final Recall recall = new Recall();
+	public static final Recall recall = new Recall(false);
+	public static final Recall recallCD = new Recall(true);
 	public static final SummonLight sl = new SummonLight();
 	public static final Test test = new Test();
 
@@ -58,6 +59,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(soulTrap);
 		SpellPartRegistry.registerComponent(mark);
 		SpellPartRegistry.registerComponent(recall);
+		SpellPartRegistry.registerComponent(recallCD);
 		SpellPartRegistry.registerComponent(sl);
 		SpellPartRegistry.registerComponent(test);
 
