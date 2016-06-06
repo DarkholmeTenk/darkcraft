@@ -23,6 +23,8 @@ darkcraft.component.dig=Excavate
 darkcraft.component.digsilk=Gentle Excavate
 darkcraft.component.digfortune=Greedy Excavate
 darkcraft.component.soultrap=Soul Trap
+darkcraft.component.mark=Mark
+darkcraft.component.recall=Recall
 
 tile.darkcraft.MagicInventory.name=Magical Storage
 tile.darkcraft.SpellCreator.name=Spell Creator
@@ -46,6 +48,7 @@ tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
 
 dc.message.anvil.emptysoul=The provided soulgem is empty
 dc.message.anvil.smallsoul=The provided soul is too small
+dc.message.mark.success=Location marked
 
 dc.guide.creator=The spell creator can be used to create spells. Use the GUI, then stand on a glyph to use mana to make the spell. 
 dc.guide.anvil=The Tonal Anvil can be used to imbue a spell's power into items.\nSimply place all the items of the recipe on the anvil and cast the indicated spell (or any spell if none specified).\nWait a few seconds and the items will transform!
