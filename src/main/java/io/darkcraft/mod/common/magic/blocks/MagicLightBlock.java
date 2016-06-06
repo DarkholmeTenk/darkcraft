@@ -33,7 +33,7 @@ public class MagicLightBlock extends AbstractBlockContainer
 	@Override
 	public void initData()
 	{
-		setBlockName("magicLight");
+		setBlockName("MagicLight");
 		setLightLevel(1);
 		setBlockBounds(0.3f, 0.4f, 0.3f, 0.7f, 0.6f, 0.7f);
 		setHardness(0f);
