@@ -32,7 +32,7 @@ import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 
-@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.1", dependencies = "required-after:darkcore@[0.41,0.499]; required-after:SkillAPI")
+@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.15", dependencies = "required-after:darkcore@[0.42,0.499]; required-after:SkillAPI")
 public class DarkcraftMod implements IConfigHandlerMod
 {
 	public static DarkcraftMod				i;
