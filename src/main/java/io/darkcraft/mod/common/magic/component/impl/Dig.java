@@ -1,5 +1,8 @@
 package io.darkcraft.mod.common.magic.component.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
@@ -7,19 +10,16 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.component.IComponent;
-import io.darkcraft.mod.common.magic.component.IMagnitudeComponent;
+import io.darkcraft.mod.common.magic.component.IDescriptiveMagnitudeComponent;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
 
-public class Dig implements IComponent, IMagnitudeComponent
+public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 {
 
 	@Override
@@ -126,6 +126,12 @@ public class Dig implements IComponent, IMagnitudeComponent
 			case 3: return oldCost * 5;
 			default: return oldCost;
 		}
+	}
+
+	@Override
+	public void getDescription(List<String> strings, int magnitude)
+	{
+		strings.add("dc.test");
 	}
 
 }

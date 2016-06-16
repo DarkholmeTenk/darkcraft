@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.magic.caster;
 
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
@@ -7,21 +9,21 @@ import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.spell.CastType;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicConfig;
-
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockCaster implements ICaster
 {
 	public final SimpleCoordStore blockPos;
+	public final IBlockCasterHandler handler;
 
-	public BlockCaster(SimpleCoordStore pos)
+	public BlockCaster(SimpleCoordStore pos, IBlockCasterHandler _handler)
 	{
 		blockPos = pos;
+		handler = _handler;
 	}
 
 	@Override
@@ -46,19 +48,17 @@ public class BlockCaster implements ICaster
 
 	public SimpleDoubleCoordStore getSpellCreationPos()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void setVelocity(EntitySpellProjectile sp)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	public ForgeDirection getFacing()
 	{
-		return ForgeDirection.NORTH;
+		return handler.getFacing();
 	}
 
 	private void castProjectile(Spell spell)
@@ -169,5 +169,20 @@ public class BlockCaster implements ICaster
 	{
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void tick()
+	{
+
+	}
+
+	public void writeToNBT(NBTTagCompound nbt)
+	{
+
+	}
+
+	public void readFromNBT(NBTTagCompound nbt)
+	{
+
 	}
 }

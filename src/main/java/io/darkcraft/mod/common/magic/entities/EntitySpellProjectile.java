@@ -6,6 +6,7 @@ import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.handlers.packets.EntityPacketHandler;
 import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
+import io.darkcraft.mod.common.magic.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.caster.ICaster;
 import io.darkcraft.mod.common.magic.spell.Spell;
 import net.minecraft.entity.Entity;
@@ -62,7 +63,9 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	private void hitCheck()
 	{
 		if(ServerHelper.isClient())return;
-		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class);
+		Entity c = caster instanceof EntityCaster ? ((EntityCaster)caster).getEntity() : null;
+		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class, c);
+		//System.out.format("P:%3.3f,%3.3f,%3.3f - %s",posX,posY,posZ,mop==null ? "null" : mop.toString());
 		if(mop != null)
 		{
 			if(mop.entityHit != null)

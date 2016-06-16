@@ -1,12 +1,11 @@
 package io.darkcraft.mod.common.command;
 
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractCommandNew;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-
-import java.util.List;
-
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -14,7 +13,7 @@ public class MagicCommand extends AbstractCommandNew
 {
 	public MagicCommand()
 	{
-		super(new SetManaSC());
+		super(new SetManaSC(), new MagicChalkCommand());
 	}
 
 	@Override

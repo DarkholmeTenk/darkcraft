@@ -1,18 +1,18 @@
 package io.darkcraft.mod.client.renderer;
 
-import io.darkcraft.darkcore.mod.datastore.Pair;
-import io.darkcraft.darkcore.mod.datastore.UVStore;
-import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.DarkcraftMod;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.lwjgl.opengl.GL11;
+
+import io.darkcraft.darkcore.mod.datastore.Colour;
+import io.darkcraft.darkcore.mod.datastore.Pair;
+import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.RenderHelper;
+import io.darkcraft.mod.DarkcraftMod;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
 
 public class LetterRenderer
 {
@@ -155,7 +155,25 @@ public class LetterRenderer
 		return ld.x + 1;
 	}
 
-	public static void render(char l)
+	public static int width(char l)
+	{
+		refreshData();
+		LetterData ld = dataMap.get(l);
+		if(ld == null) return 0;
+		return ld.x;
+	}
+
+	public static int height(char l)
+	{
+		refreshData();
+		LetterData ld = dataMap.get(l);
+		if(ld == null) return 0;
+		return ld.y;
+	}
+
+	public static final Colour defaultTextColour = RenderHelper.white;
+	public static final Colour defaultGlowColour = new Colour(0.1f,0.2f,1);
+	public static void render(char l, boolean glow, Colour textColour, Colour glowColour)
 	{
 		refreshData();
 		LetterData ld = dataMap.get(l);
@@ -163,27 +181,38 @@ public class LetterRenderer
 		{
 			Tessellator tess = Tessellator.instance;
 			RenderHelper.bindTexture(rl);
+			RenderHelper.colour(textColour);
 			tess.startDrawingQuads();
 			renderChar(tess,0,ld);
 			tess.draw();
 
-			boolean bfc = GL11.glIsEnabled(GL11.GL_CULL_FACE);
-			GL11.glDisable(GL11.GL_CULL_FACE);
-			RenderHelper.bindTexture(gl);
-			tess.startDrawingQuads();
-			renderGlow(tess,0,ld);
-			tess.draw();
-			if(bfc)
-				GL11.glEnable(GL11.GL_CULL_FACE);
+			if(glow)
+			{
+				boolean bfc = GL11.glIsEnabled(GL11.GL_CULL_FACE);
+				GL11.glDisable(GL11.GL_CULL_FACE);
+				RenderHelper.bindTexture(gl);
+				tess.startDrawingQuads();
+				RenderHelper.colour(glowColour);
+				renderGlow(tess,0,ld);
+				tess.draw();
+				if(bfc)
+					GL11.glEnable(GL11.GL_CULL_FACE);
+			}
 		}
+		RenderHelper.resetColour();
+	}
+
+	public static void render(char l)
+	{
+		render(l,true,defaultTextColour,defaultGlowColour);
 	}
 
 	public static void render(String s)
 	{
-		render(s,0,0,1,1,1,0.1f,0.2f,1);
+		render(s,0,0,defaultTextColour,defaultGlowColour);
 	}
 
-	public static void render(String s, int x, int y, float tR, float tG, float tB, float gR, float gG, float gB)
+	public static void render(String s, int x, int y, Colour textColour, Colour glowColour)
 	{
 		GL11.glPushMatrix();
 		boolean el = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -201,7 +230,7 @@ public class LetterRenderer
 			else
 				ld[i] = d;
 		}
-		GL11.glColor3f(tR, tG, tB);
+		RenderHelper.colour(textColour);
 		Tessellator tess = Tessellator.instance;
 		RenderHelper.bindTexture(rl);
 		tess.startDrawingQuads();
@@ -211,7 +240,7 @@ public class LetterRenderer
 				i+=renderChar(tess,i,d);
 		tess.draw();
 
-		GL11.glColor3f(gR, gG, gB);
+		RenderHelper.colour(glowColour);
 		boolean bfc = GL11.glIsEnabled(GL11.GL_CULL_FACE);
 		//GL11.glDisable(GL11.GL_CULL_FACE);
 		RenderHelper.bindTexture(gl);

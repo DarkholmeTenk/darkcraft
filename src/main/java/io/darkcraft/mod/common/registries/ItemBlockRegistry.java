@@ -8,11 +8,13 @@ import io.darkcraft.mod.common.magic.blocks.MagicGuideBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicInventoryBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicLightBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicStaffChangerBlock;
+import io.darkcraft.mod.common.magic.blocks.MagicSymbolBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicTouchPassBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
 import io.darkcraft.mod.common.magic.blocks.SpellCreatorBlock;
 import io.darkcraft.mod.common.magic.items.ComponentBook;
+import io.darkcraft.mod.common.magic.items.MagicChalk;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.items.MagicScroll;
 import io.darkcraft.mod.common.magic.items.SoulGem;
@@ -38,6 +40,7 @@ public class ItemBlockRegistry
 	public static AbstractBlock magicAnvil;
 	public static AbstractBlock magicGuide;
 	public static AbstractBlock magicLight;
+	public static AbstractBlock magicSymbol;
 	public static AbstractBlock techGenerator;
 	public static void registerBlocks()
 	{
@@ -53,6 +56,7 @@ public class ItemBlockRegistry
 		magicAnvil = new MagicAnvilBlock().register();
 		magicGuide = new MagicGuideBlock().register();
 		magicLight = new MagicLightBlock().register();
+		magicSymbol = new MagicSymbolBlock().register();
 		//TECH
 		techGenerator = new TechGeneratorBlock().register();
 	}
@@ -62,6 +66,7 @@ public class ItemBlockRegistry
 	public static SoulGem soulGem = new SoulGem();
 	public static MagicScroll scroll = new MagicScroll();
 	public static ComponentBook compBook = new ComponentBook();
+	public static MagicChalk magicChalk = new MagicChalk();
 	public static void registerItems()
 	{
 		magicComponent.register();
@@ -69,6 +74,7 @@ public class ItemBlockRegistry
 		soulGem.register();
 		scroll.register();
 		compBook.register();
+		magicChalk.register();
 		registerStaffParts();
 	}
 

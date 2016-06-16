@@ -1,5 +1,9 @@
 package io.darkcraft.mod.client.renderer.tileent;
 
+import java.util.WeakHashMap;
+
+import org.lwjgl.opengl.GL11;
+
 import io.darkcraft.api.magic.IMagicAnvilRecipe;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
@@ -13,9 +17,6 @@ import io.darkcraft.mod.common.magic.tileent.MagicGuide;
 import io.darkcraft.mod.common.magic.tileent.MagicGuide.Mode;
 import io.darkcraft.mod.common.magic.tileent.guide.IGuidePage;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
-
-import java.util.WeakHashMap;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -25,8 +26,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
-import org.lwjgl.opengl.GL11;
 
 public class MagicGuideRenderer extends AbstractObjRenderer
 {
@@ -109,7 +108,7 @@ public class MagicGuideRenderer extends AbstractObjRenderer
 		GL11.glTranslated(0, 1, 0.2);
 		rotateToPage();
 		GL11.glScaled(0.01, 0.01, 0.01);
-		LetterRenderer.render("manual",0,0, 0,0,0, 0.1f,0.2f,1);
+		LetterRenderer.render("manual",0,0, RenderHelper.black, LetterRenderer.defaultGlowColour);
 	}
 
 	private void renderPage(GuideData gd, IGuidePage page)
