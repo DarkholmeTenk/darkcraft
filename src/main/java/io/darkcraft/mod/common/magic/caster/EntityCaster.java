@@ -196,7 +196,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 		if(block == null) return;
 		if(spell.type == CastType.SELF) return;
 		if(doCast(spell,useMana))
-			spell.apply(this, block, 0);
+			spell.apply(this, block, side);
 	}
 
 	@Override
