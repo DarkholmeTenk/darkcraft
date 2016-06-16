@@ -128,7 +128,7 @@ public class MagicEventHandler
 			Spell sp = pc.getCurrentSpell();
 			if(sp == null) return;
 			event.setCanceled(true);
-			if(ServerHelper.isClient() && (event.action == Action.RIGHT_CLICK_AIR))
+			if(ServerHelper.isClient())
 			{
 				String un = PlayerHelper.getUsername(pl);
 				NBTTagCompound nbt = new NBTTagCompound();
