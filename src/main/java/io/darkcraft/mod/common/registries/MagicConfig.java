@@ -37,7 +37,7 @@ public class MagicConfig
 	public static boolean regenPercent = true;
 
 	public static boolean		traceLiquids = false;
-	public static int			touchCastDistance = 1;
+	public static int			touchCastDistance = 5;
 	public static boolean		castWithHand = true;
 
 	public static boolean		deity = true;
