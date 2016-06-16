@@ -1,5 +1,16 @@
 package io.darkcraft.mod.common.magic;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.Type;
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
@@ -15,12 +26,6 @@ import io.darkcraft.mod.common.magic.spell.Spell;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,12 +40,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.events.EntitySkillChangeEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.Type;
 
 public class MagicEventHandler
 {
@@ -125,6 +124,10 @@ public class MagicEventHandler
 		{
 			if(pl.getHeldItem() != null) return;
 			if(!pl.isSneaking()) return;
+			PlayerCaster pc = Helper.getPlayerCaster(pl);
+			Spell sp = pc.getCurrentSpell();
+			if(sp == null) return;
+			event.setCanceled(true);
 			if(ServerHelper.isClient() && (event.action == Action.RIGHT_CLICK_AIR))
 			{
 				String un = PlayerHelper.getUsername(pl);
@@ -135,13 +138,7 @@ public class MagicEventHandler
 				DarkcoreMod.networkChannel.sendToServer(dp);
 			}
 			if(ServerHelper.isClient())return;
-			PlayerCaster pc = Helper.getPlayerCaster(pl);
-			Spell sp = pc.getCurrentSpell();
-			if(sp != null)
-			{
-				pc.cast(sp, true);
-				event.setCanceled(true);
-			}
+			pc.cast(sp, true);
 		}
 	}
 
