@@ -15,6 +15,7 @@ import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
 import io.darkcraft.mod.client.renderer.gui.StatusOverlay;
 import io.darkcraft.mod.client.renderer.item.ComponentBookRenderer;
 import io.darkcraft.mod.client.renderer.item.ItemStaffRenderer;
+import io.darkcraft.mod.client.renderer.item.MagicChalkRenderer;
 import io.darkcraft.mod.client.renderer.item.MagicScrollRenderer;
 import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
 import io.darkcraft.mod.client.renderer.tileent.MagicAnvilRenderer;
@@ -81,6 +82,7 @@ public class ClientProxy extends CommonProxy
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.soulGem, new SoulGemRenderer());
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.scroll, new MagicScrollRenderer());
 		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.compBook, new ComponentBookRenderer());
+		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.magicChalk, new MagicChalkRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new EntitySpellProjectileRenderer());
 		ClientRegistry.registerKeyBinding(keyBind = new KeyBinding("darkcraft.key.open.desc", Keyboard.KEY_Y, "darkcraft.key.category"));
 	}

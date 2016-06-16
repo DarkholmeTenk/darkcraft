@@ -20,6 +20,7 @@ public class MagicChalk extends AbstractItem
 		super(DarkcraftMod.modName);
 		setUnlocalizedName("MagicChalk");
 		setSubNames(ChalkType.getNames());
+		setMaxStackSize(1);
 	}
 
 	@Override
@@ -43,10 +44,21 @@ public class MagicChalk extends AbstractItem
 			if(te instanceof MagicSymbol)
 			{
 				((MagicSymbol)te).setCharacter(c);
+				damage(is);
+				if(damage(is))
+					pl.inventory.decrStackSize(pl.inventory.currentItem, 1);
 			}
 		}
 		return true;
     }
+
+	public static boolean damage(ItemStack is)
+	{
+		if(is.stackTagCompound == null) return false;
+		double nd = is.stackTagCompound.getDouble("dam")+0.002;
+		is.stackTagCompound.setDouble("dam", nd);
+		return nd >= 1;
+	}
 
 	public static String getString(ItemStack is)
 	{
@@ -71,6 +83,14 @@ public class MagicChalk extends AbstractItem
 		if(is.stackTagCompound == null)	is.stackTagCompound = new NBTTagCompound();
 		is.stackTagCompound.setString("chalkText", string);
 		is.stackTagCompound.setInteger("slot", 0);
+	}
+
+	public static double getISDamage(ItemStack is)
+	{
+		if((is == null) || !(is.getItem() instanceof MagicChalk)) return 0;
+		if(is.stackTagCompound == null) return 0;
+		if(!is.stackTagCompound.hasKey("dam")) is.stackTagCompound.setDouble("dam", 0);
+		return is.stackTagCompound.getDouble("dam");
 	}
 
 }
