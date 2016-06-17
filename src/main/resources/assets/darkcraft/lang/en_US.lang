@@ -55,3 +55,9 @@ dc.message.mark.success=Location marked
 
 dc.guide.creator=The spell creator can be used to create spells. Use the GUI, then stand on a glyph to use mana to make the spell. 
 dc.guide.anvil=The Tonal Anvil can be used to imbue a spell's power into items.\nSimply place all the items of the recipe on the anvil and cast the indicated spell (or any spell if none specified).\nWait a few seconds and the items will transform!
+
+item.Wand.darkcraft.rod=Soulwood
+tc.research_name.ROD_darkcraft=[DC]Soulwood Rod
+tc.research_text.ROD_darkcraft=Using mana to power thaumaturgy
+darkcraft.tc4.page1=A Soulwood rod can be crafted by infusing the power of magical light sources into a Soul Gem with a greater (or larger) soul contained within.<LINE>Every second a Soulwood rod is held, it will drain 2 mana from the wielder and convert it into 3 aspect points.<BR>It's not the best rod, but it should allow an accomplished magister an easy way into becoming a thaumaturge.
+item.darkcraft.TC.WandRod.name=Soulwood Rod

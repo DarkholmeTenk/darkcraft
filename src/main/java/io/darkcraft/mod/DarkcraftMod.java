@@ -17,6 +17,7 @@ import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.config.ConfigHandler;
 import io.darkcraft.darkcore.mod.config.ConfigHandlerFactory;
 import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
+import io.darkcraft.interop.InteropHandler;
 import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.magic.field.MagicFieldFactory;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
@@ -32,7 +33,7 @@ import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 
-@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.15", dependencies = "required-after:darkcore@[0.42,0.499]; required-after:SkillAPI")
+@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.15", dependencies = "required-after:darkcore@[0.42,0.499]; required-after:SkillAPI; after:Thaumcraft")
 public class DarkcraftMod implements IConfigHandlerMod
 {
 	public static DarkcraftMod				i;
@@ -67,6 +68,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		MagicalRegistry.registerMagic();
 		EntRegistry.registerEntities();
 		FMLInterModComms.sendMessage("SkillAPI", "register", "io.darkcraft.mod.common.registries.SkillRegistry.requestAPI");
+		InteropHandler.preInit();
 	}
 
 	@EventHandler
@@ -78,6 +80,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		proxy.init();
 		new TestSymbolicFactory();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
+		InteropHandler.init();
 	}
 
 	@EventHandler
@@ -85,6 +88,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	{
 		MagicConfig.refreshConfigs();
 		MagicAnvilRecipeRegistry.postInit();
+		InteropHandler.postInit();
 		inited = true;
 	}
 

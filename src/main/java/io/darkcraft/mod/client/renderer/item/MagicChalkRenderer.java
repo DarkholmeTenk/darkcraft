@@ -74,5 +74,6 @@ public class MagicChalkRenderer implements IItemRenderer
 		RenderHelper.colour(chalkType.colour);
 		RenderHelper.bindTexture(tex);
 		RenderHelper.cube(-0.05f, -0.1f, -0.05f, 0.05f, (float)(0.4-(damage/2)), 0.05f, true, uvs);
+		GL11.glEnable(GL11.GL_LIGHTING);
 	}
 }
