@@ -54,7 +54,7 @@ public class WandCapRecipe extends InfusionRecipe
 	public boolean matches(ArrayList<ItemStack> input, ItemStack central, World world, EntityPlayer player)
 	{
 		if (!ThaumcraftApiHelper.isResearchComplete(ServerHelper.getUsername(player), research)) return false;
-
+		if(SoulGem.getSoulSize(central) == null) return false;
 		if(!SoulGem.getSoulSize(central).canFit(SoulGem.Size.Greater)) return false;
 
 		ArrayList<ItemStack> ii = new ArrayList<ItemStack>();
