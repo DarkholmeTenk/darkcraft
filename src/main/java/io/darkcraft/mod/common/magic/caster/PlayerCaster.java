@@ -311,7 +311,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 			DarkcoreMod.networkChannel.sendTo(dp,(EntityPlayerMP) pl);
 		}
-		return true;
+		return false;
 	}
 
 	@Override
