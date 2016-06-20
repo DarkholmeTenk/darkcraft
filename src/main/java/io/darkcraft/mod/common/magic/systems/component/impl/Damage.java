@@ -8,7 +8,7 @@ import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.systems.component.IMagnitudeComponent;
-import io.darkcraft.mod.common.magic.systems.component.impl.effects.EffectDamage;
+import io.darkcraft.mod.common.magic.systems.effects.EffectDamage;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;

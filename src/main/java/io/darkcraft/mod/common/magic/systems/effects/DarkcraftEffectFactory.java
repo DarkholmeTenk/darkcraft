@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.systems.component.impl.effects;
+package io.darkcraft.mod.common.magic.systems.effects;
 
 import io.darkcraft.darkcore.mod.abstracts.effects.AbstractEffect;
 import io.darkcraft.darkcore.mod.abstracts.effects.IEffectFactory;

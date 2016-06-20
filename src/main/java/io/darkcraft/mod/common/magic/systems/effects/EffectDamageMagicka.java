@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.systems.component.impl.effects;
+package io.darkcraft.mod.common.magic.systems.effects;
 
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.helpers.Helper;

@@ -4,7 +4,7 @@ import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.systems.component.impl.effects.EffectDamageMagicka;
+import io.darkcraft.mod.common.magic.systems.effects.EffectDamageMagicka;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;

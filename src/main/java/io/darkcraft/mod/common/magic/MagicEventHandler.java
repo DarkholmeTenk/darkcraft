@@ -19,7 +19,7 @@ import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.items.SoulGem;
-import io.darkcraft.mod.common.magic.systems.component.impl.effects.EffectSoulTrap;
+import io.darkcraft.mod.common.magic.systems.effects.EffectSoulTrap;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;

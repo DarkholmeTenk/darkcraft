@@ -6,7 +6,7 @@ import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.IDurationComponent;
-import io.darkcraft.mod.common.magic.systems.component.impl.effects.EffectWaterWalk;
+import io.darkcraft.mod.common.magic.systems.effects.EffectWaterWalk;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;

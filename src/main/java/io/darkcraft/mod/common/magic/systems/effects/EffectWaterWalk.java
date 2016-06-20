@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.systems.component.impl.effects;
+package io.darkcraft.mod.common.magic.systems.effects;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;

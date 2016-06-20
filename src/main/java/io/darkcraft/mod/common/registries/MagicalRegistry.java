@@ -20,7 +20,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.SoulTrap;
 import io.darkcraft.mod.common.magic.systems.component.impl.SummonLight;
 import io.darkcraft.mod.common.magic.systems.component.impl.Test;
 import io.darkcraft.mod.common.magic.systems.component.impl.WaterWalk;
-import io.darkcraft.mod.common.magic.systems.component.impl.effects.DarkcraftEffectFactory;
+import io.darkcraft.mod.common.magic.systems.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.systems.soulspell.SoulSpellRegistry;
 import io.darkcraft.mod.common.magic.systems.soulspell.impl.DarkcraftSoulSpellFactory;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
