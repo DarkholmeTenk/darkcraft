@@ -7,6 +7,7 @@ import io.darkcraft.darkcore.mod.handlers.packets.EntityPacketHandler;
 import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import net.minecraft.entity.Entity;
@@ -60,12 +61,23 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 		return aabb;
 	}
 
+	private MovingObjectPosition blockCasterHitCheck(MovingObjectPosition mop)
+	{
+		if(mop == null) return null;
+		if(!(caster instanceof BlockCaster)) return mop;
+		if(mop.entityHit != null) return mop;
+		BlockCaster bc = (BlockCaster) caster;
+		SimpleCoordStore scs = new SimpleCoordStore(worldObj, mop);
+		if(scs.equals(bc.blockPos)) return null;
+		return mop;
+	}
+
 	private void hitCheck()
 	{
 		if(ServerHelper.isClient())return;
 		Entity c = caster instanceof EntityCaster ? ((EntityCaster)caster).getEntity() : null;
 		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class, c);
-		//System.out.format("P:%3.3f,%3.3f,%3.3f - %s",posX,posY,posZ,mop==null ? "null" : mop.toString());
+		mop = blockCasterHitCheck(mop);
 		if(mop != null)
 		{
 			if(mop.entityHit != null)
