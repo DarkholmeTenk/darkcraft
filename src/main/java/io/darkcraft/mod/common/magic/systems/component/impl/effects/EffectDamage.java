@@ -11,7 +11,7 @@ public class EffectDamage extends AbstractDarkcraftEffect
 	private static final UVStore lqUV = new UVStore(0,0.1,0,0.1);
 	private static final UVStore hqUV = new UVStore(0,0.1,0.1,0.2);
 
-	public EffectDamage(EntityLivingBase ent, ICaster caster, int magnitude, int duration)
+	public EffectDamage(ICaster caster, EntityLivingBase ent, int magnitude, int duration)
 	{
 		super("damage", caster, ent, magnitude, duration-1, true, true, 20);
 	}
