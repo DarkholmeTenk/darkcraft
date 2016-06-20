@@ -64,9 +64,14 @@ public class GemStand extends AbstractTileEntity implements IActivatable, IBlock
 			soulspell.tick(caster);
 	}
 
-	public SoulGem.Size getGemSize()
+	public Size getGemSize()
 	{
 		return SoulGem.getGemSize(is);
+	}
+
+	public Size getSoulSize()
+	{
+		return soulsize;
 	}
 
 	private void setGem(ItemStack newIS)
@@ -77,6 +82,7 @@ public class GemStand extends AbstractTileEntity implements IActivatable, IBlock
 		soulsize = SoulGem.getSoulSize(newIS);
 		if(charge > getMaxMana())
 			charge = getMaxMana();
+		sendUpdate();
 	}
 
 	private void activate(EntityPlayer ent)
@@ -88,7 +94,6 @@ public class GemStand extends AbstractTileEntity implements IActivatable, IBlock
 			clear();
 			WorldHelper.giveItemStack(ent, is);
 			setGem(null);
-			sendUpdate();
 		}
 		else if((is == null) && (held != null))
 		{
