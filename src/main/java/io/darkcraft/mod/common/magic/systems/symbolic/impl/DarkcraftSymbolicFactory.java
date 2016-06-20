@@ -16,6 +16,7 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 	public String match(String glyphs)
 	{
 		if(glyphs.startsWith("targetmobs")) return "dc.targetmobs";
+		if(glyphs.startsWith("magicka.sila")) return "dc.manaregen";
 		return null;
 	}
 
@@ -23,6 +24,7 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 	public ISymbolicSpell createSpell(String id, String glyphs, SimpleCoordStore rootRune, SimpleCoordStore center)
 	{
 		if(id == "dc.targetmobs") return new TargetMobsSymbolicSpell(rootRune, center);
+		if(id == "dc.manaregen") return new ManaRegenSymbolicSpell(rootRune, center);
 		return null;
 	}
 

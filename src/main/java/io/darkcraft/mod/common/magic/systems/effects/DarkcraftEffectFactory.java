@@ -31,6 +31,8 @@ public class DarkcraftEffectFactory implements IEffectFactory
 			return new EffectSoulTrap(null,ent,mag,dur);
 		if(id.equals("darkcraft.waterwalk"))
 			return new EffectWaterWalk(null,ent,mag,dur);
+		if(id.equals("darkcraft.ssmanaregen"))
+			return new SSEffectManaRegen(null,ent,mag,dur);
 		return null;
 	}
 

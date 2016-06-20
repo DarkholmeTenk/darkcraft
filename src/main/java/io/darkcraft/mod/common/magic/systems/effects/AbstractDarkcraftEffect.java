@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public abstract class AbstractDarkcraftEffect extends AbstractEffect
 {
-	protected int magnitude;
+	public int magnitude;
 	public final ICaster caster;
 	private final ResourceLocation rl = new ResourceLocation(DarkcraftMod.modName,"textures/gui/effects/effects.png");
 
