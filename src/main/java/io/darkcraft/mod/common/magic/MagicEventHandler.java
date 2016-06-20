@@ -12,14 +12,17 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.Type;
 import io.darkcraft.darkcore.mod.DarkcoreMod;
+import io.darkcraft.darkcore.mod.abstracts.effects.AbstractEffect;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
+import io.darkcraft.mod.common.magic.event.caster.PlayerCasterManaRegenEvent;
 import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.systems.effects.EffectSoulTrap;
+import io.darkcraft.mod.common.magic.systems.effects.SSEffectManaRegen;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
@@ -154,5 +157,21 @@ public class MagicEventHandler
 		if(!f) return;
 		PlayerCaster pc = Helper.getPlayerCaster((EntityPlayer) ent);
 		pc.updateMaxMana();
+	}
+
+	@SubscribeEvent
+	public void handleManaRegen(PlayerCasterManaRegenEvent event)
+	{
+		PlayerCaster pc = event.playerCaster;
+		EntityPlayer pl;
+		if((pc == null) || ((pl = pc.getCaster()) == null)) return;
+		EntityEffectStore ees = EffectHandler.getEffectStore(pl);
+		if(ees == null) return;
+		AbstractEffect eff = ees.getEffect("darkcraft.ssmanaregen");
+		if(eff == null) return;
+		SSEffectManaRegen ssemr = (SSEffectManaRegen) eff;
+		int s = ssemr.magnitude+1;
+		double m = 1 + (s /2.5);
+		event.regenAmount *= m;
 	}
 }
