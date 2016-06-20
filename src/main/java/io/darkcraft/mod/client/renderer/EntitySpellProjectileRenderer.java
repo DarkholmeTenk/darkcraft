@@ -1,5 +1,7 @@
 package io.darkcraft.mod.client.renderer;
 
+import org.lwjgl.opengl.GL11;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
@@ -8,8 +10,6 @@ import io.darkcraft.mod.common.registries.MagicalRegistry;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-
-import org.lwjgl.opengl.GL11;
 
 public class EntitySpellProjectileRenderer extends RenderEntity
 {
@@ -37,7 +37,7 @@ public class EntitySpellProjectileRenderer extends RenderEntity
     	GL11.glPushMatrix();
     	GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    	GL11.glTranslated(esp.posX-RenderManager.renderPosX, esp.posY-RenderManager.renderPosY, esp.posZ-RenderManager.renderPosZ);
+		GL11.glTranslated(x, y, z);
     	GL11.glRotated(RenderManager.instance.playerViewY, 0, -1, 0);
     	GL11.glRotated(RenderManager.instance.playerViewX, 1, 0, 0);
     	GL11.glRotated(ang, 0, 0, 1);
