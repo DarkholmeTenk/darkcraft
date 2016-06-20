@@ -54,6 +54,8 @@ tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
 dc.message.anvil.emptysoul=The provided soulgem is empty
 dc.message.anvil.smallsoul=The provided soul is too small
 dc.message.mark.success=Location marked
+dc.message.gemstand.lock=Gem stand has been locked
+dc.message.gemstand.locked=You cannot interact with this as it has been locked
 
 dc.guide.creator=The spell creator can be used to create spells. Use the GUI, then stand on a glyph to use mana to make the spell. 
 dc.guide.anvil=The Tonal Anvil can be used to imbue a spell's power into items.\nSimply place all the items of the recipe on the anvil and cast the indicated spell (or any spell if none specified).\nWait a few seconds and the items will transform!
