@@ -28,6 +28,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import net.minecraftforge.common.MinecraftForge;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -389,8 +390,9 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 
 	private void regenMana()
 	{
-		double manaRegen = Math.min(mana - getMaxMana(), Math.max(1,getManaRegen()));
+		double manaRegen = Math.min(getMaxMana()-mana, Math.max(1,getManaRegen()));
 		PlayerCasterManaRegenEvent ev = new PlayerCasterManaRegenEvent(this, manaRegen);
+		MinecraftForge.EVENT_BUS.post(ev);
 		mana = MathHelper.clamp(mana + ev.regenAmount, 0, getMaxMana());
 	}
 
