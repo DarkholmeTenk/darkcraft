@@ -112,7 +112,15 @@ public class LetterRenderer
 			dataMap.put('z', ld);
 			ld = new LetterData(new UVStore(124,127, 127,127));
 			dataMap.put(' ', ld);
+			ld = new LetterData(new UVStore(80,86, 83,89));
+			ld.addLetters(1,0, 2,0, 2,1, 3,1, 3,2, 2,2, 2,3, 1,3, 1,2, 0,2, 0,1, 1,1);
+			dataMap.put('.', ld);
 		}
+	}
+
+	public static boolean validChar(char c)
+	{
+		return dataMap.keySet().contains(c);
 	}
 
 	private static double gT(double a, double c)
