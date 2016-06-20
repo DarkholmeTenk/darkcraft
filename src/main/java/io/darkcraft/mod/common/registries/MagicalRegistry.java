@@ -21,7 +21,11 @@ import io.darkcraft.mod.common.magic.systems.component.impl.SummonLight;
 import io.darkcraft.mod.common.magic.systems.component.impl.Test;
 import io.darkcraft.mod.common.magic.systems.component.impl.WaterWalk;
 import io.darkcraft.mod.common.magic.systems.component.impl.effects.DarkcraftEffectFactory;
+import io.darkcraft.mod.common.magic.systems.soulspell.SoulSpellRegistry;
+import io.darkcraft.mod.common.magic.systems.soulspell.impl.DarkcraftSoulSpellFactory;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.symbolic.SymbolicRegistry;
+import io.darkcraft.mod.common.magic.systems.symbolic.impl.DarkcraftSymbolicFactory;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
@@ -68,7 +72,8 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(blink);
 		SpellPartRegistry.registerComponent(ww);
 		SpellPartRegistry.registerComponent(test);
-
+		SoulSpellRegistry.registerFactory(new DarkcraftSoulSpellFactory());
+		SymbolicRegistry.registerFactory(new DarkcraftSymbolicFactory());
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
 
 		new MagicEventHandler();
