@@ -9,6 +9,7 @@ import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
 import io.darkcraft.mod.common.magic.blocks.tileent.GemStand;
 import io.darkcraft.mod.common.magic.items.SoulGem.Size;
+import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -23,8 +24,7 @@ public class GemStandRenderer extends AbstractObjRenderer
 	@Override
 	public AbstractBlock getBlock()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ItemBlockRegistry.gemStand;
 	}
 
 	@Override
