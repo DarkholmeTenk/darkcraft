@@ -102,7 +102,6 @@ public class SoulGemRenderer implements IItemRenderer
 		float r = (RenderHelper.getTime() % x) / 1000f;
 		if(models[m] == null) models[m] = AdvancedModelLoader.loadModel(new ResourceLocation(DarkcraftMod.modName,"models/soulgem/"+size.name()+".obj"));
 		GL11.glScalef(0.3f, 0.3f, 0.3f);
-		//testTex(size==Size.Black?btex:tex,full,r);
 		RenderHelper.bindTexture(size==Size.Black?btex:tex);
 		models[m].renderAll();
 		if(full)

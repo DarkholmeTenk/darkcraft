@@ -4,6 +4,7 @@ import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
 import io.darkcraft.mod.common.magic.systems.component.SpellPartRegistry;
+import io.darkcraft.mod.common.magic.systems.component.impl.Blink;
 import io.darkcraft.mod.common.magic.systems.component.impl.Damage;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageHunger;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageMagicka;
@@ -18,6 +19,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.RestoreHunger;
 import io.darkcraft.mod.common.magic.systems.component.impl.SoulTrap;
 import io.darkcraft.mod.common.magic.systems.component.impl.SummonLight;
 import io.darkcraft.mod.common.magic.systems.component.impl.Test;
+import io.darkcraft.mod.common.magic.systems.component.impl.WaterWalk;
 import io.darkcraft.mod.common.magic.systems.component.impl.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import net.minecraft.util.DamageSource;
@@ -43,6 +45,8 @@ public class MagicalRegistry
 	public static final Recall recall = new Recall(false);
 	public static final Recall recallCD = new Recall(true);
 	public static final SummonLight sl = new SummonLight();
+	public static final Blink blink = new Blink();
+	public static final WaterWalk ww = new WaterWalk();
 	public static final Test test = new Test();
 
 	public static void registerMagic()
@@ -61,6 +65,8 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(recall);
 		SpellPartRegistry.registerComponent(recallCD);
 		SpellPartRegistry.registerComponent(sl);
+		SpellPartRegistry.registerComponent(blink);
+		SpellPartRegistry.registerComponent(ww);
 		SpellPartRegistry.registerComponent(test);
 
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
