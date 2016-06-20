@@ -1,8 +1,10 @@
 package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicVortex;
+import io.darkcraft.mod.client.renderer.tileent.MagicVortexRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicVortex;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -35,6 +37,12 @@ public class MagicVortexBlock extends AbstractBlockContainer
 	@Override
 	public void initRecipes()
 	{
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicVortexRenderer();
 	}
 
 }

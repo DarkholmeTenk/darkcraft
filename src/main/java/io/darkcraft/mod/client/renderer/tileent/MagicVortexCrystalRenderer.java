@@ -4,7 +4,7 @@ import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicVortexCrystal;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicVortexCrystal;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 
 import java.util.WeakHashMap;

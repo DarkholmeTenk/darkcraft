@@ -133,6 +133,7 @@ public class LetterRenderer
 
 	private static int renderChar(Tessellator tess, int x, LetterData ld)
 	{
+		tess.setNormal(0, 0, 1);
 		tess.addVertexWithUV(x+ld.x, 0, 0, ld.uv.U, ld.uv.V);
 		tess.addVertexWithUV(x+ld.x, ld.y, 0, ld.uv.U, ld.uv.v);
 		tess.addVertexWithUV(x, ld.y, 0, ld.uv.u, ld.uv.v);
@@ -188,15 +189,11 @@ public class LetterRenderer
 
 			if(glow)
 			{
-				boolean bfc = GL11.glIsEnabled(GL11.GL_CULL_FACE);
-				GL11.glDisable(GL11.GL_CULL_FACE);
 				RenderHelper.bindTexture(gl);
 				tess.startDrawingQuads();
 				RenderHelper.colour(glowColour);
 				renderGlow(tess,0,ld);
 				tess.draw();
-				if(bfc)
-					GL11.glEnable(GL11.GL_CULL_FACE);
 			}
 		}
 		RenderHelper.resetColour();

@@ -1,9 +1,9 @@
 package io.darkcraft.api.magic;
 
-import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.component.IComponent;
-import io.darkcraft.mod.common.magic.spell.Spell;
-import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicAnvil;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import net.minecraft.item.ItemStack;
 
 /**

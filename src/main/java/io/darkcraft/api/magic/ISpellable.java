@@ -1,8 +1,8 @@
 package io.darkcraft.api.magic;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
-import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 
 /**
  * An interface to be implemented by blocks or tile entities to allow them to react to getting hit by spells

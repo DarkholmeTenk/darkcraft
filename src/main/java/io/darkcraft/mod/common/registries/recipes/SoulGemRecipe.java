@@ -2,12 +2,12 @@ package io.darkcraft.mod.common.registries.recipes;
 
 import io.darkcraft.api.magic.IMagicAnvilRecipe;
 import io.darkcraft.darkcore.mod.helpers.OreDictionaryHelper;
-import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicAnvil;
 import io.darkcraft.mod.common.magic.items.SoulGem;
-import io.darkcraft.mod.common.magic.spell.ComponentInstance;
-import io.darkcraft.mod.common.magic.spell.Spell;
-import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.spell.ComponentInstance;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import net.minecraft.item.ItemStack;
 

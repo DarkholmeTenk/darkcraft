@@ -1,23 +1,24 @@
 package io.darkcraft.mod.common.magic.items.staff;
 
+import java.util.List;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.renderer.item.ItemStaffRenderer;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
-import io.darkcraft.mod.common.magic.spell.CastType;
-import io.darkcraft.mod.common.magic.spell.Spell;
-
-import java.util.List;
-
+import io.darkcraft.mod.common.magic.systems.spell.CastType;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.client.IItemRenderer;
 
 public class Staff extends AbstractItem
 {
@@ -104,6 +105,14 @@ public class Staff extends AbstractItem
 		if(pl == null) return false;
 		if((pl.getHeldItem() == null) || !(pl.getHeldItem().getItem() instanceof Staff)) return false;
 		return true;
+	}
+
+
+
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new ItemStaffRenderer();
 	}
 
 }

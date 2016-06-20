@@ -4,7 +4,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicVortex;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicVortex;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 

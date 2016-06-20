@@ -7,7 +7,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicLight;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicLight;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;

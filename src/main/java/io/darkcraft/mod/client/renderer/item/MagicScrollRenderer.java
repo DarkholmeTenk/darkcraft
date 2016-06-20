@@ -1,18 +1,18 @@
 package io.darkcraft.mod.client.renderer.item;
 
+import org.lwjgl.opengl.GL11;
+
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.items.MagicScroll;
-import io.darkcraft.mod.common.magic.spell.CastType;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.spell.CastType;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
-import org.lwjgl.opengl.GL11;
 
 public class MagicScrollRenderer implements IItemRenderer
 {
@@ -53,7 +53,11 @@ public class MagicScrollRenderer implements IItemRenderer
 		else if(type == ItemRenderType.INVENTORY)
 			GL11.glRotated(90, 0, 1, 0);
 		else
-			GL11.glRotated(-90, 0, 1, 0);
+		{
+			GL11.glRotated(180, 0, 1, 0);
+			GL11.glScaled(0.7, 0.7, 0.7);
+			GL11.glTranslated(-0.2, 0, 0);
+		}
 		GL11.glScalef(0.5f, 0.5f, 0.5f);
 		model.renderAll();
 		Spell s = MagicScroll.getSpell(item);

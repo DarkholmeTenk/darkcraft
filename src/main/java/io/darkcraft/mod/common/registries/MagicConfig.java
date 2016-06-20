@@ -3,9 +3,9 @@ package io.darkcraft.mod.common.registries;
 import io.darkcraft.darkcore.mod.config.ConfigFile;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicVortexCrystal;
 import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.items.SoulGem.Size;
-import io.darkcraft.mod.common.magic.tileent.MagicVortexCrystal;
 
 public class MagicConfig
 {

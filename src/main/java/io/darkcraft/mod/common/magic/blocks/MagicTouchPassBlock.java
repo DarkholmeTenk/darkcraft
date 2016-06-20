@@ -2,7 +2,7 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicStaffChanger;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicStaffChanger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

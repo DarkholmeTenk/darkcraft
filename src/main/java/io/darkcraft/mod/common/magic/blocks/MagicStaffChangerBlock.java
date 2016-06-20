@@ -1,8 +1,10 @@
 package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicStaffChanger;
+import io.darkcraft.mod.client.renderer.tileent.MagicStaffChangerRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicStaffChanger;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -38,6 +40,12 @@ public class MagicStaffChangerBlock extends AbstractBlockContainer
 	public Class<? extends TileEntity> getTEClass()
 	{
 		return MagicStaffChanger.class;
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicStaffChangerRenderer();
 	}
 
 }

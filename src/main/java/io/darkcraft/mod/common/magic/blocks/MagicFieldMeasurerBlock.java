@@ -1,8 +1,10 @@
 package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicFieldMeasurer;
+import io.darkcraft.mod.client.renderer.tileent.MagicFieldMeasurerRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicFieldMeasurer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -37,6 +39,12 @@ public class MagicFieldMeasurerBlock extends AbstractBlockContainer
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicFieldMeasurerRenderer();
 	}
 
 }

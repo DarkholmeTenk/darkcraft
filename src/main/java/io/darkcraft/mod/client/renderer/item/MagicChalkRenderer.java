@@ -6,7 +6,7 @@ import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.items.MagicChalk;
-import io.darkcraft.mod.common.magic.symbolic.ChalkType;
+import io.darkcraft.mod.common.magic.systems.symbolic.ChalkType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -49,11 +49,6 @@ public class MagicChalkRenderer implements IItemRenderer
 			GL11.glRotated(45, -1, 0, 0);
 			GL11.glTranslated(0,-0.1,0);
 			GL11.glScaled(0.8, 0.8, 0.8);
-		}
-		else if(type == ItemRenderType.ENTITY)
-		{
-			GL11.glTranslated(0, 0.5, 0);
-			GL11.glScaled(0.5, 0.5, 0.5);
 		}
 		renderChalk(MagicChalk.getISDamage(item), ChalkType.values()[item.getItemDamage()]);
 		GL11.glPopMatrix();

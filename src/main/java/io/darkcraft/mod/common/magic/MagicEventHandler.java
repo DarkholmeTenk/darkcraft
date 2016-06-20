@@ -18,11 +18,11 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.component.impl.effects.EffectSoulTrap;
 import io.darkcraft.mod.common.magic.items.SoulGem;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.component.impl.effects.EffectSoulTrap;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
@@ -58,7 +58,7 @@ public class MagicEventHandler
 		if(ServerHelper.isIntegratedClient()) return;
 		if((event.type == Type.SERVER) || (event.type == Type.CLIENT))
 		{
-			PlayerCaster.tickAll();
+ 			PlayerCaster.tickAll();
 			synchronized(updateQueue)
 			{
 				Iterator<PlayerCaster> iter = updateQueue.iterator();

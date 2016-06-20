@@ -3,7 +3,7 @@ package io.darkcraft.mod.client.renderer;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;

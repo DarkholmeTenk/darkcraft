@@ -5,7 +5,7 @@ import java.util.List;
 import io.darkcraft.darkcore.mod.abstracts.AbstractCommandNew;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 

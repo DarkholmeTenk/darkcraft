@@ -3,8 +3,10 @@ package io.darkcraft.mod.common.magic.blocks;
 import java.util.List;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicLight;
+import io.darkcraft.mod.client.renderer.tileent.MagicLightRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicLight;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -65,5 +67,17 @@ public class MagicLightBlock extends AbstractBlockContainer
 
 	@Override
 	public void initRecipes(){}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicLightRenderer();
+	}
+
+	@Override
+	public boolean useRendererForItem()
+	{
+		return true;
+	}
 
 }

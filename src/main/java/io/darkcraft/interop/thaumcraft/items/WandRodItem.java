@@ -6,7 +6,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.interop.thaumcraft.DarkcraftTC;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;

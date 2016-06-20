@@ -1,19 +1,19 @@
 package io.darkcraft.mod.common.magic.items;
 
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.renderer.item.ComponentBookRenderer;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.SpellPartRegistry;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.component.SpellPartRegistry;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.recipes.ComponentBookRecipe;
-
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
 
 public class ComponentBook extends AbstractItem
 {
@@ -107,6 +108,14 @@ public class ComponentBook extends AbstractItem
 	public void initRecipes()
 	{
 		MagicAnvilRecipeRegistry.addRecipe(new ComponentBookRecipe());
+	}
+
+
+
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new ComponentBookRenderer();
 	}
 
 }

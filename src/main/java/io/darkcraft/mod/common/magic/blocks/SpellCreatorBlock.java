@@ -2,8 +2,10 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.SpellCreator;
+import io.darkcraft.mod.client.renderer.tileent.SpellCreatorRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -49,6 +51,18 @@ public class SpellCreatorBlock extends AbstractBlockContainer
 				'd', "blockCoal",
 				'w', "plankWood",
 				'g', "ingotGold"));
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new SpellCreatorRenderer();
+	}
+
+	@Override
+	public boolean useRendererForItem()
+	{
+		return true;
 	}
 
 }

@@ -6,9 +6,9 @@ import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.ClientHelper;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.spell.ComponentInstance;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.ComponentInstance;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicInventory;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
-import io.darkcraft.mod.common.magic.tileent.MagicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

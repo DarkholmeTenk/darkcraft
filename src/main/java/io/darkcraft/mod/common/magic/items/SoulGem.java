@@ -1,18 +1,18 @@
 package io.darkcraft.mod.common.magic.items;
 
+import java.util.List;
+
 import io.darkcraft.api.magic.IMagicAnvilRecipe;
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.caster.BlockCaster;
-import io.darkcraft.mod.common.magic.caster.EntityCaster;
-import io.darkcraft.mod.common.magic.caster.ICaster;
+import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
+import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.recipes.SoulGemRecipe;
-
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.client.IItemRenderer;
 
 public class SoulGem extends AbstractItem
 {
@@ -203,5 +204,13 @@ public class SoulGem extends AbstractItem
 			if(size == null) return false;
 			return ordinal() >= size.ordinal();
 		}
+	}
+
+
+
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new SoulGemRenderer();
 	}
 }

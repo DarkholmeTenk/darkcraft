@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.WeakHashMap;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.mod.common.magic.caster.EntityCaster;
-import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.component.IComponent;
 import io.darkcraft.mod.common.magic.field.MagicFieldGlobal;
 import io.darkcraft.mod.common.magic.items.staff.Staff;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

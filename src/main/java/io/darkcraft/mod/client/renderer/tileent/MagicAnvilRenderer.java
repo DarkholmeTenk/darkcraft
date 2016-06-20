@@ -3,7 +3,7 @@ package io.darkcraft.mod.client.renderer.tileent;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicAnvil;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;

@@ -1,23 +1,24 @@
 package io.darkcraft.mod.common.magic.items;
 
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.renderer.item.MagicScrollRenderer;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
-import io.darkcraft.mod.common.magic.spell.CastType;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.CastType;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.recipes.ScrollRecipe;
-
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
 
 public class MagicScroll extends AbstractItem
 {
@@ -130,6 +131,12 @@ public class MagicScroll extends AbstractItem
 		if((is == null) || (is.stackTagCompound == null) || !is.stackTagCompound.hasKey("spell")) return null;
 		Spell s = Spell.readFromNBT(is.stackTagCompound.getCompoundTag("spell"));
 		return s;
+	}
+
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new MagicScrollRenderer();
 	}
 
 }

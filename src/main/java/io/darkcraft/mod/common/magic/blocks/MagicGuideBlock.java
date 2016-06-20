@@ -2,8 +2,10 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicGuide;
+import io.darkcraft.mod.client.renderer.tileent.MagicGuideRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicGuide;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -61,6 +63,18 @@ public class MagicGuideBlock extends AbstractBlockContainer
 
 		int dir = MathHelper.floor_double(((entity.rotationYaw * 4.0F) / 360.0F) + 0.5D) & 3;
 		world.setBlockMetadataWithNotify(x, y, z, dir, 3);
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicGuideRenderer();
+	}
+
+	@Override
+	public boolean useRendererForItem()
+	{
+		return true;
 	}
 
 }

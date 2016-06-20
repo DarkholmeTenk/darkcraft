@@ -3,14 +3,16 @@ package io.darkcraft.mod.common.magic.items;
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.symbolic.ChalkType;
-import io.darkcraft.mod.common.magic.tileent.MagicSymbol;
+import io.darkcraft.mod.client.renderer.item.MagicChalkRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicSymbol;
+import io.darkcraft.mod.common.magic.systems.symbolic.ChalkType;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class MagicChalk extends AbstractItem
@@ -91,6 +93,12 @@ public class MagicChalk extends AbstractItem
 		if(is.stackTagCompound == null) return 0;
 		if(!is.stackTagCompound.hasKey("dam")) is.stackTagCompound.setDouble("dam", 0);
 		return is.stackTagCompound.getDouble("dam");
+	}
+
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new MagicChalkRenderer();
 	}
 
 }

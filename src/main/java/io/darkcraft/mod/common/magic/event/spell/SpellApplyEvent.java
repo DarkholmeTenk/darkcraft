@@ -1,7 +1,7 @@
 package io.darkcraft.mod.common.magic.event.spell;
 
-import io.darkcraft.mod.common.magic.caster.ICaster;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 
 
 public abstract class SpellApplyEvent extends SpellCastEvent

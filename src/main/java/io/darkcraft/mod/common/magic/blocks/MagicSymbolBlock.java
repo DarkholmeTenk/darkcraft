@@ -1,8 +1,10 @@
 package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.common.magic.tileent.MagicSymbol;
+import io.darkcraft.mod.client.renderer.tileent.MagicSymbolRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicSymbol;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -52,6 +54,12 @@ public class MagicSymbolBlock extends AbstractBlockContainer
 	public boolean isNormalBlock()
 	{
 		return false;
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicSymbolRenderer();
 	}
 
 }

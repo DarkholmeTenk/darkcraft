@@ -7,7 +7,7 @@ import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.LetterRenderer;
-import io.darkcraft.mod.common.magic.tileent.SpellCreator;
+import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.tileentity.TileEntity;

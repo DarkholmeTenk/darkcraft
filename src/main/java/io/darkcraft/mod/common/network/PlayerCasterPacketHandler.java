@@ -5,7 +5,7 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.interfaces.IDataPacketHandler;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

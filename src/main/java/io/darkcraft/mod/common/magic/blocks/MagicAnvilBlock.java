@@ -2,9 +2,11 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
+import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.renderer.tileent.MagicAnvilRenderer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicAnvil;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
-import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -58,6 +60,18 @@ public class MagicAnvilBlock extends AbstractBlockContainer
 				'i', "ingotIron",
 				'g', "ingotGold",
 				'c', MagicComponent.Type.Crystal.getIS(1)));
+	}
+
+	@Override
+	public AbstractBlockRenderer getRenderer()
+	{
+		return new MagicAnvilRenderer();
+	}
+
+	@Override
+	public boolean useRendererForItem()
+	{
+		return true;
 	}
 
 }

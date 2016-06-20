@@ -1,9 +1,9 @@
 package io.darkcraft.mod.client;
 
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.common.magic.component.IComponent;
-import io.darkcraft.mod.common.magic.spell.CastType;
-import io.darkcraft.mod.common.magic.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.spell.CastType;
+import io.darkcraft.mod.common.magic.systems.spell.Spell;
 
 import org.lwjgl.opengl.GL11;
 

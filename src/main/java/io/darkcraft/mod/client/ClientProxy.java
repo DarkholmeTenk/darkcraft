@@ -1,6 +1,8 @@
 package io.darkcraft.mod.client;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.ARBFragmentShader;
+import org.lwjgl.opengl.ARBVertexShader;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -8,54 +10,32 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import io.darkcraft.darkcore.mod.client.ShaderHandler;
+import io.darkcraft.darkcore.mod.datastore.Pair;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.EntitySpellProjectileRenderer;
 import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
 import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
 import io.darkcraft.mod.client.renderer.gui.StatusOverlay;
-import io.darkcraft.mod.client.renderer.item.ComponentBookRenderer;
-import io.darkcraft.mod.client.renderer.item.ItemStaffRenderer;
-import io.darkcraft.mod.client.renderer.item.MagicChalkRenderer;
-import io.darkcraft.mod.client.renderer.item.MagicScrollRenderer;
-import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicAnvilRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicFieldMeasurerRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicGuideRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicLightRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicStaffChangerRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicSymbolRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicVortexCrystalRenderer;
-import io.darkcraft.mod.client.renderer.tileent.MagicVortexRenderer;
-import io.darkcraft.mod.client.renderer.tileent.SpellCreatorRenderer;
 import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
 import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.caster.PlayerCaster;
+import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
-import io.darkcraft.mod.common.magic.tileent.MagicAnvil;
-import io.darkcraft.mod.common.magic.tileent.MagicFieldMeasurer;
-import io.darkcraft.mod.common.magic.tileent.MagicGuide;
-import io.darkcraft.mod.common.magic.tileent.MagicLight;
-import io.darkcraft.mod.common.magic.tileent.MagicStaffChanger;
-import io.darkcraft.mod.common.magic.tileent.MagicSymbol;
-import io.darkcraft.mod.common.magic.tileent.MagicVortex;
-import io.darkcraft.mod.common.magic.tileent.MagicVortexCrystal;
-import io.darkcraft.mod.common.magic.tileent.SpellCreator;
-import io.darkcraft.mod.common.registries.ItemBlockRegistry;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.tech.tileent.TechGenerator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy
 {
+	public static int enchShader;
 	boolean handled = false;
 	KeyBinding keyBind;
 
@@ -64,27 +44,12 @@ public class ClientProxy extends CommonProxy
 	{
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(StatusOverlay.i);
-		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.itemStaff, new ItemStaffRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicFieldMeasurer.class, new MagicFieldMeasurerRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicVortex.class, new MagicVortexRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicVortexCrystal.class, new MagicVortexCrystalRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TechGenerator.class, new TechGeneratorRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicStaffChanger.class, new MagicStaffChangerRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(SpellCreator.class, new SpellCreatorRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicAnvil.class, MagicAnvilRenderer.i);
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicGuide.class, new MagicGuideRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicLight.class, new MagicLightRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(MagicSymbol.class, new MagicSymbolRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.spellCreatorBlock),new SpellCreatorRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicAnvil),MagicAnvilRenderer.i);
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicGuide),new MagicGuideRenderer());
-		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ItemBlockRegistry.magicLight), new MagicLightRenderer());
-		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.soulGem, new SoulGemRenderer());
-		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.scroll, new MagicScrollRenderer());
-		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.compBook, new ComponentBookRenderer());
-		MinecraftForgeClient.registerItemRenderer(ItemBlockRegistry.magicChalk, new MagicChalkRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new EntitySpellProjectileRenderer());
 		ClientRegistry.registerKeyBinding(keyBind = new KeyBinding("darkcraft.key.open.desc", Keyboard.KEY_Y, "darkcraft.key.category"));
+		enchShader = ShaderHandler.getShaderProgram(
+				new Pair(DarkcraftMod.class.getResourceAsStream("/assets/darkcraft/shaders/soul.vert"),ARBVertexShader.GL_VERTEX_SHADER_ARB),
+				new Pair(DarkcraftMod.class.getResourceAsStream("/assets/darkcraft/shaders/soul.frag"),ARBFragmentShader.GL_FRAGMENT_SHADER_ARB));
 	}
 
 	@Override

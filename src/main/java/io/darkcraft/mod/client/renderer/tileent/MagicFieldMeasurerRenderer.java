@@ -4,7 +4,7 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.LetterRenderer;
-import io.darkcraft.mod.common.magic.tileent.MagicFieldMeasurer;
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicFieldMeasurer;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.client.renderer.Tessellator;
