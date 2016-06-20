@@ -8,6 +8,7 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.darkcore.mod.interfaces.IActivatable;
 import io.darkcraft.darkcore.mod.interfaces.IBlockUpdateDetector;
+import io.darkcraft.mod.client.renderer.LetterRenderer;
 import io.darkcraft.mod.common.magic.systems.symbolic.ISymbolicSpell;
 import io.darkcraft.mod.common.magic.systems.symbolic.SymbolicRegistry;
 import net.minecraft.block.Block;
@@ -233,7 +234,7 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 
 	public char getCharacter()
 	{
-		if((myChar == ' ') || ((myChar >= 'a') && (myChar <= 'z')))
+		if(LetterRenderer.validChar(myChar))
 			return myChar;
 		return 's';
 	}
@@ -327,6 +328,7 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 		}
 		if(root != null)
 			root.writeToNBT(nbt, "rootPos");
+		coords().writeToNBT(nbt, "coords");
 	}
 
 	@Override
@@ -342,7 +344,16 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 				String id = nbt.getString("activeSpellID");
 				String tx = nbt.getString("glyphs");
 				NBTTagCompound data = nbt.getCompoundTag("spellData");
-				activeSpell = SymbolicRegistry.loadSpell(id, tx, data);
+				SimpleCoordStore me = SimpleCoordStore.readFromNBT(nbt, "coords");
+				SimpleCoordStore o = SimpleCoordStore.readFromNBT(nbt, "rootPos");
+				if((me != null) && (o != null))
+				{
+					activeSpell = SymbolicRegistry.createSpell(id, tx, me, o);
+					if(activeSpell != null)
+						activeSpell.read(data);
+				}
+				else
+					activeSpell = SymbolicRegistry.loadSpell(id, tx, data);
 			}
 		}
 		if(nbt.hasKey("existingL"))
