@@ -108,7 +108,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 		double dY = sp.posY - (ent.posY+height());
 		double dZ = sp.posZ - ent.posZ;
 		double dist = Math.sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
-		double mult = MagicConfig.projectileSpeed / dist;
+		double mult = MagicConfig.projectileSpeed / 5;
 		dX *= mult;
 		dY *= mult;
 		dZ *= mult;
