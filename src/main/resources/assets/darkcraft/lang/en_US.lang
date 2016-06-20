@@ -27,6 +27,8 @@ darkcraft.component.conLight=Conjure Light
 darkcraft.component.mark=Mark
 darkcraft.component.recall=Recall
 darkcraft.component.recall.cd=Aetheric Recall
+darkcraft.component.blink=Blink
+darkcraft.component.waterwalk=Waterwalking
 
 tile.darkcraft.MagicInventory.name=Magical Storage
 tile.darkcraft.SpellCreator.name=Spell Creator
