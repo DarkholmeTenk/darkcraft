@@ -13,6 +13,7 @@ import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
+import io.darkcraft.mod.common.magic.event.caster.PlayerCasterManaRegenEvent;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.systems.spell.ComponentInstance;
@@ -386,13 +387,20 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		mana = MathHelper.clamp(amount,0,getMaxMana());
 	}
 
+	private void regenMana()
+	{
+		double manaRegen = Math.min(mana - getMaxMana(), Math.max(1,getManaRegen()));
+		PlayerCasterManaRegenEvent ev = new PlayerCasterManaRegenEvent(this, manaRegen);
+		mana = MathHelper.clamp(mana + ev.regenAmount, 0, getMaxMana());
+	}
+
 	int tt = 0;
 	public void tick()
 	{
 		tt++;
 		if((tt % 20) != 0) return;
 		if(maxMana < MagicConfig.minMana) updateMaxMana();
-		mana = MathHelper.clamp(mana + Math.max(1,getManaRegen()), 0, getMaxMana());
+		regenMana();
 	}
 
 }
