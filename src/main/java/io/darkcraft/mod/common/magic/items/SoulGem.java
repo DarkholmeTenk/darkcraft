@@ -7,6 +7,8 @@ import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
+import io.darkcraft.mod.common.magic.systems.soulspell.ISoulSpell;
+import io.darkcraft.mod.common.magic.systems.soulspell.SoulSpellRegistry;
 import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
@@ -73,6 +75,30 @@ public class SoulGem extends AbstractItem
 		if((is == null) || (is.getItem() != i)) return null;
 		int m = is.getItemDamage();
 		return Size.values()[m];
+	}
+
+	public static NBTTagCompound getSoulSpellData(ItemStack is)
+	{
+		if(is.stackTagCompound.hasKey("soulspellID"))
+		{
+			if(!is.stackTagCompound.hasKey("soulspellData"))
+				is.stackTagCompound.setTag("soulspellData", new NBTTagCompound());
+			return is.stackTagCompound.getCompoundTag("soulspellData");
+		}
+		return null;
+	}
+
+	public static ISoulSpell getSoulSpell(ItemStack is)
+	{
+		if((is == null) || (is.getItem() != i) || (is.stackTagCompound == null)) return null;
+		if(is.stackTagCompound.hasKey("soulspellID"))
+			return SoulSpellRegistry.getSoulSpell(is.stackTagCompound.getString("soulspellID"), getSoulSpellData(is));
+		return null;
+	}
+
+	public static void setSoulSpell(ItemStack is, String id)
+	{
+		is.stackTagCompound.setString("soulspellID", id);
 	}
 
 	public static Size getSoulSize(ItemStack is)

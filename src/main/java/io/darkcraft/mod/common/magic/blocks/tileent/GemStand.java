@@ -37,8 +37,11 @@ public class GemStand extends AbstractTileEntity implements IActivatable
 	public void writeTransmittable(NBTTagCompound nbt)
 	{
 		NBTTagCompound isNBT = new NBTTagCompound();
-		is.writeToNBT(isNBT);
-		nbt.setTag("is", isNBT);
+		if(is != null)
+		{
+			is.writeToNBT(isNBT);
+			nbt.setTag("is", isNBT);
+		}
 	}
 
 	@Override
