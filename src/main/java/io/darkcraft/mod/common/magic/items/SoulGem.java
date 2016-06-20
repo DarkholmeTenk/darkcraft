@@ -88,6 +88,14 @@ public class SoulGem extends AbstractItem
 		return null;
 	}
 
+	public static String getSoulSpellID(ItemStack is)
+	{
+		if((is == null) || (is.getItem() != i) || (is.stackTagCompound == null)) return null;
+		if(is.stackTagCompound.hasKey("soulspellID"))
+			return is.stackTagCompound.getString("soulspellID");
+		return null;
+	}
+
 	public static ISoulSpell getSoulSpell(ItemStack is)
 	{
 		if((is == null) || (is.getItem() != i) || (is.stackTagCompound == null)) return null;
@@ -98,7 +106,10 @@ public class SoulGem extends AbstractItem
 
 	public static void setSoulSpell(ItemStack is, String id)
 	{
-		is.stackTagCompound.setString("soulspellID", id);
+		if(id == null)
+			is.stackTagCompound.removeTag("soulspellID");
+		else
+			is.stackTagCompound.setString("soulspellID", id);
 	}
 
 	public static Size getSoulSize(ItemStack is)
@@ -229,6 +240,13 @@ public class SoulGem extends AbstractItem
 		{
 			if(size == null) return false;
 			return ordinal() >= size.ordinal();
+		}
+
+		public double getMaxCharge()
+		{
+			if(this == Black)
+				return Grand.getMaxCharge();
+			return ordinal() * 400;
 		}
 	}
 

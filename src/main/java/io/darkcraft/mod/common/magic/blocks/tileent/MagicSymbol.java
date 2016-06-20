@@ -221,7 +221,6 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 					else
 					{
 						((MagicSymbol)te).isActive = true;
-						((MagicSymbol)te).root = coords();
 						((MagicSymbol)te).sendUpdate();
 						if(charge == existing.length)
 							activate();
