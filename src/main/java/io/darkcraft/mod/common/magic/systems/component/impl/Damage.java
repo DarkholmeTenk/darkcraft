@@ -44,7 +44,7 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 		EntityLivingBase living = (EntityLivingBase) ent;
 		if(Helper.isCaster(caster,living)) return;
 		EntityEffectStore ees = EffectHandler.getEffectStore(living);
-		ees.addEffect(new EffectDamage(living,caster,magnitude,duration*20));
+		ees.addEffect(new EffectDamage(caster,living,magnitude,duration*20));
 	}
 
 	@Override
