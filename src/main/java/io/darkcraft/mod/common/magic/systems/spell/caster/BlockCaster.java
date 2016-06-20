@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.systems.spell.CastType;
@@ -13,31 +14,32 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockCaster implements ICaster
 {
 	public final SimpleCoordStore blockPos;
+	public final SimpleDoubleCoordStore blockCenter;
 	public final IBlockCasterHandler handler;
 
 	public BlockCaster(SimpleCoordStore pos, IBlockCasterHandler _handler)
 	{
 		blockPos = pos;
+		blockCenter = pos.getCenter();
 		handler = _handler;
 	}
 
 	@Override
 	public double getMana()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return handler.getMana();
 	}
 
 	@Override
 	public double getMaxMana()
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		return handler.getMaxMana();
 	}
 
 	@Override
@@ -48,12 +50,19 @@ public class BlockCaster implements ICaster
 
 	public SimpleDoubleCoordStore getSpellCreationPos()
 	{
-		return null;
+		return blockCenter;
 	}
 
 	public void setVelocity(EntitySpellProjectile sp)
 	{
-
+		SimpleDoubleCoordStore target = handler.getProjectileTarget();
+		Vec3 vec = MathHelper.getVecBetween(blockCenter, target);
+		vec.normalize();
+		double speed = MagicConfig.projectileSpeed / 5;
+		sp.motionX = vec.xCoord * speed;
+		sp.motionY = vec.yCoord * speed;
+		sp.motionZ = vec.zCoord * speed;
+		sp.velocityChanged = true;
 	}
 
 	public ForgeDirection getFacing()
@@ -89,7 +98,7 @@ public class BlockCaster implements ICaster
 		}
 		else
 		{
-			SimpleDoubleCoordStore cent = blockPos.getCenter();
+			SimpleDoubleCoordStore cent = blockCenter;
 			Entity closest = null;
 			double bestDist = Double.MAX_VALUE;
 			for(Entity e : ents)

@@ -5,6 +5,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IBlockCasterHandler
 {
+	public double getMaxMana();
+
+	public double getMana();
+
 	/**
 	 * @return a location to aim projectile spells at
 	 */
