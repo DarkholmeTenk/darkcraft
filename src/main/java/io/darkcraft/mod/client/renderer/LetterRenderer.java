@@ -112,9 +112,12 @@ public class LetterRenderer
 			dataMap.put('z', ld);
 			ld = new LetterData(new UVStore(124,127, 127,127));
 			dataMap.put(' ', ld);
-			ld = new LetterData(new UVStore(80,86, 83,89));
+			ld = new LetterData(new UVStore(80,83, 86,89));
 			ld.addLetters(1,0, 2,0, 2,1, 3,1, 3,2, 2,2, 2,3, 1,3, 1,2, 0,2, 0,1, 1,1);
 			dataMap.put('.', ld);
+			ld = new LetterData(new UVStore(86,87, 84,91));
+			ld.addLetters(0,0, 1,0, 1,7, 0,7);
+			dataMap.put('|', ld);
 		}
 	}
 
@@ -217,7 +220,7 @@ public class LetterRenderer
 		render(s,0,0,defaultTextColour,defaultGlowColour);
 	}
 
-	public static void render(String s, int x, int y, Colour textColour, Colour glowColour)
+	public static void render(String s, int x, int y, Colour textColour, Colour glowColour, boolean glow)
 	{
 		GL11.glPushMatrix();
 		boolean el = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -245,21 +248,29 @@ public class LetterRenderer
 				i+=renderChar(tess,i,d);
 		tess.draw();
 
-		RenderHelper.colour(glowColour);
-		boolean bfc = GL11.glIsEnabled(GL11.GL_CULL_FACE);
-		//GL11.glDisable(GL11.GL_CULL_FACE);
-		RenderHelper.bindTexture(gl);
-		tess.startDrawingQuads();
-		i = 0;
-		for(LetterData d : ld)
-			if(d != null)
-				i+= renderGlow(tess,i,d);
-		tess.draw();
-		if(bfc)
-			GL11.glEnable(GL11.GL_CULL_FACE);
+		if(glow)
+		{
+			RenderHelper.colour(glowColour);
+			boolean bfc = GL11.glIsEnabled(GL11.GL_CULL_FACE);
+			//GL11.glDisable(GL11.GL_CULL_FACE);
+			RenderHelper.bindTexture(gl);
+			tess.startDrawingQuads();
+			i = 0;
+			for(LetterData d : ld)
+				if(d != null)
+					i+= renderGlow(tess,i,d);
+			tess.draw();
+			if(bfc)
+				GL11.glEnable(GL11.GL_CULL_FACE);
+		}
 		if(el)
 			GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
+	}
+
+	public static void render(String s, int x, int y, Colour textColour, Colour glowColour)
+	{
+		render(s,x,y,textColour,glowColour,true);
 	}
 
 	private static class LetterData
