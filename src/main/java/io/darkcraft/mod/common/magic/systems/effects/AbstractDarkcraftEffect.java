@@ -1,6 +1,7 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
 import io.darkcraft.darkcore.mod.abstracts.effects.AbstractEffect;
+import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,6 +37,14 @@ public abstract class AbstractDarkcraftEffect extends AbstractEffect
 	protected void readFromNBT(NBTTagCompound nbt)
 	{
 		magnitude = nbt.getInteger("mag");
+	}
+
+	public static int getMagnitude(EntityEffectStore ees, String id)
+	{
+		AbstractEffect eff = ees.getEffect(id);
+		if(eff instanceof AbstractDarkcraftEffect)
+			return ((AbstractDarkcraftEffect) eff).magnitude;
+		return -1;
 	}
 
 }
