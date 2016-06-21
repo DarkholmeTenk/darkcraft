@@ -2,6 +2,7 @@ package io.darkcraft.mod.common.magic.items;
 
 import java.util.List;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
@@ -16,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class MagicChalk extends AbstractItem
 {
@@ -30,8 +32,7 @@ public class MagicChalk extends AbstractItem
 	@Override
 	public void initRecipes()
 	{
-		// TODO Auto-generated method stub
-
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this,1), "dustGlowstone", "dyeWhite", "dyeWhite"));
 	}
 
 	@Override
