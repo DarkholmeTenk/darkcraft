@@ -20,6 +20,7 @@ public class ChalkGui extends DarkcraftGui
 	{
 		super(cont, new ScalableBackground(512,58));
 		cc = cont;
+		inventoryGui = false;
 		textField.text = cont.chalk;
 		addElement(textField);
 		addElement(new ButtonTick(this));
