@@ -1,11 +1,12 @@
 package io.darkcraft.mod.common;
 
+import cpw.mods.fml.common.network.IGuiHandler;
 import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
+import io.darkcraft.mod.common.magic.gui.ChalkContainer;
 import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler
 {
@@ -18,6 +19,7 @@ public class CommonProxy implements IGuiHandler
 		switch(id)
 		{
 			case 1397: return new SpellCreationContainer((SpellCreator)te);
+			case 1399: return new ChalkContainer(player);
 		}
 		return null;
 	}

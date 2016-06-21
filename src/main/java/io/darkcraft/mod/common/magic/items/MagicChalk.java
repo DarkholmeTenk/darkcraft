@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.magic.items;
 
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
@@ -33,9 +35,29 @@ public class MagicChalk extends AbstractItem
 	}
 
 	@Override
+	public void addInfo(ItemStack is, EntityPlayer player, List infoList)
+	{
+		String s = getString(is);
+		if((s == null) || s.isEmpty()) return;
+		int slot = getSlot(is);
+		String n = "Text: §r";
+		if(slot > 0)
+			n += s.substring(0, slot);
+		n += "§9" + s.substring(slot, slot+1) + "§r";
+		if(slot < (s.length() - 1))
+			n += s.substring(slot+1);
+		infoList.add(n);
+	}
+
+	@Override
 	public boolean onItemUse(ItemStack is, EntityPlayer pl, World w, int x, int y, int z, int s, float i, float j, float k)
     {
 		if(ServerHelper.isClient()) return true;
+		if(pl.isSneaking())
+		{
+			pl.openGui(DarkcraftMod.i, 1399, w, x, y, z);
+			return true;
+		}
 		if(ForgeDirection.VALID_DIRECTIONS[s] != ForgeDirection.UP) return true;
 		if(!w.isAirBlock(x, y+1, z)) return true;
 		Character c = getChar(is);
@@ -54,6 +76,17 @@ public class MagicChalk extends AbstractItem
 		return true;
     }
 
+	@Override
+	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer pl)
+	{
+		if(pl.isSneaking())
+		{
+			pl.openGui(DarkcraftMod.i, 1399, w, 0, 0, 0);
+		}
+		return is;
+
+	}
+
 	public static boolean damage(ItemStack is)
 	{
 		if(is.stackTagCompound == null) return false;
@@ -66,6 +99,15 @@ public class MagicChalk extends AbstractItem
 	{
 		if((is == null) || !(is.getItem() instanceof MagicChalk) || (is.stackTagCompound == null)) return null;
 		return is.stackTagCompound.getString("chalkText");
+	}
+
+	public static int getSlot(ItemStack is)
+	{
+		if((is == null) || !(is.getItem() instanceof MagicChalk) || (is.stackTagCompound == null)) return 0;
+		String d = getString(is);
+		int slot = is.stackTagCompound.getInteger("slot");
+		if(d == null) return 0;
+		return slot % d.length();
 	}
 
 	public static Character getChar(ItemStack is)
@@ -83,6 +125,7 @@ public class MagicChalk extends AbstractItem
 	{
 		if((is == null) || !(is.getItem() instanceof MagicChalk)) return;
 		if(is.stackTagCompound == null)	is.stackTagCompound = new NBTTagCompound();
+		if((string == null) || string.isEmpty()) string = ".";
 		is.stackTagCompound.setString("chalkText", string);
 		is.stackTagCompound.setInteger("slot", 0);
 	}
