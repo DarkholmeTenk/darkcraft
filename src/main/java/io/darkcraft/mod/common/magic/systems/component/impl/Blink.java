@@ -36,7 +36,7 @@ public class Blink implements IComponent, IMagnitudeComponent
 	public UVStore getIconLocation(){ return uv; }
 
 	@Override
-	public ISkill getMainSkill(){ return SkillRegistry.mysticism; }
+	public ISkill getMainSkill(){ return SkillRegistry.conjuration; }
 
 	@Override
 	public double getCost()
