@@ -31,7 +31,7 @@ public class GemStandBlock extends AbstractBlockContainer
 	public void initData()
 	{
 		setBlockName("GemStand");
-		setBlockBounds(0.4f,0,0.4f,0.6f,0.8f,0.6f);
+		setBlockBounds(0.4f,0,0.4f,0.6f,0.9f,0.6f);
 	}
 
 	@Override
