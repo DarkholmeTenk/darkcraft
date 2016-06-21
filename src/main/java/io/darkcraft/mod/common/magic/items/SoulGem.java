@@ -2,6 +2,8 @@ package io.darkcraft.mod.common.magic.items;
 
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+
 import io.darkcraft.api.magic.IMagicAnvilRecipe;
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
@@ -23,6 +25,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.IItemRenderer;
 
 public class SoulGem extends AbstractItem
@@ -67,6 +70,17 @@ public class SoulGem extends AbstractItem
 			infoList.add("Soul size: " + s.name());
 			if((e != null) && !e.isEmpty())
 				infoList.add("Captured: " + e);
+		}
+		String id = getSoulSpellID(is);
+		if(id != null)
+		{
+			if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+			{
+				infoList.add("Enchanted:");
+				infoList.add(StatCollector.translateToLocal(id));
+			}
+			else
+				infoList.add("Enchanted: <Shift>");
 		}
 	}
 
