@@ -17,14 +17,16 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 	{
 		if(glyphs.startsWith("targetmobs")) return "dc.targetmobs";
 		if(glyphs.startsWith("magicka.sila")) return "dc.manaregen";
+		if(glyphs.startsWith("volatus")) return "dc.featherfall";
 		return null;
 	}
 
 	@Override
 	public ISymbolicSpell createSpell(String id, String glyphs, SimpleCoordStore rootRune, SimpleCoordStore center)
 	{
-		if(id == "dc.targetmobs") return new TargetMobsSymbolicSpell(rootRune, center);
-		if(id == "dc.manaregen") return new ManaRegenSymbolicSpell(rootRune, center);
+		if(id.equals("dc.targetmobs"))	return new TargetMobsSymbolicSpell(rootRune, center);
+		if(id.equals("dc.manaregen"))	return new ManaRegenSymbolicSpell(rootRune, center);
+		if(id.equals("dc.featherfall"))	return new FeatherfallSymbolic(rootRune, center);
 		return null;
 	}
 

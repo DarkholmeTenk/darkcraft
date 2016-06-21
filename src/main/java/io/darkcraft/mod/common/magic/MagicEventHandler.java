@@ -21,6 +21,7 @@ import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.event.caster.PlayerCasterManaRegenEvent;
 import io.darkcraft.mod.common.magic.items.SoulGem;
+import io.darkcraft.mod.common.magic.systems.effects.AbstractDarkcraftEffect;
 import io.darkcraft.mod.common.magic.systems.effects.EffectSoulTrap;
 import io.darkcraft.mod.common.magic.systems.effects.SSEffectManaRegen;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
@@ -100,8 +101,15 @@ public class MagicEventHandler
 		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
 		DamageSource ds = event.source;
 		if(ds== DamageSource.fall)
+		{
 			if(ees.hasEffect("darkcraft.fly"))
 				event.setCanceled(true);
+			int ff = AbstractDarkcraftEffect.getMagnitude(ees, "darkcraft.featherfall");
+			if((ff >= 5) || (event.ammount < (ff*2)))
+				event.setCanceled(true);
+			else if(ff > 0)
+				event.ammount -= (event.ammount * ff) / 5;
+		}
 	}
 
 	@SubscribeEvent(priority=EventPriority.LOWEST)
