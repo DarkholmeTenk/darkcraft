@@ -38,6 +38,7 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 		isRoot = false;
 		if(shouldRoot)
 		{
+			System.out.println("Cancelling " + glyphs);
 			if(existing != null)
 				for(Pair<SimpleCoordStore,Character> pos : existing)
 				{
@@ -143,8 +144,8 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 			data = shiftCharArray(data,r);
 			MathHelper.shiftObjArray(msArr, r);
 			glyphs = String.copyValueOf(data);
-
 			activeSpellID = SymbolicRegistry.match(glyphs);
+			System.out.println("Glyphs found: "+ glyphs +"="+activeSpellID);
 			if(activeSpellID == null)
 			{
 				cancel();
@@ -267,18 +268,11 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 	@Override
 	public boolean activate(EntityPlayer ent, int side)
 	{
-		if(ent.isSneaking())
-		{
-			myChar = (char) ((((myChar+1)-'a')%(('z'-'a')+1))+'a');
-			sendUpdate();
-		}
+
+		if(isRoot)
+			cancel();
 		else
-		{
-			if(isRoot)
-				cancel();
-			else
-				scanForNew();
-		}
+			scanForNew();
 		System.out.println("C:"+myChar);
 		return true;
 	}
