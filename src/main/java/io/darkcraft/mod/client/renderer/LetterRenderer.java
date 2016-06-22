@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.Pair;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
@@ -183,8 +185,10 @@ public class LetterRenderer
 		return ld.y;
 	}
 
-	public static final Colour defaultTextColour = RenderHelper.white;
+	public static final Colour defaultTextColour = Colour.white;
 	public static final Colour defaultGlowColour = new Colour(0.1f,0.2f,1);
+
+	@SideOnly(Side.CLIENT)
 	public static void render(char l, boolean glow, Colour textColour, Colour glowColour)
 	{
 		refreshData();
@@ -210,16 +214,19 @@ public class LetterRenderer
 		RenderHelper.resetColour();
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void render(char l)
 	{
 		render(l,true,defaultTextColour,defaultGlowColour);
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void render(String s)
 	{
 		render(s,0,0,defaultTextColour,defaultGlowColour);
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void render(String s, int x, int y, Colour textColour, Colour glowColour, boolean glow)
 	{
 		GL11.glPushMatrix();
@@ -268,6 +275,7 @@ public class LetterRenderer
 		GL11.glPopMatrix();
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void render(String s, int x, int y, Colour textColour, Colour glowColour)
 	{
 		render(s,x,y,textColour,glowColour,true);
