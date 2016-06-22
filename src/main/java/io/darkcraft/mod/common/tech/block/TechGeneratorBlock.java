@@ -1,7 +1,6 @@
 package io.darkcraft.mod.common.tech.block;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
 import io.darkcraft.mod.common.tech.tileent.TechGenerator;
@@ -42,7 +41,7 @@ public class TechGeneratorBlock extends AbstractBlockContainer
 	}
 
 	@Override
-	public AbstractBlockRenderer getRenderer()
+	public Object getRenderer()
 	{
 		return new TechGeneratorRenderer();
 	}

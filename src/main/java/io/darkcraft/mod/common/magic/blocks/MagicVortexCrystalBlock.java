@@ -1,7 +1,6 @@
 package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.tileent.MagicVortexCrystalRenderer;
 import io.darkcraft.mod.common.magic.blocks.tileent.MagicVortexCrystal;
@@ -40,7 +39,7 @@ public class MagicVortexCrystalBlock extends AbstractBlockContainer
 	}
 
 	@Override
-	public AbstractBlockRenderer getRenderer()
+	public Object getRenderer()
 	{
 		return new MagicVortexCrystalRenderer();
 	}

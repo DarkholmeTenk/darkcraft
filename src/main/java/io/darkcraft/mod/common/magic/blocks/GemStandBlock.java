@@ -1,7 +1,6 @@
 package io.darkcraft.mod.common.magic.blocks;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.tileent.GemStandRenderer;
 import io.darkcraft.mod.common.magic.blocks.tileent.GemStand;
@@ -42,7 +41,7 @@ public class GemStandBlock extends AbstractBlockContainer
 	}
 
 	@Override
-	public AbstractBlockRenderer getRenderer()
+	public Object getRenderer()
 	{
 		return new GemStandRenderer();
 	}

@@ -2,7 +2,6 @@ package io.darkcraft.mod.common.magic.blocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.tileent.MagicGuideRenderer;
 import io.darkcraft.mod.common.magic.blocks.tileent.MagicGuide;
@@ -66,7 +65,7 @@ public class MagicGuideBlock extends AbstractBlockContainer
 	}
 
 	@Override
-	public AbstractBlockRenderer getRenderer()
+	public Object getRenderer()
 	{
 		return new MagicGuideRenderer();
 	}

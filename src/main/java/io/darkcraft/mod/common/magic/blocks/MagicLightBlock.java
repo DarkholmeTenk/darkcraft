@@ -3,7 +3,6 @@ package io.darkcraft.mod.common.magic.blocks;
 import java.util.List;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
-import io.darkcraft.darkcore.mod.abstracts.AbstractBlockRenderer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.tileent.MagicLightRenderer;
 import io.darkcraft.mod.common.magic.blocks.tileent.MagicLight;
@@ -69,7 +68,7 @@ public class MagicLightBlock extends AbstractBlockContainer
 	public void initRecipes(){}
 
 	@Override
-	public AbstractBlockRenderer getRenderer()
+	public Object getRenderer()
 	{
 		return new MagicLightRenderer();
 	}
