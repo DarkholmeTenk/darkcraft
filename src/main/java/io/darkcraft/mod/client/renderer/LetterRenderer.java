@@ -125,6 +125,8 @@ public class LetterRenderer
 
 	public static boolean validChar(char c)
 	{
+		if(dataMap.isEmpty())
+			refreshData();
 		return dataMap.keySet().contains(c);
 	}
 
