@@ -273,7 +273,6 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 			cancel();
 		else
 			scanForNew();
-		System.out.println("C:"+myChar);
 		return true;
 	}
 
