@@ -37,6 +37,7 @@ tile.darkcraft.StaffChanger.name=Staff Changer
 tile.darkcraft.MagicGuide.name=Arcane Manual
 tile.darkcraft.MagicAnvil.name=Tonal Anvil
 tile.darkcraft.MagicLight.name=Conjured Light
+tile.darkcraft.GemStand.name=Gem Stand
 
 item.darkcraft.MagicComponent.Crystal.name=Glowing Crystal
 item.darkcraft.staff.name=Staff
