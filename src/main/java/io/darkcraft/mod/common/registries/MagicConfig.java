@@ -13,7 +13,7 @@ public class MagicConfig
 	public static double		xpCostMult		= 0.1;
 	public static double		minCostMult		= 0.5;
 	public static double		maxCostMult		= 1.5;
-	public static double		projectileSpeed	= .8;
+	public static double		projectileSpeed	= .25;
 
 	public static double		fieldDecay		= 0.95;
 	public static double		fieldDecrease	= 0.1;
@@ -56,7 +56,7 @@ public class MagicConfig
 		xpCostMult = config.getDouble("spell xp mult", 0.1, "This is the value the spell cost is multiplied by to work out how much xp to award");
 		minCostMult = config.getDouble("min spell cost mult", 0.5, "The lowest amount of the original spell cost that can be reached by player being skilled in that skill");
 		maxCostMult = config.getDouble("max spell cost mult", 1.5, "The maximum amount of the original spell cost that can be reached by player being unskilled in that skill");
-		projectileSpeed = config.getDouble("projectile speed", .8);
+		projectileSpeed = config.getDouble("projectile speed", .25);
 
 		fieldDecay = MathHelper.clamp(config.getDouble("field decay multiplier", 0.95, "Every magic field tick, the current field strength is multiplied by this","This has to be between 0 and 1"),0,1);
 		fieldDecrease = config.getDouble("field decay const", 0.1, "A static amount for the field to decrease by every field tick, after the multiplier is taken into account");

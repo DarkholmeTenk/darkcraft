@@ -58,7 +58,7 @@ public class BlockCaster implements ICaster
 		SimpleDoubleCoordStore target = handler.getProjectileTarget();
 		Vec3 vec = MathHelper.getVecBetween(blockCenter, target);
 		vec.normalize();
-		double speed = MagicConfig.projectileSpeed / 5;
+		double speed = MagicConfig.projectileSpeed;
 		sp.motionX = vec.xCoord * speed;
 		sp.motionY = vec.yCoord * speed;
 		sp.motionZ = vec.zCoord * speed;
