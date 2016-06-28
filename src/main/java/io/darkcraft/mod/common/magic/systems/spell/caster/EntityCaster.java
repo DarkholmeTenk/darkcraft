@@ -176,14 +176,18 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	@Override
 	public void cast(Spell spell, boolean useMana)
 	{
+		EntityLivingBase ent = getCaster();
+		if(ent == null) return;
 		if(doCast(spell,useMana))
 		{
-			if(spell.type == CastType.PROJECTILE)
-				castProjectile(spell);
-			else if(spell.type == CastType.TOUCH)
-				castTouch(spell);
-			else if(spell.type == CastType.SELF)
+			if(spell.type == CastType.SELF)
 				castSelf(spell);
+			else
+			{
+				if(!castTouch(spell))
+					if(spell.type == CastType.PROJECTILE)
+						castProjectile(spell);
+			}
 		}
 	}
 
