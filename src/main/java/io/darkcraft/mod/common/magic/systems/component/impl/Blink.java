@@ -57,6 +57,8 @@ public class Blink implements IComponent, IMagnitudeComponent
 		{
 			Vec3 end = RaytraceHelper.getEndPosition(ent, magnitude);
 			newPos = new SimpleDoubleCoordStore(ent.worldObj, end.xCoord, end.yCoord, end.zCoord);
+			if(newPos.getWorldObj().isAirBlock(newPos.iX, newPos.iY-1, newPos.iZ))
+				newPos = newPos.translate(0, -1, 0);
 		}
 		else
 		{
