@@ -106,7 +106,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	{
 		EntityLivingBase ent = caster.get();
 		if(ent == null) return;
-		Vec3 vec = MathHelper.getVecBetween(new SimpleDoubleCoordStore(ent), new SimpleDoubleCoordStore(sp));
+		Vec3 vec = MathHelper.getVecBetween(new SimpleDoubleCoordStore(ent).translate(0, height(), 0), new SimpleDoubleCoordStore(sp));
 		vec = vec.normalize();
 		double speed = MagicConfig.projectileSpeed / 5;
 		sp.motionX = vec.xCoord * speed;
