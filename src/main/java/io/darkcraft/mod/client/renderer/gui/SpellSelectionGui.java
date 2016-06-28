@@ -1,5 +1,9 @@
 package io.darkcraft.mod.client.renderer.gui;
 
+import java.util.List;
+
+import org.lwjgl.opengl.GL11;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
@@ -9,17 +13,12 @@ import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.spell.ComponentInstance;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
-
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-
-import org.lwjgl.opengl.GL11;
 
 public class SpellSelectionGui extends GuiScreen
 {
@@ -70,7 +69,7 @@ public class SpellSelectionGui extends GuiScreen
     {
     	GL11.glPushMatrix();
     	List<Spell> spl = pc.getKnownSpells();
-    	for(int i = 0; i <20; i++)
+    	for(int i = 0; i <24; i++)
     	{
     		int index = scroll + i;
     		if(index >= spl.size()) break;
@@ -83,7 +82,7 @@ public class SpellSelectionGui extends GuiScreen
 
     private void drawHover(int x, int y)
     {
-    	if(hover < 0) return;
+    	if((hover < 0) || (hover >= 24)) return;
     	List<Spell> spl = pc.getKnownSpells();
 		int index = hover + scroll;
 		if(index >= spl.size()) return;
@@ -149,9 +148,11 @@ public class SpellSelectionGui extends GuiScreen
 	@Override
 	protected void mouseClicked(int x, int y, int c)
     {
+		x = (int)((x - guiLeft) / sr);
+    	y = (int)((y - guiTop) / sr);
 		if(c == 0)
 		{
-			if(hover > -1)
+			if((hover > -1) && (hover < 24))
 			{
 				List<Spell> spl = pc.getKnownSpells();
 				int index = hover + scroll;
@@ -159,6 +160,20 @@ public class SpellSelectionGui extends GuiScreen
 					pc.setCurrentSpell(index);
 				else
 					pc.setCurrentSpell(-1);
+			}
+			else if(hover == 24)
+				pc.setCurrentSpell(-1);
+			else
+			{
+				if(x >= 240)
+				{
+					if((y <= 16) || (y >= 496))
+					{
+						List<Spell> spl = pc.getKnownSpells();
+						int max = Math.max(spl.size()-24, 0);
+						scroll = MathHelper.clamp(scroll + (y <= 16 ? -1 : 1), 0, max);
+					}
+				}
 			}
 		}
 		if(c == 1)
