@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import io.darkcraft.darkcore.mod.abstracts.AbstractEntityDataStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
@@ -20,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
@@ -104,17 +106,12 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	{
 		EntityLivingBase ent = caster.get();
 		if(ent == null) return;
-		double dX = sp.posX - ent.posX;
-		double dY = sp.posY - (ent.posY+height());
-		double dZ = sp.posZ - ent.posZ;
-		double dist = Math.sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
-		double mult = MagicConfig.projectileSpeed / 5;
-		dX *= mult;
-		dY *= mult;
-		dZ *= mult;
-		sp.motionX = dX;
-		sp.motionY = dY;
-		sp.motionZ = dZ;
+		Vec3 vec = MathHelper.getVecBetween(new SimpleDoubleCoordStore(ent), new SimpleDoubleCoordStore(sp));
+		vec = vec.normalize();
+		double speed = MagicConfig.projectileSpeed / 5;
+		sp.motionX = vec.xCoord * speed;
+		sp.motionY = vec.yCoord * speed;
+		sp.motionZ = vec.zCoord * speed;
 		sp.velocityChanged = true;
 	}
 
