@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
@@ -34,8 +35,41 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		background = _background;
 		guiW = background.w;
 		guiH = background.h;
+		xSize = guiW;
+		ySize = guiH;
 	}
 
+	private int oldW;
+	private int oldH;
+	private float guiScale = 1;
+	private void rescale()
+	{
+		//if(parentGui != null)
+		//{
+		//	guiScale = 1;
+		//	return;
+		//}
+		if((oldW == width) && (oldH == height)) return;
+		oldW = width;
+		oldH = height;
+		if((guiW < (width - 16)) && (guiH < (height - 16)))
+			guiScale = 1;
+		else
+		{
+			float s = Math.min(
+					(float) (width-16) / guiW,
+					(float) (height-16) / guiH);
+			s = (float) (Math.floor(s * 32) / 32);
+			guiScale = s;
+		}
+	}
+
+	private int transToScale(int mouseIn)
+	{
+		return MathHelper.round(mouseIn / guiScale);
+	}
+
+	@Override
 	public void addElement(AbstractGuiElement element)
 	{
 		elements.add(element);
@@ -57,30 +91,42 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y)
 	{
-		if (subGui != null) subGui.drawScreen(x, y, pticks);
+		if (subGui != null)
+		{
+			GL11.glPushMatrix();
+			subGui.width = width;
+			subGui.height = height;
+			subGui.drawScreen(x, y, pticks);
+			GL11.glPopMatrix();
+		}
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float pTicks)
 	{
+		rescale();
 		if (inventoryGui)
 			super.drawScreen(mouseX, mouseY, pTicks);
 		else
 		{
 			drawDefaultBackground();
+			GL11.glPushMatrix();
 			drawGuiContainerBackgroundLayer(pTicks, mouseX, mouseY);
 			drawGuiContainerForegroundLayer(mouseX, mouseY);
+			GL11.glPopMatrix();
 		}
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float pTicks, int mouseX, int mouseY)
 	{
+		GL11.glPushMatrix();
+		GL11.glScalef(guiScale, guiScale, 1);
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GL11.glEnable(GL11.GL_BLEND);
 		pticks = pTicks;
-		guiX = (width - background.w) / 2;
-		guiY = (height - background.h) / 2;
+		guiX = (int) (((width / guiScale) - background.w) / 2);
+		guiY = (int) (((height/ guiScale) - background.h) / 2);
 		background.render(guiX, guiY, zLevel, true);
 		GL11.glPushMatrix();
 		GL11.glTranslated(guiX, guiY, zLevel);
@@ -95,6 +141,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		}
 		GL11.glPopMatrix();
 		GL11.glPopAttrib();
+		GL11.glPopMatrix();
 	}
 
 	private void setTyper(ITypable t)
@@ -112,8 +159,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 			subGui.mouseClicked(x, y, b);
 			return;
 		}
-		x -= guiX;
-		y -= guiY;
+		x = transToScale(x) - guiX;
+		y = transToScale(y) - guiY;
 		for (AbstractGuiElement e : elements)
 		{
 			if (!((e instanceof ITypable) || (e instanceof IClickable))) continue;
@@ -129,7 +176,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 			}
 		}
 		setTyper(null);
-		super.mouseClicked(x + guiX, y + guiY, b);
+		if(inventoryGui)
+			super.mouseClicked(x + guiX, y + guiY, b);
 	}
 
 	@Override
@@ -140,8 +188,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 			subGui.mouseClickMove(x, y, b, t);
 			return;
 		}
-		x -= guiX;
-		y -= guiY;
+		x = transToScale(x) - guiX;
+		y = transToScale(y) - guiY;
 		for (AbstractGuiElement e : elements)
 		{
 			if (!(e instanceof IDraggable)) continue;
@@ -151,7 +199,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 			if (!e.withinBounds(cx, cy)) continue;
 			if (((IDraggable) e).drag(b, cx, cy)) return;
 		}
-		super.mouseClickMove(x + guiX, y + guiY, b, t);
+		if(inventoryGui)
+			super.mouseClickMove(x + guiX, y + guiY, b, t);
 	}
 
 	@Override
@@ -203,7 +252,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		}
 		if (activeTyper != null)
 			activeTyper.keyTyped(c, i);
-		else
+		else if(inventoryGui)
 			super.keyTyped(c, i);
 	}
 
