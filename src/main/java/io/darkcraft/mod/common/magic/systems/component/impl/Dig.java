@@ -42,6 +42,7 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 
 	protected boolean canBreak(int magnitude, float hardness)
 	{
+		if(hardness == -1) return false;
 		if(hardness < 3) return true;
 		if((magnitude >= 2) && (hardness < 50)) return true;
 		if((magnitude >= 3) && (hardness < 100)) return true;
