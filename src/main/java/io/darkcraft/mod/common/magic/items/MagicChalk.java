@@ -14,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -41,10 +42,10 @@ public class MagicChalk extends AbstractItem
 		String s = getString(is);
 		if((s == null) || s.isEmpty()) return;
 		int slot = getSlot(is);
-		String n = "Text: §r";
+		String n = "Text: " + EnumChatFormatting.RESET;
 		if(slot > 0)
 			n += s.substring(0, slot);
-		n += "§9" + s.substring(slot, slot+1) + "§r";
+		n += EnumChatFormatting.BLUE + s.substring(slot, slot+1) + EnumChatFormatting.RESET;
 		if(slot < (s.length() - 1))
 			n += s.substring(slot+1);
 		infoList.add(n);
