@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockCaster implements ICaster
@@ -130,6 +131,7 @@ public class BlockCaster implements ICaster
 	{
 		double cost = spell.getCost(this);
 		SpellPreCastEvent spce = new SpellPreCastEvent(spell, this, cost);
+		MinecraftForge.EVENT_BUS.post(spce);
 		if(!spce.isCanceled())
 			return (useMana(spce.getCost(), false));
 		return false;

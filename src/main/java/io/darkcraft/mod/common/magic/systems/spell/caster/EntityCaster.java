@@ -23,6 +23,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -168,6 +169,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	{
 		double cost = spell.getCost(this);
 		SpellPreCastEvent spce = new SpellPreCastEvent(spell, this, cost);
+		MinecraftForge.EVENT_BUS.post(spce);
 		if(!spce.isCanceled())
 			return useMana ? useMana(spce.getCost(), false) : true;
 		return false;
