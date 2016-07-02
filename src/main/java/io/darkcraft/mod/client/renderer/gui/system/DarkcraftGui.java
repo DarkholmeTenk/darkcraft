@@ -8,11 +8,12 @@ import org.lwjgl.opengl.GL11;
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 
-public abstract class DarkcraftGui extends GuiContainer
+public class DarkcraftGui extends GuiContainer implements IGuiContainer
 {
 	private final GuiTexture			background;
 	private DarkcraftGui				parentGui;
@@ -153,9 +154,15 @@ public abstract class DarkcraftGui extends GuiContainer
 		super.mouseClickMove(x + guiX, y + guiY, b, t);
 	}
 
+	@Override
 	public void clickableClicked(IClickable c, String id)
 	{
 		if ("cross".equals(id)) close();
+	}
+
+	@Override
+	public void typableChanged(ITypable t)
+	{
 	}
 
 	public void openSubGui(DarkcraftGui gui)
@@ -174,6 +181,9 @@ public abstract class DarkcraftGui extends GuiContainer
 			parentGui = null;
 		}
 	}
+
+	@Override
+	public void recalc(){}
 
 	@Override
 	protected void keyTyped(char c, int i)

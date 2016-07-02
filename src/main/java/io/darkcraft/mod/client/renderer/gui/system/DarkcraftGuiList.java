@@ -8,10 +8,11 @@ import org.lwjgl.opengl.GL11;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 import io.darkcraft.mod.client.renderer.gui.textures.ScalableInternal;
 import io.darkcraft.mod.client.renderer.gui.textures.Scrollbar;
 
-public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable
+public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, IGuiContainer
 {
 	private List<AbstractGuiElement> elements = new ArrayList();
 	private ScalableInternal bg;
@@ -36,7 +37,8 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable
 			scrollPos = MathHelper.clamp(scrollPos, 0, totalHeight - (h-2));
 	}
 
-	private void recalc()
+	@Override
+	public void recalc()
 	{
 		int th = 0;
 		for(AbstractGuiElement e : elements)
@@ -45,10 +47,11 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable
 		reclamp();
 	}
 
+	@Override
 	public void addElement(AbstractGuiElement e)
 	{
 		elements.add(e);
-		e.parent = parent;
+		e.parent = this;
 		recalc();
 	}
 
@@ -122,6 +125,20 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable
 			GL11.glPopMatrix();
 			if(y > h) break;
 		}
+	}
+
+	@Override
+	public void clickableClicked(IClickable c, String id)
+	{
+		if(parent != null)
+			parent.clickableClicked(c, id);
+	}
+
+	@Override
+	public void typableChanged(ITypable t)
+	{
+		if(parent != null)
+			parent.typableChanged(t);
 	}
 
 }

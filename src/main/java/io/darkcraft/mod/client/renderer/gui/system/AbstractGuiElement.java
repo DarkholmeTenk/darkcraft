@@ -1,15 +1,17 @@
 package io.darkcraft.mod.client.renderer.gui.system;
 
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
+
 public abstract class AbstractGuiElement
 {
 	public boolean enabled = true;
 	public boolean visible = true;
-	public DarkcraftGui parent;
+	public IGuiContainer parent;
 
-	public final int w;
-	public final int h;
-	public final int x;
-	public final int y;
+	public int w;
+	public int h;
+	public int x;
+	public int y;
 
 	public AbstractGuiElement(int _x, int _y, int width, int height)
 	{
@@ -17,6 +19,22 @@ public abstract class AbstractGuiElement
 		y = _y;
 		w = width;
 		h = height;
+	}
+
+	public void setSize(int _w, int _h)
+	{
+		w = _w;
+		h = _h;
+		if(parent != null)
+			parent.recalc();
+	}
+
+	public void setPos(int _x, int _y)
+	{
+		x = _x;
+		y = _y;
+		if(parent != null)
+			parent.recalc();
 	}
 
 	/**
