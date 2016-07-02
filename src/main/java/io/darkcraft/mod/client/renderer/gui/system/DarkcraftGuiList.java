@@ -5,36 +5,24 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
+import io.darkcraft.mod.client.renderer.gui.system.prefabs.VerticalScrollbar;
 import io.darkcraft.mod.client.renderer.gui.textures.ScalableInternal;
-import io.darkcraft.mod.client.renderer.gui.textures.Scrollbar;
 
 public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, IGuiContainer
 {
 	private List<AbstractGuiElement> elements = new ArrayList();
 	private ScalableInternal bg;
-	private Scrollbar scroll;
-	private int scrollPos;
-	private int totalHeight;
+	private VerticalScrollbar scroll;
 
 	public DarkcraftGuiList(int _x, int _y, int width, int height)
 	{
 		super(_x, _y, width, height);
 		bg = new ScalableInternal(width-16, height);
-		scroll = new Scrollbar(height);
-	}
-
-	private boolean renderBar() { return totalHeight > (h-2); }
-
-	private void reclamp()
-	{
-		if(!renderBar())
-			scrollPos = 0;
-		else
-			scrollPos = MathHelper.clamp(scrollPos, 0, totalHeight - (h-2));
+		scroll = new VerticalScrollbar(width-16, 0, height);
 	}
 
 	@Override
@@ -43,8 +31,8 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 		int th = 0;
 		for(AbstractGuiElement e : elements)
 			th += e.h;
-		totalHeight = th;
-		reclamp();
+		scroll.setMinMax(0, th-(h-2));
+		scroll.setScrollable(th > (h - 2));
 	}
 
 	@Override
@@ -60,15 +48,11 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 	{
 		if(x > (w - 16))
 		{
-			if(y < 16)
-				scrollPos -= 32;
-			else if(y > (h-16))
-				scrollPos += 32;
-			reclamp();
+			scroll.click(button, x-scroll.x, y-scroll.y);
 		}
 		else
 		{
-			int cy = y - scrollPos;
+			int cy = y - scroll.asInt();
 			for(AbstractGuiElement e : elements)
 			{
 				if(e.withinBounds(x, cy))
@@ -88,33 +72,23 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 	public boolean drag(int button, int x, int y)
 	{
 		if(button != 0) return false;
-		if(x >  (w-16))
+		if(x > (w-16))
 		{
-			if((y > 16) || (y < (h-16)))
-			{
-				float p = (y-16) / (float)(h - 32);
-				p *= (totalHeight - (h-2));
-				scrollPos = (int) p;
-				reclamp();
-				return true;
-			}
+			return scroll.drag(button, x-scroll.x, y-scroll.y);
 		}
 		return false;
-	}
-
-	private void renderScrollbar()
-	{
-		float sbp = scrollPos/(float)(totalHeight - (h-2));
-		scroll.render(w-16, 0, 0, sbp, renderBar());
 	}
 
 	@Override
 	public void render(float pticks, int mouseX, int mouseY)
 	{
 		bg.render(0, 0, 0, true);
-		renderScrollbar();
+		GL11.glPushMatrix();
+		GL11.glTranslatef(scroll.x, scroll.y, 0);
+		scroll.render(pticks, mouseX, mouseY);
+		GL11.glPopMatrix();
 		GL11.glTranslatef(1, 1, 0);
-		int y = -scrollPos;
+		int y = -scroll.asInt();
 		for(AbstractGuiElement e : elements)
 		{
 			GL11.glPushMatrix();

@@ -9,7 +9,7 @@ import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import net.minecraft.util.ResourceLocation;
 
-public class Scrollbar extends GuiTexture
+public class VerticalScrollbarTexture extends GuiTexture
 {
 	private static final ResourceLocation tex = new ResourceLocation(DarkcraftMod.modName, "textures/gui/scalable/scrollbar.png");
 	private static final UVStore bar = new UVStore(0,1,0,0.1f);
@@ -19,7 +19,7 @@ public class Scrollbar extends GuiTexture
 	int bt;
 	int bb;
 
-	public Scrollbar(int h)
+	public VerticalScrollbarTexture(int h)
 	{
 		super(tex,16,h);
 		bt = 16;
