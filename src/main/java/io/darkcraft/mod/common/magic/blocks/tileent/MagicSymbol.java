@@ -8,7 +8,7 @@ import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.darkcore.mod.interfaces.IActivatable;
 import io.darkcraft.darkcore.mod.interfaces.IBlockUpdateDetector;
-import io.darkcraft.mod.client.renderer.LetterRenderer;
+import io.darkcraft.mod.common.DaedricLetters;
 import io.darkcraft.mod.common.magic.systems.symbolic.ISymbolicSpell;
 import io.darkcraft.mod.common.magic.systems.symbolic.SymbolicRegistry;
 import net.minecraft.block.Block;
@@ -235,7 +235,7 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 
 	public char getCharacter()
 	{
-		if(LetterRenderer.validChar(myChar))
+		if(DaedricLetters.validChar(myChar))
 			return myChar;
 		return 's';
 	}
