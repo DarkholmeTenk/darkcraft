@@ -24,6 +24,7 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 		super(_x, _y, width, height);
 		bg = new ScalableInternal(width-16, height);
 		scroll = new VerticalScrollbar(width-16, 0, height);
+		scroll.parent = this;
 	}
 
 	@Override
@@ -60,7 +61,8 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 		}
 		else
 		{
-			int cy = y - scroll.asInt();
+			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h)) return false;
+			int cy = y + scroll.asInt();
 			for(AbstractGuiElement e : elements)
 			{
 				if(e.withinBounds(x, cy))
@@ -70,7 +72,7 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 					break;
 				}
 				else
-					cy += e.h;
+					cy -= e.h;
 			}
 		}
 		return true;
@@ -84,6 +86,22 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 		{
 			return scroll.drag(button, x-scroll.x, y-scroll.y);
 		}
+		else
+		{
+			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h)) return false;
+			int cy = y + scroll.asInt();
+			for(AbstractGuiElement e : elements)
+			{
+				if(e.withinBounds(x, cy))
+				{
+					if(e instanceof IDraggable)
+						((IDraggable) e).drag(button, x, cy);
+					break;
+				}
+				else
+					cy -= e.h;
+			}
+		}
 		return false;
 	}
 
@@ -96,17 +114,23 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 		scroll.render(pticks, mouseX, mouseY);
 		GL11.glPopMatrix();
 		GL11.glTranslatef(1, 1, 0);
+		GL11.glPushAttrib(GL11.GL_SCISSOR_BIT);
+		WindowSpaceStore wss = getWindowSpace(this);
+		wss = wss.transform(1, h-1);
+		GL11.glScissor((int) wss.x, (int) wss.getFromBottom(), (int)((w-17) * wss.scale), (int)((h-2) * wss.scale));
+		GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		int y = -scroll.asInt();
 		for(AbstractGuiElement e : elements)
 		{
 			GL11.glPushMatrix();
 			GL11.glTranslatef(0, y, 0);
-			if(((y >= 0) && ((y+e.h) < h)))
+			if((((y+e.h) >= 0) && ((y < h))))
 				e.render(pticks, mouseX, mouseY);
 			y += e.h;
 			GL11.glPopMatrix();
 			if(y > h) break;
 		}
+		GL11.glPopAttrib();
 	}
 
 	@Override
