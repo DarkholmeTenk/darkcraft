@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractCommandNew;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
+import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import net.minecraft.command.ICommandSender;
@@ -13,7 +14,7 @@ public class MagicCommand extends AbstractCommandNew
 {
 	public MagicCommand()
 	{
-		super(new SetManaSC(), new MagicChalkCommand());
+		super(new SetManaSC(), new MagicChalkCommand(), new DebugGuiSC());
 	}
 
 	@Override
@@ -81,5 +82,28 @@ public class MagicCommand extends AbstractCommandNew
 			return true;
 		}
 
+	}
+
+	private static class DebugGuiSC extends AbstractCommandNew
+	{
+		@Override
+		public String getCommandName()
+		{
+			return "debuggui";
+		}
+
+		@Override
+		public void getAliases(List<String> list){}
+
+		@Override
+		public boolean process(ICommandSender sen, List<String> strList)
+		{
+			EntityPlayer pl = null;
+			if(sen instanceof EntityPlayer)
+				pl = (EntityPlayer) sen;
+			if(pl != null)
+				pl.openGui(DarkcraftMod.i, 1000, pl.worldObj, 0, 0, 0);
+			return true;
+		}
 	}
 }

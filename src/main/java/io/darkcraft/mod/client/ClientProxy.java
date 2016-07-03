@@ -15,6 +15,7 @@ import io.darkcraft.darkcore.mod.datastore.Pair;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.EntitySpellProjectileRenderer;
 import io.darkcraft.mod.client.renderer.gui.ChalkGui;
+import io.darkcraft.mod.client.renderer.gui.DebugGui;
 import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
 import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
 import io.darkcraft.mod.client.renderer.gui.StatusOverlay;
@@ -63,6 +64,7 @@ public class ClientProxy extends CommonProxy
 			case 1397: return new SpellCreationGui((SpellCreator)te);
 			case 1398: return new SpellSelectionGui();
 			case 1399: return new ChalkGui(new ChalkContainer(player));
+			case 1000: return new DebugGui(player.inventoryContainer);
 		}
 		return null;
 	}

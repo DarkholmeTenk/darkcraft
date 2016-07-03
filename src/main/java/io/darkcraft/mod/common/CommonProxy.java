@@ -18,6 +18,7 @@ public class CommonProxy implements IGuiHandler
 		TileEntity te = world.getTileEntity(x, y, z);
 		switch(id)
 		{
+			case 1000: return new ChalkContainer(player);
 			case 1397: return new SpellCreationContainer((SpellCreator)te);
 			case 1399: return new ChalkContainer(player);
 		}
