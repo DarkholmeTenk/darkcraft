@@ -40,7 +40,7 @@ public class HorizontalScrollbarTexture extends GuiTexture
 			RenderHelper.uiFace(24, 0, w-48, h, z, m, true);
 		if(drawBar)
 		{
-			float pos = MathHelper.interpolate(bl, br, barPos);
+			float pos = MathHelper.interpolate(br, bl, barPos);
 			RenderHelper.uiFace(pos, 0,	8, 16, 0, bar, true);
 		}
 		GL11.glPopMatrix();
