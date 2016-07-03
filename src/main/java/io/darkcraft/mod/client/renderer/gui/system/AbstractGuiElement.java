@@ -1,9 +1,11 @@
 package io.darkcraft.mod.client.renderer.gui.system;
 
+import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 
 public abstract class AbstractGuiElement
 {
+	protected WindowSpaceStore wss;
 	public boolean enabled = true;
 	public boolean visible = true;
 	public IGuiContainer parent;
