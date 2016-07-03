@@ -4,27 +4,28 @@ import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.client.renderer.gui.system.AbstractGuiElement;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
-import io.darkcraft.mod.client.renderer.gui.textures.VerticalScrollbarTexture;
+import io.darkcraft.mod.client.renderer.gui.textures.HorizontalScrollbarTexture;
 
-public class VerticalScrollbar extends AbstractGuiElement implements IClickable, IDraggable
+public class HorizontalScrollbar extends AbstractGuiElement implements IClickable, IDraggable
 {
 	public float value;
 	private float clickAmount;
 	private float min;
 	private float max;
 	private boolean scrollable;
-	private VerticalScrollbarTexture scrollTex;
+	private HorizontalScrollbarTexture scrollTex;
 
-	public VerticalScrollbar(int x, int y, int h)
+	public HorizontalScrollbar(int x, int y, int w)
 	{
-		this(x,y,h,32);
+		this(x,y,w,32);
 	}
 
-	public VerticalScrollbar(int x, int y, int h, float scrollAmount)
+	public HorizontalScrollbar(int x, int y, int w, float scrollAmount)
 	{
-		super(x,y,16,h);
+		super(x,y,w,16);
 		clickAmount = scrollAmount;
-		scrollTex = new VerticalScrollbarTexture(h);
+		scrollTex = new HorizontalScrollbarTexture(w);
+		scrollable = true;
 	}
 
 	public void setScrollable(boolean _scrollable)
@@ -37,6 +38,12 @@ public class VerticalScrollbar extends AbstractGuiElement implements IClickable,
 	{
 		min = _min;
 		max = _max;
+		reclamp();
+	}
+
+	public void setValue(float v)
+	{
+		value = v;
 		reclamp();
 	}
 
@@ -56,9 +63,9 @@ public class VerticalScrollbar extends AbstractGuiElement implements IClickable,
 	@Override
 	public boolean click(int button, int x, int y)
 	{
-		if(y < 16)
+		if(x < 16)
 			value -= clickAmount;
-		else if(y > (h-16))
+		else if(x > (w-16))
 			value += clickAmount;
 		else
 			drag(button,x,y);
@@ -70,9 +77,9 @@ public class VerticalScrollbar extends AbstractGuiElement implements IClickable,
 	@Override
 	public boolean drag(int button, int x, int y)
 	{
-		if((y >= 16) && (y <= (h-16)))
+		if((x >= 16) && (x <= (w-16)))
 		{
-			float p = (y-16) / (float)(h - 32);
+			float p = (x-16) / (float)(w - 32);
 			p *= (max-min);
 			value = min + p;
 			reclamp();
