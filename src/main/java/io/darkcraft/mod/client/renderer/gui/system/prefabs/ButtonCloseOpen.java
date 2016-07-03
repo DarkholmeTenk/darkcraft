@@ -32,6 +32,7 @@ public class ButtonCloseOpen extends DarkcraftGuiButton
 	@Override
 	public void render(float pticks, int mouseX, int mouseY)
 	{
+		if(!visible) return;
 		if(isOpen)
 			open.render(0, 0, 0, true);
 		else
