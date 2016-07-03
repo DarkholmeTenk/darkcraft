@@ -2,6 +2,7 @@ package io.darkcraft.mod.client.renderer.gui.system;
 
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
+import net.minecraft.client.gui.FontRenderer;
 
 public class DarkcraftLabel extends AbstractGuiElement
 {
@@ -19,7 +20,8 @@ public class DarkcraftLabel extends AbstractGuiElement
 	public void render(float pticks, int mouseX, int mouseY)
 	{
 		if(text == null) return;
-		RenderHelper.getFontRenderer().drawString(text, 0, 0, colour.asInt, shadow);
+		FontRenderer fr = RenderHelper.getFontRenderer();
+		fr.drawString(fr.trimStringToWidth(text, w), 0, 0, colour.asInt, shadow);
 	}
 
 }

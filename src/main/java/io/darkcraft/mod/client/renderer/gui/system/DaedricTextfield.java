@@ -37,7 +37,7 @@ public class DaedricTextfield extends DarkcraftGuiTextfield
 	{
 		GL11.glTranslatef(0, 8, 0);
 		GL11.glRotatef(180, 1, 0, 0);
-		GL11.glScalef(0.7f, 0.7f, 0.7f);
+		GL11.glScalef(0.5f, 0.5f, 0.5f);
 		LetterRenderer.render(t, 0, 0, colour, RenderHelper.white, false);
 	}
 
