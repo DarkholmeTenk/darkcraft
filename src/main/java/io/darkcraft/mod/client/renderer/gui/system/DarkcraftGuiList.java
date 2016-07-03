@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
@@ -41,6 +42,13 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 		elements.add(e);
 		e.parent = this;
 		recalc();
+	}
+
+	@Override
+	public void removeElement(AbstractGuiElement e)
+	{
+		elements.remove(e);
+		e.parent = null;
 	}
 
 	@Override
@@ -113,6 +121,22 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 	{
 		if(parent != null)
 			parent.typableChanged(t);
+	}
+
+	@Override
+	public WindowSpaceStore getWindowSpace(AbstractGuiElement e)
+	{
+		if((parent != null) && (wss == null))
+			wss = parent.getWindowSpace(this);
+		if(e == this) return wss;
+		int y = -scroll.asInt();
+		for(AbstractGuiElement _e : elements)
+		{
+			if(e == _e)
+				break;
+			y += _e.h;
+		}
+		return wss.transform(1, y);
 	}
 
 }

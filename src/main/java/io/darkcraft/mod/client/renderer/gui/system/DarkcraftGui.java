@@ -6,11 +6,14 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
+import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 
@@ -74,6 +77,13 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	{
 		elements.add(element);
 		element.parent = this;
+	}
+
+	@Override
+	public void removeElement(AbstractGuiElement e)
+	{
+		elements.remove(e);
+		e.parent = null;
 	}
 
 	@Override
@@ -254,6 +264,18 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 			activeTyper.keyTyped(c, i);
 		else if(inventoryGui)
 			super.keyTyped(c, i);
+	}
+
+	@Override
+	public WindowSpaceStore getWindowSpace(AbstractGuiElement e)
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+		ScaledResolution sr = new ScaledResolution(mc,mc.displayWidth,mc.displayHeight);
+		WindowSpaceStore wss = new WindowSpaceStore(0,0,sr.getScaleFactor());
+		wss = wss.transform(guiX, guiY);
+		wss = wss.scale(guiScale);
+		wss = wss.transform(e.x, e.y);
+		return wss;
 	}
 
 }
