@@ -1,5 +1,7 @@
 package io.darkcraft.mod.client.renderer.tileent;
 
+import org.lwjgl.opengl.GL11;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.darkcore.mod.abstracts.AbstractObjRenderer;
 import io.darkcraft.mod.DarkcraftMod;
@@ -10,8 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
-import org.lwjgl.opengl.GL11;
 
 public class TechGeneratorRenderer extends AbstractObjRenderer
 {
@@ -33,26 +33,29 @@ public class TechGeneratorRenderer extends AbstractObjRenderer
 	public void renderBlock(Tessellator tess, TileEntity te, int x, int y, int z)
 	{
 		bindTexture(tex);
-		TechGenerator gen = (TechGenerator) te;
 		model.renderPart("Generator");
 		GL11.glPushMatrix();
 		int mul = 15;
 		double div = 20;
 		double hMul = 0.8;
-		int tt = gen.tt;
-		for(int i = 0; i < 4; i++)
+		if(te instanceof TechGenerator)
 		{
-			GL11.glRotated(90, 0, 1, 0);
-			double h = hMul * Math.sin((tt += mul) / div);
-			GL11.glPushMatrix();
-			GL11.glTranslated(0, h, 0);
-			model.renderPart("Pylon1");
-			GL11.glPopMatrix();
-			h = hMul * Math.sin((tt += mul) / div);
-			GL11.glPushMatrix();
-			GL11.glTranslated(0, h, 0);
-			model.renderPart("Pylon2");
-			GL11.glPopMatrix();
+			TechGenerator gen = (TechGenerator) te;
+			int tt = gen.tt;
+			for(int i = 0; i < 4; i++)
+			{
+				GL11.glRotated(90, 0, 1, 0);
+				double h = hMul * Math.sin((tt += mul) / div);
+				GL11.glPushMatrix();
+				GL11.glTranslated(0, h, 0);
+				model.renderPart("Pylon1");
+				GL11.glPopMatrix();
+				h = hMul * Math.sin((tt += mul) / div);
+				GL11.glPushMatrix();
+				GL11.glTranslated(0, h, 0);
+				model.renderPart("Pylon2");
+				GL11.glPopMatrix();
+			}
 		}
 		GL11.glPopMatrix();
 	}
