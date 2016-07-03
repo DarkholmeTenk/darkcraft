@@ -20,17 +20,20 @@ public class FeatherfallSymbolic implements ISymbolicSpell
 	private int r;
 	private SimpleCoordStore c;
 	private AxisAlignedBB aabb;
+	private boolean empowered = false;
 
-	public FeatherfallSymbolic(SimpleCoordStore rootRune, SimpleCoordStore center)
+	public FeatherfallSymbolic(SimpleCoordStore rootRune, SimpleCoordStore center, boolean _empowered)
 	{
 		c = center;
 		r = (int) center.diagonalParadoxDistance(rootRune);
-		double h = Math.max(6.0 / r, 1);
+		empowered = _empowered;
+		double h = empowered ? Math.max(3.0/r, 0.5) : Math.max(6.0 / r, 1);
 		aabb = AxisAlignedBB.getBoundingBox(c.x-r, c.y-0.5, c.z-r, c.x+1+r, c.y+h, c.z+r+1);
 	}
 
 	private boolean isEmpowered()
 	{
+		if(empowered) return true;
 		TileEntity te = c.getTileEntity();
 		if(te instanceof GemStand)
 			return ((GemStand) te).isGemFull();

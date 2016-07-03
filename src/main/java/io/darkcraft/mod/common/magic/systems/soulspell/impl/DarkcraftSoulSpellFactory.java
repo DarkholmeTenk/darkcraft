@@ -12,6 +12,8 @@ public class DarkcraftSoulSpellFactory implements ISoulSpellFactory
 	{
 		if(id.equals("dc.targetmobs"))
 			return new TargetMobsSoulSpell(nbt);
+		if(id.equals("dc.targetplayers"))
+			return new TargetPlayerSoulSpell(nbt);
 		if(id.equals("dc.manaregen"))
 			return new ManaRegenSS();
 		return null;

@@ -15,7 +15,8 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 	@Override
 	public String match(String glyphs)
 	{
-		if(glyphs.startsWith("targetmobs")) return "dc.targetmobs";
+		if(glyphs.startsWith("target.mobs")) return "dc.targetmobs";
+		if(glyphs.startsWith("target.players")) return "dc.targetplayers";
 		if(glyphs.startsWith("magicka.sila")) return "dc.manaregen";
 		if(glyphs.startsWith("volatus")) return "dc.featherfall";
 		return null;
@@ -24,9 +25,11 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 	@Override
 	public ISymbolicSpell createSpell(String id, String glyphs, SimpleCoordStore rootRune, SimpleCoordStore center)
 	{
-		if(id.equals("dc.targetmobs"))	return new TargetMobsSymbolicSpell(rootRune, center);
-		if(id.equals("dc.manaregen"))	return new ManaRegenSymbolicSpell(rootRune, center);
-		if(id.equals("dc.featherfall"))	return new FeatherfallSymbolic(rootRune, center);
+		boolean empowered = glyphs.endsWith(".maxima");
+		if(id.equals("dc.targetmobs"))		return new SpellSoulgemSymbolicSpell(rootRune, center, "dc.targetmobs");
+		if(id.equals("dc.targetplayers"))	return new SpellSoulgemSymbolicSpell(rootRune, center, "dc.targetplayers");
+		if(id.equals("dc.manaregen"))		return new ManaRegenSymbolicSpell(rootRune, center);
+		if(id.equals("dc.featherfall"))		return new FeatherfallSymbolic(rootRune, center, empowered);
 		return null;
 	}
 
