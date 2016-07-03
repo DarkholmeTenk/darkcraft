@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.client.renderer.LetterRenderer;
+import io.darkcraft.mod.common.DaedricLetters;
 import net.minecraft.client.gui.FontRenderer;
 
 public class DaedricTextfield extends DarkcraftGuiTextfield
@@ -28,7 +29,7 @@ public class DaedricTextfield extends DarkcraftGuiTextfield
 	@Override
 	public boolean isAllowed(char c)
 	{
-		return LetterRenderer.validChar(c);
+		return DaedricLetters.validChar(c);
 	}
 
 	@Override
