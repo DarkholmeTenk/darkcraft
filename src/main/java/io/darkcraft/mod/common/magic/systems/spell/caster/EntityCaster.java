@@ -227,13 +227,15 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		if(!extraData.hasNoTags())
-			nbt.setTag("extraData", extraData);
+			nbt.setTag("dcCasterExDa", extraData);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		if(nbt.hasKey("extraData"))
+		if(nbt.hasKey("dcCasterExDa"))
+			extraData = nbt.getCompoundTag("dcCasterExDa");
+		else if(nbt.hasKey("extraData"))
 			extraData = nbt.getCompoundTag("extraData");
 		else if(!extraData.hasNoTags())
 			extraData = new NBTTagCompound();
@@ -243,13 +245,15 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	public void writeTransmittable(NBTTagCompound nbt)
 	{
 		if(!extraDataTransmittable.hasNoTags())
-			nbt.setTag("extraDataT", extraDataTransmittable);
+			nbt.setTag("dcCasterExDaT", extraDataTransmittable);
 	}
 
 	@Override
 	public void readTransmittable(NBTTagCompound nbt)
 	{
-		if(nbt.hasKey("extraDataT"))
+		if(nbt.hasKey("dcCasterExDaT"))
+			extraDataTransmittable = nbt.getCompoundTag("dcCasterExDaT");
+		else if(nbt.hasKey("extraDataT"))
 			extraDataTransmittable = nbt.getCompoundTag("extraDataT");
 		else if(!extraDataTransmittable.hasNoTags())
 			extraDataTransmittable = new NBTTagCompound();
