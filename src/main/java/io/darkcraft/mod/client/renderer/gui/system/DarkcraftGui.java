@@ -34,10 +34,15 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 
 	public DarkcraftGui(Container cont, GuiTexture _background)
 	{
+		this(cont, _background, _background.w, _background.h);
+	}
+
+	public DarkcraftGui(Container cont, GuiTexture _background, int w, int h)
+	{
 		super(cont);
 		background = _background;
-		guiW = background.w;
-		guiH = background.h;
+		guiW = w;
+		guiH = h;
 		xSize = guiW;
 		ySize = guiH;
 	}
@@ -47,12 +52,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	private float guiScale = 1;
 	private void rescale()
 	{
-		//if(parentGui != null)
-		//{
-		//	guiScale = 1;
-		//	return;
-		//}
 		if((oldW == width) && (oldH == height)) return;
+		//ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft(), width, height);
 		oldW = width;
 		oldH = height;
 		if((guiW < (width - 16)) && (guiH < (height - 16)))
