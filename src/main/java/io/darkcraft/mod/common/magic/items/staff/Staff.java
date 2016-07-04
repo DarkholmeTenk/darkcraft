@@ -70,7 +70,6 @@ public class Staff extends AbstractItem
 	{
 		if(ServerHelper.isServer())
 		{
-			System.out.println("non-block?");
 			rightClick(is, w, pl);
 		}
 		else
