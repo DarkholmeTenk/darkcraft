@@ -1,11 +1,9 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
+import java.util.ArrayList;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
-import io.darkcraft.darkcore.mod.helpers.ServerHelper;
-import io.darkcraft.darkcore.mod.helpers.WorldHelper;
-import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,25 +24,15 @@ public class DigSilk extends Dig
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration)
+	public ArrayList<ItemStack> getDrops(Block b, SimpleCoordStore bp, EntityPlayer pl)
 	{
-		if(bp == null) return;
-		Block b = bp.getBlock();
-		if(b == null) return;
-		if(canBreak(magnitude, b.getBlockHardness(bp.getWorldObj(), bp.x, bp.y, bp.z)))
+		if(b.canSilkHarvest(bp.getWorldObj(), pl, bp.x, bp.y, bp.z, bp.getMetadata()))
 		{
-			EntityPlayer pl = null;
-			if(caster instanceof PlayerCaster) pl = ((PlayerCaster) caster).getCaster();
-			if(b.canSilkHarvest(bp.getWorldObj(), pl, bp.x, bp.y, bp.z, bp.getMetadata()))
-			{
-				ItemStack is = new ItemStack(b, 1, bp.getMetadata());
-				bp.setToAir();
-				if(ServerHelper.isServer())
-					WorldHelper.dropItemStack(is, bp.getCenter());
-			}
-			else
-				super.apply(caster, bp, side, magnitude, duration);
+			ArrayList<ItemStack> items = new ArrayList();
+			items.add(new ItemStack(b,1,bp.getMetadata()));
+			return items;
 		}
+		return super.getDrops(b, bp, pl);
 	}
 
 	private final UVStore uv = new UVStore(0.0,0.1,0.2,0.3);

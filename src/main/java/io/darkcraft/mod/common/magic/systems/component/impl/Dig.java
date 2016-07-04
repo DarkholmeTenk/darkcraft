@@ -6,15 +6,18 @@ import java.util.List;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.handlers.DelayedItemHandler;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.IDescriptiveMagnitudeComponent;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
@@ -53,6 +56,11 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 		}
 	}
 
+	public ArrayList<ItemStack> getDrops(Block b, SimpleCoordStore bp, EntityPlayer pl)
+	{
+		return b.getDrops(bp.getWorldObj(), bp.x, bp.y, bp.z, bp.getMetadata(), 0);
+	}
+
 	@Override
 	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration)
 	{
@@ -61,15 +69,17 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 		if(b == null) return;
 		if(canBreak(magnitude, b.getBlockHardness(bp.getWorldObj(), bp.x, bp.y, bp.z)))
 		{
-			ArrayList<ItemStack> drops = b.getDrops(bp.getWorldObj(), bp.x, bp.y, bp.z, bp.getMetadata(), 0);
+			EntityPlayer pl = caster instanceof PlayerCaster ? ((PlayerCaster)caster).getCaster() : null;
+			ArrayList<ItemStack> drops = getDrops(b,bp,pl);
 			bp.setToAir();
 			if((drops != null) && ServerHelper.isServer())
 			{
 				SimpleDoubleCoordStore center = bp.getCenter();
-				for(ItemStack is : drops)
-				{
-					WorldHelper.dropItemStack(is, center);
-				}
+				if(pl != null)
+					DelayedItemHandler.addItemDrop(pl, drops);
+				else
+					for(ItemStack is : drops)
+						WorldHelper.dropItemStack(is, center);
 			}
 		}
 	}
@@ -137,7 +147,8 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 	@Override
 	public void getDescription(List<String> strings, int magnitude)
 	{
-		strings.add("dc.test");
+		strings.add("dc.dig.description");
+		strings.add("dc.dig.magnitude."+magnitude+".description");
 	}
 
 }
