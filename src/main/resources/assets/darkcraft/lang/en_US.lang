@@ -22,6 +22,7 @@ darkcraft.component.test=TestPlzIgnore
 darkcraft.component.dig=Excavate
 darkcraft.component.digsilk=Gentle Excavate
 darkcraft.component.digfortune=Greedy Excavate
+darkcraft.component.digvein=Explorative Excavate
 darkcraft.component.soultrap=Soul Trap
 darkcraft.component.conLight=Conjure Light
 darkcraft.component.mark=Mark

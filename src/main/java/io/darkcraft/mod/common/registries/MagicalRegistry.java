@@ -11,6 +11,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.DamageMagicka;
 import io.darkcraft.mod.common.magic.systems.component.impl.Dig;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigFortune;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigSilk;
+import io.darkcraft.mod.common.magic.systems.component.impl.DigVein;
 import io.darkcraft.mod.common.magic.systems.component.impl.FeatherFall;
 import io.darkcraft.mod.common.magic.systems.component.impl.Fly;
 import io.darkcraft.mod.common.magic.systems.component.impl.Mark;
@@ -39,6 +40,7 @@ public class MagicalRegistry
 	public static final Dig dig = new Dig();
 	public static final DigFortune digfortune = new DigFortune();
 	public static final DigSilk digsilk = new DigSilk();
+	public static final DigVein digvein = new DigVein();
 	public static final Damage damage = new Damage();
 	public static final DamageHunger damageHunger = new DamageHunger();
 	public static final DamageMagicka damageMagicka = new DamageMagicka();
@@ -60,6 +62,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(dig);
 		SpellPartRegistry.registerComponent(digsilk);
 		SpellPartRegistry.registerComponent(digfortune);
+		SpellPartRegistry.registerComponent(digvein);
 		SpellPartRegistry.registerComponent(damage);
 		SpellPartRegistry.registerComponent(damageHunger);
 		SpellPartRegistry.registerComponent(damageMagicka);
