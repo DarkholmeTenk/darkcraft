@@ -37,16 +37,20 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 	@Override
 	public double getCost()
 	{
-		return 6;
+		return 5;
 	}
 
 	protected boolean canBreak(int magnitude, float hardness)
 	{
-		if(hardness == -1) return false;
-		if(hardness < 3) return true;
-		if((magnitude >= 2) && (hardness < 50)) return true;
-		if((magnitude >= 3) && (hardness < 100)) return true;
-		return false;
+		if(hardness < 0) return false;
+		switch(magnitude)
+		{
+			case 5: return true;
+			case 4: return hardness <= 50;
+			case 3: return hardness <= 5;
+			case 2: return hardness <= 3;
+			default: return hardness < 3;
+		}
 	}
 
 	@Override
@@ -113,8 +117,7 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 	@Override
 	public int getMaxMagnitude()
 	{
-		// TODO Auto-generated method stub
-		return 3;
+		return 5;
 	}
 
 	@Override
@@ -124,7 +127,9 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 		{
 			case 1: return oldCost;
 			case 2: return oldCost * 2;
-			case 3: return oldCost * 5;
+			case 3: return oldCost * 3;
+			case 4: return oldCost * 5;
+			case 5: return oldCost * 10;
 			default: return oldCost;
 		}
 	}
