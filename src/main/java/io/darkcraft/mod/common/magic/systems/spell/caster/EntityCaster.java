@@ -127,7 +127,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 				for(Entry<ISkill, Double> entry : xpMap.entrySet())
 					if((maxEntry == null) || (entry.getValue() > maxEntry.getValue()))
 						maxEntry = entry;
-				double xp = Math.max(maxEntry.getValue(), 5);
+				double xp = Math.max(maxEntry.getValue(), 15 - (getMaxMana()/100.0));
 				double mult = 2.5 - (2*(handler.getLevelPercent(maxEntry.getKey())));
 				xp *= mult;
 				handler.addXP(maxEntry.getKey(), xp);
