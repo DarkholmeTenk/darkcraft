@@ -207,7 +207,7 @@ public class GemStand extends AbstractTileEntity implements IActivatable, IBlock
 				soulspell = null;
 				soulspellID = ssi;
 			}
-			else
+			else if(soulspell != null)
 				soulspell.readFromNBT(SoulGem.getSoulSpellData(is));
 		}
 		else
