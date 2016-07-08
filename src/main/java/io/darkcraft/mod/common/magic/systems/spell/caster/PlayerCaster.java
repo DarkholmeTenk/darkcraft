@@ -241,7 +241,6 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	@Override
 	public void loadNBTData(NBTTagCompound lnbt)
 	{
-		super.loadNBTData(lnbt);
 		if(lnbt.hasKey("rem"))
 		{
 			int x = lnbt.getInteger("rem");
@@ -262,8 +261,9 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 				sendUpdate();
 			}
 		}
-		else
+		else if(lnbt.hasKey("dcpc"))
 		{
+			super.loadNBTData(lnbt);
 			NBTTagCompound nbt = lnbt.getCompoundTag("dcpc");
 			currentSpell = nbt.hasKey("cs") ? nbt.getInteger("cs") : -1;
 			synchronized(knownSpells){ synchronized(knownComponents)
