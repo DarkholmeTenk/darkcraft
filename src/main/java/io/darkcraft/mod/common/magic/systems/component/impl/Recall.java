@@ -4,6 +4,7 @@ import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.TeleportHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.common.helpers.Helper;
@@ -17,8 +18,12 @@ import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import skillapi.api.implement.ISkill;
 
 public class Recall implements IComponent, IConfigurableComponent
@@ -55,9 +60,45 @@ public class Recall implements IComponent, IConfigurableComponent
 	@Override
 	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config){}
 
+	private void transfer(ICaster caster, EntityLivingBase e, SimpleDoubleCoordStore markLoc)
+	{
+		if(crossDimensional || (markLoc.world == WorldHelper.getWorldID(e)))
+		{
+			TeleportHelper.teleportEntity(e, markLoc);
+		}
+		else
+		{
+			if(caster instanceof PlayerCaster)
+				MessageHelper.sendMessage(((PlayerCaster) caster).getCaster(), "dc.recall.crossdim");
+			Helper.playFizzleNoise(new SimpleDoubleCoordStore(e));
+		}
+	}
+
+	private void respawnAttempt(PlayerCaster pc,EntityLivingBase ent)
+	{
+		EntityPlayer pl = pc.getCaster();
+		World w = pl.getEntityWorld();
+		int respawnDim = w.provider.getRespawnDimension((EntityPlayerMP) pl);
+		ChunkCoordinates spawn = pl.getBedLocation(respawnDim);
+		if(spawn == null)
+			spawn = WorldHelper.getWorld(respawnDim).getSpawnPoint();
+		if(spawn != null)
+		{
+			spawn = EntityPlayer.verifyRespawnCoordinates(WorldHelper.getWorld(respawnDim), spawn, true);
+			if(spawn != null)
+			{
+				SimpleDoubleCoordStore sdcs = new SimpleDoubleCoordStore(respawnDim, spawn.posX+0.5, spawn.posY, spawn.posZ+0.5);
+				transfer(pc, ent, sdcs);
+				return;
+			}
+		}
+		Helper.playFizzleNoise(new SimpleDoubleCoordStore(ent));
+	}
+
 	@Override
 	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
+		if(ServerHelper.isClient()) return;
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase e = (EntityLivingBase) ent;
 		if(caster instanceof EntityCaster)
@@ -65,19 +106,19 @@ public class Recall implements IComponent, IConfigurableComponent
 			EntityCaster ec = (EntityCaster) caster;
 			if(!(MagicConfig.recallOthers || Helper.isCaster(ec, e))) return;
 			NBTTagCompound nbt = ec.getExtraData();
-			if(nbt.hasKey("markLoc" + config))
+			if((config == 4) && (ec instanceof PlayerCaster))
+			{
+				respawnAttempt((PlayerCaster)ec, e);
+			}
+			else if((config == 5) && nbt.hasKey("markLocDeath"))
+			{
+				SimpleDoubleCoordStore markLoc = SimpleDoubleCoordStore.readFromNBT(nbt.getCompoundTag("markLocDeath"));
+				transfer(caster, e,markLoc);
+			}
+			else if(nbt.hasKey("markLoc" + config))
 			{
 				SimpleDoubleCoordStore markLoc = SimpleDoubleCoordStore.readFromNBT(nbt.getCompoundTag("markLoc"+config));
-				if(crossDimensional || (markLoc.world == WorldHelper.getWorldID(e)))
-				{
-					TeleportHelper.teleportEntity(e, markLoc);
-				}
-				else
-				{
-					if(caster instanceof PlayerCaster)
-						MessageHelper.sendMessage(((PlayerCaster) caster).getCaster(), "dc.recall.crossdim " + config);
-					Helper.playFizzleNoise(new SimpleDoubleCoordStore(e));
-				}
+				transfer(caster, e,markLoc);
 			}
 			else
 			{
