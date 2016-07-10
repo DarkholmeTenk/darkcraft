@@ -31,7 +31,7 @@ public class ComponentInstanceLabel extends AbstractGuiElement
 		RenderHelper.bindTexture(compInst.component.getIcon());
 		RenderHelper.uiFace(0, 0, 16, 16, 0, compInst.component.getIconLocation(), true);
 		FontRenderer fr = RenderHelper.getFontRenderer();
-		fr.drawString(fr.trimStringToWidth(str, w-20), 18, 3, labelColour.asInt, shadow);
+		fr.drawString(fr.trimStringToWidth(str, w-20), 18, 4, labelColour.asInt, shadow);
 	}
 
 }

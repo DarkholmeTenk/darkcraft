@@ -19,11 +19,13 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	private List<T> elements = new ArrayList();
 	private ScalableInternal bg;
 	private VerticalScrollbar scroll;
+	public int iW;
 
 	public DarkcraftGuiList(int _x, int _y, int width, int height)
 	{
 		super(_x, _y, width, height);
 		bg = new ScalableInternal(width-16, height);
+		iW = bg.w-2;
 		scroll = new VerticalScrollbar(width-16, 0, height);
 		scroll.parent = this;
 	}
@@ -53,6 +55,12 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		e.parent = null;
 	}
 
+	public void clear()
+	{
+		elements.clear();
+		recalc();
+	}
+
 	public void sort(Comparator<T> comparator)
 	{
 		elements.sort(comparator);
@@ -76,12 +84,13 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 				{
 					if(e instanceof IClickable)
 						((IClickable) e).click(button, x, cy);
-					break;
+					return true;
 				}
 				else
 					cy -= e.h;
 			}
 		}
+		parent.clickableClicked(this, "list", button);
 		return true;
 	}
 
@@ -158,10 +167,10 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	}
 
 	@Override
-	public void clickableClicked(IClickable c, String id)
+	public void clickableClicked(IClickable c, String id, int button)
 	{
 		if(parent != null)
-			parent.clickableClicked(c, id);
+			parent.clickableClicked(c, id, button);
 	}
 
 	@Override

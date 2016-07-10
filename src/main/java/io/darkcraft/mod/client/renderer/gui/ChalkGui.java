@@ -1,7 +1,7 @@
 package io.darkcraft.mod.client.renderer.gui;
 
-import io.darkcraft.mod.client.renderer.gui.system.DaedricTextfield;
 import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGui;
+import io.darkcraft.mod.client.renderer.gui.system.daedric.DaedricTextfield;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonCross;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonTick;
@@ -28,13 +28,13 @@ public class ChalkGui extends DarkcraftGui
 	}
 
 	@Override
-	public void clickableClicked(IClickable c, String id)
+	public void clickableClicked(IClickable c, String id, int button)
 	{
 		if("tick".equals(id))
 		{
 			ChalkGuiPacketHandler.updateChalk(cc.pl, textField.text);
 			close();
 		}
-		super.clickableClicked(c, id);
+		super.clickableClicked(c, id, button);
 	}
 }

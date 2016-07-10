@@ -1,219 +1,176 @@
 package io.darkcraft.mod.client.renderer.gui;
 
-import java.util.List;
+import java.util.Comparator;
 
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.input.Keyboard;
 
-import io.darkcraft.darkcore.mod.datastore.UVStore;
-import io.darkcraft.darkcore.mod.helpers.MathHelper;
-import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.client.ClientHelper;
-import io.darkcraft.mod.common.helpers.Helper;
-import io.darkcraft.mod.common.magic.systems.spell.ComponentInstance;
+import io.darkcraft.darkcore.mod.datastore.Colour;
+import io.darkcraft.mod.client.renderer.gui.system.AbstractGuiElement;
+import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGui;
+import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiList;
+import io.darkcraft.mod.client.renderer.gui.system.daedric.DaedricButton;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
+import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonCross;
+import io.darkcraft.mod.client.renderer.gui.system.spells.SpellHover;
+import io.darkcraft.mod.client.renderer.gui.system.spells.SpellItem;
+import io.darkcraft.mod.client.renderer.gui.textures.ScalableBackground;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
-public class SpellSelectionGui extends GuiScreen
+public class SpellSelectionGui extends DarkcraftGui
 {
-	private static ResourceLocation guiBackground = new ResourceLocation(DarkcraftMod.modName, "textures/gui/spellselection.png");
-	private static UVStore guiUV = new UVStore(0,0.5,0,1);
-	private static UVStore hovTop = new UVStore(0.5,1,0,0.046875);
-	private static UVStore hovMid = new UVStore(0.5,1,0.046875,0.203125);
-	private static UVStore hovBot = new UVStore(0.5,1,0.203125,0.25);
-	private int size = -1;
-    private double sr;
-    private int guiLeft;
-    private int guiTop;
-    private int scroll = 0;
-    private FontRenderer fr;
-    private EntityPlayer pl;
-    private PlayerCaster pc;
-    private int hover = -1;
+	private final PlayerCaster player;
+	private final DarkcraftGuiList<SpellItem> list;
+	private SpellItem currentItem;
+	private Spell currentSpell;
+	private SpellHover hover = new SpellHover(272,0,240,256);
+	private Comparator<SpellItem> currentComp = SpellItem.skillcompSorter;
+	private Colour defaultColour = Colour.white;
+	private Colour selectedColour = new Colour(0.2f, 0.3f, 1f);
+	private Colour hoveredColour = new Colour(0.7f, 0.3f,0.2f);
 
-    {
-    	//width = 256;
-    	//height = 512;
-    	fr = Minecraft.getMinecraft().fontRenderer;
-    	pl = Minecraft.getMinecraft().thePlayer;
-    	pc = Helper.getPlayerCaster(pl);
-    }
-
-    private void setSize()
-    {
-    	size = Math.min(512, (height/64)*64);
-    	sr = size / 512.0;
-    	guiLeft = (int) ((width - (256*sr))/2);
-    	guiTop = (int) ((height - (512*sr)) / 2);
-    }
-
-    private void drawSpell(int i, Spell sp)
-    {
-    	if(pc.getHotkey(scroll+i) != '-')
-    		fr.drawString(""+pc.getHotkey(scroll+i), 0, 4, 16777215);
-    	GL11.glColor3f(1, 1, 1);
-    	ClientHelper.renderSpellIcon(sp, 8, 0, 16, 16);
-    	fr.drawString(sp.name, 26, 4, i==hover?2179839:sp==pc.getCurrentSpell()?16716800:16777215);
-    	String c = String.format("%8.1f", sp.getCost(pc));
-    	int w = fr.getStringWidth(c);
-    	fr.drawString(c, 214-w, 4, 16777215);
-    }
-
-    private void drawSpells()
-    {
-    	GL11.glPushMatrix();
-    	List<Spell> spl = pc.getKnownSpells();
-    	for(int i = 0; i <24; i++)
-    	{
-    		int index = scroll + i;
-    		if(index >= spl.size()) break;
-    		Spell s = spl.get(index);
-    		drawSpell(i,s);
-    		GL11.glTranslatef(0, 18, 0);
-    	}
-    	GL11.glPopMatrix();
-    }
-
-    private void drawHover(int x, int y)
-    {
-    	if((hover < 0) || (hover >= 24)) return;
-    	List<Spell> spl = pc.getKnownSpells();
-		int index = hover + scroll;
-		if(index >= spl.size()) return;
-		Spell spell = spl.get(index);
-    	RenderHelper.bindTexture(guiBackground);
-    	{
-	    	int l = MathHelper.ceil(spell.components.length / 4.0f);
-	    	RenderHelper.uiFace(x, y, 256, 24, 0, hovTop, true);
-	    	for(int i = 0; i < l; i++)
-	    		RenderHelper.uiFace(x, y+24+(80*i), 256, 80, 0, hovMid, true);
-	    	RenderHelper.uiFace(x, y+24+(80*l), 256, 24, 0, hovBot, true);
-    	}
-    	GL11.glTranslatef(x+20, y+20, 1);
-    	fr.drawString("Name: " + spell.name, 0, 0, 16777215);
-    	fr.drawString("Cost:", 0, 12, 16777215);
-    	String c = String.format("%8.1f",spell.getCost(pc));
-    	fr.drawString(c, 95-fr.getStringWidth(c), 12, 16777215);
-    	fr.drawString("Base Cost:", 100, 12, 16777215);
-    	c = String.format("%8.1f",spell.getCost(null));
-    	fr.drawString(c, 200-fr.getStringWidth(c), 12, 16777215);
-    	String skillName = spell.getMainSkill() != null ? spell.getMainSkill().getName() : "Null";
-    	fr.drawString("Skill: " + StatCollector.translateToLocal(skillName), 100, 24, 16777215);
-    	fr.drawString("Components:", 0, 24, 16777215);
-    	int i = 0;
-    	for(ComponentInstance ci : spell.components)
-    	{
-    		RenderHelper.bindTexture(ci.component.getIcon());
-    		RenderHelper.uiFace(0, 36+(i*18), 16, 16, 1, ci.component.getIconLocation(), true);
-    		String name = StatCollector.translateToLocal(ci.toString());
-    		fr.drawString(name, 20, 40+(i*18), 16777215);
-    		i++;
-    	}
-    }
-
-	@Override
-	public void drawScreen(int a, int b, float f)
-    {
-		if(size == -1)
-			setSize();
-		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glTranslated(guiLeft, guiTop, 0);
-		GL11.glScaled(sr, sr, 1);
-		RenderHelper.bindTexture(guiBackground);
-		RenderHelper.uiFace(0, 0, 256, 512, 0, guiUV, true);
-		GL11.glPushMatrix();{
-			GL11.glTranslated(20, 51, 1);
-			a = (int) ((a-guiLeft)/sr);
-			b = (int) ((b-guiTop)/sr);
-			if((a > 20) && (a < 236) && (b > 51) && (b < 493))
-				hover = (b-50)/18;
-			else
-				hover = -1;
-			drawSpells();
-			GL11.glColor3f(1, 1, 1);
-    	}GL11.glPopMatrix();
-    	GL11.glTranslatef(0, 0, 5);
-		drawHover(280,0);
-		GL11.glPopMatrix();
-    }
-
-	@Override
-	protected void mouseClicked(int x, int y, int c)
-    {
-		x = (int)((x - guiLeft) / sr);
-    	y = (int)((y - guiTop) / sr);
-		if(c == 0)
+	public SpellSelectionGui(PlayerCaster pc)
+	{
+		super(null, new ScalableBackground(256,350), 512, 350);
+		sorter = new HotkeySorter(pc);
+		player = pc;
+		currentSpell = player.getCurrentSpell();
+		hover.setSpell(pc, currentSpell);
+		list = new DarkcraftGuiList(24,40,256-48,guiH-64);
+		for(Spell s : player.getKnownSpells())
 		{
-			if((hover > -1) && (hover < 24))
+			SpellItem si = new SpellItem(0,0,256-64,pc,s);
+			if(s == currentSpell)
+				setCurrent(si);
+			list.addElement(si);
+		}
+		list.sort(currentComp);
+		addElement(hover);
+		addElement(list);
+		addElement(new DaedricButton("sortHot",26,20,"H"));
+		addElement(new DaedricButton("sortSkill",36,20,"S"));
+		addElement(new DaedricButton("sortName",46,20,"Name"));
+		addElement(new DaedricButton("sortCost",172,20,"Cost"));
+		addElement(new ButtonCross(this));
+		inventoryGui = false;
+	}
+
+	private void setCurrent(SpellItem si)
+	{
+		hover.setSpell(player, si == null ? null : si.spell);
+		if(si == null)
+		{
+			if(currentItem != null)
+				currentItem.colour = Colour.white;
+			currentItem = null;
+			currentSpell = null;
+		}
+		else
+		{
+			if(currentItem != null)
+				currentItem.colour = Colour.white;
+			currentItem = si;
+			currentSpell = si.spell;
+			si.colour = new Colour(0.3f, 0.5f, 1);
+		}
+	}
+
+	private void sort(Comparator c)
+	{
+		currentComp = c;
+		list.sort(c);
+	}
+
+	@Override
+	public void clickableClicked(IClickable c, String id, int button)
+	{
+		if((c == list) && (button == 0))
+		{
+			player.setCurrentSpell(-1);
+			setCurrent(null);
+		}
+		if("spellitem".equals(id))
+		{
+			SpellItem si = (SpellItem) c;
+			if((button == 1) && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
 			{
-				List<Spell> spl = pc.getKnownSpells();
-				int index = hover + scroll;
-				if(index < spl.size())
-					pc.setCurrentSpell(index);
+				player.removeIndex(player.getIndex(si.spell));
+				if(currentItem == si)
+					setCurrent(null);
+				list.removeElement(si);
+			}
+			else if(button == 0)
+			{
+				if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+				{
+					player.setCurrentSpell(-1);
+					setCurrent(null);
+				}
 				else
-					pc.setCurrentSpell(-1);
+				{
+					player.setCurrentSpell(player.getIndex(si.spell));
+					setCurrent(si);
+				}
 			}
-			else if(hover == 24)
-				pc.setCurrentSpell(-1);
+		}
+		if("sortHot".equals(id))
+			sort(sorter);
+		if("sortSkill".equals(id))
+			if(currentComp == SpellItem.skillcompSorter)
+				sort(SpellItem.skillSorter);
 			else
-			{
-				if(x >= 240)
-				{
-					if((y <= 16) || (y >= 496))
-					{
-						List<Spell> spl = pc.getKnownSpells();
-						int max = Math.max(spl.size()-24, 0);
-						scroll = MathHelper.clamp(scroll + (y <= 16 ? -1 : 1), 0, max);
-					}
-				}
-			}
-		}
-		if(c == 1)
+				sort(SpellItem.skillcompSorter);
+		if("sortName".equals(id))
+			sort(SpellItem.nameSorter);
+		if("sortCost".equals(id))
+			sort(SpellItem.costSorter);
+	}
+
+	@Override
+	public void hoverChanged(AbstractGuiElement newHover)
+	{
+		if(lastHovered instanceof SpellItem)
+			((SpellItem) lastHovered).colour = currentItem == lastHovered ? selectedColour : defaultColour;
+
+		if(newHover instanceof SpellItem)
 		{
-			if(isShiftKeyDown())
-			{
-				if(hover > -1)
-				{
-					List<Spell> spl = pc.getKnownSpells();
-					int index = hover + scroll;
-					if(index < spl.size())
-					{
-						pc.removeIndex(index);
-					}
-				}
-			}
+			hover.setSpell(player, ((SpellItem) newHover).spell);
+			((SpellItem) newHover).colour = hoveredColour;
 		}
-    }
+		else if(hover.getSpell() != currentSpell)
+			hover.setSpell(player, currentItem == null ? null : currentItem.spell);
+	}
 
 	@Override
 	protected void keyTyped(char c, int i)
-    {
-		if((c>='0') && (c<='9'))
-		{
-			if(hover > -1)
-			{
-				List<Spell> spl = pc.getKnownSpells();
-				int index = hover + scroll;
-				if(index < spl.size())
-				{
-					pc.setHotkey(index, c);
-				}
-			}
-		}
-		super.keyTyped(c, i);
-    }
-
-	@Override
-	public boolean doesGuiPauseGame()
 	{
-		return false;
+		if((c >= '1') && (c <='9'))
+		{
+			if(lastHovered instanceof SpellItem)
+				player.setHotkey(player.getIndex(((SpellItem) lastHovered).spell), c);
+		}
+		else
+			super.keyTyped(c, i);
 	}
+
+	public final HotkeySorter sorter;
+	private class HotkeySorter implements Comparator<SpellItem>
+	{
+		private final PlayerCaster pc;
+		private HotkeySorter(PlayerCaster _pc)
+		{
+			pc = _pc;
+		}
+
+		@Override
+		public int compare(SpellItem a, SpellItem b)
+		{
+			int as = pc.getHotkey(pc.getIndex(a.spell));
+			int bs = pc.getHotkey(pc.getIndex(b.spell));
+			if(as == bs) return SpellItem.skillcompSorter.compare(a, b);
+			if(as == '-') return 1;
+			if(bs == '-') return -1;
+			return Integer.compare(as, bs);
+		}
+	};
 }

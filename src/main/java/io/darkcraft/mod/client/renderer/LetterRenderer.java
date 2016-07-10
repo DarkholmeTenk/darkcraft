@@ -65,6 +65,14 @@ public class LetterRenderer
 		return ld.x;
 	}
 
+	public static int width(String s)
+	{
+		int w = 0;
+		for(char c : s.toCharArray())
+			w += width(c) + 1;
+		return w;
+	}
+
 	public static int height(char l)
 	{
 		DaedricLetters.refreshData();

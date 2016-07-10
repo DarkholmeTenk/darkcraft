@@ -63,7 +63,7 @@ public class VerticalScrollbar extends AbstractGuiElement implements IClickable,
 		else
 			drag(button,x,y);
 		reclamp();
-		parent.clickableClicked(this, "scroll");
+		parent.clickableClicked(this, "scroll", button);
 		return true;
 	}
 
@@ -76,7 +76,7 @@ public class VerticalScrollbar extends AbstractGuiElement implements IClickable,
 			p *= (max-min);
 			value = min + p;
 			reclamp();
-			parent.clickableClicked(this, "scroll");
+			parent.clickableClicked(this, "scroll", button);
 			return true;
 		}
 		return false;
