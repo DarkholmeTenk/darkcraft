@@ -1,17 +1,17 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
-import java.util.List;
-
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.MessageHelper;
 import io.darkcraft.darkcore.mod.helpers.TeleportHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
-import io.darkcraft.mod.common.magic.systems.component.IDescriptiveMagnitudeComponent;
+import io.darkcraft.mod.common.magic.systems.component.IConfigurableComponent;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
@@ -21,7 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
 
-public class Recall implements IComponent, IDescriptiveMagnitudeComponent
+public class Recall implements IComponent, IConfigurableComponent
 {
 	public final boolean crossDimensional;
 	public Recall(boolean cd)
@@ -65,20 +65,24 @@ public class Recall implements IComponent, IDescriptiveMagnitudeComponent
 			EntityCaster ec = (EntityCaster) caster;
 			if(!(MagicConfig.recallOthers || Helper.isCaster(ec, e))) return;
 			NBTTagCompound nbt = ec.getExtraData();
-			if(nbt.hasKey("markLoc" + magnitude))
+			if(nbt.hasKey("markLoc" + config))
 			{
-				SimpleDoubleCoordStore markLoc = SimpleDoubleCoordStore.readFromNBT(nbt.getCompoundTag("markLoc"+magnitude));
+				SimpleDoubleCoordStore markLoc = SimpleDoubleCoordStore.readFromNBT(nbt.getCompoundTag("markLoc"+config));
 				if(crossDimensional || (markLoc.world == WorldHelper.getWorldID(e)))
 				{
 					TeleportHelper.teleportEntity(e, markLoc);
 				}
 				else
 				{
+					if(caster instanceof PlayerCaster)
+						MessageHelper.sendMessage(((PlayerCaster) caster).getCaster(), "dc.recall.crossdim " + config);
 					Helper.playFizzleNoise(new SimpleDoubleCoordStore(e));
 				}
 			}
 			else
 			{
+				if(caster instanceof PlayerCaster)
+					MessageHelper.sendMessage(((PlayerCaster) caster).getCaster(), "dc.recall.missing " + config);
 				Helper.playFizzleNoise(new SimpleDoubleCoordStore(e));
 			}
 		}
@@ -98,17 +102,27 @@ public class Recall implements IComponent, IDescriptiveMagnitudeComponent
 	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 
 	@Override
-	public int getMinMagnitude(){ return 0; }
-
-	@Override
-	public int getMaxMagnitude(){ return 2; }
-
-	@Override
-	public double getCostMag(int magnitude, double oldCost){ return oldCost; }
-
-	@Override
-	public void getDescription(List<String> strings, int magnitude)
+	public int getMinConfig()
 	{
+		return 0;
+	}
+
+	@Override
+	public int getMaxConfig()
+	{
+		return 5;
+	}
+
+	@Override
+	public String getConfigDescription(int val)
+	{
+		if(val <= 3)
+			return "dc.recall.slot " + val;
+		if(val == 4)
+			return "dc.recall.spawn";
+		if(val == 5)
+			return "dc.recall.death";
+		return "";
 	}
 
 }
