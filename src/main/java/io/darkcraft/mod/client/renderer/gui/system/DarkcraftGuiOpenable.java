@@ -12,11 +12,11 @@ import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonCloseOpen;
 
-public class DarkcraftGuiOpenable extends AbstractGuiElement implements IGuiContainer, IClickable, IDraggable
+public class DarkcraftGuiOpenable<T extends AbstractGuiElement> extends AbstractGuiElement implements IGuiContainer<T>, IClickable, IDraggable
 {
 	protected ButtonCloseOpen closeOpenButton;
 	public final AbstractGuiElement title;
-	private List<AbstractGuiElement> hiddenElements = new ArrayList();
+	private List<T> hiddenElements = new ArrayList();
 	private final int cH;
 
 	public DarkcraftGuiOpenable(int _x, int _y, AbstractGuiElement titleElement)
@@ -61,6 +61,25 @@ public class DarkcraftGuiOpenable extends AbstractGuiElement implements IGuiCont
 	}
 
 	@Override
+	public T getHovered(int mouseX, int mouseY)
+	{
+		if((mouseX > (w - 16)) && (mouseY < 16) && closeOpenButton.enabled && closeOpenButton.visible)
+			return null;
+		else
+		{
+			if(closeOpenButton.isOpen)
+				for(T e : hiddenElements)
+				{
+					int cx = mouseX - e.x;
+					int cy = mouseY - e.y;
+					if(e.withinBounds(cx, cy))
+						return e;
+				}
+		}
+		return null;
+	}
+
+	@Override
 	public boolean click(int button, int x, int y)
 	{
 		if((x > (w - 16)) && (y < 16) && closeOpenButton.enabled && closeOpenButton.visible)
@@ -94,7 +113,7 @@ public class DarkcraftGuiOpenable extends AbstractGuiElement implements IGuiCont
 	}
 
 	@Override
-	public void addElement(AbstractGuiElement e)
+	public void addElement(T e)
 	{
 		hiddenElements.add(e);
 		e.parent = this;

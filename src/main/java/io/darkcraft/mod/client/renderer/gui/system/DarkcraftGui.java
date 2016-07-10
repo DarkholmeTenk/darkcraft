@@ -163,6 +163,28 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	}
 
 	@Override
+	public AbstractGuiElement getHovered(int mouseX, int mouseY)
+	{
+		if (subGui != null)
+			return subGui.getHovered(mouseX, mouseY);
+		int x = transToScale(mouseX) - guiX;
+		int y = transToScale(mouseY) - guiY;
+		for (AbstractGuiElement e : elements)
+		{
+			if(!e.visible) continue;
+			int cx = x - e.x;
+			int cy = y - e.y;
+			if (e.withinBounds(cx, cy))
+			{
+				if(e instanceof IGuiContainer)
+					return ((IGuiContainer) e).getHovered(cx, cy);
+				return e;
+			}
+		}
+		return null;
+	}
+
+	@Override
 	protected void mouseClicked(int x, int y, int b)
 	{
 		if (subGui != null)
@@ -212,6 +234,26 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		}
 		if(inventoryGui)
 			super.mouseClickMove(x + guiX, y + guiY, b, t);
+	}
+
+	private AbstractGuiElement lastHovered = null;
+	@Override
+	protected void mouseMovedOrUp(int x, int y, int w)
+    {
+		super.mouseMovedOrUp(x, y, w);
+		if(subGui != null)
+			subGui.mouseMovedOrUp(x, y, w);
+		AbstractGuiElement hover = getHovered(x,y);
+		if(hover != lastHovered)
+		{
+			hoverChanged(hover);
+			lastHovered = hover;
+		}
+    }
+
+	public void hoverChanged(AbstractGuiElement newHover)
+	{
+
 	}
 
 	@Override

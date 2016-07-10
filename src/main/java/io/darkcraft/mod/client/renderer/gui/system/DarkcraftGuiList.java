@@ -1,6 +1,7 @@
 package io.darkcraft.mod.client.renderer.gui.system;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -13,9 +14,9 @@ import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.VerticalScrollbar;
 import io.darkcraft.mod.client.renderer.gui.textures.ScalableInternal;
 
-public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, IGuiContainer
+public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiElement implements IDraggable, IGuiContainer<T>
 {
-	private List<AbstractGuiElement> elements = new ArrayList();
+	private List<T> elements = new ArrayList();
 	private ScalableInternal bg;
 	private VerticalScrollbar scroll;
 
@@ -38,7 +39,7 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 	}
 
 	@Override
-	public void addElement(AbstractGuiElement e)
+	public void addElement(T e)
 	{
 		elements.add(e);
 		e.parent = this;
@@ -46,10 +47,16 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 	}
 
 	@Override
-	public void removeElement(AbstractGuiElement e)
+	public void removeElement(T e)
 	{
 		elements.remove(e);
 		e.parent = null;
+	}
+
+	public void sort(Comparator<T> comparator)
+	{
+		elements.sort(comparator);
+		recalc();
 	}
 
 	@Override
@@ -103,6 +110,23 @@ public class DarkcraftGuiList extends AbstractGuiElement implements IDraggable, 
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public T getHovered(int mouseX, int mouseY)
+	{
+		if((mouseX > 0) && (mouseY > 0) && (mouseX < (w - 16)) && (mouseY < h))
+		{
+			int cy = mouseY + scroll.asInt();
+			for(T e : elements)
+			{
+				if(e.withinBounds(mouseX, cy))
+					return e;
+				else
+					cy -= e.h;
+			}
+		}
+		return null;
 	}
 
 	@Override

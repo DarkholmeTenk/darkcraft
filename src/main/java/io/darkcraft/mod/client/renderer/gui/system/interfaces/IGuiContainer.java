@@ -3,11 +3,13 @@ package io.darkcraft.mod.client.renderer.gui.system.interfaces;
 import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
 import io.darkcraft.mod.client.renderer.gui.system.AbstractGuiElement;
 
-public interface IGuiContainer
+public interface IGuiContainer<T extends AbstractGuiElement>
 {
-	public void addElement(AbstractGuiElement e);
+	public void addElement(T e);
 
-	public void removeElement(AbstractGuiElement e);
+	public void removeElement(T e);
+
+	public T getHovered(int mouseX, int mouseY);
 
 	public void clickableClicked(IClickable c, String id);
 
@@ -15,5 +17,5 @@ public interface IGuiContainer
 
 	public void recalc();
 
-	public WindowSpaceStore getWindowSpace(AbstractGuiElement e);
+	public WindowSpaceStore getWindowSpace(T e);
 }
