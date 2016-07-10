@@ -141,4 +141,40 @@ public class ComponentInstance
 		}
 		return null;
 	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + area;
+		result = (prime * result) + ((component == null) ? 0 : component.hashCode());
+		result = (prime * result) + config;
+		long temp;
+		temp = Double.doubleToLongBits(cost);
+		result = (prime * result) + (int) (temp ^ (temp >>> 32));
+		result = (prime * result) + duration;
+		result = (prime * result) + magnitude;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof ComponentInstance)) return false;
+		ComponentInstance other = (ComponentInstance) obj;
+		if (area != other.area) return false;
+		if (component == null)
+		{
+			if (other.component != null) return false;
+		}
+		else if (!component.equals(other.component)) return false;
+		if (config != other.config) return false;
+		if (Double.doubleToLongBits(cost) != Double.doubleToLongBits(other.cost)) return false;
+		if (duration != other.duration) return false;
+		if (magnitude != other.magnitude) return false;
+		return true;
+	}
 }

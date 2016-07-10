@@ -52,11 +52,13 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 	public PlayerCaster(EntityPlayer pl)
 	{
 		super(pl, "dcPC");
+		if(ServerHelper.isServer())
+			spellUpdateID = 1;
 	}
 
 	private void sortSpells()
 	{
-		Spell[] spells = new Spell[hotkeys.length];
+		/*Spell[] spells = new Spell[hotkeys.length];
 		for(int i = 0; i < spells.length; i++)
 			if(hotkeys[i] != -1)
 				spells[i] = knownSpells.get(hotkeys[i]);
@@ -65,7 +67,8 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		Collections.sort(knownSpells, Spell.SpellNameComparator.withSkill);
 		for(int i = 0; i < spells.length; i++)
 			if(spells[i] != null)
-				hotkeys[i] = knownSpells.indexOf(spells[i]);
+				hotkeys[i] = knownSpells.indexOf(spells[i]);*/
+		spellUpdateID++;
 	}
 
 	public void learnComponent(IComponent c)
@@ -87,6 +90,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			knownSpells.add(spell);
 			for(ComponentInstance ci : spell.components)
 				learnComponent(ci.component);
+			spellUpdateID++;
 			sortSpells();
 		}
 		sendUpdate();
@@ -197,6 +201,10 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		nbt.setInteger("rem", index);
 		DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 		DarkcoreMod.networkChannel.sendToServer(dp);
+		synchronized(knownSpells)
+		{
+			handleRemoval(index);
+		}
 	}
 
 	public int getCurrentSpellIndex()
@@ -220,6 +228,7 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 					s.writeToNBT(snbt);
 					nbt.setTag("ks"+(i++), snbt);
 				}
+			nbt.setInteger("spellUpdateID", spellUpdateID);
 		}
 		synchronized(knownComponents)
 		{
@@ -238,6 +247,23 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 		lnbt.setTag("dcpc", nbt);
 	}
 
+	private void handleRemoval(int x)
+	{
+		knownSpells.remove(x);
+		for(int i = 0; i < 10; i++)
+		{
+			if(hotkeys[i] == x)
+				hotkeys[i] = -1;
+			else if(hotkeys[i] > x)
+				hotkeys[i]--;
+		}
+		if(currentSpell == x)
+			currentSpell = -1;
+		else if(currentSpell > x)
+			currentSpell--;
+	}
+
+	private int spellUpdateID = -1;
 	@Override
 	public void loadNBTData(NBTTagCompound lnbt)
 	{
@@ -246,19 +272,8 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			int x = lnbt.getInteger("rem");
 			if((x >= 0) && (x < knownSpells.size()))
 			{
-				knownSpells.remove(x);
-				for(int i = 0; i < 10; i++)
-				{
-					if(hotkeys[i] == x)
-						hotkeys[i] = -1;
-					else if(hotkeys[i] > x)
-						hotkeys[i]--;
-				}
-				if(currentSpell == x)
-					currentSpell = -1;
-				else if(currentSpell > x)
-					currentSpell--;
-				sendUpdate();
+				handleRemoval(x);
+				spellUpdateID++;
 			}
 		}
 		else if(lnbt.hasKey("dcpc"))
@@ -268,15 +283,28 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			currentSpell = nbt.hasKey("cs") ? nbt.getInteger("cs") : -1;
 			synchronized(knownSpells){ synchronized(knownComponents)
 			{
-				int i = 0;
-				knownSpells.clear();
-				while(nbt.hasKey("ks"+i))
+				int i = 0,j = 0;
+				if(spellUpdateID != nbt.getInteger("ksid"))
 				{
-					NBTTagCompound snbt = nbt.getCompoundTag("ks"+i);
-					Spell s = Spell.readFromNBT(snbt);
-					if(s != null)
-						knownSpells.add(s);
-					i++;
+					while(nbt.hasKey("ks"+i))
+					{
+						NBTTagCompound snbt = nbt.getCompoundTag("ks"+i);
+						Spell s = Spell.readFromNBT(snbt);
+						if(s != null)
+						{
+							if(knownSpells.size() <= j)
+								knownSpells.add(s);
+							else if(!s.equals(knownSpells.get(j)))
+								knownSpells.set(j, s);
+							j++;
+						}
+						else if(knownSpells.size() >= j)
+							knownSpells.remove(j);
+						i++;
+					}
+					for(;i<knownSpells.size();i++)
+						knownSpells.remove(i);
+					spellUpdateID = nbt.getInteger("ksid");
 				}
 				i = 0;
 				knownComponents.clear();
