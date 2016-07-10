@@ -7,6 +7,11 @@ import io.darkcraft.mod.client.renderer.gui.system.DarkcraftLabel;
 
 public class DaedricLabel extends DarkcraftLabel
 {
+	public DaedricLabel(int _x, int _y, String _text)
+	{
+		super(_x, _y, LetterRenderer.width(_text)+2,_text);
+	}
+
 	public DaedricLabel(int _x, int _y, int width, String _text)
 	{
 		super(_x, _y, width, _text);
