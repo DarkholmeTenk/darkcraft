@@ -1,10 +1,11 @@
-package io.darkcraft.mod.client.renderer.gui.system;
+package io.darkcraft.mod.client.renderer.gui.system.daedric;
 
 import org.lwjgl.opengl.GL11;
 
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.client.renderer.LetterRenderer;
+import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiTextfield;
 import io.darkcraft.mod.common.DaedricLetters;
 import net.minecraft.client.gui.FontRenderer;
 
