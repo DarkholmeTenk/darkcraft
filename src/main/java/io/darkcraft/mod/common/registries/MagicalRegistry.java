@@ -77,7 +77,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(blink);
 		SpellPartRegistry.registerComponent(ww);
 		SpellPartRegistry.registerComponent(ff);
-		SpellPartRegistry.registerComponent(test);
+		SpellPartRegistry.registerComponent(test, false);
 		SoulSpellRegistry.registerFactory(new DarkcraftSoulSpellFactory());
 		SymbolicRegistry.registerFactory(new DarkcraftSymbolicFactory());
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
