@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.magic.blocks.tileent;
 
+import java.util.List;
+
 import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
@@ -20,9 +22,6 @@ import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
-
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -168,13 +167,16 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 			}
 			if(currentCost <= 0)
 			{
+				NBTTagCompound nbt = new NBTTagCompound();
+				currentSpell.writeToNBT(nbt);
 				for(String s : hasUser)
 				{
 					if(s == null) continue;
 					EntityPlayer pl = PlayerHelper.getPlayer(s);
 					if(pl == null) continue;
 					PlayerCaster c = Helper.getPlayerCaster(pl);
-					c.learnSpell(currentSpell);
+					Spell spell = Spell.readFromNBT(nbt);
+					c.learnSpell(spell);
 				}
 				setSpell(null,null);
 			}
