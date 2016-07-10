@@ -79,18 +79,17 @@ public class Recall implements IComponent, IConfigurableComponent
 		EntityPlayer pl = pc.getCaster();
 		World w = pl.getEntityWorld();
 		int respawnDim = w.provider.getRespawnDimension((EntityPlayerMP) pl);
+		w = WorldHelper.getWorld(respawnDim);
 		ChunkCoordinates spawn = pl.getBedLocation(respawnDim);
 		if(spawn == null)
-			spawn = WorldHelper.getWorld(respawnDim).getSpawnPoint();
+			spawn = w.provider.getRandomizedSpawnPoint();
 		if(spawn != null)
 		{
-			spawn = EntityPlayer.verifyRespawnCoordinates(WorldHelper.getWorld(respawnDim), spawn, true);
-			if(spawn != null)
-			{
-				SimpleDoubleCoordStore sdcs = new SimpleDoubleCoordStore(respawnDim, spawn.posX+0.5, spawn.posY, spawn.posZ+0.5);
-				transfer(pc, ent, sdcs);
-				return;
-			}
+			while(!(w.isAirBlock(spawn.posX, spawn.posY, spawn.posZ) && w.isAirBlock(spawn.posX, spawn.posY+1, spawn.posZ)))
+				spawn.posY++;
+			SimpleDoubleCoordStore sdcs = new SimpleDoubleCoordStore(respawnDim, spawn.posX+0.5, spawn.posY, spawn.posZ+0.5);
+			transfer(pc, ent, sdcs);
+			return;
 		}
 		Helper.playFizzleNoise(new SimpleDoubleCoordStore(ent));
 	}
