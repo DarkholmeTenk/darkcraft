@@ -76,7 +76,11 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		}
 		else
 		{
-			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h)) return false;
+			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h))
+			{
+				parent.clickableClicked(this, "list", button);
+				return false;
+			}
 			int cy = y + scroll.asInt();
 			for(AbstractGuiElement e : elements)
 			{
@@ -89,8 +93,8 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 				else
 					cy -= e.h;
 			}
+			parent.clickableClicked(this, "list", button);
 		}
-		parent.clickableClicked(this, "list", button);
 		return true;
 	}
 
