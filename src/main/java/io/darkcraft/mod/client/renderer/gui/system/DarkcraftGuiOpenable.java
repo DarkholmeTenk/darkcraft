@@ -12,19 +12,21 @@ import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonCloseOpen;
 
-public class DarkcraftGuiOpenable<T extends AbstractGuiElement> extends AbstractGuiElement implements IGuiContainer<T>, IClickable, IDraggable
+public class DarkcraftGuiOpenable<T extends AbstractGuiElement, E extends AbstractGuiElement> extends AbstractGuiElement implements IGuiContainer<E>, IClickable, IDraggable
 {
 	protected ButtonCloseOpen closeOpenButton;
-	public final AbstractGuiElement title;
-	private List<T> hiddenElements = new ArrayList();
+	public final T title;
+	private List<E> hiddenElements = new ArrayList();
+	private int buttonSize;
 	private final int cH;
 
-	public DarkcraftGuiOpenable(int _x, int _y, AbstractGuiElement titleElement)
+	public DarkcraftGuiOpenable(int _x, int _y, T titleElement)
 	{
-		super(_x, _y, titleElement.w+16, Math.max(titleElement.h, 16));
+		super(_x, _y, titleElement.w+Math.min(16, titleElement.h), titleElement.h);
 		title = titleElement;
 		cH = h;
-		closeOpenButton = new ButtonCloseOpen(titleElement.w, 0);
+		buttonSize = Math.min(titleElement.h, 16);
+		closeOpenButton = new ButtonCloseOpen(titleElement.w, 0, buttonSize);
 		closeOpenButton.parent = this;
 	}
 
@@ -61,14 +63,14 @@ public class DarkcraftGuiOpenable<T extends AbstractGuiElement> extends Abstract
 	}
 
 	@Override
-	public T getHovered(int mouseX, int mouseY)
+	public E getHovered(int mouseX, int mouseY)
 	{
 		if((mouseX > (w - 16)) && (mouseY < 16) && closeOpenButton.enabled && closeOpenButton.visible)
 			return null;
 		else
 		{
 			if(closeOpenButton.isOpen)
-				for(T e : hiddenElements)
+				for(E e : hiddenElements)
 				{
 					int cx = mouseX - e.x;
 					int cy = mouseY - e.y;
@@ -82,9 +84,9 @@ public class DarkcraftGuiOpenable<T extends AbstractGuiElement> extends Abstract
 	@Override
 	public boolean click(int button, int x, int y)
 	{
-		if((x > (w - 16)) && (y < 16) && closeOpenButton.enabled && closeOpenButton.visible)
+		if((x > (w - buttonSize)) && (y < buttonSize) && closeOpenButton.enabled && closeOpenButton.visible)
 		{
-			closeOpenButton.click(button, x-(w-16), y);
+			closeOpenButton.click(button, x-(w-buttonSize), y);
 			return true;
 		}
 		else
@@ -113,7 +115,7 @@ public class DarkcraftGuiOpenable<T extends AbstractGuiElement> extends Abstract
 	}
 
 	@Override
-	public void addElement(T e)
+	public void addElement(E e)
 	{
 		hiddenElements.add(e);
 		e.parent = this;
@@ -127,12 +129,12 @@ public class DarkcraftGuiOpenable<T extends AbstractGuiElement> extends Abstract
 	}
 
 	@Override
-	public void clickableClicked(IClickable c, String id)
+	public void clickableClicked(IClickable c, String id, int button)
 	{
 		if(c == closeOpenButton)
 			recalc();
 		else
-			parent.clickableClicked(c, id);
+			parent.clickableClicked(c, id, button);
 	}
 
 	@Override

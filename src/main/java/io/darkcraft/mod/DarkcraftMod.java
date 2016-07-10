@@ -24,6 +24,7 @@ import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import io.darkcraft.mod.common.network.ChalkGuiPacketHandler;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.network.SpellCreationPacketHandler;
+import io.darkcraft.mod.common.network.SpellSelectionPacketHandler;
 import io.darkcraft.mod.common.registries.CommandRegistry;
 import io.darkcraft.mod.common.registries.DarkcraftCreativeTabs;
 import io.darkcraft.mod.common.registries.EntRegistry;
@@ -78,6 +79,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		DarkcoreMod.packetHandler.registerHandler(SpellCreationPacketHandler.disc, new SpellCreationPacketHandler());
 		DarkcoreMod.packetHandler.registerHandler(PlayerCasterPacketHandler.disc, new PlayerCasterPacketHandler());
 		DarkcoreMod.packetHandler.registerHandler(ChalkGuiPacketHandler.disc, new ChalkGuiPacketHandler());
+		DarkcoreMod.packetHandler.registerHandler(SpellSelectionPacketHandler.disc, new SpellSelectionPacketHandler());
 
 		proxy.init();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);

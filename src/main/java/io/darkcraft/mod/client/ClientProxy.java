@@ -62,7 +62,7 @@ public class ClientProxy extends CommonProxy
 		switch(id)
 		{
 			case 1397: return new SpellCreationGui((SpellCreator)te);
-			case 1398: return new SpellSelectionGui();
+			case 1398: return new SpellSelectionGui(Helper.getPlayerCaster(player));
 			case 1399: return new ChalkGui(new ChalkContainer(player));
 			case 1000: return new DebugGui(player.inventoryContainer);
 		}

@@ -13,6 +13,7 @@ import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
@@ -39,7 +40,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 
 	public DarkcraftGui(Container cont, GuiTexture _background, int w, int h)
 	{
-		super(cont);
+		super(cont == null ? Minecraft.getMinecraft().thePlayer.inventoryContainer : cont);
 		background = _background;
 		guiW = w;
 		guiH = h;
@@ -131,13 +132,14 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float pTicks, int mouseX, int mouseY)
 	{
+		handleHover(mouseX, mouseY);
 		GL11.glPushMatrix();
 		GL11.glScalef(guiScale, guiScale, 1);
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GL11.glEnable(GL11.GL_BLEND);
 		pticks = pTicks;
-		guiX = (int) (((width / guiScale) - background.w) / 2);
-		guiY = (int) (((height/ guiScale) - background.h) / 2);
+		guiX = (int) (((width / guiScale) - guiW) / 2);
+		guiY = (int) (((height/ guiScale) - guiH) / 2);
 		background.render(guiX, guiY, zLevel, true);
 		GL11.glPushMatrix();
 		GL11.glTranslated(guiX, guiY, zLevel);
@@ -145,6 +147,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		int my = mouseY - guiY;
 		for (AbstractGuiElement e : elements)
 		{
+			if(!e.visible) continue;
 			GL11.glPushMatrix();
 			GL11.glTranslatef(e.x, e.y, 0);
 			e.render(pTicks, mx - e.x, my - e.y);
@@ -236,28 +239,36 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 			super.mouseClickMove(x + guiX, y + guiY, b, t);
 	}
 
-	private AbstractGuiElement lastHovered = null;
+	private int lastMouseX;
+	private int lastMouseY;
+	private void handleHover(int mouseX, int mouseY)
+	{
+		if((mouseX == lastMouseX) && (mouseY == lastMouseY)) return;
+		if(subGui != null) return;
+		lastMouseX = mouseX; lastMouseY = mouseY;
+		AbstractGuiElement hover = getHovered(mouseX,mouseY);
+		if(hover != lastHovered)
+		{
+			hoverChanged(hover);
+			lastHovered = hover;
+		}
+	}
+
+	protected AbstractGuiElement lastHovered = null;
 	@Override
 	protected void mouseMovedOrUp(int x, int y, int w)
     {
 		super.mouseMovedOrUp(x, y, w);
 		if(subGui != null)
 			subGui.mouseMovedOrUp(x, y, w);
-		AbstractGuiElement hover = getHovered(x,y);
-		if(hover != lastHovered)
-		{
-			hoverChanged(hover);
-			lastHovered = hover;
-		}
+		else
+			handleHover(x,y);
     }
 
-	public void hoverChanged(AbstractGuiElement newHover)
-	{
-
-	}
+	public void hoverChanged(AbstractGuiElement newHover){}
 
 	@Override
-	public void clickableClicked(IClickable c, String id)
+	public void clickableClicked(IClickable c, String id, int button)
 	{
 		if ("cross".equals(id)) close();
 	}
@@ -276,7 +287,13 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	public void close()
 	{
 		if (parentGui == null)
-			mc.thePlayer.closeScreen();
+		{
+			EntityClientPlayerMP pl = mc.thePlayer;
+			if(pl.openContainer != null)
+				pl.closeScreen();
+			else
+				pl.closeScreenNoPacket();
+		}
 		else
 		{
 			parentGui.subGui = null;
@@ -314,9 +331,9 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	{
 		Minecraft mc = Minecraft.getMinecraft();
 		ScaledResolution sr = new ScaledResolution(mc,mc.displayWidth,mc.displayHeight);
-		WindowSpaceStore wss = new WindowSpaceStore(0,0,sr.getScaleFactor());
-		wss = wss.transform(guiX, guiY);
+		WindowSpaceStore wss = new WindowSpaceStore(0,0,mc.displayHeight / sr.getScaledHeight_double());
 		wss = wss.scale(guiScale);
+		wss = wss.transform(guiX, guiY);
 		wss = wss.transform(e.x, e.y);
 		return wss;
 	}

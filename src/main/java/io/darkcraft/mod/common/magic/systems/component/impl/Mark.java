@@ -1,14 +1,12 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
-import java.util.List;
-
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
-import io.darkcraft.mod.common.magic.systems.component.IDescriptiveMagnitudeComponent;
+import io.darkcraft.mod.common.magic.systems.component.IConfigurableComponent;
 import io.darkcraft.mod.common.magic.systems.component.INoAreaComponent;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
@@ -21,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
 
-public class Mark implements IComponent, IDescriptiveMagnitudeComponent, INoAreaComponent
+public class Mark implements IComponent, IConfigurableComponent, INoAreaComponent
 {
 
 	@Override
@@ -60,9 +58,9 @@ public class Mark implements IComponent, IDescriptiveMagnitudeComponent, INoArea
 			if(!Helper.isCaster(ec, e)) return;
 			NBTTagCompound nbt = ec.getExtraData();
 			SimpleDoubleCoordStore markLoc = new SimpleDoubleCoordStore(e);
-			nbt.setTag("markLoc"+magnitude, markLoc.writeToNBT());
+			nbt.setTag("markLoc"+config, markLoc.writeToNBT());
 			if(caster instanceof PlayerCaster)
-				MessageHelper.sendMessage(((PlayerCaster) caster).getCaster(), "dc.message.mark.success");
+				MessageHelper.sendMessage(((PlayerCaster) caster).getCaster(), "dc.message.mark.success " + config);
 		}
 	}
 
@@ -80,17 +78,21 @@ public class Mark implements IComponent, IDescriptiveMagnitudeComponent, INoArea
 	public UVStore getProjectileLocation(int f){ return uvs[f%uvs.length]; }
 
 	@Override
-	public int getMinMagnitude(){ return 0; }
-
-	@Override
-	public int getMaxMagnitude(){ return 2; }
-
-	@Override
-	public double getCostMag(int magnitude, double oldCost){ return oldCost; }
-
-	@Override
-	public void getDescription(List<String> strings, int magnitude)
+	public int getMinConfig()
 	{
+		return 0;
+	}
+
+	@Override
+	public int getMaxConfig()
+	{
+		return 3;
+	}
+
+	@Override
+	public String getConfigDescription(int val)
+	{
+		return "dc.mark.slot " + val;
 	}
 
 }

@@ -39,7 +39,7 @@ public class DarkcraftGuiSpellComponent extends AbstractGuiElement implements IC
 	@Override
 	public boolean click(int button, int x, int y)
 	{
-		parent.clickableClicked(this, "component." + component.id());
+		parent.clickableClicked(this, "component." + component.id(), button);
 		return true;
 	}
 

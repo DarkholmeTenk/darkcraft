@@ -35,7 +35,7 @@ public class DebugGui extends DarkcraftGui
 	}
 
 	@Override
-	public void clickableClicked(IClickable c, String id)
+	public void clickableClicked(IClickable c, String id, int button)
 	{
 		if(id.equals("tick"))
 		{
@@ -45,7 +45,7 @@ public class DebugGui extends DarkcraftGui
 			openSubGui(subGui);
 		}
 		else
-			super.clickableClicked(c, id);
+			super.clickableClicked(c, id, button);
 	}
 
 }

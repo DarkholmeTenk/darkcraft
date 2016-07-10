@@ -35,7 +35,7 @@ public class MagicalRegistry
 {
 	public static final ResourceLocation componentTex = new ResourceLocation(DarkcraftMod.modName,"textures/gui/components/components.png");
 	public static final ResourceLocation projectileTex = new ResourceLocation(DarkcraftMod.modName,"textures/project/projectiles.png");
-	public static final DamageSource magicDamage = new DamageSource("dcMagicDamage");
+	public static final DamageSource magicDamage = new DamageSource("dcMagicDamage").setMagicDamage();
 
 	public static final Dig dig = new Dig();
 	public static final DigFortune digfortune = new DigFortune();

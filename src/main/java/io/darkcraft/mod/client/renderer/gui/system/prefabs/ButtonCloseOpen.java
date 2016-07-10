@@ -9,13 +9,15 @@ import net.minecraft.util.ResourceLocation;
 public class ButtonCloseOpen extends DarkcraftGuiButton
 {
 	private static final ResourceLocation tex = new ResourceLocation(DarkcraftMod.modName, "textures/gui/bits/closeopen.png");
-	private static final GuiTexture closed =	new GuiTexture(tex,new UVStore(0,1,0,0.5),16,16);
-	private static final GuiTexture open =		new GuiTexture(tex,new UVStore(0,1,0.5,1),16,16);
+	private final GuiTexture closed;
+	private final GuiTexture open;
 	public boolean isOpen = false;
 
-	public ButtonCloseOpen(int x, int y)
+	public ButtonCloseOpen(int x, int y, int size)
 	{
-		super("closeopen", x, y, closed, null);
+		super("closeopen", x, y, size, size, null);
+		closed =	new GuiTexture(tex,new UVStore(0,1,0,0.5),size,size);
+		open =		new GuiTexture(tex,new UVStore(0,1,0.5,1),size,size);
 		w = 16;
 		h = 16;
 	}
@@ -25,7 +27,7 @@ public class ButtonCloseOpen extends DarkcraftGuiButton
 	{
 		isOpen = !isOpen;
 		if(parent != null)
-			parent.clickableClicked(this, isOpen ? "closeopen-close" : "closeopen-open");
+			parent.clickableClicked(this, isOpen ? "closeopen-close" : "closeopen-open", button);
 		return true;
 	}
 

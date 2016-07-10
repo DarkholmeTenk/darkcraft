@@ -5,6 +5,8 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 
 public class EffectDamage extends AbstractDarkcraftEffect
 {
@@ -27,11 +29,15 @@ public class EffectDamage extends AbstractDarkcraftEffect
 	@Override
 	public void apply()
 	{
-		getEntity().attackEntityFrom(MagicalRegistry.magicDamage, magnitude);
+		EntityLivingBase toAttack = getEntity();
+
 		if(caster instanceof EntityCaster)
 		{
-			EntityLivingBase ent = ((EntityCaster) caster).getCaster();
-			getEntity().setRevengeTarget(ent);
+			EntityLivingBase ecaster = ((EntityCaster) caster).getCaster();
+			DamageSource eds = new EntityDamageSource(MagicalRegistry.magicDamage.damageType,ecaster).setMagicDamage();
+			toAttack.attackEntityFrom(eds, magnitude);
 		}
+		else
+			toAttack.attackEntityFrom(MagicalRegistry.magicDamage, magnitude);
 	}
 }

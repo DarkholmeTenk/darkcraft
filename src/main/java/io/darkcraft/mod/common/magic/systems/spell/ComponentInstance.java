@@ -2,6 +2,7 @@ package io.darkcraft.mod.common.magic.systems.spell;
 
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.component.IConfigurableComponent;
 import io.darkcraft.mod.common.magic.systems.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.systems.component.IMagnitudeComponent;
 import io.darkcraft.mod.common.magic.systems.component.INoAreaComponent;
@@ -107,6 +108,8 @@ public class ComponentInstance
 			s += " for " + getDurationString();
 		if(area > 0)
 			s += " over " + getAreaString();
+		if(component instanceof IConfigurableComponent)
+			s += " - " + ((IConfigurableComponent)component).getConfigDescription(config);
 		return s;
 	}
 

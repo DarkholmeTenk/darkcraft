@@ -1,7 +1,7 @@
 package io.darkcraft.mod.client.renderer.gui.system.spells;
 
-import io.darkcraft.mod.client.renderer.gui.system.DaedricLabel;
 import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiOpenable;
+import io.darkcraft.mod.client.renderer.gui.system.daedric.DaedricLabel;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.HorizontalScrollbar;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
@@ -75,7 +75,7 @@ public class ComponentInstanceMod extends DarkcraftGuiOpenable
 	}
 
 	@Override
-	public void clickableClicked(IClickable c, String id)
+	public void clickableClicked(IClickable c, String id, int button)
 	{
 		if(id.equals("scroll"))
 		{
@@ -86,7 +86,7 @@ public class ComponentInstanceMod extends DarkcraftGuiOpenable
 			ci = instanceLabel.compInst;
 		}
 		else
-			super.clickableClicked(c, id);
+			super.clickableClicked(c, id, button);
 	}
 
 }

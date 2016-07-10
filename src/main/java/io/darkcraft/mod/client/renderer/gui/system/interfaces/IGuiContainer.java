@@ -11,7 +11,7 @@ public interface IGuiContainer<T extends AbstractGuiElement>
 
 	public T getHovered(int mouseX, int mouseY);
 
-	public void clickableClicked(IClickable c, String id);
+	public void clickableClicked(IClickable c, String id, int button);
 
 	public void typableChanged(ITypable t);
 

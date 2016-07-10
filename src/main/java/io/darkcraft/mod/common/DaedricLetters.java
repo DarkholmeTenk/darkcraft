@@ -10,12 +10,29 @@ import io.darkcraft.darkcore.mod.datastore.UVStore;
 
 public class DaedricLetters
 {
-
 	public static Map<Character,DaedricLetters.LetterData> dataMap = new THashMap();
+	public static int maxWidth;
+	public static int maxHeight;
+
+	static
+	{
+		refreshData();
+	}
+
+	private static void setMax()
+	{
+		for(LetterData ld : dataMap.values())
+		{
+			if(ld.x > maxWidth)
+				maxWidth = ld.x;
+			if(ld.y > maxHeight)
+				maxHeight = ld.y;
+		}
+	}
 
 	public static void refreshData()
 	{
-		//if(dataMap.isEmpty())
+		if(dataMap.isEmpty())
 		{
 			LetterData ld = new LetterData(new UVStore(1,6,63,73));
 			ld.addLetters(0,0, 5,0, 5,1, 4,1, 4,2, 3,2, 3,4, 2,4, 2,2, 3,2, 3,1, 1,1, 1,8, 3,8, 3,10, 2,10, 2,9, 1,9, 1,8, 0,8);
@@ -205,6 +222,8 @@ public class DaedricLetters
 			ld = new LetterData(new UVStore(94,97, 81,92));
 			ld.addLettersNew(1,0, 1,1, 1,1, -1,1, -1,1, -1,-1, 1,-1, -1);
 			dataMap.put('\'', ld);
+
+			setMax();
 		}
 	}
 

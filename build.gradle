@@ -24,6 +24,9 @@ repositories {
 
 apply plugin: 'forge'
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 version = "0.15"
 group= "io.darkcraft.darkcraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Darkcraft"

@@ -11,5 +11,5 @@ public interface IConfigurableComponent
 
 	public int getMaxConfig();
 
-	public String getConfigDescription();
+	public String getConfigDescription(int val);
 }

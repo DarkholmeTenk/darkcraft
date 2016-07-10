@@ -9,11 +9,24 @@ import net.minecraft.client.gui.FontRenderer;
 public class DarkcraftGuiButton extends AbstractGuiElement implements IClickable
 {
 	private final String id;
-	private final GuiTexture buttonTex;
+	protected final GuiTexture buttonTex;
 	public GuiTexture hoverTex;
 	public String strTex;
 	public Colour strColour = RenderHelper.white;
 	public boolean strShadow = true;
+
+	public DarkcraftGuiButton(String _id, int x, int y, int w, String str)
+	{
+		this(_id, x, y, w, RenderHelper.getFontRenderer().FONT_HEIGHT, str);
+	}
+
+	public DarkcraftGuiButton(String _id, int x, int y, int w, int h, String str)
+	{
+		super(x,y,w, h);
+		id = _id;
+		buttonTex = null;
+		strTex = str;
+	}
 
 	public DarkcraftGuiButton(String _id, int x, int y, GuiTexture tex, String str)
 	{
@@ -33,7 +46,7 @@ public class DarkcraftGuiButton extends AbstractGuiElement implements IClickable
 	public boolean click(int button, int x, int y)
 	{
 		if(parent != null)
-			parent.clickableClicked(this, id);
+			parent.clickableClicked(this, id, button);
 		return true;
 	}
 
@@ -41,10 +54,13 @@ public class DarkcraftGuiButton extends AbstractGuiElement implements IClickable
 	public void render(float pticks, int mouseX, int mouseY)
 	{
 		if(!visible) return;
-		if(enabled && (hoverTex != null) && withinBounds(mouseX,mouseY))
-			hoverTex.render(0, 0, 0, true);
-		else
-			buttonTex.render(0, 0, 0, true);
+		if(buttonTex != null)
+		{
+			if(enabled && (hoverTex != null) && withinBounds(mouseX,mouseY))
+				hoverTex.render(0, 0, 0, true);
+			else
+				buttonTex.render(0, 0, 0, true);
+		}
 		if((strTex == null) || strTex.isEmpty()) return;
 		FontRenderer fr = RenderHelper.getFontRenderer();
 		int sw = fr.getStringWidth(strTex);

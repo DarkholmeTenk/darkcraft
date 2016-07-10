@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import skillapi.api.implement.ISkill;
 
 public class Helper
 {
@@ -76,6 +77,7 @@ public class Helper
 	{
 		List<IComponent> list = new ArrayList();
 		list.addAll(comps);
+		if(list.isEmpty()) return list;
 		Collections.sort(list, ComponentComparator.i);
 		return list;
 	}
@@ -91,13 +93,24 @@ public class Helper
 	{
 		private static ComponentComparator i = new ComponentComparator();
 
+		public int compare(ISkill a, ISkill b)
+		{
+			if(a == b) return 0;
+			if(a == null) return 1;
+			if(b == null) return -1;
+			String sa = a.getName();
+			String sb = b.getName();
+			return sa.compareTo(sb);
+		}
+
 		@Override
 		public int compare(IComponent a, IComponent b)
 		{
-			String sa = a.getMainSkill().getName();
-			String sb = b.getMainSkill().getName();
-			if(sa.compareTo(sb) != 0)
-				return sa.compareTo(sb);
+			if(a == b) return 0;
+			if(a == null) return 1;
+			if(b == null) return -1;
+			int c = compare(a.getMainSkill(), b.getMainSkill());
+			if(c != 0) return c;
 			String na = StatCollector.translateToLocal(a.getUnlocalisedName());
 			String nb = StatCollector.translateToLocal(b.getUnlocalisedName());
 			return na.compareTo(nb);

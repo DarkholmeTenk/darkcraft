@@ -13,6 +13,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.Type;
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.abstracts.effects.AbstractEffect;
+import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
@@ -124,6 +125,12 @@ public class MagicEventHandler
 			ICaster cast = st.caster;
 			if(cast != null)
 				SoulGem.fill(cast, ent);
+		}
+		if(ent instanceof EntityPlayer)
+		{
+			EntityPlayer pl = (EntityPlayer)ent;
+			PlayerCaster pc = Helper.getPlayerCaster(pl);
+			new SimpleDoubleCoordStore(pl).writeToNBT(pc.getExtraData(),"markLocDeath");
 		}
 	}
 
