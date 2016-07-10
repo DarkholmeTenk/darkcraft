@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class HorizontalScrollbarTexture extends GuiTexture
 {
-	private static final ResourceLocation tex = new ResourceLocation(DarkcraftMod.modName, "textures/gui/scalable/scrollbarh.png");
+	private static final ResourceLocation tex = new ResourceLocation(DarkcraftMod.modName, "textures/gui/scalable/scrollbarH.png");
 	private static final UVStore bar = new UVStore(0,.1f,0,1);
 	private static final UVStore l = new UVStore(0.2f,0.5f,0,1);
 	private static final UVStore m = new UVStore(0.5f,0.7f,0,1);
