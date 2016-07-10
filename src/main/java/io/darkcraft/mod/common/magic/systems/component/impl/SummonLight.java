@@ -37,7 +37,7 @@ public class SummonLight implements IComponent, INoAreaComponent
 	public double getCost(){ return 100; }
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration)
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config)
 	{
 		ForgeDirection d = ForgeDirection.VALID_DIRECTIONS[side];
 		SimpleCoordStore np = blockPos.getNearby(d);
@@ -50,7 +50,7 @@ public class SummonLight implements IComponent, INoAreaComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration){}
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config){}
 
 	@Override
 	public boolean applyToEnt(){ return false; }

@@ -55,10 +55,10 @@ public class WaterWalk implements IComponent, IDurationComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration){}
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config){}
 
 	@Override
-	public void apply(ICaster caster, Entity entity, int magnitude, int duration)
+	public void apply(ICaster caster, Entity entity, int magnitude, int duration, int config)
 	{
 		if(!(entity instanceof EntityLivingBase))return;
 		EntityLivingBase ent = (EntityLivingBase) entity;

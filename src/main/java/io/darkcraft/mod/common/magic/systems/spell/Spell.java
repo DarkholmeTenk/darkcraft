@@ -1,5 +1,11 @@
 package io.darkcraft.mod.common.magic.systems.spell;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
 import io.darkcraft.api.magic.ISpellable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
@@ -12,13 +18,6 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -182,7 +181,7 @@ public class Spell
 							if(d > ci.area) continue;
 							double magMult = sabe.spellMagnitudeMults[i];
 							double durMult = sabe.spellDurationMults[i];
-							ci.component.apply(caster, scs, -1, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+							ci.component.apply(caster, scs, -1, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult), ci.config);
 							ISkill skill = ci.component.getMainSkill();
 							xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,false));
 						}
@@ -219,7 +218,7 @@ public class Spell
 					double magMult = saee.spellMagnitudeMults[i];
 					double durMult = saee.spellDurationMults[i];
 					if((magMult <= 0) || (durMult <= 0)) continue;
-					ci.component.apply(caster, e, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+					ci.component.apply(caster, e, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult), ci.config);
 					ISkill skill = ci.component.getMainSkill();
 					xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,true));
 				}
@@ -253,7 +252,7 @@ public class Spell
 				double magMult = sabe.spellMagnitudeMults[i];
 				double durMult = sabe.spellDurationMults[i];
 				if((magMult <= 0) || (durMult <= 0)) continue;
-				ci.component.apply(caster, scs, side, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+				ci.component.apply(caster, scs, side, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult), ci.config);
 				ISkill skill = ci.component.getMainSkill();
 				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,false));
 			}
@@ -284,7 +283,7 @@ public class Spell
 				double magMult = saee.spellMagnitudeMults[i];
 				double durMult = saee.spellDurationMults[i];
 				if((magMult <= 0) || (durMult <= 0)) continue;
-				ci.component.apply(caster, ent, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult));
+				ci.component.apply(caster, ent, (int)(ci.magnitude * magMult), (int)(ci.duration * durMult), ci.config);
 				ISkill skill = ci.component.getMainSkill();
 				xpMap.put(skill, (xpMap.containsKey(skill) ? xpMap.get(skill) : 0) + xpFunction(ci,true));
 			}

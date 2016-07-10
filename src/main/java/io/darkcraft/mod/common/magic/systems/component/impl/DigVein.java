@@ -53,7 +53,7 @@ public class DigVein extends Dig implements INoAreaComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration)
+	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration, int config)
 	{
 		if(bp == null) return;
 		Block b = bp.getBlock();

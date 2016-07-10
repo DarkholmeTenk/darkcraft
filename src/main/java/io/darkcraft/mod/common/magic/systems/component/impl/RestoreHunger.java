@@ -29,10 +29,10 @@ public class RestoreHunger extends RestoreHealth
 	public boolean applyToEnt(){ return true; }
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration){}
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config){}
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase living = (EntityLivingBase) ent;

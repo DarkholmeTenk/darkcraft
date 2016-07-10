@@ -62,7 +62,7 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration)
+	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration, int config)
 	{
 		if(bp == null) return;
 		Block b = bp.getBlock();
@@ -85,7 +85,7 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
 	}
 

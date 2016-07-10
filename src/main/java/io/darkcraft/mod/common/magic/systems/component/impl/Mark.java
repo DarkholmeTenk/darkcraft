@@ -47,10 +47,10 @@ public class Mark implements IComponent, IDescriptiveMagnitudeComponent, INoArea
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration){}
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config){}
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase e = (EntityLivingBase) ent;

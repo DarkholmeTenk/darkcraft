@@ -23,7 +23,7 @@ public class DamageMagicka extends Damage
 	public double getCost(){ return 5; }
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase living = (EntityLivingBase) ent;

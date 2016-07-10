@@ -45,10 +45,10 @@ public class Blink implements IComponent, IMagnitudeComponent
 	}
 
 	@Override
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration){}
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config){}
 
 	@Override
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration)
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		MovingObjectPosition mop = RaytraceHelper.rayTrace(ent, magnitude, false, EntityLivingBase.class);

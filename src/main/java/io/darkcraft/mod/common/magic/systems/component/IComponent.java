@@ -34,16 +34,18 @@ public interface IComponent
 	 * @param blockPos the position of the block to affect
 	 * @param side TODO
 	 * @param magnitude the magnitude this spell has
+	 * @param config TODO
 	 */
-	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration);
+	public void apply(ICaster caster, SimpleCoordStore blockPos, int side, int magnitude, int duration, int config);
 
 	/**
 	 * Apply the effect of this component to an entity.
 	 * @param caster the thing which cast the spell containing this component
 	 * @param ent the entity which has been hit by this spell
 	 * @param magnitude the magnitude this spell has
+	 * @param config TODO
 	 */
-	public void apply(ICaster caster, Entity ent, int magnitude, int duration);
+	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config);
 
 	public boolean applyToEnt();
 

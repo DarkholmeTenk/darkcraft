@@ -18,8 +18,9 @@ public class ComponentInstance
 	public final IComponent component;
 	public final int magnitude;
 	public final int duration;
-	public final double cost;
 	public final int area;
+	public int config = 0;
+	public final double cost;
 	public final double areaCubed;
 
 	public ComponentInstance(IComponent comp, int mag, int dur){this(comp,mag,dur,0);}
@@ -116,6 +117,7 @@ public class ComponentInstance
 		sub.setInteger("mag", magnitude);
 		sub.setInteger("dur", duration);
 		sub.setInteger("area", area);
+		sub.setInteger("config", config);
 		nbt.setTag(id, sub);
 	}
 
@@ -129,7 +131,11 @@ public class ComponentInstance
 		int area = sub.getInteger("area");
 		IComponent component = SpellPartRegistry.getComponent(cid);
 		if(component != null)
-			return new ComponentInstance(component, mag, dur, area);
+		{
+			ComponentInstance ci = new ComponentInstance(component, mag, dur, area);
+			ci.config = sub.getInteger("config");
+			return ci;
+		}
 		return null;
 	}
 }
