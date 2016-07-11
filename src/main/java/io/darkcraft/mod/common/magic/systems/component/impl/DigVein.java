@@ -9,6 +9,7 @@ import io.darkcraft.darkcore.mod.handlers.DelayedItemHandler;
 import io.darkcraft.darkcore.mod.helpers.BlockIterator;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
+import io.darkcraft.mod.common.magic.systems.component.IConfigurableComponent;
 import io.darkcraft.mod.common.magic.systems.component.INoAreaComponent;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
@@ -16,7 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class DigVein extends Dig implements INoAreaComponent
+public class DigVein extends Dig implements INoAreaComponent, IConfigurableComponent
 {
 	@Override
 	public String id(){ return "digvein"; }
@@ -63,7 +64,7 @@ public class DigVein extends Dig implements INoAreaComponent
 			double cost = getCostMag(magnitude, getCost()) / 2;
 			EntityPlayer pl = caster instanceof PlayerCaster ? ((PlayerCaster)caster).getCaster() : null;
 			BlockIterator bi = new BlockIterator(bp, BlockIterator.sameIncMeta, true, 100);
-			for(int i = 0; i < 256; i++)
+			for(int i = 0; i < Math.max(getMinConfig(),config); i++)
 			{
 				SimpleCoordStore scs = bi.next();
 				if(scs == null) return;
@@ -78,4 +79,22 @@ public class DigVein extends Dig implements INoAreaComponent
 	private final UVStore uv = new UVStore(0.0,0.1,0.4,0.5);
 	@Override
 	public UVStore getIconLocation(){return uv;}
+
+	@Override
+	public int getMinConfig()
+	{
+		return 16;
+	}
+
+	@Override
+	public int getMaxConfig()
+	{
+		return 512;
+	}
+
+	@Override
+	public String getConfigDescription(int val)
+	{
+		return "dc.digvein.desc";
+	}
 }

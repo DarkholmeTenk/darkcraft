@@ -58,6 +58,8 @@ item.darkcraft.MagicChalk.Blood.name=Blood Chalk
 tile.darkcraft.MagicVortex.name=Heart of Red Mountain
 tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
 
+cd.digvein.desc=Number of blocks to mine
+
 dc.message.anvil.emptysoul=The provided soulgem is empty
 dc.message.anvil.smallsoul=The provided soul is too small
 dc.message.mark.success=Location marked
