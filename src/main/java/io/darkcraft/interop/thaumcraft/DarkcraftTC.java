@@ -3,8 +3,11 @@ package io.darkcraft.interop.thaumcraft;
 import java.util.Collection;
 
 import io.darkcraft.interop.thaumcraft.items.WandRodItem;
+import io.darkcraft.interop.thaumcraft.magic.CleanWarp;
+import io.darkcraft.interop.thaumcraft.magic.WarpWard;
 import io.darkcraft.interop.thaumcraft.recipes.WandCapRecipe;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.systems.component.SpellPartRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -26,7 +29,8 @@ public class DarkcraftTC
 	public static ResearchItem rodResearch;
 	public static void init()
 	{
-		//SpellPartRegistry.registerComponent(new CleanWarp());
+		SpellPartRegistry.registerComponent(new CleanWarp());
+		SpellPartRegistry.registerComponent(new WarpWard());
 		wand = ItemApi.getItem("itemWandCasting", 0).getItem();
 		initCap();
 	}
