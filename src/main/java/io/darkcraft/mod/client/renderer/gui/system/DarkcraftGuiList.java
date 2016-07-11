@@ -53,6 +53,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	{
 		elements.remove(e);
 		e.parent = null;
+		recalc();
 	}
 
 	public void clear()
