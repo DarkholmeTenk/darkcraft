@@ -95,6 +95,6 @@ public class DigVein extends Dig implements INoAreaComponent, IConfigurableCompo
 	@Override
 	public String getConfigDescription(int val)
 	{
-		return "dc.digvein.desc";
+		return ""+val;
 	}
 }
