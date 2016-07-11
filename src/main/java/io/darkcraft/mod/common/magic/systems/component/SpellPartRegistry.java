@@ -25,7 +25,7 @@ public class SpellPartRegistry
 	public static void registerComponent(IComponent comp, boolean defaultEnabled)
 	{
 		String id = comp.id();
-		if(config.getBoolean("Enabled - " + id, defaultEnabled, "If false, this component will not be registered"));
+		if(config.getBoolean("Enabled - " + id, defaultEnabled, "If false, this component will not be registered"))
 			compMap.put(id, comp);
 	}
 
