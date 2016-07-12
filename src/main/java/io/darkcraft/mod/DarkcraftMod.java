@@ -17,7 +17,7 @@ import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.config.ConfigHandler;
 import io.darkcraft.darkcore.mod.config.ConfigHandlerFactory;
 import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
-import io.darkcraft.interop.InteropHandler;
+import io.darkcraft.interop.Interop;
 import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.magic.field.MagicFieldFactory;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
@@ -69,7 +69,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 		MagicalRegistry.registerMagic();
 		EntRegistry.registerEntities();
 		FMLInterModComms.sendMessage("SkillAPI", "register", "io.darkcraft.mod.common.registries.SkillRegistry.requestAPI");
-		InteropHandler.preInit();
+		Interop.preInit();
 	}
 
 	@EventHandler
@@ -80,10 +80,9 @@ public class DarkcraftMod implements IConfigHandlerMod
 		DarkcoreMod.packetHandler.registerHandler(PlayerCasterPacketHandler.disc, new PlayerCasterPacketHandler());
 		DarkcoreMod.packetHandler.registerHandler(ChalkGuiPacketHandler.disc, new ChalkGuiPacketHandler());
 		DarkcoreMod.packetHandler.registerHandler(SpellSelectionPacketHandler.disc, new SpellSelectionPacketHandler());
-
+		Interop.init();
 		proxy.init();
 		FMLCommonHandler.instance().bus().register(MagicFieldFactory.factory);
-		InteropHandler.init();
 	}
 
 	@EventHandler
@@ -91,7 +90,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 	{
 		MagicConfig.refreshConfigs();
 		MagicAnvilRecipeRegistry.postInit();
-		InteropHandler.postInit();
+		Interop.postInit();
 		inited = true;
 	}
 

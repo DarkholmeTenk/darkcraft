@@ -42,7 +42,7 @@ public class WandRodItem extends AbstractItem implements IWandRodOnUpdate
 		PlayerCaster pc = Helper.getPlayerCaster(player);
 		if(pc == null) return;
 		if(!shouldUpdate(is)) return;
-		int max = DarkcraftTC.wr.getCapacity() * 100;
+		int max = DarkcraftTC.maxRecharge;
 		if(is.stackTagCompound.getBoolean("sceptre"))
 			max *= 1.5;
 		List<Aspect> primals = Aspect.getPrimalAspects();

@@ -2,6 +2,8 @@ package io.darkcraft.interop.thaumcraft;
 
 import java.util.Collection;
 
+import io.darkcraft.darkcore.mod.config.ConfigFile;
+import io.darkcraft.darkcore.mod.interop.InteropInstance;
 import io.darkcraft.interop.thaumcraft.items.WandRodItem;
 import io.darkcraft.interop.thaumcraft.magic.CleanWarp;
 import io.darkcraft.interop.thaumcraft.magic.WarpWard;
@@ -19,22 +21,18 @@ import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
 import thaumcraft.api.wands.WandRod;
 
-public class DarkcraftTC
+public class DarkcraftTC extends InteropInstance
 {
-	public static Item wand;
+	public DarkcraftTC()
+	{
+		super("Thaumcraft");
+	}
 
+	public static Item wand;
 	public static WandRodItem rod;
 	public static WandCapRecipe wcr;
 	public static WandRod wr;
 	public static ResearchItem rodResearch;
-	public static void init()
-	{
-		SpellPartRegistry.registerComponent(new CleanWarp());
-		SpellPartRegistry.registerComponent(new WarpWard());
-		wand = ItemApi.getItem("itemWandCasting", 0).getItem();
-		initCap();
-	}
-
 	private static void initCap()
 	{
 		rod = (WandRodItem) new WandRodItem().register();
@@ -69,10 +67,34 @@ public class DarkcraftTC
 				sec = cap;
 		}
 		int t = (best + sec) / 2;
-		return (t/25)*25;
+		return Math.min((t/25)*25, maxAspects);
 	}
 
-	public static void postInit()
+	public ConfigFile config;
+	public static int maxAspects;
+	public static int maxRecharge;
+
+	@Override
+	public void preInit()
+	{
+		config = DarkcraftMod.configHandler.registerConfigNeeder("thaumcraft");
+		maxAspects = config.getInt("Wand rod - max aspects", 250,
+				"The maximum of each aspect that the wand core will set itself to",
+				"It will try to sit between the largest and second largest rod, unless it exceeds this value");
+		maxRecharge = config.getInt("Wand rod - max recharge", 100, "The maximum amount of aspects that the wand core can gain by mana recharging");
+	}
+
+	@Override
+	public void init()
+	{
+		SpellPartRegistry.registerComponent(new CleanWarp());
+		SpellPartRegistry.registerComponent(new WarpWard());
+		wand = ItemApi.getItem("itemWandCasting", 0).getItem();
+		initCap();
+	}
+
+	@Override
+	public void postInit()
 	{
 		wr = new WandRod("darkcraft", getWandCapacity(), new ItemStack(rod), 4, rod);
 		wr.setGlowing(true);
