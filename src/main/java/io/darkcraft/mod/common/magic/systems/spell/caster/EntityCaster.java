@@ -150,7 +150,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 	{
 		EntityLivingBase c = getCaster();
 		if(c == null) return false;
-		MovingObjectPosition pos = RaytraceHelper.rayTrace(c, MagicConfig.touchCastDistance, MagicConfig.traceLiquids, Entity.class);
+		MovingObjectPosition pos = RaytraceHelper.rayTrace(c, MagicConfig.touchCastDistance, MagicConfig.traceLiquids, Entity.class, true, spell.affectEntities);
 		if(pos == null)
 			return false;
 		if(pos.typeOfHit == MovingObjectType.BLOCK)

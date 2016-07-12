@@ -51,7 +51,7 @@ public class Blink implements IComponent, IMagnitudeComponent
 	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
-		MovingObjectPosition mop = RaytraceHelper.rayTrace(ent, magnitude, false, EntityLivingBase.class);
+		MovingObjectPosition mop = RaytraceHelper.rayTrace(ent, magnitude, false, EntityLivingBase.class,true,false);
 		SimpleDoubleCoordStore newPos = null;
 		if((mop == null) || ((mop.typeOfHit != MovingObjectType.BLOCK) && (mop.entityHit == null)))
 		{

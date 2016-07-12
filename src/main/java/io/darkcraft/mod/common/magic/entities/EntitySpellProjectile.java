@@ -76,7 +76,7 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	{
 		if(ServerHelper.isClient())return;
 		Entity c = caster instanceof EntityCaster ? ((EntityCaster)caster).getEntity() : null;
-		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class, c);
+		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class, true, spell.affectEntities, c);
 		mop = blockCasterHitCheck(mop);
 		if(mop != null)
 		{

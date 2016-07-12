@@ -36,8 +36,8 @@ public class Spell
 	public final ComponentInstance[] components;
 	public final ComponentInstance mostExpensiveComponent;
 	private final int maxArea;
-	private final boolean affectBlocks;
-	private final boolean affectEntities;
+	public final boolean affectBlocks;
+	public final boolean affectEntities;
 
 	public Spell(String _name, ComponentInstance[] componentInstances)
 	{
