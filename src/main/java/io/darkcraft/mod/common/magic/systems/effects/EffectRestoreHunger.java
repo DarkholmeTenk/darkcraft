@@ -11,6 +11,7 @@ public class EffectRestoreHunger extends AbstractDarkcraftEffect
 	public EffectRestoreHunger(ICaster _caster, EntityLivingBase ent, int magnitude, int duration)
 	{
 		super("restorehunger", _caster, ent, magnitude, duration-1, true, true, 20);
+		canStack = true;
 	}
 
 	private static final UVStore uv = new UVStore(0.2,0.3,0.1,0.2);

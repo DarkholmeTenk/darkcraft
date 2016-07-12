@@ -16,6 +16,12 @@ public class EffectDamage extends AbstractDarkcraftEffect
 	public EffectDamage(ICaster caster, EntityLivingBase ent, int magnitude, int duration)
 	{
 		super("damage", caster, ent, magnitude, duration-1, true, true, 20);
+		canStack = true;
+	}
+
+	protected EffectDamage(String id, ICaster caster, EntityLivingBase ent, int magnitude, int duration)
+	{
+		super(id, caster, ent, magnitude, duration-1, true, true, 20);
 	}
 
 	@Override
@@ -26,18 +32,20 @@ public class EffectDamage extends AbstractDarkcraftEffect
 		return lqUV;
 	}
 
+	public DamageSource getDS(ICaster caster)
+	{
+		if(caster instanceof EntityCaster)
+		{
+			EntityLivingBase ecaster = ((EntityCaster) caster).getCaster();
+			return new EntityDamageSource(MagicalRegistry.magicDamage.damageType,ecaster).setMagicDamage();
+		}
+		return MagicalRegistry.magicDamage;
+	}
+
 	@Override
 	public void apply()
 	{
 		EntityLivingBase toAttack = getEntity();
-
-		if(caster instanceof EntityCaster)
-		{
-			EntityLivingBase ecaster = ((EntityCaster) caster).getCaster();
-			DamageSource eds = new EntityDamageSource(MagicalRegistry.magicDamage.damageType,ecaster).setMagicDamage();
-			toAttack.attackEntityFrom(eds, magnitude);
-		}
-		else
-			toAttack.attackEntityFrom(MagicalRegistry.magicDamage, magnitude);
+		toAttack.attackEntityFrom(getDS(caster), magnitude);
 	}
 }

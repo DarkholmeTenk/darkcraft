@@ -9,6 +9,7 @@ public class EffectRestoreHealth extends AbstractDarkcraftEffect
 	public EffectRestoreHealth(ICaster _caster, EntityLivingBase ent, int magnitude, int duration)
 	{
 		super("restore", _caster, ent, magnitude, duration-1, true, true, 20);
+		canStack = true;
 	}
 
 	private static final UVStore uv = new UVStore(0.2,0.3,0,0.1);

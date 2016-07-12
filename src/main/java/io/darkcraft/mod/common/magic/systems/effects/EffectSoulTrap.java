@@ -10,6 +10,7 @@ public class EffectSoulTrap extends AbstractDarkcraftEffect
 	public EffectSoulTrap(ICaster _caster, EntityLivingBase ent, int _magnitude, int _duration)
 	{
 		super("soultrap", _caster, ent, _magnitude, _duration, true, false, 0);
+		canStack = true;
 	}
 
 	@Override
