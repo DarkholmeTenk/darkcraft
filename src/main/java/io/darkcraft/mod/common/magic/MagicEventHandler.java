@@ -21,7 +21,10 @@ import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
 import io.darkcraft.darkcore.mod.network.DataPacket;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.event.caster.PlayerCasterManaRegenEvent;
+import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.items.SoulGem;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
+import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import io.darkcraft.mod.common.magic.systems.effects.AbstractDarkcraftEffect;
 import io.darkcraft.mod.common.magic.systems.effects.EffectSoulTrap;
 import io.darkcraft.mod.common.magic.systems.effects.SSEffectManaRegen;
@@ -188,5 +191,17 @@ public class MagicEventHandler
 		int s = ssemr.magnitude+1;
 		double m = 1 + (s /2.5);
 		event.regenAmount *= m;
+	}
+
+	@SubscribeEvent
+	public void handleStaffCast(SpellPreCastEvent event)
+	{
+		if(!(event.caster instanceof PlayerCaster)) return;
+		PlayerCaster pc = (PlayerCaster) event.caster;
+		EntityPlayer pl = pc.getCaster();
+		if(pl == null) return;
+		StaffHelper staff = StaffHelperFactory.getHelper(pl.getHeldItem());
+		if(staff == null) return;
+		event.setCost(event.getCost() * 0.75);
 	}
 }
