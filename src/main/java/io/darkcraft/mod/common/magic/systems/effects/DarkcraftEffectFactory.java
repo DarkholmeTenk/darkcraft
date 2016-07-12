@@ -17,6 +17,8 @@ public class DarkcraftEffectFactory implements IEffectFactory
 		int dur = nbt.getInteger("dur");
 		if(id.equals("darkcraft.damage"))
 			return new EffectDamage(null, ent, mag, dur);
+		if(id.equals("darkcraft.damagefire"))
+			return new EffectDamageFire(null, ent, mag, dur);
 		if(id.equals("darkcraft.fly"))
 			return new EffectFly(null,ent,mag,dur);
 		if(id.equals("darkcraft.damagehunger"))

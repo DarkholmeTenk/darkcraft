@@ -6,6 +6,7 @@ import io.darkcraft.mod.common.magic.MagicEventHandler;
 import io.darkcraft.mod.common.magic.systems.component.SpellPartRegistry;
 import io.darkcraft.mod.common.magic.systems.component.impl.Blink;
 import io.darkcraft.mod.common.magic.systems.component.impl.Damage;
+import io.darkcraft.mod.common.magic.systems.component.impl.DamageFire;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageHunger;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageMagicka;
 import io.darkcraft.mod.common.magic.systems.component.impl.Dig;
@@ -55,6 +56,7 @@ public class MagicalRegistry
 	public static final Blink blink = new Blink();
 	public static final WaterWalk ww = new WaterWalk();
 	public static final FeatherFall ff = new FeatherFall();
+	public static final DamageFire df = new DamageFire();
 	public static final Test test = new Test();
 
 	public static void registerMagic()
@@ -77,6 +79,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(blink);
 		SpellPartRegistry.registerComponent(ww);
 		SpellPartRegistry.registerComponent(ff);
+		SpellPartRegistry.registerComponent(df);
 		SpellPartRegistry.registerComponent(test, false);
 		SoulSpellRegistry.registerFactory(new DarkcraftSoulSpellFactory());
 		SymbolicRegistry.registerFactory(new DarkcraftSymbolicFactory());
