@@ -4,7 +4,6 @@ import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.darkcore.mod.impl.EntityEffectStore;
-import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.IDurationComponent;
 import io.darkcraft.mod.common.magic.systems.component.IMagnitudeComponent;
@@ -19,6 +18,7 @@ import skillapi.api.implement.ISkill;
 
 public class Damage implements IComponent, IDurationComponent, IMagnitudeComponent
 {
+
 	@Override
 	public String id(){ return "damage"; }
 
@@ -42,7 +42,6 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	{
 		if(!(ent instanceof EntityLivingBase)) return;
 		EntityLivingBase living = (EntityLivingBase) ent;
-		if(Helper.isCaster(caster,living)) return;
 		EntityEffectStore ees = EffectHandler.getEffectStore(living);
 		ees.addEffect(new EffectDamage(caster,living,magnitude,duration*20));
 	}
