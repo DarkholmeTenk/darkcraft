@@ -42,6 +42,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -98,26 +99,34 @@ public class MagicEventHandler
 			ent.registerExtendedProperties("dcPC", new PlayerCaster((EntityPlayer) ent));
 	}
 
-	@SubscribeEvent
-	public void entityDamage(LivingHurtEvent event)
+	private float handleEvent(EntityLivingBase ent, DamageSource ds, float amount)
 	{
-		EntityLivingBase ent = event.entityLiving;
 		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
-		DamageSource ds = event.source;
 		for(AbstractEffect e : ees.getEffects())
 		{
 			if(e instanceof AbstractDamageResistEffect)
 			{
 				AbstractDamageResistEffect adre = (AbstractDamageResistEffect) e;
-				float newDam = adre.getNewDamage(ds, event.ammount);
-				if(newDam <= 0)
-				{
-					event.setCanceled(true);
-					return;
-				}
-				event.ammount = newDam;
+				amount = adre.getNewDamage(ds, amount);
+				if(amount <= 0)
+					return 0;
 			}
 		}
+		return amount;
+	}
+
+	@SubscribeEvent
+	public void entityDamage(LivingHurtEvent event)
+	{
+		event.ammount = handleEvent(event.entityLiving, event.source, event.ammount);
+	}
+
+	@SubscribeEvent
+	public void entityAttacked(LivingAttackEvent event)
+	{
+		float dam = handleEvent(event.entityLiving, event.source, event.ammount);
+		if(dam <= 0)
+			event.setCanceled(true);
 	}
 
 	@SubscribeEvent(priority=EventPriority.LOWEST)
