@@ -46,7 +46,7 @@ public class FeatherFall implements IComponent, IMagnitudeComponent, IDurationCo
 	@Override
 	public int getMaxDuration()
 	{
-		return 360;
+		return 3600;
 	}
 
 	@Override
