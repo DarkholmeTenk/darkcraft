@@ -32,6 +32,7 @@ darkcraft.component.recall.cd=Aetheric Recall
 darkcraft.component.blink=Blink
 darkcraft.component.waterwalk=Waterwalking
 darkcraft.component.featherfall=Feather Falling
+darkcraft.component.resistfire=Resist Fire
 darkcraft.component.tc.warpward=Mental Warp Wall
 darkcraft.component.tc.cleanwarp=Warp Purification
 

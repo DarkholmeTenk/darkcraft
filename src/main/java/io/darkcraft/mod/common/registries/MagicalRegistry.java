@@ -17,6 +17,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.FeatherFall;
 import io.darkcraft.mod.common.magic.systems.component.impl.Fly;
 import io.darkcraft.mod.common.magic.systems.component.impl.Mark;
 import io.darkcraft.mod.common.magic.systems.component.impl.Recall;
+import io.darkcraft.mod.common.magic.systems.component.impl.ResistFire;
 import io.darkcraft.mod.common.magic.systems.component.impl.RestoreHealth;
 import io.darkcraft.mod.common.magic.systems.component.impl.RestoreHunger;
 import io.darkcraft.mod.common.magic.systems.component.impl.SoulTrap;
@@ -57,6 +58,7 @@ public class MagicalRegistry
 	public static final WaterWalk ww = new WaterWalk();
 	public static final FeatherFall ff = new FeatherFall();
 	public static final DamageFire df = new DamageFire();
+	public static final ResistFire rf = new ResistFire();
 	public static final Test test = new Test();
 
 	public static void registerMagic()
@@ -80,6 +82,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(ww);
 		SpellPartRegistry.registerComponent(ff);
 		SpellPartRegistry.registerComponent(df);
+		SpellPartRegistry.registerComponent(rf);
 		SpellPartRegistry.registerComponent(test, false);
 		SoulSpellRegistry.registerFactory(new DarkcraftSoulSpellFactory());
 		SymbolicRegistry.registerFactory(new DarkcraftSymbolicFactory());

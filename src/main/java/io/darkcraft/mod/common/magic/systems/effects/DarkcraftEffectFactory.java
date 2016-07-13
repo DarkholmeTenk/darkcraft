@@ -37,6 +37,8 @@ public class DarkcraftEffectFactory implements IEffectFactory
 			return new SSEffectManaRegen(null,ent,mag,dur);
 		if(id.equals("darkcraft.featherfall"))
 			return new EffectFeatherFall(null,ent,mag,dur);
+		if(id.equals("darkcraft.resistfire"))
+			return new EffectResistFire(null,ent,mag,dur);
 		return null;
 	}
 
