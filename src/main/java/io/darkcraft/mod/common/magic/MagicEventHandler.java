@@ -25,7 +25,7 @@ import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
-import io.darkcraft.mod.common.magic.systems.effects.AbstractDarkcraftEffect;
+import io.darkcraft.mod.common.magic.systems.effects.AbstractDamageResistEffect;
 import io.darkcraft.mod.common.magic.systems.effects.EffectSoulTrap;
 import io.darkcraft.mod.common.magic.systems.effects.SSEffectManaRegen;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
@@ -104,15 +104,19 @@ public class MagicEventHandler
 		EntityLivingBase ent = event.entityLiving;
 		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
 		DamageSource ds = event.source;
-		if(ds== DamageSource.fall)
+		for(AbstractEffect e : ees.getEffects())
 		{
-			if(ees.hasEffect("darkcraft.fly"))
-				event.setCanceled(true);
-			int ff = AbstractDarkcraftEffect.getMagnitude(ees, "darkcraft.featherfall");
-			if((ff >= 5) || (event.ammount < (ff*2)))
-				event.setCanceled(true);
-			else if(ff > 0)
-				event.ammount -= (event.ammount * ff) / 5;
+			if(e instanceof AbstractDamageResistEffect)
+			{
+				AbstractDamageResistEffect adre = (AbstractDamageResistEffect) e;
+				float newDam = adre.getNewDamage(ds, event.ammount);
+				if(newDam <= 0)
+				{
+					event.setCanceled(true);
+					return;
+				}
+				event.ammount = newDam;
+			}
 		}
 	}
 

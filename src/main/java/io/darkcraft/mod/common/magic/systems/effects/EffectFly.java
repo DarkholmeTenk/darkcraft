@@ -4,8 +4,9 @@ import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 
-public class EffectFly extends AbstractDarkcraftEffect
+public class EffectFly extends AbstractDamageResistEffect
 {
 	private final static UVStore flyUV = new UVStore(0.1,0.2,0,0.1);
 
@@ -41,5 +42,11 @@ public class EffectFly extends AbstractDarkcraftEffect
 
 	@Override
 	public void apply(){}
+
+	@Override
+	public float getNewDamage(DamageSource ds, float oldDamage)
+	{
+		return ds == DamageSource.fall ? 0 : oldDamage;
+	}
 
 }
