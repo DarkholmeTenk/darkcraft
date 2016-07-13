@@ -45,7 +45,10 @@ public class WandRodItem extends AbstractItem implements IWandRodOnUpdate
 		int max = DarkcraftTC.maxRecharge * 100;
 		int absMax = DarkcraftTC.wr.getCapacity() * 100;
 		if(is.stackTagCompound.getBoolean("sceptre"))
+		{
 			max *= 1.5;
+			absMax *= 1.5;
+		}
 		List<Aspect> primals = Aspect.getPrimalAspects();
 		for(Aspect a : primals)
 		{
