@@ -22,7 +22,7 @@ public class ResistFire implements IComponent, IMagnitudeComponent, IDurationCom
 	@Override
 	public String id()
 	{
-		return "featherfall";
+		return "resistfire";
 	}
 
 	@Override
