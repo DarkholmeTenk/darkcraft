@@ -2,6 +2,8 @@ package io.darkcraft.mod.common.magic.blocks.tileent;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
@@ -303,5 +305,15 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 		}
 
 	}
+
+	AxisAlignedBB aabb;
+	@Override
+	@SideOnly(Side.CLIENT)
+    public AxisAlignedBB getRenderBoundingBox()
+    {
+		if(aabb == null)
+			aabb = AxisAlignedBB.getBoundingBox(xCoord-2, yCoord, zCoord-2, xCoord+3, yCoord+4, zCoord+4);
+		return aabb;
+    }
 
 }
