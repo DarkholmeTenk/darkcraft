@@ -9,6 +9,7 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import skillapi.api.implement.ISkill;
@@ -55,8 +56,16 @@ public class WarpWard implements IComponent, IDurationComponent
 		if(ent instanceof EntityPlayer)
 		{
 			EntityPlayer pl = (EntityPlayer) ent;
+			if(duration == -1)
+				duration = Integer.MAX_VALUE / 20;
 			PotionHelper.applyPotion(pl, "potion.warpward", duration*20);
 		}
+	}
+
+	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		ent.removePotionEffect(PotionHelper.getPotionIndex("potion.warpward"));
 	}
 
 	@Override

@@ -220,4 +220,10 @@ public class GemStand extends AbstractTileEntity implements IActivatable, IBlock
 	{
 		return is;
 	}
+
+	public void removeGem()
+	{
+		is = null;
+		sendUpdate();
+	}
 }

@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.magic.systems.component;
 
+import net.minecraft.entity.EntityLivingBase;
+
 public interface IDurationComponent
 {
 	/**
@@ -17,4 +19,6 @@ public interface IDurationComponent
 	 * @return how much the component should cost with this duration
 	 */
 	public double getCostDur(int duration, double oldCost);
+
+	public void remove(EntityLivingBase ent);
 }

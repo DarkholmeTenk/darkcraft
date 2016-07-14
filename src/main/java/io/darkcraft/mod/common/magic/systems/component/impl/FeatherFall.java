@@ -34,7 +34,7 @@ public class FeatherFall implements IComponent, IMagnitudeComponent, IDurationCo
 	@Override
 	public double getCost()
 	{
-		return 5;
+		return 2;
 	}
 
 	@Override
@@ -84,6 +84,14 @@ public class FeatherFall implements IComponent, IMagnitudeComponent, IDurationCo
 		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
 		if(ees != null)
 			ees.addEffect(new EffectFeatherFall(caster,ent,magnitude,duration*20));
+	}
+
+	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.featherfall");
 	}
 
 	@Override

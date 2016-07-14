@@ -19,6 +19,8 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 		if(glyphs.startsWith("target.players")) return "dc.targetplayers";
 		if(glyphs.startsWith("magicka.sila")) return "dc.manaregen";
 		if(glyphs.startsWith("volatus")) return "dc.featherfall";
+		if(glyphs.startsWith("cognitio.enchantia")) return "dc.scrollwrite";
+		if(glyphs.startsWith("tutamen.praecantatio")) return "dc.armorenchant";
 		return null;
 	}
 
@@ -30,6 +32,8 @@ public class DarkcraftSymbolicFactory implements ISymbolicFactory
 		if(id.equals("dc.targetplayers"))	return new SpellSoulgemSymbolicSpell(rootRune, center, "dc.targetplayers");
 		if(id.equals("dc.manaregen"))		return new ManaRegenSymbolicSpell(rootRune, center);
 		if(id.equals("dc.featherfall"))		return new FeatherfallSymbolic(rootRune, center, empowered);
+		if(id.equals("dc.scrollwrite"))		return new ScrollWritingSymbolic(rootRune, center);
+		if(id.equals("dc.armorenchant"))	return new ArmorEnchantSymbolic(rootRune, center);
 		return null;
 	}
 

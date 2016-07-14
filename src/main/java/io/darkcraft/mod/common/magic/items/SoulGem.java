@@ -260,7 +260,7 @@ public class SoulGem extends AbstractItem
 		{
 			if(this == Black)
 				return Grand.getMaxCharge();
-			return ordinal() * 400;
+			return (ordinal()+1) * 400;
 		}
 	}
 

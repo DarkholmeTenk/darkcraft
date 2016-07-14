@@ -47,6 +47,14 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	}
 
 	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.damage");
+	}
+
+	@Override
 	public int getMinMagnitude(){ return 1; }
 
 	@Override

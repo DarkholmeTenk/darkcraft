@@ -87,6 +87,14 @@ public class ResistFire implements IComponent, IMagnitudeComponent, IDurationCom
 	}
 
 	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.resistfire");
+	}
+
+	@Override
 	public boolean applyToEnt(){return true;}
 
 	@Override

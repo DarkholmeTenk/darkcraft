@@ -41,6 +41,14 @@ public class RestoreHunger extends RestoreHealth
 	}
 
 	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.restorehunger");
+	}
+
+	@Override
 	public int getMinMagnitude(){ return 1; }
 
 	@Override

@@ -45,7 +45,7 @@ public class WaterWalk implements IComponent, IDurationComponent
 	@Override
 	public int getMaxDuration()
 	{
-		return 360;
+		return 3600;
 	}
 
 	@Override
@@ -65,6 +65,14 @@ public class WaterWalk implements IComponent, IDurationComponent
 		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
 		if(ees != null)
 			ees.addEffect(new EffectWaterWalk(caster,ent,magnitude,duration*20));
+	}
+
+	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.waterwalk");
 	}
 
 	@Override

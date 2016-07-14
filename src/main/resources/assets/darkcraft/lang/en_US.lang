@@ -67,6 +67,8 @@ dc.message.anvil.smallsoul=The provided soul is too small
 dc.message.mark.success=Location marked
 dc.message.gemstand.lock=Gem stand has been locked
 dc.message.gemstand.locked=You cannot interact with this as it has been locked
+dc.message.nomana=Insufficient mana
+dc.message.weaksoul=Provided soul is not strong enough
 
 dc.manaregen=Mana Regen
 dc.targetmobs=Target Mobs

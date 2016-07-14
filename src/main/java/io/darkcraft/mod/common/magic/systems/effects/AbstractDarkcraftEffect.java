@@ -16,7 +16,7 @@ public abstract class AbstractDarkcraftEffect extends AbstractEffect
 
 	public AbstractDarkcraftEffect(String _id, ICaster _caster, EntityLivingBase ent, int _magnitude, int _duration, boolean _visible, boolean _doesTick, int _tickFreq)
 	{
-		super("darkcraft."+_id, ent, _duration, _visible, _doesTick, _tickFreq);
+		super("darkcraft."+_id, ent, _duration<0 ? -1 : _duration, _visible, _doesTick, _tickFreq);
 		caster = _caster;
 		magnitude = _magnitude;
 	}
@@ -45,6 +45,13 @@ public abstract class AbstractDarkcraftEffect extends AbstractEffect
 		if(eff instanceof AbstractDarkcraftEffect)
 			return ((AbstractDarkcraftEffect) eff).magnitude;
 		return -1;
+	}
+
+	@Override
+	public AbstractEffect combine(AbstractEffect newEffect)
+	{
+		if((duration == -1) || ((duration - getTT()) > newEffect.duration)) return this;
+		return newEffect;
 	}
 
 }

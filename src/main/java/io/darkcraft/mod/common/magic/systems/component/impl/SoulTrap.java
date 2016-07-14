@@ -53,6 +53,14 @@ public class SoulTrap implements IComponent, IDurationComponent
 	}
 
 	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.soultrap");
+	}
+
+	@Override
 	public boolean applyToEnt(){ return true; }
 
 	@Override

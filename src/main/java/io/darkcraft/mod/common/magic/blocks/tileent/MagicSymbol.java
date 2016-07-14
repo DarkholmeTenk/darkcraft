@@ -60,6 +60,12 @@ public class MagicSymbol extends AbstractTileEntity implements IActivatable, IBl
 		sendUpdate();
 	}
 
+	public void cancelCircle()
+	{
+		if(isRoot)
+			cancel();
+	}
+
 	public void clearCircle()
 	{
 		if(existing == null) return;

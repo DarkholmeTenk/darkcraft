@@ -3,6 +3,7 @@ package io.darkcraft.mod.common.magic.systems.effects;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -21,6 +22,7 @@ public class EffectWaterWalk extends AbstractDarkcraftEffect
 	public void apply()
 	{
 		Entity ent = getEntity();
+		boolean server = ServerHelper.isServer();
 		if(ent == null) return;
 		boolean inWater = false;
 		SimpleDoubleCoordStore pos = new SimpleDoubleCoordStore(ent).translate(0, -ent.yOffset-0.01, 0);

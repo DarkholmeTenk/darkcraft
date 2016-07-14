@@ -46,6 +46,14 @@ public class RestoreHealth implements IComponent, IDurationComponent, IMagnitude
 	}
 
 	@Override
+	public void remove(EntityLivingBase ent)
+	{
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		if(ees != null)
+			ees.remove("darkcraft.restorehealth");
+	}
+
+	@Override
 	public int getMinMagnitude(){ return 1; }
 
 	@Override

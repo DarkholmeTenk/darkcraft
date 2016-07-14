@@ -49,6 +49,7 @@ public class MagicConfig
 	public static double silkMult = 3;
 	public static int[] soulHealthSizes = new int[]{0,5,15,30,45};
 	public static boolean recallOthers = true;
+	public static double armorEnchCostMult = 1500;
 
 	public static void refreshConfigs()
 	{
@@ -74,6 +75,8 @@ public class MagicConfig
 		deity = config.getBoolean("Deity - Enabled", true, "Is the deity system enabled");
 		manaRegenRate = config.getDouble("Mana - Regen rate", 0.005, "How much mana a player regens per second","If Regen Percent is true, this is the percent of the player's mana that gets regen (with 1 being all)","Else this is the amount of mana that regens per second");
 		regenPercent = config.getBoolean("Mana - Regen percent", true, "If true, regen an amount of mana proportional to max mana","Else regen a flat amount");
+
+		armorEnchCostMult = config.getDouble("Enchantment - armor cost mult", 1500, "Multiplier for how difficult enchanting is", "Higher is harder");
 
 		if(cbConfig == null) cbConfig = DarkcraftMod.configHandler.registerConfigNeeder("Magic Component Balance");
 		fortuneMult = cbConfig.getDouble("Fortune cost multiplier", 6, "Configures how much of a cost increase fortune is on excavate");
