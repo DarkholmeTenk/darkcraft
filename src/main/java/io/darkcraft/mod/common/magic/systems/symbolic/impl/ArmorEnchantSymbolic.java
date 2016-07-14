@@ -74,6 +74,8 @@ public class ArmorEnchantSymbolic extends AbstractSpellEnchanterSymbolic
 				return true;
 			}
 		}
+		else
+			MessageHelper.sendMessage(pl, "dc.message.nomana");
 		return false;
 	}
 
