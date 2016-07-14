@@ -203,6 +203,49 @@ public class DaedricLetters
 			ld.addLettersNew(0,0, 4,1, -1,1, 2,1, -1,2, -1,8, -1,-7, -1,-3, -1,-1, 2,-1, -2);
 			dataMap.put('Z', ld);
 
+			//NUMBERS
+			ld = new LetterData(new UVStore(16,20, 46,50));
+			ld.addLettersNew(1,0, 2,1, 1,2, -1,1, -2,-1, -1,-2, 1);
+			ld.addLettersNew(1,1, 2,2, -2);
+			dataMap.put('0', ld);
+			ld = new LetterData(new UVStore(23,25, 47,49));
+			ld.addLettersNew(0,0, 2,2, -2);
+			dataMap.put('1', ld);
+			ld = new LetterData(new UVStore(27,33, 47,50));
+			ld.addLettersNew(0,0, 2,3, -2);
+			ld.addLettersNew(4,0, 2,3, -2);
+			dataMap.put('2', ld);
+			ld = new LetterData(new UVStore(35,41, 47,53));
+			ld.addLettersNew(2,0, 2,2, -2);
+			ld.addLettersNew(0,3, 2,3, -2);
+			ld.addLettersNew(4,3, 2,3, -2);
+			dataMap.put('3', ld);
+			ld = new LetterData(new UVStore(43,50, 45,54));
+			ld.addLettersNew(2,0, 3,2,-3);
+			ld.addLettersNew(0,3, 2,3,-2);
+			ld.addLettersNew(5,3, 2,3,-2);
+			ld.addLettersNew(2,7, 3,2,-3);
+			dataMap.put('4', ld);
+			ld = new LetterData(new UVStore(51,58, 45, 54));
+			ld.addLettersNew(0,3, 2,3,-2);
+			ld.addLettersNew(5,3, 2,3,-2);
+			ld.addLettersNew(2,0, 3,2, -1,5, 1,2, -3,-2, 1,-5, -1);
+			dataMap.put('5', ld);
+			ld = new LetterData(new UVStore(60,67, 45,54));
+			ld.addLettersNew(2,0, 3,2, -1,2, 1,-1, 2,3, -2,-1, -1,2, 1,2, -3,-2, 1,-2, -1,1, -2,-3, 2,1, 1,-2, -1);
+			dataMap.put('6', ld);
+			ld = new LetterData(new UVStore(69,76, 45,54));
+			ld.addLettersNew(0,0, 5,2, -3,-1, -1,2, 1,1, 3,-1, 2,6, -5,-2, 3,1, 1,-2, -1,-1, -3,1, -2);
+			dataMap.put('7', ld);
+			ld = new LetterData(new UVStore(78,85, 45,54));
+			ld.addLettersNew(0,0, 5,2, -1,5, 1,1, 1,-2, -1,-3, 2,6, -5,-2, 1,-5, -1,-1, -1,2, 1,3, -2);
+			dataMap.put('8', ld);
+			ld = new LetterData(new UVStore(87,94, 45,54));
+			ld.addLettersNew(0,0, 5,2, -1,2, 1,-1, 2,6, -5,-2, 1,-2, -1,1, -2);
+			ld.addLettersNew(1,1, 1,1, 1,2, -1,-1, -1);
+			ld.addLettersNew(4,5, 1,1, 1,2, -1,-1, -1);
+			dataMap.put('9', ld);
+
 			//SYMBOLS
 			ld = new LetterData(new UVStore(124,127, 127,127));
 			dataMap.put(' ', ld);
@@ -222,6 +265,9 @@ public class DaedricLetters
 			ld = new LetterData(new UVStore(94,97, 81,92));
 			ld.addLettersNew(1,0, 1,1, 1,1, -1,1, -1,1, -1,-1, 1,-1, -1);
 			dataMap.put('\'', ld);
+			ld = new LetterData(new UVStore(96,99,49,50));
+			ld.addLettersNew(0,0, 3,1,-3);
+			dataMap.put('-', ld);
 
 			setMax();
 		}
