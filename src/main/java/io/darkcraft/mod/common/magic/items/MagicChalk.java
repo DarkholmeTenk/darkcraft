@@ -99,7 +99,7 @@ public class MagicChalk extends AbstractItem
 
 	public static String getString(ItemStack is)
 	{
-		if((is == null) || !(is.getItem() instanceof MagicChalk) || (is.stackTagCompound == null)) return null;
+		if((is == null) || !(is.getItem() instanceof MagicChalk) || (is.stackTagCompound == null)) return "";
 		return is.stackTagCompound.getString("chalkText");
 	}
 
