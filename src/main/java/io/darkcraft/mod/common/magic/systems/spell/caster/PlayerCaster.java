@@ -22,7 +22,6 @@ import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,7 +31,7 @@ import net.minecraftforge.common.MinecraftForge;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
-public class PlayerCaster extends EntityCaster implements IExtendedEntityProperties
+public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtendedEntityProperties
 {
 	private static Set<PlayerCaster> registeredCasters = Collections.newSetFromMap(new WeakHashMap<PlayerCaster,Boolean>());
 	public static void tickAll()
@@ -94,15 +93,6 @@ public class PlayerCaster extends EntityCaster implements IExtendedEntityPropert
 			sortSpells();
 		}
 		sendUpdate();
-	}
-
-	@Override
-	public EntityPlayer getCaster()
-	{
-		EntityLivingBase ent = super.getCaster();
-		if(ent != null)
-			return (EntityPlayer)ent;
-		return null;
 	}
 
 	public Set<IComponent> getKnownComponents()

@@ -1,6 +1,5 @@
 package io.darkcraft.mod.common.magic.systems.spell.caster;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -27,27 +26,24 @@ import net.minecraftforge.common.MinecraftForge;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
-public class EntityCaster extends AbstractEntityDataStore implements ICaster
+public class EntityCaster<E extends EntityLivingBase> extends AbstractEntityDataStore<E> implements ICaster
 {
-	private final WeakReference<EntityLivingBase> caster;
 	private NBTTagCompound extraData = new NBTTagCompound();
 	private NBTTagCompound extraDataTransmittable = new NBTTagCompound();
 
-	public EntityCaster(EntityLivingBase ent)
+	public EntityCaster(E ent)
 	{
 		super(ent,"darkcraft.entitycaster");
-		caster = new WeakReference(ent);
 	}
 
-	public EntityCaster(EntityLivingBase pl, String string)
+	public EntityCaster(E pl, String string)
 	{
 		super(pl,string);
-		caster = new WeakReference(pl);
 	}
 
-	public EntityLivingBase getCaster()
+	public E getCaster()
 	{
-		return caster.get();
+		return getEntity();
 	}
 
 	public ISkillHandler getHandler()
@@ -81,7 +77,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 
 	private double height()
 	{
-		EntityLivingBase ent = caster.get();
+		EntityLivingBase ent = getCaster();
 		if(ent == null) return 0;
 		if(ent instanceof EntityPlayer)
 			return ((EntityPlayer)ent).eyeHeight;
@@ -91,7 +87,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 
 	public SimpleDoubleCoordStore getSpellCreationPos()
 	{
-		EntityLivingBase ent = caster.get();
+		EntityLivingBase ent = getCaster();
 		if(ent == null) return null;
 		double dist = 1;
 		double pitchRads = Math.toRadians(ent.rotationPitch + 90);
@@ -105,7 +101,7 @@ public class EntityCaster extends AbstractEntityDataStore implements ICaster
 
 	public void setVelocity(EntitySpellProjectile sp)
 	{
-		EntityLivingBase ent = caster.get();
+		EntityLivingBase ent = getCaster();
 		if(ent == null) return;
 		Vec3 vec = MathHelper.getVecBetween(new SimpleDoubleCoordStore(ent).translate(0, height(), 0), new SimpleDoubleCoordStore(sp));
 		vec = vec.normalize();
