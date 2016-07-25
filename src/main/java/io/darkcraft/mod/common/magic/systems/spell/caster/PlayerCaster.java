@@ -326,6 +326,8 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 		}
 		else if(ServerHelper.isServer())
 		{
+			EntityPlayerMP plm = (EntityPlayerMP) pl;
+			if((plm.playerNetServerHandler == null) || (plm.playerNetServerHandler.netManager == null)) return true;
 			NBTTagCompound nbt = new NBTTagCompound();
 			saveNBTData(nbt);
 			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
