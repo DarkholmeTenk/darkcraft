@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import net.minecraftforge.common.util.FakePlayer;
 import skillapi.api.implement.ISkill;
 
 public class Helper
@@ -44,7 +45,7 @@ public class Helper
 
 	public static EntityCaster getCaster(EntityLivingBase ent)
 	{
-		if(ent instanceof EntityPlayer)
+		if((ent instanceof EntityPlayer) && !(ent instanceof FakePlayer))
 			return getPlayerCaster((EntityPlayer) ent);
 		if (entCastMap.containsKey(ent)) return entCastMap.get(ent);
 		EntityCaster caster = new EntityCaster(ent);
