@@ -202,10 +202,9 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 	}
 
 	@Override
-	public void saveNBTData(NBTTagCompound lnbt)
+	public void writeTransmittable(NBTTagCompound lnbt)
 	{
-		writeToNBT(lnbt);
-		writeTransmittable(lnbt);
+		super.writeTransmittable(lnbt);
 		NBTTagCompound nbt = new NBTTagCompound();
 		synchronized(knownSpells)
 		{
@@ -236,6 +235,13 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 		lnbt.setTag("dcpc", nbt);
 	}
 
+	@Override
+	public void saveNBTData(NBTTagCompound lnbt)
+	{
+		writeToNBT(lnbt);
+		writeTransmittable(lnbt);
+	}
+
 	private void handleRemoval(int x)
 	{
 		knownSpells.remove(x);
@@ -250,6 +256,49 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 			currentSpell = -1;
 		else if(currentSpell > x)
 			currentSpell--;
+	}
+
+	@Override
+	public void readTransmittable(NBTTagCompound lnbt)
+	{
+		super.readTransmittable(lnbt);
+		NBTTagCompound nbt = lnbt.getCompoundTag("dcpc");
+		currentSpell = nbt.hasKey("cs") ? nbt.getInteger("cs") : -1;
+		synchronized(knownSpells){ synchronized(knownComponents)
+		{
+			int i = 0,j = 0;
+			if(spellUpdateID != nbt.getInteger("ksid"))
+			{
+				while(nbt.hasKey("ks"+i))
+				{
+					NBTTagCompound snbt = nbt.getCompoundTag("ks"+i);
+					Spell s = Spell.readFromNBT(snbt);
+					if(s != null)
+					{
+						if(knownSpells.size() <= j)
+							knownSpells.add(s);
+						else if(!s.equals(knownSpells.get(j)))
+							knownSpells.set(j, s);
+						j++;
+					}
+					else if(knownSpells.size() >= j)
+						knownSpells.remove(j);
+					i++;
+				}
+				for(;i<knownSpells.size();i++)
+					knownSpells.remove(i);
+				spellUpdateID = nbt.getInteger("ksid");
+			}
+			i = 0;
+			knownComponents.clear();
+			while(nbt.hasKey("kc"+i))
+				knownComponents.add(SpellPartRegistry.getComponent(nbt.getString("kc"+(i++))));
+			if(nbt.hasKey("hotkeys"))
+				hotkeys = nbt.getIntArray("hotkeys");
+			sortSpells();
+		}}
+		maxMana = nbt.getDouble("maxMana");
+		mana = nbt.getDouble("mana");
 	}
 
 	private int spellUpdateID = -1;
@@ -268,43 +317,7 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 		else if(lnbt.hasKey("dcpc"))
 		{
 			super.loadNBTData(lnbt);
-			NBTTagCompound nbt = lnbt.getCompoundTag("dcpc");
-			currentSpell = nbt.hasKey("cs") ? nbt.getInteger("cs") : -1;
-			synchronized(knownSpells){ synchronized(knownComponents)
-			{
-				int i = 0,j = 0;
-				if(spellUpdateID != nbt.getInteger("ksid"))
-				{
-					while(nbt.hasKey("ks"+i))
-					{
-						NBTTagCompound snbt = nbt.getCompoundTag("ks"+i);
-						Spell s = Spell.readFromNBT(snbt);
-						if(s != null)
-						{
-							if(knownSpells.size() <= j)
-								knownSpells.add(s);
-							else if(!s.equals(knownSpells.get(j)))
-								knownSpells.set(j, s);
-							j++;
-						}
-						else if(knownSpells.size() >= j)
-							knownSpells.remove(j);
-						i++;
-					}
-					for(;i<knownSpells.size();i++)
-						knownSpells.remove(i);
-					spellUpdateID = nbt.getInteger("ksid");
-				}
-				i = 0;
-				knownComponents.clear();
-				while(nbt.hasKey("kc"+i))
-					knownComponents.add(SpellPartRegistry.getComponent(nbt.getString("kc"+(i++))));
-				if(nbt.hasKey("hotkeys"))
-					hotkeys = nbt.getIntArray("hotkeys");
-				sortSpells();
-			}}
-			maxMana = nbt.getDouble("maxMana");
-			mana = nbt.getDouble("mana");
+			readTransmittable(lnbt);
 		}
 	}
 
@@ -313,7 +326,7 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 	{
 		EntityPlayer pl = getCaster();
 		if(pl == null) return false;
-		if(ServerHelper.isClient() || pl.worldObj.isRemote)
+		if(pl.worldObj.isRemote || ServerHelper.isClient())
 		{
 			String un = PlayerHelper.getUsername(pl);
 			NBTTagCompound nbt = new NBTTagCompound();
@@ -323,14 +336,19 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 			DarkcoreMod.networkChannel.sendToServer(dp);
 		}
-		else if(ServerHelper.isServer())
+		else
 		{
 			EntityPlayerMP plm = (EntityPlayerMP) pl;
-			if(!PlayerHelper.validForNetwork(plm)) return true;
-			NBTTagCompound nbt = new NBTTagCompound();
-			saveNBTData(nbt);
-			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
-			DarkcoreMod.networkChannel.sendTo(dp,(EntityPlayerMP) pl);
+			if(!PlayerHelper.validForNetwork(plm))
+			{
+				System.err.println("Invalid network for player " + pl.toString());
+				return true;
+			}
+			return super.sendUpdate();
+			//NBTTagCompound nbt = new NBTTagCompound();
+			//saveNBTData(nbt);
+			//DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
+			//DarkcoreMod.networkChannel.sendTo(dp,(EntityPlayerMP) pl);
 		}
 		return false;
 	}
@@ -340,7 +358,6 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 	{
 		if(ServerHelper.isServer())
 			queueUpdate();
-			//MagicEventHandler.updateQueue.add(this);
 		synchronized(registeredCasters)
 		{
 			registeredCasters.add(this);
