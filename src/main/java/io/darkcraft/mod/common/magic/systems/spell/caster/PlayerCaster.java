@@ -12,7 +12,6 @@ import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.network.DataPacket;
-import io.darkcraft.mod.common.magic.MagicEventHandler;
 import io.darkcraft.mod.common.magic.event.caster.PlayerCasterManaRegenEvent;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.SpellPartRegistry;
@@ -340,7 +339,8 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 	public void init(Entity entity, World world)
 	{
 		if(ServerHelper.isServer())
-			MagicEventHandler.updateQueue.add(this);
+			queueUpdate();
+			//MagicEventHandler.updateQueue.add(this);
 		synchronized(registeredCasters)
 		{
 			registeredCasters.add(this);
