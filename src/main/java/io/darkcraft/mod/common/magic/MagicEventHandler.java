@@ -41,6 +41,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -95,7 +96,7 @@ public class MagicEventHandler
 	public void entityConstruction(EntityConstructing event)
 	{
 		Entity ent = event.entity;
-		if(ent instanceof EntityPlayer)
+		if((ent instanceof EntityPlayer) && !(ent instanceof FakePlayer))
 			ent.registerExtendedProperties("dcPC", new PlayerCaster((EntityPlayer) ent));
 	}
 
