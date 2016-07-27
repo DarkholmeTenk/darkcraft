@@ -56,7 +56,7 @@ public class DigVein extends Dig implements INoAreaComponent, IConfigurableCompo
 	@Override
 	public void apply(ICaster caster, SimpleCoordStore bp, int side, int magnitude, int duration, int config)
 	{
-		if(bp == null) return;
+		if((bp == null) || (caster == null)) return;
 		Block b = bp.getBlock();
 		if(b == null) return;
 		if(canBreak(magnitude, b.getBlockHardness(bp.getWorldObj(), bp.x, bp.y, bp.z)))
