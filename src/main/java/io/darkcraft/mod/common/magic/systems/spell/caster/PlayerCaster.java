@@ -56,16 +56,6 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 
 	private void sortSpells()
 	{
-		/*Spell[] spells = new Spell[hotkeys.length];
-		for(int i = 0; i < spells.length; i++)
-			if(hotkeys[i] != -1)
-				spells[i] = knownSpells.get(hotkeys[i]);
-			else
-				spells[i] = null;
-		Collections.sort(knownSpells, Spell.SpellNameComparator.withSkill);
-		for(int i = 0; i < spells.length; i++)
-			if(spells[i] != null)
-				hotkeys[i] = knownSpells.indexOf(spells[i]);*/
 		spellUpdateID++;
 	}
 
