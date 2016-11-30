@@ -4,12 +4,18 @@ import io.darkcraft.darkcore.mod.abstracts.IEntityTransmittable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.handlers.packets.EntityPacketHandler;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
+import io.darkcraft.darkcore.mod.interfaces.IPositionProvider;
+import io.darkcraft.mod.common.magic.entities.particles.BasicParticle;
+import io.darkcraft.mod.common.magic.entities.particles.movement.Orbit;
+import io.darkcraft.mod.common.magic.entities.particles.movement.Velocity;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +23,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntitySpellProjectile extends Entity implements IEntityTransmittable
+public class EntitySpellProjectile extends Entity implements IEntityTransmittable, IPositionProvider
 {
 	public Spell spell;
 	public ICaster caster;
@@ -98,6 +104,20 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 		move();
 		if(ticksExisted > 500)
 			setDead();
+		if(ServerHelper.isClient())
+		{
+			if(Math.random() < 0.1)
+			{
+				double r = (rand.nextDouble() * 360);
+				double x = MathHelper.sin(r);
+				double z = MathHelper.cos(r);
+				Velocity vel = new Velocity(motionX * 0.7, motionY * 0.7, motionZ * 0.7);
+				vel.gravity = true;
+				BasicParticle particle = new BasicParticle(worldObj, posX + x, posY, posZ + z, vel);
+				Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+				Minecraft.getMinecraft().effectRenderer.addEffect(new BasicParticle(worldObj, posX + x, posY, posZ + z, new Orbit(this, 5)));
+			}
+		}
     }
 
 	@Override
@@ -129,6 +149,19 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	{
 		//readFromNBT(nbt);
 		readEntityFromNBT(nbt);
+	}
+
+	private int lastAge = -1;
+	private SimpleDoubleCoordStore lastPosition = null;
+	@Override
+	public SimpleDoubleCoordStore getPosition()
+	{
+		if(ticksExisted != lastAge)
+		{
+			lastAge = ticksExisted;
+			return lastPosition = new SimpleDoubleCoordStore(this);
+		}
+		return lastPosition;
 	}
 
 }
