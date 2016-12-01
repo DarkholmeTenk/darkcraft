@@ -2,6 +2,10 @@ package io.darkcraft.mod.common.magic.systems.component.impl;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
@@ -9,13 +13,11 @@ import io.darkcraft.darkcore.mod.handlers.DelayedItemHandler;
 import io.darkcraft.darkcore.mod.helpers.BlockIterator;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
+import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.systems.component.IConfigurableComponent;
 import io.darkcraft.mod.common.magic.systems.component.INoAreaComponent;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
 public class DigVein extends Dig implements INoAreaComponent, IConfigurableComponent
 {
@@ -40,6 +42,7 @@ public class DigVein extends Dig implements INoAreaComponent, IConfigurableCompo
 	public void digBlock(EntityPlayer pl, int magnitude, Block b, SimpleCoordStore bp)
 	{
 		if((bp == null) || (b == null)) return;
+		DarkcraftMod.proxy.getParticleHandler().createBlockCreator(DarkcraftMod.modRand, bp, bp);
 		ArrayList<ItemStack> drops = getDrops(b,bp,pl);
 		bp.setToAir();
 		if((drops != null) && ServerHelper.isServer())

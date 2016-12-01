@@ -1,15 +1,19 @@
-package io.darkcraft.mod.common;
+package io.darkcraft.mod.proxy;
 
-import cpw.mods.fml.common.network.IGuiHandler;
-import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
-import io.darkcraft.mod.common.magic.gui.ChalkContainer;
-import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
+import io.darkcraft.mod.common.magic.gui.ChalkContainer;
+import io.darkcraft.mod.common.magic.gui.SpellCreationContainer;
+
+import cpw.mods.fml.common.network.IGuiHandler;
+
 public class CommonProxy implements IGuiHandler
 {
+	ParticleHandler particleHandler;
+
 	public void init(){}
 
 	@Override
@@ -29,5 +33,10 @@ public class CommonProxy implements IGuiHandler
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
 		return null;
+	}
+
+	public ParticleHandler getParticleHandler()
+	{
+		return particleHandler;
 	}
 }

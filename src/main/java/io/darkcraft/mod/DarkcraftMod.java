@@ -2,23 +2,13 @@ package io.darkcraft.mod;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.config.ConfigHandler;
 import io.darkcraft.darkcore.mod.config.ConfigHandlerFactory;
 import io.darkcraft.darkcore.mod.interfaces.IConfigHandlerMod;
 import io.darkcraft.interop.Interop;
-import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.magic.field.MagicFieldFactory;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelperFactory;
 import io.darkcraft.mod.common.network.ChalkGuiPacketHandler;
@@ -32,7 +22,19 @@ import io.darkcraft.mod.common.registries.ItemBlockRegistry;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
-import net.minecraft.creativetab.CreativeTabs;
+import io.darkcraft.mod.proxy.CommonProxy;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = "darkcraft", name = "Darkcraft", version = "0.15", dependencies = "required-after:darkcore@[0.42,0.499]; required-after:SkillAPI; after:Thaumcraft")
 public class DarkcraftMod implements IConfigHandlerMod
@@ -44,8 +46,8 @@ public class DarkcraftMod implements IConfigHandlerMod
 	public static CreativeTabs				tab						= new DarkcraftCreativeTabs();
 	public static boolean					inited					= false;
 
-	@SidedProxy(clientSide = "io.darkcraft.mod.client.ClientProxy",
-			serverSide = "io.darkcraft.mod.common.CommonProxy")
+	@SidedProxy(	clientSide = "io.darkcraft.mod.proxy.ClientProxy",
+					serverSide = "io.darkcraft.mod.proxy.CommonProxy")
 	public static CommonProxy				proxy;
 
 	{

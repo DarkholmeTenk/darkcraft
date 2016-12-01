@@ -7,9 +7,10 @@ import org.lwjgl.opengl.GL20;
 
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.client.ClientProxy;
 import io.darkcraft.mod.common.magic.items.SoulGem;
 import io.darkcraft.mod.common.magic.items.SoulGem.Size;
+import io.darkcraft.mod.proxy.ClientProxy;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;

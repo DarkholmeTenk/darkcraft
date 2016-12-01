@@ -1,15 +1,18 @@
-package io.darkcraft.mod.client;
+package io.darkcraft.mod.proxy;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.ARBFragmentShader;
 import org.lwjgl.opengl.ARBVertexShader;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import io.darkcraft.darkcore.mod.client.ShaderHandler;
 import io.darkcraft.darkcore.mod.datastore.Pair;
 import io.darkcraft.mod.DarkcraftMod;
@@ -20,27 +23,30 @@ import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
 import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
 import io.darkcraft.mod.client.renderer.gui.StatusOverlay;
 import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
-import io.darkcraft.mod.common.CommonProxy;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.gui.ChalkContainer;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.tech.tileent.TechGenerator;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+import io.darkcraft.mod.proxy.ParticleHandler.ClientParticleHandler;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class ClientProxy extends CommonProxy
 {
 	public static int enchShader;
 	boolean handled = false;
 	KeyBinding keyBind;
+
+	{
+		particleHandler = new ClientParticleHandler();
+	}
 
 	@Override
 	public void init()
