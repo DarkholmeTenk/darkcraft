@@ -1,8 +1,9 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
+import net.minecraft.entity.EntityLivingBase;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import net.minecraft.entity.EntityLivingBase;
 
 public class EffectSoulTrap extends AbstractDarkcraftEffect
 {
@@ -10,7 +11,6 @@ public class EffectSoulTrap extends AbstractDarkcraftEffect
 	public EffectSoulTrap(ICaster _caster, EntityLivingBase ent, int _magnitude, int _duration)
 	{
 		super("soultrap", _caster, ent, _magnitude, _duration, true, false, 0);
-		canStack = true;
 	}
 
 	@Override
@@ -18,5 +18,4 @@ public class EffectSoulTrap extends AbstractDarkcraftEffect
 
 	@Override
 	public UVStore getIconLocation(){ return uv; }
-
 }
