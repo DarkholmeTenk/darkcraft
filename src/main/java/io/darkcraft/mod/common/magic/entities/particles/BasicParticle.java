@@ -73,13 +73,12 @@ public class BasicParticle extends EntityFX
         float pX = (float)((prevPosX + ((posX - prevPosX) * ptt)) - interpPosX);
         float pY = (float)((prevPosY + ((posY - prevPosY) * ptt)) - interpPosY);
         float pZ = (float)((prevPosZ + ((posZ - prevPosZ) * ptt)) - interpPosZ);
-        tess.setColorRGBA_F(particleRed, particleGreen, particleBlue, particleAlpha);
-        RenderHelper.colour(colour);
+        RenderHelper.colour(tess, colour);
         tess.addVertexWithUV(handle(pX, -rotationX, -rotationYZ, sz), pY - (rotationXZ * sz), handle(pZ, -rotationZ, -rotationXY, sz), uv.U, uv.V);
         tess.addVertexWithUV(handle(pX, -rotationX,  rotationYZ, sz), pY + (rotationXZ * sz), handle(pZ, -rotationZ,  rotationXY, sz), uv.U, uv.v);
         tess.addVertexWithUV(handle(pX,  rotationX,  rotationYZ, sz), pY + (rotationXZ * sz), handle(pZ,  rotationZ,  rotationXY, sz), uv.u, uv.v);
         tess.addVertexWithUV(handle(pX,  rotationX, -rotationYZ, sz), pY - (rotationXZ * sz), handle(pZ,  rotationZ, -rotationXY, sz), uv.u, uv.V);
-        RenderHelper.resetColour();
+        RenderHelper.resetColour(tess);
     }
 
 	public void setRenderInfo(ResourceLocation rl, UVStore uv, Colour c)
