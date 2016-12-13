@@ -49,7 +49,7 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-	runtime("io.darkcraft:darkcore:0.45:source") { changing = true }
+	compile("io.darkcraft:darkcore:0.45:source") { changing = true }
 	compile "io.darkcraft:skillapi:1.7.10-0.02:source"
 	compile "thaumcraft:thaumcraft:1.7.10:source"
 	compile "waila:waila:1.7.10:source"
