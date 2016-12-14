@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.common.IExtendedEntityProperties;
+import net.minecraftforge.common.MinecraftForge;
+
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.PlayerHelper;
@@ -20,13 +28,7 @@ import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.common.IExtendedEntityProperties;
-import net.minecraftforge.common.MinecraftForge;
+
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -42,9 +44,9 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 		}
 	}
 
-	private List<Spell> knownSpells = new ArrayList<Spell>();
+	private List<Spell> knownSpells = new ArrayList<>();
 	private List<Spell> unmodSpells = Collections.unmodifiableList(knownSpells);
-	private Set<IComponent> knownComponents = new HashSet<IComponent>();
+	private Set<IComponent> knownComponents = new HashSet<>();
 	private int currentSpell = -1;
 	private int[] hotkeys = new int[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 	public PlayerCaster(EntityPlayer pl)
@@ -326,7 +328,7 @@ public class PlayerCaster extends EntityCaster<EntityPlayer> implements IExtende
 			DataPacket dp = new DataPacket(nbt,PlayerCasterPacketHandler.disc);
 			DarkcoreMod.networkChannel.sendToServer(dp);
 		}
-		else
+		else if(pl instanceof EntityPlayerMP)
 		{
 			EntityPlayerMP plm = (EntityPlayerMP) pl;
 			if(!PlayerHelper.validForNetwork(plm))

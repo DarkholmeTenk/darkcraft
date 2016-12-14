@@ -7,6 +7,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.WeakHashMap;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.IExtendedEntityProperties;
+import net.minecraftforge.common.util.FakePlayer;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.magic.field.MagicFieldGlobal;
 import io.darkcraft.mod.common.magic.items.staff.Staff;
@@ -15,11 +21,7 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.IExtendedEntityProperties;
-import net.minecraftforge.common.util.FakePlayer;
+
 import skillapi.api.implement.ISkill;
 
 public class Helper
@@ -31,6 +33,7 @@ public class Helper
 	public static PlayerCaster getPlayerCaster(EntityPlayer pl)
 	{
 		if(pl == null) return null;
+		if(pl instanceof FakePlayer) return null;
 		IExtendedEntityProperties ieep = pl.getExtendedProperties("dcPC");
 		PlayerCaster caster;
 		if(ieep instanceof PlayerCaster)
