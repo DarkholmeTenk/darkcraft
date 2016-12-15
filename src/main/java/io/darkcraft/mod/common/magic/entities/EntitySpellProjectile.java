@@ -20,15 +20,17 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class EntitySpellProjectile extends Entity implements IEntityTransmittable, IPositionProvider
 {
-	public Spell spell;
-	public ICaster caster;
+	public Spell	spell;
+	public ICaster	caster;
 
 	public EntitySpellProjectile(World w)
 	{
 		super(w);
-		renderDistanceWeight *= 2;
 	}
 
 	public EntitySpellProjectile(ICaster _caster, Spell _spell, SimpleDoubleCoordStore dcs)
@@ -61,30 +63,30 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 		double mX = Math.max(posX, prevPosX);
 		double mY = Math.max(posY, prevPosY);
 		double mZ = Math.max(posZ, prevPosZ);
-		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(mx,my,mz,mX,mY,mZ).expand(1, 1, 1);
+		AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(mx, my, mz, mX, mY, mZ).expand(1, 1, 1);
 		return aabb;
 	}
 
 	private MovingObjectPosition blockCasterHitCheck(MovingObjectPosition mop)
 	{
-		if(mop == null) return null;
-		if(!(caster instanceof BlockCaster)) return mop;
-		if(mop.entityHit != null) return mop;
+		if (mop == null) return null;
+		if (!(caster instanceof BlockCaster)) return mop;
+		if (mop.entityHit != null) return mop;
 		BlockCaster bc = (BlockCaster) caster;
 		SimpleCoordStore scs = new SimpleCoordStore(worldObj, mop);
-		if(scs.equals(bc.blockPos)) return null;
+		if (scs.equals(bc.blockPos)) return null;
 		return mop;
 	}
 
 	private void hitCheck()
 	{
-		if(ServerHelper.isClient())return;
-		Entity c = caster instanceof EntityCaster ? ((EntityCaster)caster).getEntity() : null;
+		if (ServerHelper.isClient()) return;
+		Entity c = caster instanceof EntityCaster ? ((EntityCaster) caster).getEntity() : null;
 		MovingObjectPosition mop = RaytraceHelper.rayTrace(this, false, EntityLivingBase.class, true, spell.affectEntities, c);
 		mop = blockCasterHitCheck(mop);
-		if(mop != null)
+		if (mop != null)
 		{
-			if(mop.entityHit != null)
+			if (mop.entityHit != null)
 				spell.apply(caster, mop.entityHit);
 			else
 				spell.apply(caster, new SimpleCoordStore(worldObj, mop), mop.sideHit);
@@ -94,22 +96,20 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 
 	@Override
 	public void onEntityUpdate()
-    {
-		if(ticksExisted == 1)
-			EntityPacketHandler.syncEntity(this);
+	{
+		if (ticksExisted == 1) EntityPacketHandler.syncEntity(this);
 		super.onEntityUpdate();
 		hitCheck();
 		move();
-		if(ticksExisted > 500)
-			setDead();
-		if(ServerHelper.isClient())
+		if (ticksExisted > 500) setDead();
+		if (ServerHelper.isClient())
 		{
-			if(Math.random() < 0.1)
+			if (Math.random() < 0.1)
 			{
 				DarkcraftMod.particle.createProjectileParticle(this);
 			}
 		}
-    }
+	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt)
@@ -120,7 +120,7 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound nbt)
 	{
-		if(spell != null)
+		if (spell != null)
 		{
 			NBTTagCompound spellNBT = new NBTTagCompound();
 			spell.writeToNBT(spellNBT);
@@ -131,25 +131,25 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	@Override
 	public void writeToNBTTransmittable(NBTTagCompound nbt)
 	{
-		//writeToNBT(nbt);
+		// writeToNBT(nbt);
 		writeEntityToNBT(nbt);
 	}
 
 	@Override
 	public void readFromNBTTransmittable(NBTTagCompound nbt)
 	{
-		//readFromNBT(nbt);
+		// readFromNBT(nbt);
 		readEntityFromNBT(nbt);
 	}
 
-	private int lastAge = -1;
-	private SimpleDoubleCoordStore lastPosition = null;
+	private int						lastAge			= -1;
+	private SimpleDoubleCoordStore	lastPosition	= null;
+
 	@Override
 	public SimpleDoubleCoordStore getPosition()
 	{
-		if(isDead)
-			return null;
-		if(ticksExisted != lastAge)
+		if (isDead) return null;
+		if (ticksExisted != lastAge)
 		{
 			lastAge = ticksExisted;
 			return lastPosition = new SimpleDoubleCoordStore(this);
@@ -157,4 +157,10 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 		return lastPosition;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isInRangeToRenderDist(double p_70112_1_)
+	{
+		return true;
+	}
 }

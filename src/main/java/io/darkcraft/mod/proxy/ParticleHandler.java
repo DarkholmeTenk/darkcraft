@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -23,11 +24,14 @@ import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.darkcore.mod.proxy.BaseProxy;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.particles.BasicParticle;
+import io.darkcraft.mod.client.particles.ParticleCreator;
 import io.darkcraft.mod.client.particles.creators.BlockCreator;
+import io.darkcraft.mod.client.particles.creators.SpellCreatorCorner;
 import io.darkcraft.mod.client.particles.movement.AbstractMovement;
 import io.darkcraft.mod.client.particles.movement.Orbit;
 import io.darkcraft.mod.client.particles.movement.Towards;
 import io.darkcraft.mod.client.particles.movement.Velocity;
+import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.systems.component.impl.Blink;
 import io.darkcraft.mod.common.magic.systems.component.impl.SoulTrap;
@@ -51,6 +55,8 @@ public abstract class ParticleHandler extends BaseProxy
 
 	@ClientMethod(broadcast = Broadcast.DIMENSION)
 	public abstract void createSoulTrapParticles(IEntityContainer<EntityLivingBase> soultrapped);
+
+	public abstract void createSpellCreateParticles(SimpleCoordStore spellCreator, String[] hasUser);
 
 	@SideOnly(Side.CLIENT)
 	public static class ClientParticleHandler extends ParticleHandler
@@ -143,6 +149,22 @@ public abstract class ParticleHandler extends BaseProxy
 				SimpleDoubleCoordStore pos = soultrapped.getPosition();
 				BasicParticle bp = create(20+rand.nextInt(20), SoulTrap.PARTICLE_COLOUR, pos.getWorldObj(), pos.x + x, pos.y, pos.z + z, new Orbit(soultrapped, 5));
 				add(bp);
+			}
+		}
+
+		@Override
+		public void createSpellCreateParticles(SimpleCoordStore spellCreator, String[] players)
+		{
+			TileEntity te = spellCreator.getTileEntity();
+			if(te instanceof SpellCreator)
+			{
+				final SpellCreator sc = (SpellCreator) te;
+				for(int i = 0; i < 4; i++)
+				{
+					ParticleCreator pc = new SpellCreatorCorner(20, sc, i);
+					pc.setRenderInfo(rl, UVStore.defaultUV, new Colour(0.1f, 0.2f, 1));
+					add(pc);
+				}
 			}
 		}
 	}

@@ -2,8 +2,12 @@ package io.darkcraft.mod.common.magic.blocks.tileent;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import io.darkcraft.api.magic.IStaffable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
@@ -15,6 +19,9 @@ import io.darkcraft.darkcore.mod.multiblock.AirBlockState;
 import io.darkcraft.darkcore.mod.multiblock.BlockState;
 import io.darkcraft.darkcore.mod.multiblock.IBlockState;
 import io.darkcraft.darkcore.mod.multiblock.IMultiBlockStructure;
+import io.darkcraft.darkcore.mod.nbt.NBTProperty;
+import io.darkcraft.darkcore.mod.nbt.NBTProperty.SerialisableType;
+import io.darkcraft.darkcore.mod.nbt.NBTSerialisable;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.abstracts.AbstractMFTileEntity;
 import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
@@ -24,16 +31,21 @@ import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.ItemBlockRegistry;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraftforge.common.util.ForgeDirection;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@NBTSerialisable
 public class SpellCreator extends AbstractMFTileEntity implements IActivatable, IStaffable
 {
+	@NBTProperty
 	private double currentCost = 0;
+	@NBTProperty
+	private double totalCost = 0;
+
+	@NBTProperty({SerialisableType.WORLD})
 	private Spell currentSpell = null;
+	@NBTProperty({SerialisableType.WORLD})
 	private String currentSpellOwner = null;
 
 	public void closeGui()
@@ -89,19 +101,21 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 		EntityPlayer pl = PlayerHelper.getPlayer(un);
 		if(spell == null)
 		{
+			hasSpell = false;
 			currentSpell = null;
 			currentSpellOwner = null;
-			currentCost = 0;
+			currentCost = totalCost = 0;
 			hasUser = new String[]{null,null,null,null};
 			markDirty();
 			sendUpdate();
 		}
 		else if(!hasSpell())
 		{
+			hasSpell = true;
 			currentSpell = spell;
 			currentSpellOwner = un;
 			hasUser = new String[]{null,null,null,null};
-			currentCost = spell.getCost(null) * 10;
+			currentCost = totalCost = spell.getCost(null) * 10;
 			markDirty();
 			sendUpdate();
 		}
@@ -111,6 +125,7 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 		}
 	}
 
+	@NBTProperty({SerialisableType.TRANSMIT})
 	private boolean hasSpell = false;
 	public boolean hasSpell()
 	{
@@ -119,17 +134,27 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 		return (currentSpell != null) && (currentSpellOwner != null);
 	}
 
+	@NBTProperty
 	private boolean validStructure = false;
+
+	@NBTProperty
 	public String[] hasUser = new String[]{null,null,null,null};
 
 	@Override
 	public void tick()
 	{
-		if((tt % 100) == 0)
+		if((tt % 100) == 1)
+		{
+			boolean lvi = validStructure;
 			validStructure = MultiBlockHelper.isMultiblockValid(this, SpellCreatorStructure.i);
+			if(lvi != validStructure)
+				sendUpdate();
+		}
 		if(ServerHelper.isServer())
 			if(isValidStructure() && hasSpell() && ((tt%10) == 0))
 				checkNearbyPlayers();
+		if(((tt % 20) == 0) && hasSpell && ServerHelper.isClient())
+			DarkcraftMod.particle.createSpellCreateParticles(coords(), hasUser);
 	}
 
 	private void checkNearbyPlayers()
@@ -190,6 +215,14 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 		sendUpdate();
 	}
 
+	public double getProgress()
+	{
+		if((!hasSpell()) || (totalCost == 0))
+			return -1;
+		return (totalCost - currentCost) / totalCost;
+	}
+
+	/*
 	@Override
 	public void writeToNBT(NBTTagCompound nbt)
 	{
@@ -243,7 +276,7 @@ public class SpellCreator extends AbstractMFTileEntity implements IActivatable, 
 	public void readTransmittableOnly(NBTTagCompound nbt)
 	{
 		hasSpell = nbt.getBoolean("hasSpell");
-	}
+	}*/
 
 	public static IMultiBlockStructure getStructure()
 	{

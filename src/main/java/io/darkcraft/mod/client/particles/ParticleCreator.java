@@ -6,12 +6,23 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import io.darkcraft.darkcore.mod.datastore.Colour;
+import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.client.particles.movement.AbstractMovement;
 
 public abstract class ParticleCreator extends EntityFX
 {
+	protected ParticleCreator(int time, SimpleCoordStore pos)
+	{
+		this(time, pos.getWorldObj(), pos.x,pos.y,pos.z);
+	}
+
+	protected ParticleCreator(int time, SimpleDoubleCoordStore pos)
+	{
+		this(time, pos.getWorldObj(), pos.x, pos.y, pos.z);
+	}
 
 	protected ParticleCreator(int time, World w, double x, double y, double z)
 	{
@@ -56,7 +67,12 @@ public abstract class ParticleCreator extends EntityFX
 		return particle;
 	}
 
-	public void add(BasicParticle particle)
+	protected BasicParticle create(int life, SimpleDoubleCoordStore pos, AbstractMovement move)
+	{
+		return create(life, pos.x, pos.y, pos.z, move);
+	}
+
+	public void add(EntityFX particle)
 	{
 		Minecraft.getMinecraft().effectRenderer.addEffect(particle);
 	}

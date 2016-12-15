@@ -7,10 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import io.darkcraft.api.magic.ISpellable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.nbt.NBTHelper;
+import io.darkcraft.darkcore.mod.nbt.impl.PrimMapper;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.event.spell.SpellApplyBlockEvent;
 import io.darkcraft.mod.common.magic.event.spell.SpellApplyEntityEvent;
@@ -19,13 +29,7 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -151,7 +155,7 @@ public class Spell
 
 	private void applyArea(ICaster caster, SimpleDoubleCoordStore center)
 	{
-		HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+		HashMap<ISkill,Double> xpMap = new HashMap<>();
 		if(affectBlocks)
 		{
 			SimpleCoordStore iCenter = center.floor();
@@ -243,7 +247,7 @@ public class Spell
 		if(maxArea == 0)
 		{
 			if(!affectBlocks) return;
-			HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+			HashMap<ISkill,Double> xpMap = new HashMap<>();
 			SpellApplyBlockEvent sabe = new SpellApplyBlockEvent(caster, this, scs);
 			MinecraftForge.EVENT_BUS.post(sabe);
 			for(int i = 0; i < components.length; i++)
@@ -274,7 +278,7 @@ public class Spell
 		if(maxArea == 0)
 		{
 			if(!affectEntities) return;
-			HashMap<ISkill,Double> xpMap = new HashMap<ISkill,Double>();
+			HashMap<ISkill,Double> xpMap = new HashMap<>();
 			SpellApplyEntityEvent saee = new SpellApplyEntityEvent(caster, this, ent);
 			MinecraftForge.EVENT_BUS.post(saee);
 			for(int i = 0; i < components.length; i++)
@@ -350,4 +354,26 @@ public class Spell
 		if (type != other.type) return false;
 		return true;
 	}
+
+	public static final PrimMapper<Spell> spellMapper = new PrimMapper<Spell>()
+	{
+		{
+			NBTHelper.register(Spell.class, this);
+		}
+
+		@Override
+		public void writeToNBT(NBTTagCompound nbt, String id, Object t)
+		{
+			NBTTagCompound snbt = new NBTTagCompound();
+			((Spell) t).writeToNBT(snbt);
+			nbt.setTag(id, snbt);
+		}
+
+		@Override
+		public Spell readFromNBT(NBTTagCompound nbt, String id)
+		{
+			return Spell.readFromNBT(nbt.getCompoundTag(id));
+		}
+
+	};
 }
