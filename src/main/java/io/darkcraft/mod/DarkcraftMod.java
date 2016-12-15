@@ -51,7 +51,7 @@ public class DarkcraftMod implements IConfigHandlerMod
 					serverSide = "io.darkcraft.mod.proxy.CommonProxy")
 	public static CommonProxy				proxy;
 
-	@SidedProxy(	clientSide = "io.darkcraft.mod.proxy.ParticleHandler.ClientParticleHandler",
+	@SidedProxy(	clientSide = "io.darkcraft.mod.proxy.ParticleHandler$ClientParticleHandler",
 					serverSide = "io.darkcraft.mod.proxy.ParticleHandlerImpl")
 	public static ParticleHandler			particle;
 
