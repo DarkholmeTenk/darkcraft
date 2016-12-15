@@ -44,7 +44,7 @@ public abstract class ParticleHandler extends BaseProxy
 	public abstract void createBlockCreator(SimpleCoordStore bL, SimpleCoordStore tR);
 
 	@ClientMethod
-	public abstract void createBlinkParticles(SimpleDoubleCoordStore from, SimpleDoubleCoordStore to);
+	public abstract void createBlinkParticles(SimpleDoubleCoordStore from, SimpleDoubleCoordStore to, boolean middle);
 
 	@SideOnly(Side.CLIENT)
 	public static class ClientParticleHandler extends ParticleHandler
@@ -105,7 +105,7 @@ public abstract class ParticleHandler extends BaseProxy
 		}
 
 		@Override
-		public void createBlinkParticles(SimpleDoubleCoordStore from, SimpleDoubleCoordStore to)
+		public void createBlinkParticles(SimpleDoubleCoordStore from, SimpleDoubleCoordStore to, boolean middle)
 		{
 			if(from.getWorldObj() != null)
 				for(int i = 0; i < 20; i++)
@@ -114,7 +114,7 @@ public abstract class ParticleHandler extends BaseProxy
 			{
 				for(int i = 0; i < 20; i++)
 					add(create(20+rand.nextInt(10), Blink.particleColour, to, 0.0001, new Towards(to, -0.05)));
-				if(from.world == to.world)
+				if(middle && (from.world == to.world))
 				{
 					double dist = from.distance(to);
 					if(dist == 0)

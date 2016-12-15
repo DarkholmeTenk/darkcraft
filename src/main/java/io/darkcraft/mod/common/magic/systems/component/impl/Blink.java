@@ -81,7 +81,7 @@ public class Blink implements IComponent, IMagnitudeComponent
 				newPos = new SimpleDoubleCoordStore(mop.entityHit);
 		}
 		if(newPos == null) return;
-		DarkcraftMod.particle.createBlinkParticles(new SimpleDoubleCoordStore(ent), newPos);
+		DarkcraftMod.particle.createBlinkParticles(new SimpleDoubleCoordStore(ent), newPos, true);
 		TeleportHelper.teleportEntity(ent, newPos);
 	}
 

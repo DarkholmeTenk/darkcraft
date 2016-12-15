@@ -1,5 +1,14 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
@@ -7,6 +16,7 @@ import io.darkcraft.darkcore.mod.helpers.MessageHelper;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.darkcore.mod.helpers.TeleportHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
+import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.systems.component.IComponent;
 import io.darkcraft.mod.common.magic.systems.component.IConfigurableComponent;
@@ -16,14 +26,7 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+
 import skillapi.api.implement.ISkill;
 
 public class Recall implements IComponent, IConfigurableComponent
@@ -65,6 +68,7 @@ public class Recall implements IComponent, IConfigurableComponent
 		if(crossDimensional || (markLoc.world == WorldHelper.getWorldID(e)))
 		{
 			TeleportHelper.teleportEntity(e, markLoc);
+			DarkcraftMod.particle.createBlinkParticles(new SimpleDoubleCoordStore(e), markLoc, false);
 		}
 		else
 		{
