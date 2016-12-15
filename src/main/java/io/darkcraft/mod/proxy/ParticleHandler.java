@@ -56,6 +56,7 @@ public abstract class ParticleHandler extends BaseProxy
 	@ClientMethod(broadcast = Broadcast.DIMENSION)
 	public abstract void createSoulTrapParticles(IEntityContainer<EntityLivingBase> soultrapped);
 
+	@ClientMethod(broadcast = Broadcast.DIMENSION)
 	public abstract void createSpellCreateParticles(SimpleCoordStore spellCreator, String[] hasUser);
 
 	@SideOnly(Side.CLIENT)
