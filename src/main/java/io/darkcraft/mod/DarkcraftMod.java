@@ -23,6 +23,7 @@ import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.proxy.CommonProxy;
+import io.darkcraft.mod.proxy.ParticleHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -49,6 +50,10 @@ public class DarkcraftMod implements IConfigHandlerMod
 	@SidedProxy(	clientSide = "io.darkcraft.mod.proxy.ClientProxy",
 					serverSide = "io.darkcraft.mod.proxy.CommonProxy")
 	public static CommonProxy				proxy;
+
+	@SidedProxy(	clientSide = "io.darkcraft.mod.proxy.ParticleHandler.ClientParticleHandler",
+					serverSide = "io.darkcraft.mod.proxy.ParticleHandlerImpl")
+	public static ParticleHandler			particle;
 
 	{
 		i = this;

@@ -7,11 +7,15 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import io.darkcraft.apt.ClientMethod;
+import io.darkcraft.apt.ClientMethod.Broadcast;
+import io.darkcraft.apt.CommonProxy;
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
+import io.darkcraft.darkcore.mod.proxy.BaseProxy;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.entities.particles.BasicParticle;
@@ -23,11 +27,16 @@ import io.darkcraft.mod.common.magic.entities.particles.movement.Velocity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ParticleHandler
+@CommonProxy
+public class ParticleHandler extends BaseProxy
 {
-	public void createProjectileParticle(Random rand, EntitySpellProjectile projectile){}
+	protected static final Random rand = DarkcraftMod.modRand;
 
-	public void createBlockCreator(Random rand, SimpleCoordStore bL, SimpleCoordStore tR){}
+	@ClientMethod(broadcast = Broadcast.DIMENSION)
+	public void createProjectileParticle(EntitySpellProjectile projectile){}
+
+	@ClientMethod(broadcast = Broadcast.DIMENSION)
+	public void createBlockCreator(SimpleCoordStore bL, SimpleCoordStore tR){}
 
 	@SideOnly(Side.CLIENT)
 	public static class ClientParticleHandler extends ParticleHandler
@@ -53,7 +62,7 @@ public class ParticleHandler
 		}
 
 		@Override
-		public void createProjectileParticle(Random rand, EntitySpellProjectile pr)
+		public void createProjectileParticle(EntitySpellProjectile pr)
 		{
 			double r = (rand.nextDouble() * 360);
 			double x = MathHelper.sin(r);
@@ -67,7 +76,7 @@ public class ParticleHandler
 		}
 
 		@Override
-		public void createBlockCreator(Random rand, SimpleCoordStore bL, SimpleCoordStore tR)
+		public void createBlockCreator(SimpleCoordStore bL, SimpleCoordStore tR)
 		{
 			BlockCreator bc = new BlockCreator(20, bL.getWorldObj(), bL, tR);
 			bc.setRenderInfo(rl, UVStore.defaultUV, new Colour(0.1f, 0.2f, 1));

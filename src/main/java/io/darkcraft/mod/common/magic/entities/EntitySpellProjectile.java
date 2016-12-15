@@ -105,7 +105,7 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 		{
 			if(Math.random() < 0.1)
 			{
-				DarkcraftMod.proxy.getParticleHandler().createProjectileParticle(rand, this);
+				DarkcraftMod.particle.createProjectileParticle(rand, this);
 			}
 		}
     }

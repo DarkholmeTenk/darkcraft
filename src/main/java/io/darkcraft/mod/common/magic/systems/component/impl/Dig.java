@@ -72,7 +72,7 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 		if(b == null) return;
 		if(canBreak(magnitude, b.getBlockHardness(bp.getWorldObj(), bp.x, bp.y, bp.z)))
 		{
-			DarkcraftMod.proxy.getParticleHandler().createBlockCreator(DarkcraftMod.modRand, bp, bp);
+			DarkcraftMod.particle.createBlockCreator(DarkcraftMod.modRand, bp, bp);
 			EntityPlayer pl = caster instanceof PlayerCaster ? ((PlayerCaster)caster).getCaster() : null;
 			ArrayList<ItemStack> drops = getDrops(b,bp,pl);
 			bp.setToAir();

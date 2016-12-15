@@ -34,9 +34,4 @@ public class CommonProxy implements IGuiHandler
 	{
 		return null;
 	}
-
-	public ParticleHandler getParticleHandler()
-	{
-		return particleHandler;
-	}
 }
