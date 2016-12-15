@@ -42,7 +42,7 @@ public class DigVein extends Dig implements INoAreaComponent, IConfigurableCompo
 	public void digBlock(EntityPlayer pl, int magnitude, Block b, SimpleCoordStore bp)
 	{
 		if((bp == null) || (b == null)) return;
-		DarkcraftMod.proxy.getParticleHandler().createBlockCreator(DarkcraftMod.modRand, bp, bp);
+		DarkcraftMod.particle.createBlockCreator(bp, bp);
 		ArrayList<ItemStack> drops = getDrops(b,bp,pl);
 		bp.setToAir();
 		if((drops != null) && ServerHelper.isServer())
