@@ -67,8 +67,8 @@ public class Recall implements IComponent, IConfigurableComponent
 	{
 		if(crossDimensional || (markLoc.world == WorldHelper.getWorldID(e)))
 		{
+			DarkcraftMod.particle.createBlinkParticles(new SimpleDoubleCoordStore(e), markLoc.translate(0, 0.5, 0), false);
 			TeleportHelper.teleportEntity(e, markLoc);
-			DarkcraftMod.particle.createBlinkParticles(new SimpleDoubleCoordStore(e), markLoc, false);
 		}
 		else
 		{
