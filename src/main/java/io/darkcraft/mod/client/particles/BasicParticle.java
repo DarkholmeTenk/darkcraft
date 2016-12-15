@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.entities.particles;
+package io.darkcraft.mod.client.particles;
 
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
@@ -7,8 +7,10 @@ import net.minecraft.world.World;
 
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.common.magic.entities.particles.movement.AbstractMovement;
+import io.darkcraft.darkcore.mod.helpers.WorldHelper;
+import io.darkcraft.mod.client.particles.movement.AbstractMovement;
 
 public class BasicParticle extends EntityFX
 {
@@ -18,14 +20,16 @@ public class BasicParticle extends EntityFX
 	private UVStore uv;
 	private Colour colour;
 
+	private float lastScale = 0;
+
 	public BasicParticle(World w, double x, double y, double z, AbstractMovement movement)
 	{
-		super(w, x, y, z);
+		super(w.isRemote ? w : WorldHelper.getClientWorld(), x, y, z);
 		this.movement = movement;
 		movement.setParticle(this);
 		particleMaxAge = 200;
 		setParticleTextureIndex(82); // same as happy villager
-        particleScale = 1.0F;
+        particleScale = 0;
         particleGravity = 0.05f;
 
         movement.move();
@@ -68,7 +72,7 @@ public class BasicParticle extends EntityFX
 			return;
 		}
 		RenderHelper.bindTexture(tex);
-        float sz = 0.1F * particleScale;
+        float sz = 0.1F * MathHelper.interpolate(lastScale, particleScale, ptt);
 
         float pX = (float)((prevPosX + ((posX - prevPosX) * ptt)) - interpPosX);
         float pY = (float)((prevPosY + ((posY - prevPosY) * ptt)) - interpPosY);
@@ -103,6 +107,17 @@ public class BasicParticle extends EntityFX
         if(isDead)
         	return;
 
+        lastScale = particleScale;
+        if(particleMaxAge > 8)
+        {
+        	if(particleAge <= 4)
+        		particleScale = particleAge / 4f;
+        	else if(particleAge >= (particleMaxAge - 4))
+        		particleScale = (particleMaxAge - particleAge - 1) / 4f;
+        	else
+        		particleScale = 1;
+        }
+
         if (particleAge++ >= particleMaxAge)
         {
             setDead();
@@ -111,5 +126,18 @@ public class BasicParticle extends EntityFX
         {
         	movement.move();
         }
+    }
+
+	@Override
+	public void moveEntity(double x, double y, double z)
+    {
+		try
+		{
+			super.moveEntity(x, y, z);
+		}
+		catch(NullPointerException e)
+		{
+			setDead();
+		}
     }
 }

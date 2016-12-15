@@ -1,6 +1,6 @@
-package io.darkcraft.mod.common.magic.entities.particles.movement;
+package io.darkcraft.mod.client.particles.movement;
 
-import io.darkcraft.mod.common.magic.entities.particles.BasicParticle;
+import io.darkcraft.mod.client.particles.BasicParticle;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

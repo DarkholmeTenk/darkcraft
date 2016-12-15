@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.entities.particles.movement;
+package io.darkcraft.mod.client.particles.movement;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Vec3;

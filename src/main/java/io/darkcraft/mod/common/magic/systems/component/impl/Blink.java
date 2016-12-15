@@ -1,16 +1,5 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
-import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
-import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.darkcore.mod.datastore.UVStore;
-import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
-import io.darkcraft.darkcore.mod.helpers.TeleportHelper;
-import io.darkcraft.darkcore.mod.helpers.WorldHelper;
-import io.darkcraft.mod.common.magic.systems.component.IComponent;
-import io.darkcraft.mod.common.magic.systems.component.IMagnitudeComponent;
-import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import io.darkcraft.mod.common.registries.MagicalRegistry;
-import io.darkcraft.mod.common.registries.SkillRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MovingObjectPosition;
@@ -18,10 +7,27 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import io.darkcraft.darkcore.mod.datastore.Colour;
+import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
+import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
+import io.darkcraft.darkcore.mod.helpers.TeleportHelper;
+import io.darkcraft.darkcore.mod.helpers.WorldHelper;
+import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.systems.component.IComponent;
+import io.darkcraft.mod.common.magic.systems.component.IMagnitudeComponent;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import io.darkcraft.mod.common.registries.MagicalRegistry;
+import io.darkcraft.mod.common.registries.SkillRegistry;
+
 import skillapi.api.implement.ISkill;
 
 public class Blink implements IComponent, IMagnitudeComponent
 {
+	public static final Colour particleColour = new Colour(0x1a6f61);
+
 	@Override
 	public String id(){ return "blink"; }
 
@@ -75,6 +81,7 @@ public class Blink implements IComponent, IMagnitudeComponent
 				newPos = new SimpleDoubleCoordStore(mop.entityHit);
 		}
 		if(newPos == null) return;
+		DarkcraftMod.particle.createBlinkParticles(new SimpleDoubleCoordStore(ent), newPos);
 		TeleportHelper.teleportEntity(ent, newPos);
 	}
 

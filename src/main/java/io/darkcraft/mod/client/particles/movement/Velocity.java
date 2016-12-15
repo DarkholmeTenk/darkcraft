@@ -1,4 +1,6 @@
-package io.darkcraft.mod.common.magic.entities.particles.movement;
+package io.darkcraft.mod.client.particles.movement;
+
+import net.minecraft.util.Vec3;
 
 public class Velocity extends AbstractMovement
 {
@@ -16,6 +18,11 @@ public class Velocity extends AbstractMovement
 		this.motionX = motionX;
 		this.motionY = motionY;
 		this.motionZ = motionZ;
+	}
+
+	public Velocity(Vec3 normalisedVec, double speed)
+	{
+		this(normalisedVec.xCoord * speed, normalisedVec.yCoord * speed, normalisedVec.zCoord * speed);
 	}
 
 	@Override

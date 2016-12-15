@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.entities.particles;
+package io.darkcraft.mod.client.particles;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import io.darkcraft.mod.common.magic.entities.particles.movement.AbstractMovement;
+import io.darkcraft.mod.client.particles.movement.AbstractMovement;
 
 public abstract class ParticleCreator extends EntityFX
 {

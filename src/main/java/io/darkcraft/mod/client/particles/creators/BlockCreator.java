@@ -1,12 +1,12 @@
-package io.darkcraft.mod.common.magic.entities.particles.creators;
+package io.darkcraft.mod.client.particles.creators;
 
 import net.minecraft.world.World;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
-import io.darkcraft.mod.common.magic.entities.particles.ParticleCreator;
-import io.darkcraft.mod.common.magic.entities.particles.movement.AbstractMovement;
-import io.darkcraft.mod.common.magic.entities.particles.movement.Path;
+import io.darkcraft.mod.client.particles.ParticleCreator;
+import io.darkcraft.mod.client.particles.movement.AbstractMovement;
+import io.darkcraft.mod.client.particles.movement.Path;
 
 public class BlockCreator extends ParticleCreator
 {

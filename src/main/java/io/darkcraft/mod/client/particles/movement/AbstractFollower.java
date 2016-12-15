@@ -1,4 +1,4 @@
-package io.darkcraft.mod.common.magic.entities.particles.movement;
+package io.darkcraft.mod.client.particles.movement;
 
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.interfaces.IPositionProvider;

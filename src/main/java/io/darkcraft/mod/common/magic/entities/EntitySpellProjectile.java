@@ -28,11 +28,12 @@ public class EntitySpellProjectile extends Entity implements IEntityTransmittabl
 	public EntitySpellProjectile(World w)
 	{
 		super(w);
+		renderDistanceWeight *= 2;
 	}
 
 	public EntitySpellProjectile(ICaster _caster, Spell _spell, SimpleDoubleCoordStore dcs)
 	{
-		super(dcs.getWorldObj());
+		this(dcs.getWorldObj());
 		caster = _caster;
 		spell = _spell;
 		posX = dcs.x;
