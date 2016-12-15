@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -15,6 +16,7 @@ import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.handlers.containers.IEntityContainer;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
@@ -28,6 +30,7 @@ import io.darkcraft.mod.client.particles.movement.Towards;
 import io.darkcraft.mod.client.particles.movement.Velocity;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.systems.component.impl.Blink;
+import io.darkcraft.mod.common.magic.systems.component.impl.SoulTrap;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -45,6 +48,9 @@ public abstract class ParticleHandler extends BaseProxy
 
 	@ClientMethod
 	public abstract void createBlinkParticles(SimpleDoubleCoordStore from, SimpleDoubleCoordStore to, boolean middle);
+
+	@ClientMethod(broadcast = Broadcast.DIMENSION)
+	public abstract void createSoulTrapParticles(IEntityContainer<EntityLivingBase> soultrapped);
 
 	@SideOnly(Side.CLIENT)
 	public static class ClientParticleHandler extends ParticleHandler
@@ -123,6 +129,20 @@ public abstract class ParticleHandler extends BaseProxy
 					for(int i = 0; i < dist; i++)
 						add(create(40+rand.nextInt(20), Blink.particleColour, from.interpolate(to, i / dist), 0.2, new Velocity(vel, 0.1)));
 				}
+			}
+		}
+
+		@Override
+		public void createSoulTrapParticles(IEntityContainer<EntityLivingBase> soultrapped)
+		{
+			for(int i = 0; i < (rand.nextInt(5) + 1); i++)
+			{
+				double r = (rand.nextDouble() * 360);
+				double x = MathHelper.sin(r);
+				double z = MathHelper.cos(r);
+				SimpleDoubleCoordStore pos = soultrapped.getPosition();
+				BasicParticle bp = create(20+rand.nextInt(20), SoulTrap.PARTICLE_COLOUR, pos.getWorldObj(), pos.x + x, pos.y, pos.z + z, new Orbit(soultrapped, 5));
+				add(bp);
 			}
 		}
 	}

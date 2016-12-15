@@ -1,5 +1,10 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
+
+import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
@@ -10,13 +15,12 @@ import io.darkcraft.mod.common.magic.systems.effects.EffectSoulTrap;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ResourceLocation;
+
 import skillapi.api.implement.ISkill;
 
 public class SoulTrap implements IComponent, IDurationComponent
 {
+	public static final Colour PARTICLE_COLOUR = new Colour(0x7500b1);
 
 	@Override
 	public String id()
