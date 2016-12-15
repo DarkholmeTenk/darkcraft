@@ -26,7 +26,7 @@ import skillapi.api.implement.ISkill;
 
 public class Blink implements IComponent, IMagnitudeComponent
 {
-	public static final Colour particleColour = new Colour(0x1a6f61);
+	public static final Colour PARTICLE_COLOUR = new Colour(0x1a6f61);
 
 	@Override
 	public String id(){ return "blink"; }

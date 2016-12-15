@@ -115,11 +115,11 @@ public abstract class ParticleHandler extends BaseProxy
 		{
 			if(from.getWorldObj() != null)
 				for(int i = 0; i < 20; i++)
-					add(create(20+rand.nextInt(10), Blink.particleColour, from, 1, new Towards(from, 0.03)));
+					add(create(20+rand.nextInt(10), Blink.PARTICLE_COLOUR, from, 1, new Towards(from, 0.03)));
 			if(to.getWorldObj() != null)
 			{
 				for(int i = 0; i < 20; i++)
-					add(create(20+rand.nextInt(10), Blink.particleColour, to, 0.0001, new Towards(to, -0.05)));
+					add(create(20+rand.nextInt(10), Blink.PARTICLE_COLOUR, to, 0.0001, new Towards(to, -0.05)));
 				if(middle && (from.world == to.world))
 				{
 					double dist = from.distance(to);
@@ -127,7 +127,7 @@ public abstract class ParticleHandler extends BaseProxy
 						return;
 					Vec3 vel = MathHelper.getVecBetween(from, to).normalize();
 					for(int i = 0; i < dist; i++)
-						add(create(40+rand.nextInt(20), Blink.particleColour, from.interpolate(to, i / dist), 0.2, new Velocity(vel, 0.1)));
+						add(create(40+rand.nextInt(20), Blink.PARTICLE_COLOUR, from.interpolate(to, i / dist), 0.2, new Velocity(vel, 0.1)));
 				}
 			}
 		}
