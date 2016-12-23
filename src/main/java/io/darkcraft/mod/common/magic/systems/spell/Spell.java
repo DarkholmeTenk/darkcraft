@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import io.darkcraft.api.magic.ISpellable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
@@ -328,12 +329,7 @@ public class Spell
 	@Override
 	public int hashCode()
 	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + Arrays.hashCode(components);
-		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
-		result = (prime * result) + ((type == null) ? 0 : type.hashCode());
-		return result;
+		return Objects.hash(Arrays.hashCode(components), name, type);
 	}
 
 	@Override
@@ -344,11 +340,7 @@ public class Spell
 		if (!(obj instanceof Spell)) return false;
 		Spell other = (Spell) obj;
 		if (!Arrays.equals(components, other.components)) return false;
-		if (name == null)
-		{
-			if (other.name != null) return false;
-		}
-		else if (!name.equals(other.name)) return false;
+		if(!Objects.equals(name, other.name)) return false;
 		if (type != other.type) return false;
 		return true;
 	}
