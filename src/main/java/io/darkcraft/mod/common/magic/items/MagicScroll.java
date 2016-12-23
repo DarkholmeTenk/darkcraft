@@ -2,6 +2,12 @@ package io.darkcraft.mod.common.magic.items;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
@@ -14,11 +20,6 @@ import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
 import io.darkcraft.mod.common.registries.recipes.ScrollRecipe;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import net.minecraftforge.client.IItemRenderer;
 
 public class MagicScroll extends AbstractItem
 {
@@ -48,7 +49,7 @@ public class MagicScroll extends AbstractItem
 	@Override
 	public boolean onItemUse(ItemStack is, EntityPlayer pl, World w, int x, int y, int z, int s, float i, float j, float k)
     {
-		if(ServerHelper.isServer())
+		if(ServerHelper.isServer(w))
 		{
 			Spell spell = getSpell(is);
 			PlayerCaster caster = Helper.getPlayerCaster(pl);
@@ -69,7 +70,8 @@ public class MagicScroll extends AbstractItem
 	@Override
 	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer pl)
 	{
-		rightClick(is, w, pl);
+		if(ServerHelper.isServer(w))
+			rightClick(is, w, pl);
 		return is;
 	}
 
