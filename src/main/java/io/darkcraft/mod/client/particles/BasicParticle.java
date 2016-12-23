@@ -28,10 +28,9 @@ public class BasicParticle extends EntityFX
 		this.movement = movement;
 		movement.setParticle(this);
 		particleMaxAge = 200;
-		setParticleTextureIndex(82); // same as happy villager
+		//setParticleTextureIndex(82); // same as happy villager
         particleScale = 0;
         particleGravity = 0.05f;
-
         movement.move();
 	}
 
@@ -127,6 +126,12 @@ public class BasicParticle extends EntityFX
         	movement.move();
         }
     }
+
+	@Override
+	public int getFXLayer()
+	{
+		return 2;
+	}
 
 	@Override
 	public void moveEntity(double x, double y, double z)
