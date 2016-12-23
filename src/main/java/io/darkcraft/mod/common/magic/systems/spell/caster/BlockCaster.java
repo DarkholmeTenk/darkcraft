@@ -2,6 +2,14 @@ package io.darkcraft.mod.common.magic.systems.spell.caster;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
@@ -10,13 +18,6 @@ import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.systems.spell.CastType;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicConfig;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockCaster implements ICaster
 {
@@ -195,5 +196,17 @@ public class BlockCaster implements ICaster
 	public void readFromNBT(NBTTagCompound nbt)
 	{
 
+	}
+
+	@Override
+	public boolean isCaster(SimpleCoordStore pos)
+	{
+		return blockPos.equals(pos);
+	}
+
+	@Override
+	public boolean isCaster(Entity ent)
+	{
+		return false;
 	}
 }

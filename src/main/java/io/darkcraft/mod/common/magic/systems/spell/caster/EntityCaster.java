@@ -3,6 +3,16 @@ package io.darkcraft.mod.common.magic.systems.spell.caster;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractEntityDataStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
@@ -14,15 +24,7 @@ import io.darkcraft.mod.common.magic.systems.spell.CastType;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -262,5 +264,17 @@ public class EntityCaster<E extends EntityLivingBase> extends AbstractEntityData
 	public NBTTagCompound getExtraDataT()
 	{
 		return extraDataTransmittable;
+	}
+
+	@Override
+	public boolean isCaster(SimpleCoordStore pos)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isCaster(Entity ent)
+	{
+		return ent == getCaster();
 	}
 }

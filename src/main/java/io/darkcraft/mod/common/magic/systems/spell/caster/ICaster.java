@@ -1,9 +1,10 @@
 package io.darkcraft.mod.common.magic.systems.spell.caster;
 
+import net.minecraft.entity.Entity;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
-import net.minecraft.entity.Entity;
 
 /**
  * Useless on its own, caster will either be {@link EntityCaster} or {@link BlockCaster}
@@ -33,4 +34,8 @@ public interface ICaster
 	public void cast(Spell spell, SimpleCoordStore block, int side, boolean useMana);
 
 	public void cast(Spell spell, Entity ent, boolean useMana);
+
+	public boolean isCaster(SimpleCoordStore pos);
+
+	public boolean isCaster(Entity ent);
 }
