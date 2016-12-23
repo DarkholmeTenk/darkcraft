@@ -1,15 +1,17 @@
 package io.darkcraft.mod.common.magic.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlockContainer;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.tileent.GemStandRenderer;
 import io.darkcraft.mod.common.magic.blocks.tileent.GemStand;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class GemStandBlock extends AbstractBlockContainer
 {
@@ -35,7 +37,7 @@ public class GemStandBlock extends AbstractBlockContainer
 	{
 		setBlockName("GemStand");
 		setBlockBounds(0.4f,0,0.4f,0.6f,0.9f,0.6f);
-		setHardness(5.0f);
+		setHardness(3.0f);
 	}
 
 	@Override

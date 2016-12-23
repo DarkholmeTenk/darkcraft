@@ -1,5 +1,12 @@
 package io.darkcraft.mod.common.magic.blocks.tileent;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractTileEntity;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MessageHelper;
@@ -12,10 +19,6 @@ import io.darkcraft.mod.common.magic.items.SoulGem.Size;
 import io.darkcraft.mod.common.magic.systems.soulspell.ISoulSpell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
 import io.darkcraft.mod.common.magic.systems.spell.caster.IBlockCasterHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class GemStand extends AbstractTileEntity implements IActivatable, IBlockCasterHandler
 {
@@ -219,5 +222,12 @@ public class GemStand extends AbstractTileEntity implements IActivatable, IBlock
 	public ItemStack getIS()
 	{
 		return is;
+	}
+
+	@Override
+	public void addDrops(List<ItemStack> items)
+	{
+		if(is != null)
+			items.add(is);
 	}
 }
