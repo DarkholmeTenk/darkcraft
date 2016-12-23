@@ -49,6 +49,8 @@ public class MagicConfig
 	public static double silkMult = 3;
 	public static int[] soulHealthSizes = new int[]{0,5,15,30,45};
 	public static boolean recallOthers = true;
+	public static boolean hitSelf = false;
+
 
 	public static void refreshConfigs()
 	{
@@ -80,7 +82,7 @@ public class MagicConfig
 		fortuneLevel = cbConfig.getInt("Fortune level", 3, "The level of fortune fortune spells have");
 		silkMult = cbConfig.getDouble("Silk cost multiplier", 3, "Configures how much of a cost increase silk touch is on excavate");
 		recallOthers = cbConfig.getBoolean("Can recall others", true, "If this is true, you can cast the recall spells on any living entity");
-
+		hitSelf = cbConfig.getBoolean("Can hit self", false, "If this is true, then a touch/projectile spell with an area can hit the caster");
 		setSoulSizes();
 	}
 

@@ -176,6 +176,7 @@ public class Spell
 						}
 						//Must be in range to be here
 						SimpleCoordStore scs = new SimpleCoordStore(center.world, x,y,z);
+						if(!MagicConfig.hitSelf && (type != CastType.SELF) && (caster != null) && caster.isCaster(scs)) continue;
 						SpellApplyBlockEvent sabe = new SpellApplyBlockEvent(caster, this, scs);
 						MinecraftForge.EVENT_BUS.post(sabe);
 						for(int i = 0; i < components.length; i++)
@@ -198,6 +199,7 @@ public class Spell
 			List<Entity> entList = w.getEntitiesWithinAABB(Entity.class, aabb);
 			for(Entity e : entList)
 			{
+				if(!MagicConfig.hitSelf && (type != CastType.SELF) && (caster != null) && caster.isCaster(e)) continue;
 				double d = center.diagonalParadoxDistance(e.posX, e.posY, e.posZ);
 				if(d > maxArea) continue;
 
