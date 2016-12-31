@@ -35,7 +35,7 @@ public class EnderChest implements IComponent, INoAreaComponent
 		return MagicalRegistry.componentTex;
 	}
 
-	private final UVStore uv = new UVStore(0.3, 0.4, 0.2, 0.3);
+	private final UVStore uv = new UVStore(0.6, 0.7, 0.2, 0.3);
 
 	@Override
 	public UVStore getIconLocation()
