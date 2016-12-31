@@ -1,5 +1,8 @@
 package io.darkcraft.mod.common.registries;
 
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
@@ -13,6 +16,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.Dig;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigFortune;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigSilk;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigVein;
+import io.darkcraft.mod.common.magic.systems.component.impl.EnderChest;
 import io.darkcraft.mod.common.magic.systems.component.impl.FeatherFall;
 import io.darkcraft.mod.common.magic.systems.component.impl.Fly;
 import io.darkcraft.mod.common.magic.systems.component.impl.Mark;
@@ -30,8 +34,6 @@ import io.darkcraft.mod.common.magic.systems.soulspell.impl.DarkcraftSoulSpellFa
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.symbolic.SymbolicRegistry;
 import io.darkcraft.mod.common.magic.systems.symbolic.impl.DarkcraftSymbolicFactory;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 
 public class MagicalRegistry
 {
@@ -55,6 +57,7 @@ public class MagicalRegistry
 	public static final Recall recallCD = new Recall(true);
 	public static final SummonLight sl = new SummonLight();
 	public static final Blink blink = new Blink();
+	public static final EnderChest enderchest = new EnderChest();
 	public static final WaterWalk ww = new WaterWalk();
 	public static final FeatherFall ff = new FeatherFall();
 	public static final DamageFire df = new DamageFire();
@@ -79,6 +82,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(recallCD);
 		SpellPartRegistry.registerComponent(sl);
 		SpellPartRegistry.registerComponent(blink);
+		SpellPartRegistry.registerComponent(enderchest);
 		SpellPartRegistry.registerComponent(ww);
 		SpellPartRegistry.registerComponent(ff);
 		SpellPartRegistry.registerComponent(df);
