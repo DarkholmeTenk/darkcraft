@@ -19,6 +19,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.DigVein;
 import io.darkcraft.mod.common.magic.systems.component.impl.EnderChest;
 import io.darkcraft.mod.common.magic.systems.component.impl.FeatherFall;
 import io.darkcraft.mod.common.magic.systems.component.impl.Fly;
+import io.darkcraft.mod.common.magic.systems.component.impl.Jump;
 import io.darkcraft.mod.common.magic.systems.component.impl.Mark;
 import io.darkcraft.mod.common.magic.systems.component.impl.Recall;
 import io.darkcraft.mod.common.magic.systems.component.impl.ResistFire;
@@ -87,6 +88,7 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(ff);
 		SpellPartRegistry.registerComponent(df);
 		SpellPartRegistry.registerComponent(rf);
+		SpellPartRegistry.registerComponent(new Jump());
 		SpellPartRegistry.registerComponent(test, false);
 		SoulSpellRegistry.registerFactory(new DarkcraftSoulSpellFactory());
 		SymbolicRegistry.registerFactory(new DarkcraftSymbolicFactory());

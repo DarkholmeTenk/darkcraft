@@ -59,6 +59,9 @@ public abstract class ParticleHandler extends BaseProxy
 	@ClientMethod(broadcast = Broadcast.DIMENSION)
 	public abstract void createSpellCreateParticles(SimpleCoordStore spellCreator, String[] hasUser);
 
+	@ClientMethod(broadcast = Broadcast.DIMENSION)
+	public abstract void createJumpParticles(SimpleDoubleCoordStore simpleDoubleCoordStore, Vec3 createVectorHelper);
+
 	@SideOnly(Side.CLIENT)
 	public static class ClientParticleHandler extends ParticleHandler
 	{
@@ -166,6 +169,17 @@ public abstract class ParticleHandler extends BaseProxy
 					pc.setRenderInfo(rl, UVStore.defaultUV, new Colour(0.1f, 0.2f, 1));
 					add(pc);
 				}
+			}
+		}
+
+		@Override
+		public void createJumpParticles(SimpleDoubleCoordStore simpleDoubleCoordStore, Vec3 newMotion)
+		{
+			for( int i = 0; i < 50; i++)
+			{
+				Velocity v = new Velocity(newMotion.xCoord * -0.2, 0.1, newMotion.zCoord * -0.2);
+				BasicParticle bp = create(20 + rand.nextInt(20), new Colour(0.8f, 0.8f, 0.2f), simpleDoubleCoordStore, 1, v);
+				add(bp);
 			}
 		}
 	}
