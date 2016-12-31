@@ -12,10 +12,12 @@ import io.darkcraft.mod.common.magic.systems.component.impl.Damage;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageFire;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageHunger;
 import io.darkcraft.mod.common.magic.systems.component.impl.DamageMagicka;
+import io.darkcraft.mod.common.magic.systems.component.impl.Deflect;
 import io.darkcraft.mod.common.magic.systems.component.impl.Dig;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigFortune;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigSilk;
 import io.darkcraft.mod.common.magic.systems.component.impl.DigVein;
+import io.darkcraft.mod.common.magic.systems.component.impl.Dispel;
 import io.darkcraft.mod.common.magic.systems.component.impl.EnderChest;
 import io.darkcraft.mod.common.magic.systems.component.impl.FeatherFall;
 import io.darkcraft.mod.common.magic.systems.component.impl.Fly;
@@ -65,6 +67,7 @@ public class MagicalRegistry
 	public static final FeatherFall ff = new FeatherFall();
 	public static final DamageFire df = new DamageFire();
 	public static final ResistFire rf = new ResistFire();
+	public static final Deflect deflect = new Deflect();
 	public static final Test test = new Test();
 
 	public static void registerMagic()
@@ -90,6 +93,8 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(ff);
 		SpellPartRegistry.registerComponent(df);
 		SpellPartRegistry.registerComponent(rf);
+		SpellPartRegistry.registerComponent(deflect);
+		SpellPartRegistry.registerComponent(new Dispel());
 		SpellPartRegistry.registerComponent(new Nightvision());
 		SpellPartRegistry.registerComponent(new Invisibility());
 		SpellPartRegistry.registerComponent(new Jump());

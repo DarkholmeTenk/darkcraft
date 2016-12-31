@@ -40,6 +40,8 @@ public class DarkcraftEffectFactory implements IEffectFactory
 			return new EffectFeatherFall(null,ent,mag,dur);
 		if(id.equals("darkcraft.resistfire"))
 			return new EffectResistFire(null,ent,mag,dur);
+		if(id.equals("darkcraft.deflect"))
+			return new EffectDeflect(null, ent, mag, dur);
 		return null;
 	}
 
