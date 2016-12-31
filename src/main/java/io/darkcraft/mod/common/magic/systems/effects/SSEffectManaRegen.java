@@ -1,12 +1,13 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
+import net.minecraft.entity.Entity;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import net.minecraft.entity.EntityLivingBase;
 
 public class SSEffectManaRegen extends AbstractDarkcraftEffect
 {
-	public SSEffectManaRegen(ICaster _caster, EntityLivingBase ent, int magnitude, int duration)
+	public SSEffectManaRegen(ICaster _caster, Entity ent, int magnitude, int duration)
 	{
 		super("ssmanaregen", _caster, ent, magnitude, duration-1, true, false, 20);
 	}

@@ -1,5 +1,8 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
@@ -11,9 +14,7 @@ import io.darkcraft.mod.common.magic.systems.effects.EffectDamage;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ResourceLocation;
+
 import skillapi.api.implement.ISkill;
 
 public class Damage implements IComponent, IDurationComponent, IMagnitudeComponent
@@ -40,10 +41,8 @@ public class Damage implements IComponent, IDurationComponent, IMagnitudeCompone
 	@Override
 	public void apply(ICaster caster, Entity ent, int magnitude, int duration, int config)
 	{
-		if(!(ent instanceof EntityLivingBase)) return;
-		EntityLivingBase living = (EntityLivingBase) ent;
-		EntityEffectStore ees = EffectHandler.getEffectStore(living);
-		ees.addEffect(new EffectDamage(caster,living,magnitude,duration*20));
+		EntityEffectStore ees = EffectHandler.getEffectStore(ent);
+		ees.addEffect(new EffectDamage(caster,ent,magnitude,duration*20));
 	}
 
 	@Override

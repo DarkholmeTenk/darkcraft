@@ -1,17 +1,19 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
-import io.darkcraft.darkcore.mod.datastore.UVStore;
-import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
-import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+
+import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 
 public class EffectDamageFire extends EffectDamage
 {
 	private static final UVStore uv = new UVStore(0,0.1,0.4,0.5);
 
-	public EffectDamageFire(ICaster caster, EntityLivingBase ent, int magnitude, int duration)
+	public EffectDamageFire(ICaster caster, Entity ent, int magnitude, int duration)
 	{
 		super("damagefire", caster, ent, magnitude, duration);
 	}
@@ -36,7 +38,7 @@ public class EffectDamageFire extends EffectDamage
 	@Override
 	public void apply()
 	{
-		EntityLivingBase toAttack = getEntity();
+		Entity toAttack = getEntity();
 		toAttack.attackEntityFrom(getDS(caster), magnitude);
 		toAttack.setFire(2);
 	}

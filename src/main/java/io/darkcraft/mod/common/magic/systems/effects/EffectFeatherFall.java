@@ -1,13 +1,14 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.util.DamageSource;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.DamageSource;
 
 public class EffectFeatherFall extends AbstractDamageResistEffect
 {
-	public EffectFeatherFall(ICaster caster, EntityLivingBase ent, int magnitude, int duration)
+	public EffectFeatherFall(ICaster caster, Entity ent, int magnitude, int duration)
 	{
 		super("featherfall", caster, ent, magnitude, duration-1, true, false, 20);
 	}

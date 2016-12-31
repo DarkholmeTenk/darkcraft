@@ -1,18 +1,18 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 
 public class EffectWaterWalk extends AbstractDarkcraftEffect
 {
 	private double lastY = -1;
-	public EffectWaterWalk(ICaster _caster, EntityLivingBase ent, int magnitude, int duration)
+	public EffectWaterWalk(ICaster _caster, Entity ent, int magnitude, int duration)
 	{
 		super("waterwalk", _caster, ent, magnitude, duration-1, true, true, 1);
 	}

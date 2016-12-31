@@ -1,15 +1,16 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
+
 import io.darkcraft.darkcore.mod.abstracts.effects.AbstractEffect;
 import io.darkcraft.darkcore.mod.abstracts.effects.IEffectFactory;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class DarkcraftEffectFactory implements IEffectFactory
 {
 
 	@Override
-	public AbstractEffect createEffect(EntityLivingBase ent, String id, NBTTagCompound nbt)
+	public AbstractEffect createEffect(Entity ent, String id, NBTTagCompound nbt)
 	{
 		if(id == null) return null;
 		if(!id.startsWith("darkcraft.")) return null;

@@ -1,12 +1,14 @@
 package io.darkcraft.mod.common.magic.systems.effects;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import net.minecraft.entity.EntityLivingBase;
 
 public class EffectRestoreHealth extends AbstractDarkcraftEffect
 {
-	public EffectRestoreHealth(ICaster _caster, EntityLivingBase ent, int magnitude, int duration)
+	public EffectRestoreHealth(ICaster _caster, Entity ent, int magnitude, int duration)
 	{
 		super("restore", _caster, ent, magnitude, duration-1, true, true, 20);
 		canStack = true;
@@ -19,7 +21,7 @@ public class EffectRestoreHealth extends AbstractDarkcraftEffect
 	@Override
 	public void apply()
 	{
-		EntityLivingBase ent = getEntity();
+		EntityLivingBase ent = getEntityLB();
 		if(ent == null) return;
 		ent.heal(magnitude);
 	}
