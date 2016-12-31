@@ -1,10 +1,13 @@
 package io.darkcraft.mod.client.renderer.gui.system.spells;
 
+import java.util.List;
+
+import net.minecraft.client.gui.FontRenderer;
+
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.client.renderer.gui.system.AbstractGuiElement;
 import io.darkcraft.mod.common.magic.systems.spell.ComponentInstance;
-import net.minecraft.client.gui.FontRenderer;
 
 public class ComponentInstanceLabel extends AbstractGuiElement
 {
@@ -23,6 +26,9 @@ public class ComponentInstanceLabel extends AbstractGuiElement
 	{
 		compInst = ci;
 		str = ci.toString();
+		FontRenderer fr = RenderHelper.getFontRenderer();
+		int size = 4 + (12 * fr.listFormattedStringToWidth(str, w-20).size());
+		setSize(w, size);
 	}
 
 	@Override
@@ -31,7 +37,10 @@ public class ComponentInstanceLabel extends AbstractGuiElement
 		RenderHelper.bindTexture(compInst.component.getIcon());
 		RenderHelper.uiFace(0, 0, 16, 16, 0, compInst.component.getIconLocation(), true);
 		FontRenderer fr = RenderHelper.getFontRenderer();
-		fr.drawString(fr.trimStringToWidth(str, w-20), 18, 4, labelColour.asInt, shadow);
+		int y = 4 - 12;
+		List<String> strl = fr.listFormattedStringToWidth(str, w-20);
+		for(String strp : strl)
+			fr.drawString(strp, 18, y+=12, labelColour.asInt, shadow);
 	}
 
 }
