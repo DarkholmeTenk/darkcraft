@@ -33,6 +33,12 @@ darkcraft.component.blink=Blink
 darkcraft.component.waterwalk=Waterwalking
 darkcraft.component.featherfall=Feather Falling
 darkcraft.component.resistfire=Resist Fire
+darkcraft.component.dispel=Dispel
+darkcraft.component.deflect=Deflect Projectiles
+darkcraft.component.nightvision=Night Eye
+darkcraft.component.invisibility=Chameleon
+darkcraft.component.enderchest=Open Enderchest
+darkcraft.component.jump=Jump
 darkcraft.component.tc.warpward=Mental Warp Wall
 darkcraft.component.tc.cleanwarp=Warp Purification
 
