@@ -37,6 +37,7 @@ public class EffectFly extends AbstractDamageResistEffect
 		Entity ent = getEntity();
 		if((ent == null) || !(ent instanceof EntityPlayer)) return;
 		EntityPlayer pl = (EntityPlayer) ent;
+		if(pl.capabilities.isCreativeMode) return;
 		pl.capabilities.allowFlying = false;
 		pl.capabilities.isFlying = false;
 	}
