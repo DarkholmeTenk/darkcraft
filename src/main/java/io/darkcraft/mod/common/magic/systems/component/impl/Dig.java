@@ -152,6 +152,8 @@ public class Dig implements IComponent, IDescriptiveMagnitudeComponent
 	public void getDescription(List<String> strings, int magnitude)
 	{
 		strings.add("dc.dig.description");
+		if(!id().equals("dig"))
+			strings.add("dc."+id()+".description");
 		strings.add("dc.dig.magnitude."+magnitude+".description");
 	}
 

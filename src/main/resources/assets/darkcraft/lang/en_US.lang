@@ -66,7 +66,18 @@ item.darkcraft.MagicChalk.Blood.name=Blood Chalk
 tile.darkcraft.MagicVortex.name=Heart of Red Mountain
 tile.darkcraft.MagicVortexCrystal.name=Tears of Lorkhan
 
-cd.digvein.desc=Number of blocks to mine
+dc.dig.description=Dig allows you to mine blocks from the world with relative ease.
+dc.dig.magnitude.1.description=Soft blocks\n(e.g. wood, dirt, cobble)\n[Hardness < 3]
+dc.dig.magnitude.2.description=Ore blocks\n(e.g. Iron, Diamond, etc)\n[Hardness = 3]
+dc.dig.magnitude.3.description=Harder blocks\n(e.g. Block of Iron, Spawners, Furnaces, etc)\n[Hardness = 5]
+dc.dig.magnitude.4.description=Super hard blocks\n(e.g. Obsidian, Ender Chests, etc)\n[Hardness = 50]
+dc.dig.magnitude.5.description=Any breakable blocks should be mineable by this
+dc.digsilk.desc=This version allows you to mine with the equivalent of a silk touch enchantment
+dc.digfortune.desc=This version allows you to mine with the equivalent of a fortune enchantment
+dc.digvein.desc=This version allows you to mine a number of connected, identical blocks\nThe mana cost is taken for each block mined, but XP is only awarded for the first
+
+dc.tc.cleanwarp.1=Removes all temporary warp from your soul
+dc.tc.cleanwarp.2=Removes all temporary and sticky warp that affects your soul
 
 dc.message.anvil.emptysoul=The provided soulgem is empty
 dc.message.anvil.smallsoul=The provided soul is too small
