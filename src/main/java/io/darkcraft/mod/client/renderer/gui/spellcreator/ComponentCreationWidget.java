@@ -93,7 +93,7 @@ public class ComponentCreationWidget extends DarkcraftGui
 		{
 			sliderY += 20;
 			IDurationComponent imc = (IDurationComponent)component;
-			addElement(new DaedricLabel(labelX,sliderY+2,"Duration:"));
+			addElement(new DaedricLabel(labelX+7,sliderY+2,"Duration:"));
 			addElement(duration = new HorizontalScrollbar(sliderX,sliderY,sliderW, 1));
 			duration.setMinMax(imc.getMinDuration(), imc.getMaxDuration());
 			addElement(durationLabel = new DarkcraftLabel(descX, sliderY+5, descW, ""));
@@ -104,7 +104,7 @@ public class ComponentCreationWidget extends DarkcraftGui
 		if(!(component instanceof INoAreaComponent))
 		{
 			sliderY += 20;
-			addElement(new DaedricLabel(labelX,sliderY+2,"Area"));
+			addElement(new DaedricLabel(labelX+32,sliderY+2,"Area:"));
 			addElement(area = new HorizontalScrollbar(sliderX,sliderY,sliderW, 1));
 			area.setMinMax(0,5);
 			addElement(areaLabel = new DarkcraftLabel(descX, sliderY+5, descW, ""));
@@ -115,10 +115,10 @@ public class ComponentCreationWidget extends DarkcraftGui
 		if(component instanceof IDescriptiveMagnitudeComponent)
 			addElement(descriptors = new DarkcraftGuiList<>(labelX, 124, guiW-(labelX * 2), 100));
 
-		addElement(new DaedricLabel(labelX, guiH-32, "Cost:"));
-		addElement(costLabel = new DarkcraftLabel(labelX+40, guiH - 28, 100,""));
-		addElement(new DaedricLabel(labelX+144, guiH-32, "Base Cost:"));
-		addElement(baseCostLabel = new DarkcraftLabel(labelX+214, guiH-28,100,""));
+		addElement(new DaedricLabel(labelX+31, guiH-32, "Cost:"));
+		addElement(costLabel = new DarkcraftLabel(labelX+71, guiH - 28, 100,""));
+		addElement(new DaedricLabel(labelX+175, guiH-32, "Base Cost:"));
+		addElement(baseCostLabel = new DarkcraftLabel(labelX+245, guiH-28,100,""));
 
 		refresh();
 	}
