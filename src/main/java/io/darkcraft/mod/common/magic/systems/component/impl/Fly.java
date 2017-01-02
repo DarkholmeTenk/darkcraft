@@ -1,5 +1,9 @@
 package io.darkcraft.mod.common.magic.systems.component.impl;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
+
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
@@ -10,9 +14,7 @@ import io.darkcraft.mod.common.magic.systems.effects.EffectFly;
 import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ResourceLocation;
+
 import skillapi.api.implement.ISkill;
 
 public class Fly implements IComponent, IDurationComponent
@@ -33,7 +35,7 @@ public class Fly implements IComponent, IDurationComponent
 	@Override
 	public double getCost()
 	{
-		return 100;
+		return 75;
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class Fly implements IComponent, IDurationComponent
 	@Override
 	public int getMaxDuration()
 	{
-		return 120;
+		return 240;
 	}
 
 	@Override
