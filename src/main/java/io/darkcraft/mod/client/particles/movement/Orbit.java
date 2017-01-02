@@ -59,6 +59,7 @@ public class Orbit extends AbstractFollower
 	{
 		SimpleDoubleCoordStore centerPos = provider.getPosition();
 		SimpleDoubleCoordStore partPos = new SimpleDoubleCoordStore(entity);
+		if((centerPos == null) || (partPos == null)) return;
 		distance = centerPos.distance(partPos);
 		angle = Math.toDegrees(Math.atan2(partPos.z - centerPos.z, partPos.x - centerPos.x));
 	}
