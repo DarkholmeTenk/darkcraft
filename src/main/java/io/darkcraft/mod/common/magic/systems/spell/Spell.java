@@ -302,6 +302,11 @@ public class Spell
 			applyArea(caster, new SimpleDoubleCoordStore(ent));
 	}
 
+	public boolean isValid()
+	{
+		return (name != null) && (name.length() >= 3) && (components.length > 0);
+	}
+
 	public static class SpellNameComparator implements Comparator<Spell>
 	{
 		public static SpellNameComparator withSkill = new SpellNameComparator(true);
