@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
@@ -35,8 +36,6 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	float								pticks;
 	public boolean						inventoryGui	= false;
 
-	private boolean isNull = false;
-
 	public DarkcraftGui(Container cont, GuiTexture _background)
 	{
 		this(cont, _background, _background.w, _background.h);
@@ -44,14 +43,14 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 
 	public DarkcraftGui(Container cont, GuiTexture _background, int w, int h)
 	{
-		super(cont == null ? Minecraft.getMinecraft().thePlayer.inventoryContainer : cont);
+		super(cont == null ? DummyContainer.i : cont);
 		background = _background;
 		guiW = w;
 		guiH = h;
 		xSize = guiW;
 		ySize = guiH;
 
-		isNull = cont == null;
+		inventoryGui = cont != null;
 	}
 
 	private int oldW;
@@ -265,7 +264,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	@Override
 	protected void mouseMovedOrUp(int x, int y, int w)
     {
-		if(!isNull)
+		if(inventoryGui)
 			super.mouseMovedOrUp(x, y, w);
 		if(subGui != null)
 			subGui.mouseMovedOrUp(x, y, w);
@@ -346,4 +345,14 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		return wss;
 	}
 
+	public static class DummyContainer extends Container
+	{
+		public static final DummyContainer i = new DummyContainer();
+
+		@Override
+		public boolean canInteractWith(EntityPlayer p_75145_1_)
+		{
+			return false;
+		}
+	}
 }
