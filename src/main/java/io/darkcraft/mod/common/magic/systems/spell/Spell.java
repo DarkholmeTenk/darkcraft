@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import io.darkcraft.api.magic.ISpellable;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
@@ -22,13 +30,7 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.MagicalRegistry;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
+
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.ISkillHandler;
 
@@ -200,7 +202,7 @@ public class Spell
 			for(Entity e : entList)
 			{
 				if(!MagicConfig.hitSelf && (type != CastType.SELF) && (caster != null) && caster.isCaster(e)) continue;
-				double d = center.diagonalParadoxDistance(e.posX, e.posY, e.posZ);
+				double d = center.distance(new SimpleDoubleCoordStore(e));
 				if(d > maxArea) continue;
 
 				{
