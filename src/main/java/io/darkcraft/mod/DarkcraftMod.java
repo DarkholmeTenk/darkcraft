@@ -39,7 +39,7 @@ import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.15", dependencies = "required-after:darkcore@[0.42,0.499]; required-after:SkillAPI; after:Thaumcraft")
+@Mod(modid = "darkcraft", name = "Darkcraft", version = "0.16", dependencies = "required-after:darkcore@[0.42,0.499]; required-after:SkillAPI; after:Thaumcraft")
 public class DarkcraftMod implements IConfigHandlerMod
 {
 	public static DarkcraftMod				i;

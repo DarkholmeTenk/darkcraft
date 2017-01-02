@@ -27,7 +27,7 @@ apply plugin: 'forge'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-version = "0.15"
+version = "0.16"
 group= "io.darkcraft.darkcraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Darkcraft"
 
@@ -50,7 +50,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 	compile("io.darkcraft:darkcore:0.45:source") { changing = true }
-	compile "io.darkcraft:skillapi:1.7.10-0.02:source"
+	compile("io.darkcraft:skillapi:1.7.10-0.02:source") { changing = true }
 	compile "thaumcraft:thaumcraft:1.7.10:source"
 	compile "waila:waila:1.7.10:source"
 }
