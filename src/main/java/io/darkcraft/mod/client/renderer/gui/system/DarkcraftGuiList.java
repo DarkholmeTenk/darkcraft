@@ -2,6 +2,7 @@ package io.darkcraft.mod.client.renderer.gui.system;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -14,7 +15,7 @@ import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.VerticalScrollbar;
 import io.darkcraft.mod.client.renderer.gui.textures.ScalableInternal;
 
-public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiElement implements IDraggable, IGuiContainer<T>
+public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiElement implements IDraggable, IGuiContainer<T>, Iterable<T>
 {
 	private List<T> elements = new ArrayList();
 	private ScalableInternal bg;
@@ -25,7 +26,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	{
 		super(_x, _y, width, height);
 		bg = new ScalableInternal(width-16, height);
-		iW = bg.w-2;
+		iW = bg.w-3;
 		scroll = new VerticalScrollbar(width-16, 0, height);
 		scroll.parent = this;
 	}
@@ -35,15 +36,21 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	{
 		int th = 0;
 		for(AbstractGuiElement e : elements)
+		{
+			if(e.w > iW)
+				e.setSize(iW, e.h);
 			th += e.h;
-		scroll.setMinMax(0, th-(h-2));
-		scroll.setScrollable(th > (h - 2));
+		}
+		scroll.setMinMax(0, th-(h-3));
+		scroll.setScrollable(th > (h - 3));
 	}
 
 	@Override
 	public void addElement(T e)
 	{
 		elements.add(e);
+		if(e.w > iW)
+			e.setSize(iW, e.h);
 		e.parent = this;
 		recalc();
 	}
@@ -82,7 +89,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 				parent.clickableClicked(this, "list", button);
 				return false;
 			}
-			int cy = y + scroll.asInt();
+			int cy = (y + scroll.asInt()) - 1;
 			for(AbstractGuiElement e : elements)
 			{
 				if(e.withinBounds(x, cy))
@@ -110,7 +117,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		else
 		{
 			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h)) return false;
-			int cy = y + scroll.asInt();
+			int cy = (y + scroll.asInt()) - 1;
 			for(AbstractGuiElement e : elements)
 			{
 				if(e.withinBounds(x, cy))
@@ -131,7 +138,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	{
 		if((mouseX > 0) && (mouseY > 0) && (mouseX < (w - 16)) && (mouseY < h))
 		{
-			int cy = mouseY + scroll.asInt();
+			int cy = (mouseY + scroll.asInt()) - 1;
 			for(T e : elements)
 			{
 				if(e.withinBounds(mouseX, cy))
@@ -151,11 +158,11 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		GL11.glTranslatef(scroll.x, scroll.y, 0);
 		scroll.render(pticks, mouseX, mouseY);
 		GL11.glPopMatrix();
-		GL11.glTranslatef(1, 1, 0);
+		GL11.glTranslatef(2, 2, 0);
 		GL11.glPushAttrib(GL11.GL_SCISSOR_BIT);
 		WindowSpaceStore wss = getWindowSpace(this);
-		wss = wss.transform(1, h-1);
-		GL11.glScissor((int) wss.x, (int) wss.getFromBottom(), (int)((w-17) * wss.scale), (int)((h-2) * wss.scale));
+		wss = wss.transform(2, h-1);
+		GL11.glScissor((int) wss.x, (int) wss.getFromBottom(), (int)((w-17) * wss.scale), (int)((h-3) * wss.scale));
 		GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		int y = -scroll.asInt();
 		for(AbstractGuiElement e : elements)
@@ -198,7 +205,13 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 				break;
 			y += _e.h;
 		}
-		return wss.transform(1, y);
+		return wss.transform(2, y);
+	}
+
+	@Override
+	public Iterator<T> iterator()
+	{
+		return elements.iterator();
 	}
 
 }

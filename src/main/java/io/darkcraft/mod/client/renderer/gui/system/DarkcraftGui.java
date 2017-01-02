@@ -5,18 +5,20 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import io.darkcraft.darkcore.mod.datastore.GuiTexture;
-import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
-import io.darkcraft.darkcore.mod.helpers.MathHelper;
-import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
-import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
-import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
-import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
+
+import io.darkcraft.darkcore.mod.datastore.GuiTexture;
+import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
+import io.darkcraft.darkcore.mod.helpers.MathHelper;
+import io.darkcraft.darkcore.mod.helpers.RenderHelper;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IDraggable;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
+import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 
 public class DarkcraftGui extends GuiContainer implements IGuiContainer
 {
@@ -33,6 +35,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	float								pticks;
 	public boolean						inventoryGui	= false;
 
+	private boolean isNull = false;
+
 	public DarkcraftGui(Container cont, GuiTexture _background)
 	{
 		this(cont, _background, _background.w, _background.h);
@@ -46,6 +50,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		guiH = h;
 		xSize = guiW;
 		ySize = guiH;
+
+		isNull = cont == null;
 	}
 
 	private int oldW;
@@ -137,6 +143,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		GL11.glScalef(guiScale, guiScale, 1);
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GL11.glEnable(GL11.GL_BLEND);
+		RenderHelper.resetColour();
 		pticks = pTicks;
 		guiX = (int) (((width / guiScale) - guiW) / 2);
 		guiY = (int) (((height/ guiScale) - guiH) / 2);
@@ -258,7 +265,8 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	@Override
 	protected void mouseMovedOrUp(int x, int y, int w)
     {
-		super.mouseMovedOrUp(x, y, w);
+		if(!isNull)
+			super.mouseMovedOrUp(x, y, w);
 		if(subGui != null)
 			subGui.mouseMovedOrUp(x, y, w);
 		else

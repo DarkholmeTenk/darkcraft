@@ -1,8 +1,11 @@
 package io.darkcraft.mod.client.renderer.gui.system;
 
+import org.lwjgl.opengl.GL11;
+
+import net.minecraft.client.gui.FontRenderer;
+
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
-import net.minecraft.client.gui.FontRenderer;
 
 public class DarkcraftLabel extends AbstractGuiElement
 {
@@ -10,10 +13,23 @@ public class DarkcraftLabel extends AbstractGuiElement
 	public Colour colour = RenderHelper.white;
 	public boolean shadow = true;
 
-	public DarkcraftLabel(int _x, int _y, int width, String _text)
+	private final int scale;
+
+	public DarkcraftLabel(int x, int y, String text)
 	{
-		super(_x, _y, width, RenderHelper.getFontRenderer().FONT_HEIGHT);
+		this(x,y,RenderHelper.getFontRenderer().getStringWidth(text), text);
+	}
+
+	public DarkcraftLabel(int x, int y, int width, String text)
+	{
+		this(x,y,width,text, 1);
+	}
+
+	public DarkcraftLabel(int _x, int _y, int width, String _text, int scale)
+	{
+		super(_x, _y, width, RenderHelper.getFontRenderer().FONT_HEIGHT * scale);
 		text = _text;
+		this.scale = scale;
 	}
 
 	@Override
@@ -21,7 +37,10 @@ public class DarkcraftLabel extends AbstractGuiElement
 	{
 		if(text == null) return;
 		FontRenderer fr = RenderHelper.getFontRenderer();
-		fr.drawString(fr.trimStringToWidth(text, w), 0, 0, colour.asInt, shadow);
+		GL11.glPushMatrix();
+		GL11.glScaled(scale, scale, scale);
+		fr.drawString(fr.trimStringToWidth(text, w/scale), 0, 0, colour.asInt, shadow);
+		GL11.glPopMatrix();
 	}
 
 }

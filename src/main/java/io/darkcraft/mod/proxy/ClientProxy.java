@@ -19,9 +19,9 @@ import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.EntitySpellProjectileRenderer;
 import io.darkcraft.mod.client.renderer.gui.ChalkGui;
 import io.darkcraft.mod.client.renderer.gui.DebugGui;
-import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
 import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
 import io.darkcraft.mod.client.renderer.gui.StatusOverlay;
+import io.darkcraft.mod.client.renderer.gui.spellcreator.SpellCreationGuiNew;
 import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
@@ -67,7 +67,7 @@ public class ClientProxy extends CommonProxy
 		TileEntity te = world.getTileEntity(x, y, z);
 		switch(id)
 		{
-			case 1397: return new SpellCreationGui((SpellCreator)te);
+			case 1397: return new SpellCreationGuiNew((SpellCreator)te);
 			case 1398: return new SpellSelectionGui(Helper.getPlayerCaster(player));
 			case 1399: return new ChalkGui(new ChalkContainer(player));
 			case 1000: return new DebugGui(player.inventoryContainer);

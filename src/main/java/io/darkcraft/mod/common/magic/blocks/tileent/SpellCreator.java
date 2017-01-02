@@ -24,7 +24,7 @@ import io.darkcraft.darkcore.mod.nbt.NBTProperty.SerialisableType;
 import io.darkcraft.darkcore.mod.nbt.NBTSerialisable;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.abstracts.AbstractMFTileEntity;
-import io.darkcraft.mod.client.renderer.gui.SpellCreationGui;
+import io.darkcraft.mod.client.renderer.gui.spellcreator.SpellCreationGui;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.items.staff.StaffHelper;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;

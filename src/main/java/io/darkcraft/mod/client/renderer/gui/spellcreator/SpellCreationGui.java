@@ -1,4 +1,4 @@
-package io.darkcraft.mod.client.renderer.gui;
+package io.darkcraft.mod.client.renderer.gui.spellcreator;
 
 import org.lwjgl.opengl.GL11;
 
