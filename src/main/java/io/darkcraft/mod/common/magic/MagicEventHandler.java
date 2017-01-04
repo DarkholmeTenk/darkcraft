@@ -5,12 +5,21 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.Type;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+
 import io.darkcraft.darkcore.mod.DarkcoreMod;
 import io.darkcraft.darkcore.mod.abstracts.effects.AbstractEffect;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
@@ -34,20 +43,13 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.network.PlayerCasterPacketHandler;
 import io.darkcraft.mod.common.registries.MagicConfig;
 import io.darkcraft.mod.common.registries.SkillRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.gameevent.TickEvent.Type;
 import skillapi.api.implement.ISkill;
 import skillapi.api.internal.events.EntitySkillChangeEvent;
 
@@ -155,6 +157,7 @@ public class MagicEventHandler
 	public void handleInteract(PlayerInteractEvent event)
 	{
 		EntityPlayer pl = event.entityPlayer;
+		if(pl instanceof FakePlayer) return;
 		if((event.action != Action.LEFT_CLICK_BLOCK) && MagicConfig.castWithHand)
 		{
 			if(pl.getHeldItem() != null) return;
