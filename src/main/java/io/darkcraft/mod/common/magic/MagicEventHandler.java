@@ -163,6 +163,7 @@ public class MagicEventHandler
 			if(pl.getHeldItem() != null) return;
 			if(!pl.isSneaking()) return;
 			PlayerCaster pc = Helper.getPlayerCaster(pl);
+			if(pc == null) return;
 			Spell sp = pc.getCurrentSpell();
 			if(sp == null) return;
 			event.setCanceled(true);
