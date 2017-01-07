@@ -11,6 +11,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
 import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
@@ -348,6 +349,9 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 	public static class DummyContainer extends Container
 	{
 		public static final DummyContainer i = new DummyContainer();
+
+		@Override
+		public void putStackInSlot(int p_75141_1_, ItemStack p_75141_2_){}
 
 		@Override
 		public boolean canInteractWith(EntityPlayer p_75145_1_)
