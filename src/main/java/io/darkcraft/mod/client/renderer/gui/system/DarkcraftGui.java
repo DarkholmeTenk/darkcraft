@@ -296,7 +296,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		if (parentGui == null)
 		{
 			EntityClientPlayerMP pl = mc.thePlayer;
-			if(pl.openContainer != null)
+			if(inventoryGui)
 				pl.closeScreen();
 			else
 				pl.closeScreenNoPacket();
