@@ -32,6 +32,8 @@ public enum ChalkType
 	}
 
 	public static final ResourceLocation[] TEXTURES = {
-			new ResourceLocation(DarkcraftMod.modName, "textures/chalk/level1.png")
+			new ResourceLocation(DarkcraftMod.modName, "textures/chalk/level1.png"),
+			new ResourceLocation(DarkcraftMod.modName, "textures/chalk/level2.png"),
+			new ResourceLocation(DarkcraftMod.modName, "textures/chalk/level3.png")
 	};
 }
