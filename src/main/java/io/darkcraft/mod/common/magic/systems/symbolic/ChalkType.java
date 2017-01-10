@@ -1,6 +1,9 @@
 package io.darkcraft.mod.common.magic.systems.symbolic;
 
+import net.minecraft.util.ResourceLocation;
+
 import io.darkcraft.darkcore.mod.datastore.Colour;
+import io.darkcraft.mod.DarkcraftMod;
 
 public enum ChalkType
 {
@@ -27,4 +30,8 @@ public enum ChalkType
 		}
 		return names;
 	}
+
+	public static final ResourceLocation[] TEXTURES = {
+			new ResourceLocation(DarkcraftMod.modName, "textures/chalk/level1.png")
+	};
 }

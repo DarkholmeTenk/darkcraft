@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.registries;
 
+import net.minecraft.util.ResourceLocation;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.blocks.GemStandBlock;
@@ -16,6 +18,7 @@ import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
 import io.darkcraft.mod.common.magic.blocks.SpellCreatorBlock;
 import io.darkcraft.mod.common.magic.items.ComponentBook;
 import io.darkcraft.mod.common.magic.items.MagicChalk;
+import io.darkcraft.mod.common.magic.items.MagicChalkNew;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.items.MagicScroll;
 import io.darkcraft.mod.common.magic.items.SoulGem;
@@ -26,7 +29,6 @@ import io.darkcraft.mod.common.magic.items.staff.parts.head.DefaultStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.head.SillyStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.shaft.DefaultStaffShaft;
 import io.darkcraft.mod.common.tech.block.TechGeneratorBlock;
-import net.minecraft.util.ResourceLocation;
 
 
 public class ItemBlockRegistry
@@ -78,6 +80,7 @@ public class ItemBlockRegistry
 		scroll.register();
 		compBook.register();
 		magicChalk.register();
+		new MagicChalkNew().register();
 		registerStaffParts();
 	}
 
