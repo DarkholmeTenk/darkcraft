@@ -35,4 +35,9 @@ public enum ChalkType
 			names[i] = types[i].name;
 		return null;
 	}
+
+	public int getLevel()
+	{
+		return ordinal();
+	}
 }
