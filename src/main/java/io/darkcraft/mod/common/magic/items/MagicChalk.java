@@ -2,23 +2,21 @@ package io.darkcraft.mod.common.magic.items;
 
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.item.MagicChalkRenderer;
-import io.darkcraft.mod.common.magic.blocks.tileent.MagicSymbol;
 import io.darkcraft.mod.common.magic.systems.symbolic.ChalkType;
-import io.darkcraft.mod.common.registries.ItemBlockRegistry;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.World;
-import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class MagicChalk extends AbstractItem
 {
@@ -60,21 +58,7 @@ public class MagicChalk extends AbstractItem
 			pl.openGui(DarkcraftMod.i, 1399, w, x, y, z);
 			return true;
 		}
-		if(ForgeDirection.VALID_DIRECTIONS[s] != ForgeDirection.UP) return true;
-		if(!w.isAirBlock(x, y+1, z)) return true;
-		Character c = getChar(is);
-		if(c != null)
-		{
-			w.setBlock(x, y+1, z, ItemBlockRegistry.magicSymbol);
-			TileEntity te = w.getTileEntity(x, y+1, z);
-			if(te instanceof MagicSymbol)
-			{
-				((MagicSymbol)te).setCharacter(c);
-				damage(is);
-				if(damage(is))
-					pl.inventory.decrStackSize(pl.inventory.currentItem, 1);
-			}
-		}
+
 		return true;
     }
 

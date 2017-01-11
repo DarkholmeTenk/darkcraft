@@ -11,7 +11,6 @@ import io.darkcraft.mod.common.magic.blocks.MagicGuideBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicInventoryBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicLightBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicStaffChangerBlock;
-import io.darkcraft.mod.common.magic.blocks.MagicSymbolBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicTouchPassBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
@@ -43,7 +42,6 @@ public class ItemBlockRegistry
 	public static AbstractBlock magicAnvil;
 	public static AbstractBlock magicGuide;
 	public static AbstractBlock magicLight;
-	public static AbstractBlock magicSymbol;
 	public static AbstractBlock gemStand;
 	public static AbstractBlock techGenerator;
 	public static void registerBlocks()
@@ -60,7 +58,6 @@ public class ItemBlockRegistry
 		magicAnvil = new MagicAnvilBlock().register();
 		magicGuide = new MagicGuideBlock().register();
 		magicLight = new MagicLightBlock().register();
-		magicSymbol = new MagicSymbolBlock().register();
 		gemStand = new GemStandBlock().register();
 		//TECH
 		techGenerator = new TechGeneratorBlock().register();

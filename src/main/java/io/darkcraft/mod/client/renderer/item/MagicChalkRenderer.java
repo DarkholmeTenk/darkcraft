@@ -2,14 +2,15 @@ package io.darkcraft.mod.client.renderer.item;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.IItemRenderer;
+
 import io.darkcraft.darkcore.mod.datastore.UVStore;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.items.MagicChalk;
 import io.darkcraft.mod.common.magic.systems.symbolic.ChalkType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer;
 
 public class MagicChalkRenderer implements IItemRenderer
 {
@@ -66,7 +67,7 @@ public class MagicChalkRenderer implements IItemRenderer
 	private void renderChalk(double damage, ChalkType chalkType)
 	{
 		GL11.glDisable(GL11.GL_LIGHTING);
-		RenderHelper.colour(chalkType.colour);
+		RenderHelper.colour(chalkType.renderColour);
 		RenderHelper.bindTexture(tex);
 		RenderHelper.cube(-0.05f, -0.1f, -0.05f, 0.05f, (float)(0.4-(damage/2)), 0.05f, true, uvs);
 		GL11.glEnable(GL11.GL_LIGHTING);
