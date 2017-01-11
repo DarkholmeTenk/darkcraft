@@ -35,11 +35,7 @@ import io.darkcraft.mod.common.magic.systems.component.impl.potions.Invisibility
 import io.darkcraft.mod.common.magic.systems.component.impl.potions.Nightvision;
 import io.darkcraft.mod.common.magic.systems.component.impl.potions.WaterBreathing;
 import io.darkcraft.mod.common.magic.systems.effects.DarkcraftEffectFactory;
-import io.darkcraft.mod.common.magic.systems.soulspell.SoulSpellRegistry;
-import io.darkcraft.mod.common.magic.systems.soulspell.impl.DarkcraftSoulSpellFactory;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
-import io.darkcraft.mod.common.magic.systems.symbolic.SymbolicRegistry;
-import io.darkcraft.mod.common.magic.systems.symbolic.impl.DarkcraftSymbolicFactory;
 
 public class MagicalRegistry
 {
@@ -101,8 +97,6 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(new WaterBreathing());
 		SpellPartRegistry.registerComponent(new Jump());
 		SpellPartRegistry.registerComponent(test, false);
-		SoulSpellRegistry.registerFactory(new DarkcraftSoulSpellFactory());
-		SymbolicRegistry.registerFactory(new DarkcraftSymbolicFactory());
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
 
 		new MagicEventHandler();

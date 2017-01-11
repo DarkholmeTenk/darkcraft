@@ -4,19 +4,6 @@ import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
-import io.darkcraft.api.magic.IMagicAnvilRecipe;
-import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
-import io.darkcraft.darkcore.mod.helpers.WorldHelper;
-import io.darkcraft.mod.DarkcraftMod;
-import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
-import io.darkcraft.mod.common.magic.systems.soulspell.ISoulSpell;
-import io.darkcraft.mod.common.magic.systems.soulspell.SoulSpellRegistry;
-import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
-import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
-import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
-import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
-import io.darkcraft.mod.common.registries.MagicConfig;
-import io.darkcraft.mod.common.registries.recipes.SoulGemRecipe;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,6 +14,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.IItemRenderer;
+
+import io.darkcraft.api.magic.IMagicAnvilRecipe;
+import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
+import io.darkcraft.darkcore.mod.helpers.WorldHelper;
+import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.renderer.item.SoulGemRenderer;
+import io.darkcraft.mod.common.magic.systems.spell.caster.BlockCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.EntityCaster;
+import io.darkcraft.mod.common.magic.systems.spell.caster.ICaster;
+import io.darkcraft.mod.common.registries.MagicAnvilRecipeRegistry;
+import io.darkcraft.mod.common.registries.MagicConfig;
+import io.darkcraft.mod.common.registries.recipes.SoulGemRecipe;
 
 public class SoulGem extends AbstractItem
 {
@@ -108,22 +107,6 @@ public class SoulGem extends AbstractItem
 		if(is.stackTagCompound.hasKey("soulspellID"))
 			return is.stackTagCompound.getString("soulspellID");
 		return null;
-	}
-
-	public static ISoulSpell getSoulSpell(ItemStack is)
-	{
-		if((is == null) || (is.getItem() != i) || (is.stackTagCompound == null)) return null;
-		if(is.stackTagCompound.hasKey("soulspellID"))
-			return SoulSpellRegistry.getSoulSpell(is.stackTagCompound.getString("soulspellID"), getSoulSpellData(is));
-		return null;
-	}
-
-	public static void setSoulSpell(ItemStack is, String id)
-	{
-		if(id == null)
-			is.stackTagCompound.removeTag("soulspellID");
-		else
-			is.stackTagCompound.setString("soulspellID", id);
 	}
 
 	public static Size getSoulSize(ItemStack is)
