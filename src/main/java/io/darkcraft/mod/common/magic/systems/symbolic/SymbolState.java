@@ -1,5 +1,6 @@
 package io.darkcraft.mod.common.magic.systems.symbolic;
 
+import io.darkcraft.darkcore.mod.nbt.Mapper;
 import io.darkcraft.darkcore.mod.nbt.NBTConstructor;
 import io.darkcraft.darkcore.mod.nbt.NBTHelper;
 import io.darkcraft.darkcore.mod.nbt.NBTProperty;
