@@ -1,6 +1,8 @@
 package io.darkcraft.mod.common.magic.systems.symbolic.type;
 
-import io.darkcraft.darkcore.mod.abstracts.AbstractTileEntity;
+import net.minecraft.nbt.NBTTagCompound;
+
+import io.darkcraft.mod.common.magic.blocks.tileent.MagicRune;
 
 public abstract class BaseSymbolic
 {
@@ -49,15 +51,19 @@ public abstract class BaseSymbolic
 		return selector;
 	}
 
-	private AbstractTileEntity tileEntity;
-	public void setTileEntity(AbstractTileEntity tileEntity)
+	private MagicRune tileEntity;
+	public void setTileEntity(MagicRune tileEntity)
 	{
 		if(this.tileEntity == null)
 			this.tileEntity = tileEntity;
 	}
 
-	public AbstractTileEntity getTileEntity()
+	public MagicRune getTileEntity()
 	{
 		return tileEntity;
 	}
+
+	public void writeToNBT(NBTTagCompound nbt){}
+
+	public void readFromNBT(NBTTagCompound nbt){}
 }
