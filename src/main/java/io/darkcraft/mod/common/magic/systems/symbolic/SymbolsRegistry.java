@@ -17,6 +17,7 @@ public class SymbolsRegistry
 {
 	private static Map<String, WrappedConstructor<? extends BaseSymbolic>> symbolMap = new HashMap<>();
 
+	@SuppressWarnings("unchecked")
 	public static void register(Class<? extends BaseSymbolic>... classes)
 	{
 		for(Class<? extends BaseSymbolic> clazz : classes)
@@ -28,7 +29,7 @@ public class SymbolsRegistry
 				String id = first.id();
 				if(symbolMap.containsKey(id))
 					throw new RuntimeException("Class " + clazz.getName() + " conflicts with " + symbolMap.get(id).getDeclaringClass().getName());
-				symbolMap.put(id, new WrappedConstructor(constructor));
+				symbolMap.put(id, new WrappedConstructor<>(constructor));
 			}
 			catch (Exception e)
 			{
@@ -101,7 +102,7 @@ public class SymbolsRegistry
 			}
 		}
 
-		public Class getDeclaringClass()
+		public Class<T> getDeclaringClass()
 		{
 			return constructor.getDeclaringClass();
 		}
