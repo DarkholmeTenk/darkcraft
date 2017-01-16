@@ -16,7 +16,6 @@ import io.darkcraft.mod.common.magic.blocks.MagicVortexBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicVortexCrystalBlock;
 import io.darkcraft.mod.common.magic.blocks.SpellCreatorBlock;
 import io.darkcraft.mod.common.magic.items.ComponentBook;
-import io.darkcraft.mod.common.magic.items.MagicChalk;
 import io.darkcraft.mod.common.magic.items.MagicChalkNew;
 import io.darkcraft.mod.common.magic.items.MagicComponent;
 import io.darkcraft.mod.common.magic.items.MagicScroll;
@@ -68,7 +67,7 @@ public class ItemBlockRegistry
 	public static SoulGem soulGem = new SoulGem();
 	public static MagicScroll scroll = new MagicScroll();
 	public static ComponentBook compBook = new ComponentBook();
-	public static MagicChalk magicChalk = new MagicChalk();
+	public static MagicChalkNew magicChalk = new MagicChalkNew();
 	public static void registerItems()
 	{
 		magicComponent.register();
@@ -77,7 +76,6 @@ public class ItemBlockRegistry
 		scroll.register();
 		compBook.register();
 		magicChalk.register();
-		new MagicChalkNew().register();
 		registerStaffParts();
 	}
 

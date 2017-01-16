@@ -3,10 +3,12 @@ package io.darkcraft.mod.common.magic.items;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractItem;
 import io.darkcraft.darkcore.mod.helpers.ServerHelper;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.client.renderer.item.MagicChalkRenderer;
 import io.darkcraft.mod.common.magic.systems.symbolic.ChalkType;
 
 public class MagicChalkNew extends AbstractItem
@@ -36,4 +38,17 @@ public class MagicChalkNew extends AbstractItem
 		return is;
 	}
 
+	public static double getISDamage(ItemStack is)
+	{
+		if((is == null) || !(is.getItem() instanceof MagicChalkNew)) return 0;
+		if(is.stackTagCompound == null) return 0;
+		if(!is.stackTagCompound.hasKey("dam")) is.stackTagCompound.setDouble("dam", 0);
+		return is.stackTagCompound.getDouble("dam");
+	}
+
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new MagicChalkRenderer();
+	}
 }
