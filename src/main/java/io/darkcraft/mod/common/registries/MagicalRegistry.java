@@ -1,8 +1,5 @@
 package io.darkcraft.mod.common.registries;
 
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-
 import io.darkcraft.darkcore.mod.handlers.EffectHandler;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.MagicEventHandler;
@@ -36,6 +33,14 @@ import io.darkcraft.mod.common.magic.systems.component.impl.potions.Nightvision;
 import io.darkcraft.mod.common.magic.systems.component.impl.potions.WaterBreathing;
 import io.darkcraft.mod.common.magic.systems.effects.DarkcraftEffectFactory;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
+import io.darkcraft.mod.common.magic.systems.symbolic.SymbolsRegistry;
+import io.darkcraft.mod.common.magic.systems.symbolic.impl.effects.ManaRegen;
+import io.darkcraft.mod.common.magic.systems.symbolic.impl.modifiers.Area;
+import io.darkcraft.mod.common.magic.systems.symbolic.impl.modifiers.MaxPotency;
+import io.darkcraft.mod.common.magic.systems.symbolic.impl.modifiers.Potency;
+import io.darkcraft.mod.common.magic.systems.symbolic.impl.selectors.PlayerSelector;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 
 public class MagicalRegistry
 {
@@ -99,6 +104,12 @@ public class MagicalRegistry
 		SpellPartRegistry.registerComponent(test, false);
 		EffectHandler.registerEffectFactory(new DarkcraftEffectFactory());
 
+		SymbolsRegistry.register(
+				ManaRegen.class,
+				Area.class,
+				MaxPotency.class,
+				Potency.class,
+				PlayerSelector.class);
 		new MagicEventHandler();
 
 		magicDamage.setDamageBypassesArmor().setMagicDamage();

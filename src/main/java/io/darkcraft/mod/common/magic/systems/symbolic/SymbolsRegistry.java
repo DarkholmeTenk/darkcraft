@@ -17,7 +17,7 @@ public class SymbolsRegistry
 {
 	private static Map<String, WrappedConstructor<? extends BaseSymbolic>> symbolMap = new HashMap<>();
 
-	@SuppressWarnings("unchecked")
+	@SafeVarargs
 	public static void register(Class<? extends BaseSymbolic>... classes)
 	{
 		for(Class<? extends BaseSymbolic> clazz : classes)
