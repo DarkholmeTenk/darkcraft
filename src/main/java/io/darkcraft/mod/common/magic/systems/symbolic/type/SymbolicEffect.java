@@ -2,8 +2,12 @@ package io.darkcraft.mod.common.magic.systems.symbolic.type;
 
 public abstract class SymbolicEffect extends BaseSymbolic
 {
+	/**
+	 * Will only be called when placed on a valid tile
+	 */
+	public abstract void tick();
 
-	public static abstract class SymbolicEntityEffect extends BaseSymbolic
+	public static abstract class SymbolicEntityEffect extends SymbolicEffect
 	{
 		@Override
 		public boolean isValidSymbolic()
@@ -20,7 +24,7 @@ public abstract class SymbolicEffect extends BaseSymbolic
 		}
 	}
 
-	public static abstract class SymbolicBlockEffect extends BaseSymbolic
+	public static abstract class SymbolicBlockEffect extends SymbolicEffect
 	{
 		@Override
 		public boolean isValidSymbolic()

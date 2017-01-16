@@ -1,8 +1,7 @@
 package io.darkcraft.mod.common.magic.systems.symbolic.type;
 
-import net.minecraft.nbt.NBTTagCompound;
-
 import io.darkcraft.mod.common.magic.blocks.tileent.MagicRune;
+import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class BaseSymbolic
 {
@@ -18,11 +17,6 @@ public abstract class BaseSymbolic
 	{
 		return false;
 	}
-
-	/**
-	 * Will only be called when placed on a valid tile
-	 */
-	public abstract void tick();
 
 	/**
 	 * Used to add a modifier to the symbol

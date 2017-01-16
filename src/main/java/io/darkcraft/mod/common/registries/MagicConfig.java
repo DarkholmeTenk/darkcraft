@@ -50,7 +50,11 @@ public class MagicConfig
 	public static int[] soulHealthSizes = new int[]{0,5,15,30,45};
 	public static boolean recallOthers = true;
 	public static boolean hitSelf = false;
-
+	
+	
+	//SYMBOLIC BALANCE
+	public static ConfigFile sbConfig;
+	public static int maxRegenLevel = 5;
 
 	public static void refreshConfigs()
 	{
@@ -84,6 +88,9 @@ public class MagicConfig
 		recallOthers = cbConfig.getBoolean("Can recall others", true, "If this is true, you can cast the recall spells on any living entity");
 		hitSelf = cbConfig.getBoolean("Can hit self", false, "If this is true, then a touch/projectile spell with an area can hit the caster");
 		setSoulSizes();
+		
+		if(sbConfig == null) sbConfig = DarkcraftMod.configHandler.registerConfigNeeder("Symbolic Balance");
+		maxRegenLevel = sbConfig.getInt("Max Mana Regen Level", 5, "Increasing this increases the max potency of the mana regen symbol");
 	}
 
 	private static void setSoulSizes()

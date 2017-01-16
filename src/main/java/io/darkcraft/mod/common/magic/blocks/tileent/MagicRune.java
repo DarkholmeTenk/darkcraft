@@ -1,11 +1,10 @@
 package io.darkcraft.mod.common.magic.blocks.tileent;
 
-import net.minecraft.util.AxisAlignedBB;
-
 import io.darkcraft.darkcore.mod.abstracts.AbstractTileEntitySer;
 import io.darkcraft.darkcore.mod.nbt.NBTProperty;
 import io.darkcraft.darkcore.mod.nbt.NBTSerialisable;
 import io.darkcraft.mod.common.magic.systems.symbolic.SymbolState;
+import net.minecraft.util.AxisAlignedBB;
 
 @NBTSerialisable
 public class MagicRune extends AbstractTileEntitySer
@@ -33,5 +32,10 @@ public class MagicRune extends AbstractTileEntitySer
 			state.effect.tick();
 		else
 			coords().setToAir();
+	}
+	
+	public boolean useCharge(int chargeAmount, boolean sim)
+	{
+		return true;
 	}
 }

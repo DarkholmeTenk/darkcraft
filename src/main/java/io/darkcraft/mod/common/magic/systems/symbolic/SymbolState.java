@@ -1,7 +1,5 @@
 package io.darkcraft.mod.common.magic.systems.symbolic;
 
-import net.minecraft.nbt.NBTTagCompound;
-
 import io.darkcraft.darkcore.mod.nbt.Mapper;
 import io.darkcraft.darkcore.mod.nbt.NBTConstructor;
 import io.darkcraft.darkcore.mod.nbt.NBTHelper;
@@ -11,6 +9,7 @@ import io.darkcraft.darkcore.mod.nbt.NBTProperty;
 import io.darkcraft.darkcore.mod.nbt.NBTProperty.SerialisableType;
 import io.darkcraft.darkcore.mod.nbt.NBTSerialisable;
 import io.darkcraft.mod.common.magic.systems.symbolic.type.SymbolicEffect;
+import net.minecraft.nbt.NBTTagCompound;
 
 @NBTSerialisable
 public class SymbolState
@@ -44,5 +43,10 @@ public class SymbolState
 	public void readFromNBT(NBTTagCompound nbt)
 	{
 		effect.readFromNBT(nbt);
+	}
+	
+	public SymbolState copy()
+	{
+		return new SymbolState(rings);
 	}
 }
