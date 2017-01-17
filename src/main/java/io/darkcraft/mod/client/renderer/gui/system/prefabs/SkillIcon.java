@@ -10,9 +10,11 @@ import io.darkcraft.mod.common.registries.SkillRegistry;
 
 import skillapi.api.implement.ISkill;
 import skillapi.api.implement.ISkillIcon;
+import skillapi.api.internal.ISkillHandler;
 
 public class SkillIcon extends AbstractGuiElement
 {
+	private ISkillHandler handler;
 	private ISkill skill;
 
 	public SkillIcon(int _x, int _y, int width, int height, ISkill skill)
@@ -31,7 +33,9 @@ public class SkillIcon extends AbstractGuiElement
 	{
 		if(skill == null) return;
 		GL11.glColor3f(1, 1, 1);
-		ISkillIcon skillIcon = skill.getIcon(SkillRegistry.api.getSkillHandler(Minecraft.getMinecraft().thePlayer));
+		if(handler == null)
+			handler = SkillRegistry.api.getSkillHandler(Minecraft.getMinecraft().thePlayer);
+		ISkillIcon skillIcon = skill.getIcon(handler);
 		RenderHelper.bindTexture(skillIcon.getResourceLocation());
 		RenderHelper.uiFace(0, 0, w, h, 0, skillIcon.getUV(), true);
 	}

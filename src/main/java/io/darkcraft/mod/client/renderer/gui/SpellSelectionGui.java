@@ -8,6 +8,7 @@ import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.mod.client.renderer.gui.system.AbstractGuiElement;
 import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGui;
 import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiList;
+import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiTabbed;
 import io.darkcraft.mod.client.renderer.gui.system.daedric.DaedricButton;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonCross;
@@ -20,7 +21,7 @@ import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 public class SpellSelectionGui extends DarkcraftGui
 {
 	private final PlayerCaster player;
-	private final DarkcraftGuiList<SpellItem> list;
+	private final DarkcraftGuiTabbed<SpellItem, DarkcraftGuiList<SpellItem>> list;
 	private SpellItem currentItem;
 	private Spell currentSpell;
 	private SpellHover hover = new SpellHover(272,0,240,256);
