@@ -1,27 +1,32 @@
 package io.darkcraft.mod.client.renderer.gui;
 
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.lwjgl.input.Keyboard;
 
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.mod.client.renderer.gui.system.AbstractGuiElement;
 import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGui;
-import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiList;
-import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiTabbed;
+import io.darkcraft.mod.client.renderer.gui.system.DarkcraftGuiListFiltered;
 import io.darkcraft.mod.client.renderer.gui.system.daedric.DaedricButton;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IClickable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.ButtonCross;
+import io.darkcraft.mod.client.renderer.gui.system.prefabs.SkillTab;
 import io.darkcraft.mod.client.renderer.gui.system.spells.SpellHover;
 import io.darkcraft.mod.client.renderer.gui.system.spells.SpellItem;
 import io.darkcraft.mod.client.renderer.gui.textures.ScalableBackground;
 import io.darkcraft.mod.common.magic.systems.spell.Spell;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 
+import skillapi.api.implement.ISkill;
+
 public class SpellSelectionGui extends DarkcraftGui
 {
 	private final PlayerCaster player;
-	private final DarkcraftGuiTabbed<SpellItem, DarkcraftGuiList<SpellItem>> list;
+	private final DarkcraftGuiListFiltered<SpellItem,SkillTab<SpellItem>> list;
 	private SpellItem currentItem;
 	private Spell currentSpell;
 	private SpellHover hover = new SpellHover(272,0,240,256);
@@ -37,15 +42,25 @@ public class SpellSelectionGui extends DarkcraftGui
 		player = pc;
 		currentSpell = player.getCurrentSpell();
 		hover.setSpell(pc, currentSpell);
-		list = new DarkcraftGuiList(24,40,256-48,guiH-64);
+		list = new DarkcraftGuiListFiltered(24,40,256-48,guiH-64, new TreeSet<SkillTab<?>>());
+		Set<ISkill> skills = new HashSet<>();
 		for(Spell s : player.getKnownSpells())
 		{
+			skills.add(s.getMainSkill());
 			SpellItem si = new SpellItem(0,0,256-64,pc,s);
 			if(s == currentSpell)
 				setCurrent(si);
 			list.addElement(si);
 		}
 		list.sort(currentComp);
+		for(ISkill skill : skills)
+			list.addTab(new SkillTab<SpellItem>(skill) {
+				@Override
+				public boolean filter(SpellItem t)
+				{
+					return t.spell.getMainSkill() == skill;
+				}
+			});
 		addElement(hover);
 		addElement(list);
 		addElement(new DaedricButton("sortHot",26,20,"H"));

@@ -15,18 +15,20 @@ import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
 import io.darkcraft.mod.client.renderer.gui.system.prefabs.VerticalScrollbar;
 import io.darkcraft.mod.client.renderer.gui.textures.ScalableInternal;
 
-public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiElement implements IDraggable, IGuiContainer<T>, Iterable<T>
+public class DarkcraftGuiList<I extends AbstractGuiElement> extends AbstractGuiElement implements IDraggable, IGuiContainer<I>, Iterable<I>
 {
-	private List<T> elements = new ArrayList();
+	protected List<I> elements = new ArrayList();
 	private ScalableInternal bg;
 	private VerticalScrollbar scroll;
 	public int iW;
+	public int iH;
 
 	public DarkcraftGuiList(int _x, int _y, int width, int height)
 	{
 		super(_x, _y, width, height);
 		bg = new ScalableInternal(width-16, height);
 		iW = bg.w-3;
+		iH = height;
 		scroll = new VerticalScrollbar(width-16, 0, height);
 		scroll.parent = this;
 	}
@@ -37,16 +39,18 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		int th = 0;
 		for(AbstractGuiElement e : elements)
 		{
+			if(!e.visible || !e.enabled)
+				continue;
 			if(e.w > iW)
 				e.setSize(iW, e.h);
 			th += e.h;
 		}
-		scroll.setMinMax(0, th-(h-3));
-		scroll.setScrollable(th > (h - 3));
+		scroll.setMinMax(0, th-(iH-3));
+		scroll.setScrollable(th > (iH - 3));
 	}
 
 	@Override
-	public void addElement(T e)
+	public void addElement(I e)
 	{
 		elements.add(e);
 		if(e.w > iW)
@@ -56,7 +60,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	}
 
 	@Override
-	public void removeElement(T e)
+	public void removeElement(I e)
 	{
 		elements.remove(e);
 		e.parent = null;
@@ -69,7 +73,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		recalc();
 	}
 
-	public void sort(Comparator<T> comparator)
+	public void sort(Comparator<I> comparator)
 	{
 		elements.sort(comparator);
 		recalc();
@@ -84,7 +88,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		}
 		else
 		{
-			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h))
+			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == iH))
 			{
 				parent.clickableClicked(this, "list", button);
 				return false;
@@ -92,6 +96,8 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 			int cy = (y + scroll.asInt()) - 1;
 			for(AbstractGuiElement e : elements)
 			{
+				if(!e.visible || !e.enabled)
+					continue;
 				if(e.withinBounds(x, cy))
 				{
 					if(e instanceof IClickable)
@@ -116,10 +122,12 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		}
 		else
 		{
-			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == h)) return false;
+			if((x == 0) || (y == 0) || (x == (w - 16)) || (y == iH)) return false;
 			int cy = (y + scroll.asInt()) - 1;
 			for(AbstractGuiElement e : elements)
 			{
+				if(!e.visible || !e.enabled)
+					continue;
 				if(e.withinBounds(x, cy))
 				{
 					if(e instanceof IDraggable)
@@ -134,13 +142,15 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	}
 
 	@Override
-	public T getHovered(int mouseX, int mouseY)
+	public I getHovered(int mouseX, int mouseY)
 	{
-		if((mouseX > 0) && (mouseY > 0) && (mouseX < (w - 16)) && (mouseY < h))
+		if((mouseX > 0) && (mouseY > 0) && (mouseX < (w - 16)) && (mouseY < iH))
 		{
 			int cy = (mouseY + scroll.asInt()) - 1;
-			for(T e : elements)
+			for(I e : elements)
 			{
+				if(!e.visible || !e.enabled)
+					continue;
 				if(e.withinBounds(mouseX, cy))
 					return e;
 				else
@@ -161,19 +171,21 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 		GL11.glTranslatef(2, 2, 0);
 		GL11.glPushAttrib(GL11.GL_SCISSOR_BIT);
 		WindowSpaceStore wss = getWindowSpace(this);
-		wss = wss.transform(2, h-1);
-		GL11.glScissor((int) wss.x, (int) wss.getFromBottom(), (int)((w-17) * wss.scale), (int)((h-3) * wss.scale));
+		wss = wss.transform(2, iH-1);
+		GL11.glScissor((int) wss.x, (int) wss.getFromBottom(), (int)((w-17) * wss.scale), (int)((iH-3) * wss.scale));
 		GL11.glEnable(GL11.GL_SCISSOR_TEST);
 		int y = -scroll.asInt();
 		for(AbstractGuiElement e : elements)
 		{
+			if(!e.visible || !e.enabled)
+				continue;
 			GL11.glPushMatrix();
 			GL11.glTranslatef(0, y, 0);
-			if((((y+e.h) >= 0) && ((y < h))))
+			if((((y+e.h) >= 0) && ((y < iH))))
 				e.render(pticks, mouseX, mouseY);
 			y += e.h;
 			GL11.glPopMatrix();
-			if(y > h) break;
+			if(y > iH) break;
 		}
 		GL11.glPopAttrib();
 	}
@@ -209,7 +221,7 @@ public class DarkcraftGuiList<T extends AbstractGuiElement> extends AbstractGuiE
 	}
 
 	@Override
-	public Iterator<T> iterator()
+	public Iterator<I> iterator()
 	{
 		return elements.iterator();
 	}
