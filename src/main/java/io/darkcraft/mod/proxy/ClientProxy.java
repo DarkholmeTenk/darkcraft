@@ -22,13 +22,11 @@ import io.darkcraft.mod.client.renderer.gui.DebugGui;
 import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
 import io.darkcraft.mod.client.renderer.gui.StatusOverlay;
 import io.darkcraft.mod.client.renderer.gui.spellcreator.SpellCreationGuiNew;
-import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.gui.ChalkContainer;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
-import io.darkcraft.mod.common.tech.tileent.TechGenerator;
 import io.darkcraft.mod.proxy.ParticleHandler.ClientParticleHandler;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -53,7 +51,6 @@ public class ClientProxy extends CommonProxy
 	{
 		FMLCommonHandler.instance().bus().register(this);
 		MinecraftForge.EVENT_BUS.register(StatusOverlay.i);
-		ClientRegistry.bindTileEntitySpecialRenderer(TechGenerator.class, new TechGeneratorRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellProjectile.class, new EntitySpellProjectileRenderer());
 		ClientRegistry.registerKeyBinding(keyBind = new KeyBinding("darkcraft.key.open.desc", Keyboard.KEY_Y, "darkcraft.key.category"));
 		enchShader = ShaderHandler.getShaderProgram(

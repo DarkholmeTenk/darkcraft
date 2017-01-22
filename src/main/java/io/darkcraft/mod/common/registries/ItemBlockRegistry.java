@@ -1,5 +1,7 @@
 package io.darkcraft.mod.common.registries;
 
+import net.minecraft.util.ResourceLocation;
+
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.blocks.GemStandBlock;
@@ -25,8 +27,6 @@ import io.darkcraft.mod.common.magic.items.staff.parts.bottom.DefaultStaffBottom
 import io.darkcraft.mod.common.magic.items.staff.parts.head.DefaultStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.head.SillyStaffHead;
 import io.darkcraft.mod.common.magic.items.staff.parts.shaft.DefaultStaffShaft;
-import io.darkcraft.mod.common.tech.block.TechGeneratorBlock;
-import net.minecraft.util.ResourceLocation;
 
 
 public class ItemBlockRegistry
@@ -43,7 +43,6 @@ public class ItemBlockRegistry
 	public static AbstractBlock magicLight;
 	public static AbstractBlock magicSymbol;
 	public static AbstractBlock gemStand;
-	public static AbstractBlock techGenerator;
 	public static void registerBlocks()
 	{
 		//MAGIC
@@ -60,8 +59,6 @@ public class ItemBlockRegistry
 		magicLight = new MagicLightBlock().register();
 		magicSymbol = new MagicSymbolBlock().register();
 		gemStand = new GemStandBlock().register();
-		//TECH
-		techGenerator = new TechGeneratorBlock().register();
 	}
 
 	public static MagicComponent magicComponent = new MagicComponent();
