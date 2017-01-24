@@ -4,6 +4,7 @@ import net.minecraft.util.ResourceLocation;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractBlock;
 import io.darkcraft.mod.DarkcraftMod;
+import io.darkcraft.mod.common.magic.blocks.DebugBlock;
 import io.darkcraft.mod.common.magic.blocks.GemStandBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicAnvilBlock;
 import io.darkcraft.mod.common.magic.blocks.MagicFieldMeasurerBlock;
@@ -45,6 +46,7 @@ public class ItemBlockRegistry
 	public static AbstractBlock gemStand;
 	public static void registerBlocks()
 	{
+		new DebugBlock().register();
 		//MAGIC
 		magicTouchPass = new MagicTouchPassBlock().register();
 
