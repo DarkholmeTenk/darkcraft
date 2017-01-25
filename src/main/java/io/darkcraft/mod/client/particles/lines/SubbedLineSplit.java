@@ -9,8 +9,8 @@ public class SubbedLineSplit extends SubbedLine
 	public SubbedLineSplit(Vec3 start, Vec3 end)
 	{
 		super(start, end);
-		Vec3 midPoint = newPoint(start, end);
-		newLine = new Line(start,midPoint);
+		Vec3 newPoint = newPoint(start, midPoint);
+		newLine = new Line(start,newPoint);
 	}
 
 	@Override

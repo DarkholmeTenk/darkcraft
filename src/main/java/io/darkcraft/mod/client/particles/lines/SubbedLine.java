@@ -8,12 +8,13 @@ import io.darkcraft.mod.DarkcraftMod;
 
 public class SubbedLine implements ILine
 {
+	protected final Vec3 midPoint;
 	private ILine startLine;
 	private ILine endLine;
 
 	public SubbedLine(Vec3 start, Vec3 end)
 	{
-		Vec3 midPoint = newPoint(start, end);
+		midPoint = newPoint(start, end);
 		startLine = new Line(start,midPoint);
 		endLine = new Line(midPoint, end);
 	}
@@ -43,7 +44,7 @@ public class SubbedLine implements ILine
 
 	private static double d(Random r, double d, double dist)
 	{
-		return (r.nextDouble() * d) + ((r.nextDouble() * dist) - (0.5 * dist));
+		return ((0.25 + (r.nextDouble()/2)) * d) + ((r.nextDouble() * dist) - (0.5 * dist));
 	}
 
 	@Override

@@ -8,12 +8,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 import io.darkcraft.darkcore.mod.datastore.Colour;
-import io.darkcraft.darkcore.mod.datastore.UVStore;
+import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.mod.client.particles.lines.ILine;
 import io.darkcraft.mod.client.particles.lines.Line;
@@ -22,11 +21,7 @@ import io.darkcraft.mod.client.particles.lines.LineIterator;
 
 public class Lightning extends EntityFX
 {
-	private ResourceLocation tex;
-	private UVStore uv;
-	private Colour colour;
-
-	private float lastScale = 0;
+	private Colour colour = Colour.white;
 
 	private final ILine line;
 
@@ -63,21 +58,12 @@ public class Lightning extends EntityFX
     {
 		if(isDead)
 			return;
-//		if(tex == null)
-//		{
-//			super.renderParticle(tess, ptt, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
-//			return;
-//		}
 		tess.draw();
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		tess.startDrawing(GL11.GL_LINES);
-		tess.setColorOpaque_F(1, 1, 1);
-		GL11.glLineWidth(4);
+		RenderHelper.colour(tess, colour);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		Iterator<Line> lineIter = new LineIterator(line);
-/*		float pX = (float)((prevPosX + ((posX - prevPosX) * ptt)) - interpPosX);
-        float pY = (float)((prevPosY + ((posY - prevPosY) * ptt)) - interpPosY);
-        float pZ = (float)((prevPosZ + ((posZ - prevPosZ) * ptt)) - interpPosZ);*/
 		EntityLivingBase entitylivingbase1 = Minecraft.getMinecraft().thePlayer;
 		float pX = 0;float pY = 0;float pZ = 0;
 		pX = (float) (-((entitylivingbase1.lastTickPosX) + ((entitylivingbase1.posX - entitylivingbase1.lastTickPosX) * ptt))+posX);
@@ -88,7 +74,6 @@ public class Lightning extends EntityFX
 			Line line = lineIter.next();
 			Vec3 start = line.start;
 			Vec3 end = line.end;
-	//		System.out.println(""+(start.xCoord + pX));
 			tess.addVertex(start.xCoord + pX, start.yCoord + pY, start.zCoord + pZ);
 			tess.addVertex(end.xCoord + pX, end.yCoord + pY, end.zCoord + pZ);
 		}
