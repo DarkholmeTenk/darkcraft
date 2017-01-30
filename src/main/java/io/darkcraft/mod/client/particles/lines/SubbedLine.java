@@ -38,7 +38,7 @@ public class SubbedLine implements ILine
 	{
 		Random r = DarkcraftMod.modRand;
 		Vec3 d = a.subtract(b);
-		double dist = d.lengthVector() / 5;
+		double dist = d.lengthVector() / 8;
 		return a.addVector(d(r,d.xCoord,dist), d(r,d.yCoord,dist), d(r,d.zCoord,dist));
 	}
 

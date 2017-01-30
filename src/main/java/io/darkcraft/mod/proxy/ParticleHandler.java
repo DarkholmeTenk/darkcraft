@@ -24,6 +24,7 @@ import io.darkcraft.darkcore.mod.helpers.WorldHelper;
 import io.darkcraft.darkcore.mod.proxy.BaseProxy;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.particles.BasicParticle;
+import io.darkcraft.mod.client.particles.Lightning;
 import io.darkcraft.mod.client.particles.ParticleCreator;
 import io.darkcraft.mod.client.particles.creators.BlockCreator;
 import io.darkcraft.mod.client.particles.creators.SpellCreatorCorner;
@@ -189,7 +190,9 @@ public abstract class ParticleHandler extends BaseProxy
 		@Override
 		public void createBoltParticle(SimpleDoubleCoordStore from, Vec3 to, Colour colour)
 		{
-
+			Lightning l = new Lightning(from.getWorldObj(), from.x, from.y, from.z, to.xCoord, to.yCoord, to.zCoord);
+			l.setMaxAge(15);
+			add(l);
 		}
 	}
 }
