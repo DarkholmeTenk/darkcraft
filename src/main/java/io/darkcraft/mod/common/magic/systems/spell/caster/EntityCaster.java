@@ -14,10 +14,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import io.darkcraft.darkcore.mod.abstracts.AbstractEntityDataStore;
+import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.SimpleCoordStore;
 import io.darkcraft.darkcore.mod.datastore.SimpleDoubleCoordStore;
 import io.darkcraft.darkcore.mod.helpers.MathHelper;
 import io.darkcraft.darkcore.mod.helpers.RaytraceHelper;
+import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
 import io.darkcraft.mod.common.magic.event.spell.SpellPreCastEvent;
 import io.darkcraft.mod.common.magic.systems.spell.CastType;
@@ -134,6 +136,22 @@ public class EntityCaster<E extends EntityLivingBase> extends AbstractEntityData
 		}
 	}
 
+	private void castBolt(Spell spell)
+	{
+		E e = getEntity();
+		Vec3 look = getEntity().getLookVec();
+		double d = 40;
+		Vec3 end = Vec3.createVectorHelper(e.posX, e.posY, e.posZ).addVector(look.xCoord * d, look.yCoord * d, look.zCoord * d);
+		MovingObjectPosition mop = RaytraceHelper.rayTrace(getEntity(), end, MagicConfig.traceLiquids, EntityLivingBase.class, true, spell.affectEntities);
+		DarkcraftMod.particle.createBoltParticle(new SimpleDoubleCoordStore(e), mop == null ? end : mop.hitVec, Colour.white);
+		if(mop == null)
+			return;
+		if(mop.typeOfHit == MovingObjectType.BLOCK)
+			spell.apply(this, new SimpleCoordStore(e.worldObj, mop), mop.sideHit);
+		else
+			spell.apply(this, mop.entityHit);
+	}
+
 	private void castProjectile(Spell spell)
 	{
 		//if(castTouch(spell)) return;
@@ -148,7 +166,7 @@ public class EntityCaster<E extends EntityLivingBase> extends AbstractEntityData
 	{
 		EntityLivingBase c = getCaster();
 		if(c == null) return false;
-		MovingObjectPosition pos = RaytraceHelper.rayTrace(c, MagicConfig.touchCastDistance, MagicConfig.traceLiquids, Entity.class, true, spell.affectEntities);
+		MovingObjectPosition pos = RaytraceHelper.rayTrace(c, MagicConfig.touchCastDistance, MagicConfig.traceLiquids, EntityLivingBase.class, true, spell.affectEntities);
 		if(pos == null)
 			return false;
 		if(pos.typeOfHit == MovingObjectType.BLOCK)
@@ -185,8 +203,12 @@ public class EntityCaster<E extends EntityLivingBase> extends AbstractEntityData
 			else
 			{
 				if(!castTouch(spell))
+				{
 					if(spell.type == CastType.PROJECTILE)
 						castProjectile(spell);
+					else if(spell.type == CastType.BOLT)
+						castBolt(spell);
+				}
 			}
 		}
 	}
