@@ -62,6 +62,9 @@ public abstract class ParticleHandler extends BaseProxy
 	@ClientMethod(broadcast = Broadcast.DIMENSION)
 	public abstract void createJumpParticles(SimpleDoubleCoordStore simpleDoubleCoordStore, Vec3 createVectorHelper);
 
+	@ClientMethod(broadcast = Broadcast.DIMENSION)
+	public abstract void createBoltParticle(SimpleDoubleCoordStore from, Vec3 to, Colour colour);
+
 	@SideOnly(Side.CLIENT)
 	public static class ClientParticleHandler extends ParticleHandler
 	{
@@ -181,6 +184,12 @@ public abstract class ParticleHandler extends BaseProxy
 				BasicParticle bp = create(20 + rand.nextInt(20), new Colour(0.8f, 0.8f, 0.2f), simpleDoubleCoordStore, 1, v);
 				add(bp);
 			}
+		}
+
+		@Override
+		public void createBoltParticle(SimpleDoubleCoordStore from, Vec3 to, Colour colour)
+		{
+
 		}
 	}
 }
