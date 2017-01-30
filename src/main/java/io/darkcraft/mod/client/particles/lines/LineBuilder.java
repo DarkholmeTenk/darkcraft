@@ -23,7 +23,6 @@ public class LineBuilder
 			else
 				chance = 0;
 		}
-		chance = 0;
 		return line.split(i, chance);
 	}
 
@@ -33,6 +32,6 @@ public class LineBuilder
 			return;
 		int max = line.getNumParts();
 		for(int i = 0; i < max; i++)
-			split(split(line,i,max,depth,mD), i == 2 ? depth + 2 : depth + 1, mD);
+			split(split(line,i,max,depth,mD), depth + 1, mD);
 	}
 }
