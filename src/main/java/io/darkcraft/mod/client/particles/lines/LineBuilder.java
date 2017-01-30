@@ -34,8 +34,5 @@ public class LineBuilder
 		int max = line.getNumParts();
 		for(int i = 0; i < max; i++)
 			split(split(line,i,max,depth,mD), i == 2 ? depth + 2 : depth + 1, mD);
-//			split(line.split(i, ((max == 2) && (i == 0)) ? 0 : 0.8-(depth/(double)mD)), i == 2 ? depth + 2 : depth + 1, mD);
-			//split(line.split(i, 0), i == 2 ? depth + 2 : depth + 1, mD);
-			//((max == 2) && (i == 0)) ? 0 : 0.8-(depth/(double)mD))
 	}
 }
