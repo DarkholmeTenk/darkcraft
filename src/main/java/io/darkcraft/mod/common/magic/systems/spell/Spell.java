@@ -113,6 +113,7 @@ public class Spell
 			sh = SkillRegistry.api.getSkillHandler(((EntityCaster) caster).getCaster());
 		for(ComponentInstance ci : components)
 			cost += ci.getCost(caster, sh);
+		cost *= type.costMult;
 		return cost;
 	}
 
