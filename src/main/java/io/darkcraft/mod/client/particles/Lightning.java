@@ -29,7 +29,7 @@ public class Lightning extends EntityFX
 	{
 		super(w.isRemote ? w : WorldHelper.getClientWorld(), x, y, z);
 		particleMaxAge = 50;
-		line = LineBuilder.build(Vec3.createVectorHelper(0, 0, 0), Vec3.createVectorHelper(dx-x, dy-y, dz-z), 8);
+		line = LineBuilder.build(Vec3.createVectorHelper(0, 0, 0), Vec3.createVectorHelper(dx-x, dy-y, dz-z), 6);
 	}
 
 	public float getGravity()

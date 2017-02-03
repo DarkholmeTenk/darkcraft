@@ -141,9 +141,10 @@ public class EntityCaster<E extends EntityLivingBase> extends AbstractEntityData
 		E e = getEntity();
 		Vec3 look = getEntity().getLookVec();
 		double d = 40;
-		Vec3 end = Vec3.createVectorHelper(e.posX, e.posY, e.posZ).addVector(look.xCoord * d, look.yCoord * d, look.zCoord * d);
+		Vec3 end = Vec3.createVectorHelper(e.posX, e.posY+MathHelper.castHeight(e), e.posZ).addVector(look.xCoord * d, look.yCoord * d, look.zCoord * d);
 		MovingObjectPosition mop = RaytraceHelper.rayTrace(getEntity(), end, MagicConfig.traceLiquids, EntityLivingBase.class, true, spell.affectEntities);
-		DarkcraftMod.particle.createBoltParticle(new SimpleDoubleCoordStore(e), mop == null ? end : mop.hitVec, Colour.white);
+		SimpleDoubleCoordStore s = new SimpleDoubleCoordStore(e).translate(look.xCoord, look.yCoord+MathHelper.castHeight(e), look.zCoord);
+		DarkcraftMod.particle.createBoltParticle(s, mop == null ? end : mop.hitVec, Colour.white);
 		if(mop == null)
 			return;
 		if(mop.typeOfHit == MovingObjectType.BLOCK)
