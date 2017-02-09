@@ -1,7 +1,12 @@
 package io.darkcraft.mod.common.magic.items;
 
+import java.util.List;
+
+import com.google.common.base.Strings;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -38,6 +43,20 @@ public class MagicChalkNew extends AbstractItem
 		return is;
 	}
 
+	@Override
+	public IItemRenderer getRenderer()
+	{
+		return new MagicChalkRenderer();
+	}
+
+	public static boolean damage(ItemStack is)
+	{
+		if(is.stackTagCompound == null) return false;
+		double nd = is.stackTagCompound.getDouble("dam")+0.002;
+		is.stackTagCompound.setDouble("dam", nd);
+		return nd >= 1;
+	}
+
 	public static double getISDamage(ItemStack is)
 	{
 		if((is == null) || !(is.getItem() instanceof MagicChalkNew)) return 0;
@@ -46,9 +65,49 @@ public class MagicChalkNew extends AbstractItem
 		return is.stackTagCompound.getDouble("dam");
 	}
 
-	@Override
-	public IItemRenderer getRenderer()
+	public static String[] getStrings(ItemStack is)
 	{
-		return new MagicChalkRenderer();
+		if((is == null) || !(is.getItem() instanceof MagicChalkNew)) return new String[]{};
+		if(is.stackTagCompound == null) return new String[]{};
+		return getStrings(is.stackTagCompound);
+	}
+
+	public static String[] getStrings(NBTTagCompound nbt)
+	{
+		int size = nbt.getInteger("size");
+		String[] arr = new String[size];
+		for(int i = 0; i < size; i++)
+			arr[i] = nbt.getString("text"+i);
+		return arr;
+	}
+
+	public static void setStrings(ItemStack is, String[] values)
+	{
+		if((is == null) || !(is.getItem() instanceof MagicChalkNew)) return;
+		if(is.stackTagCompound == null)
+			is.stackTagCompound = new NBTTagCompound();
+		is.stackTagCompound.setInteger("size", values.length);
+		for(int i = 0; i < values.length; i++)
+			is.stackTagCompound.setString("text"+i, Strings.nullToEmpty(values[i]));
+	}
+
+	public static void setStrings(NBTTagCompound nbt, String[] values)
+	{
+		nbt.setInteger("size", values.length);
+		for(int i = 0; i < values.length; i++)
+			nbt.setString("text"+i, Strings.nullToEmpty(values[i]));
+	}
+
+	@Override
+	public void addInfo(ItemStack is, EntityPlayer player, List infoList)
+	{
+		String[] data = getStrings(is);
+		if((data == null) || (data.length == 0))
+			return;
+		for(String s : data)
+		{
+			if(s.isEmpty()) continue;
+			infoList.add(s);
+		}
 	}
 }

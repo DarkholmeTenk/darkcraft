@@ -45,6 +45,7 @@ public class HorizontalScrollbar extends AbstractGuiElement implements IClickabl
 	{
 		value = v;
 		reclamp();
+		triggerChange();
 	}
 
 	public int asInt()
@@ -71,6 +72,7 @@ public class HorizontalScrollbar extends AbstractGuiElement implements IClickabl
 			drag(button,x,y);
 		reclamp();
 		parent.clickableClicked(this, "scroll", button);
+		triggerChange();
 		return true;
 	}
 
@@ -84,6 +86,7 @@ public class HorizontalScrollbar extends AbstractGuiElement implements IClickabl
 			value = min + p;
 			reclamp();
 			parent.clickableClicked(this, "scroll", button);
+			triggerChange();
 			return true;
 		}
 		return false;

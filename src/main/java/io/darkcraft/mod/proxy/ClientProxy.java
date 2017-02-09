@@ -17,7 +17,6 @@ import io.darkcraft.darkcore.mod.client.ShaderHandler;
 import io.darkcraft.darkcore.mod.datastore.Pair;
 import io.darkcraft.mod.DarkcraftMod;
 import io.darkcraft.mod.client.renderer.EntitySpellProjectileRenderer;
-import io.darkcraft.mod.client.renderer.gui.ChalkGui;
 import io.darkcraft.mod.client.renderer.gui.ChalkGuiNew;
 import io.darkcraft.mod.client.renderer.gui.DebugGui;
 import io.darkcraft.mod.client.renderer.gui.SpellSelectionGui;
@@ -27,7 +26,7 @@ import io.darkcraft.mod.client.renderer.tileent.TechGeneratorRenderer;
 import io.darkcraft.mod.common.helpers.Helper;
 import io.darkcraft.mod.common.magic.blocks.tileent.SpellCreator;
 import io.darkcraft.mod.common.magic.entities.EntitySpellProjectile;
-import io.darkcraft.mod.common.magic.gui.ChalkContainer;
+import io.darkcraft.mod.common.magic.gui.ChalkContainerNew;
 import io.darkcraft.mod.common.magic.systems.spell.caster.PlayerCaster;
 import io.darkcraft.mod.common.tech.tileent.TechGenerator;
 import io.darkcraft.mod.proxy.ParticleHandler.ClientParticleHandler;
@@ -70,8 +69,7 @@ public class ClientProxy extends CommonProxy
 		{
 			case 1397: return new SpellCreationGuiNew((SpellCreator)te);
 			case 1398: return new SpellSelectionGui(Helper.getPlayerCaster(player));
-			case 1399: return new ChalkGui(new ChalkContainer(player));
-			case 1400: return new ChalkGuiNew();
+			case 1400: return new ChalkGuiNew(new ChalkContainerNew(player));
 			case 1000: return new DebugGui(player.inventoryContainer);
 		}
 		return null;

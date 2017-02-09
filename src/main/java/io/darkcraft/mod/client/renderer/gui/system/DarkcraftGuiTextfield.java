@@ -2,12 +2,13 @@ package io.darkcraft.mod.client.renderer.gui.system;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.util.ChatAllowedCharacters;
+
 import io.darkcraft.darkcore.mod.datastore.Colour;
 import io.darkcraft.darkcore.mod.datastore.GuiTexture;
 import io.darkcraft.darkcore.mod.helpers.RenderHelper;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.ITypable;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.ChatAllowedCharacters;
 
 public class DarkcraftGuiTextfield extends AbstractGuiElement implements ITypable
 {
@@ -78,6 +79,7 @@ public class DarkcraftGuiTextfield extends AbstractGuiElement implements ITypabl
 			text = insertAtCursor(c);
 			cursorPos++;
 		}
+		triggerChange();
 	}
 
 	public boolean isAllowed(char c)

@@ -51,7 +51,7 @@ public class DarkcraftGui extends GuiContainer implements IGuiContainer
 		xSize = guiW;
 		ySize = guiH;
 
-		inventoryGui = cont != null;
+		inventoryGui = ((cont != null) && !(cont instanceof DummyContainer));
 	}
 
 	private int oldW;

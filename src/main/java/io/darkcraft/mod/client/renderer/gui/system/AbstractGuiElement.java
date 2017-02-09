@@ -1,5 +1,8 @@
 package io.darkcraft.mod.client.renderer.gui.system;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.darkcraft.darkcore.mod.datastore.WindowSpaceStore;
 import io.darkcraft.mod.client.renderer.gui.system.interfaces.IGuiContainer;
 
@@ -14,6 +17,8 @@ public abstract class AbstractGuiElement
 	public int h;
 	public int x;
 	public int y;
+
+	private List<ChangeWatcher> changeWatchers = new ArrayList<>();
 
 	public AbstractGuiElement(int _x, int _y, int width, int height)
 	{
@@ -53,6 +58,22 @@ public abstract class AbstractGuiElement
 		return true;
 	}
 
+	protected void triggerChange()
+	{
+		for(ChangeWatcher watcher : changeWatchers)
+			watcher.change(this);
+	}
+
+	public void registerWatcher(ChangeWatcher watcher)
+	{
+		changeWatchers.add(watcher);
+	}
+
+	public void removeWatcher(ChangeWatcher watcher)
+	{
+		changeWatchers.remove(watcher);
+	}
+
 	/**
 	 * Will be translated to correct x/y coordinates before this is called.<br>
 	 * Assume that zLevel is 0
@@ -61,4 +82,9 @@ public abstract class AbstractGuiElement
 	 * @param mouseY
 	 */
 	public abstract void render(float pticks, int mouseX, int mouseY);
+
+	public static interface ChangeWatcher
+	{
+		public void change(Object source);
+	}
 }
