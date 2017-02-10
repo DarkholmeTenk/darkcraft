@@ -99,6 +99,7 @@ public class ChalkBackground extends AbstractGuiElement
 			buttons[i].setField(field);
 			parent.addElement(buttons[i]);
 		}
+		field.text = "";
 	}
 
 	public ChalkType getType()
